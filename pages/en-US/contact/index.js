@@ -101,7 +101,7 @@ const Contact = () => {
     // Attualmente non la manda
 
     // Redirect to home page 
-    router.push("/");
+    router.push("/en-US/");
 
 
     // https://resend.com/nextjs
