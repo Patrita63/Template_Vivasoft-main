@@ -49,7 +49,7 @@ const Home = () => {
               exit='hidden'
               className='max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16'
             >
-              Dal 2014 trasformiamo il futuro  delle Aziende con soluzioni innovative per vincere ogni sfida aiutandole a ottimizzare i processi aziendali. 
+              Dal 2014 trasformiamo il futuro delle Aziende con soluzioni innovative per vincere ogni sfida aiutandole ad ottimizzare i processi aziendali. 
             </motion.p>
           </div>
         </div>

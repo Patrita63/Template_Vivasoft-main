@@ -98,7 +98,7 @@ const Contact = () => {
     // TODO PATRIZIO
     // Gestire il ritorno dell'invio della mail
     // Attualmente non la manda
-    
+
     // Redirect to home page 
     router.push("/");
 
@@ -152,7 +152,7 @@ const Contact = () => {
 
   return (
     <div className='h-full bg-primary'>
-      <div className='container mx-auto py-32 text-center xl:text-left flex items-center justify-center h-full'>
+      <div className='container mx-auto py-32 text-center xl:text-left flex items-center justify-center overflow-hidden h-full'>
         {/* text & form */}
         <div className='flex flex-col w-full max-w-[700px] pt-60'>
           {/* text */}
