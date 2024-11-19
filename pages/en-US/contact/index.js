@@ -39,7 +39,7 @@ const Contact = () => {
   useEffect(() => {
     setFullname('Patrizio Tardiolo Bonifazi');
     setMailAddress('p.tardiolobonifazi@vivasoft.it');
-    setMailSubject('Invio Mail');
+    setMailSubject('Send Mail');
     setMailBody('Test from Contact');
   }, [])
 
