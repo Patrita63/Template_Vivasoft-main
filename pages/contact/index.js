@@ -154,7 +154,7 @@ const Contact = () => {
     <div className='h-full bg-primary'>
       <div className='container mx-auto py-32 text-center xl:text-left flex items-center justify-center overflow-hidden h-full'>
         {/* text & form */}
-        <div className='flex flex-col w-full max-w-[700px] pt-60'>
+        <div className='flex flex-col w-full max-w-[700px]'>
           {/* text */}
           <motion.h2
             variants={fadeIn('up', 0.2)}
