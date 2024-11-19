@@ -1,12 +1,14 @@
 // components
-import TestimonialSlider from '../../components/TestimonialSlider';
+import LayoutEnUs from '../../../components/LayoutEnUs';
+import TestimonialSlider from '../../../components/TestimonialSlider';
 
 // framer motion
 import { motion } from 'framer-motion';
-import { fadeIn } from '../../variants';
+import { fadeIn } from '../../../variants';
 
 const Testimonials = () => {
   return (
+    <LayoutEnUs>
     <div className='h-full bg-primary py-32 text-center'>
       <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden pt-60'>
         {/* title */}
@@ -17,7 +19,7 @@ const Testimonials = () => {
           exit='hidden'
           className='h2 mb-8 xl:mb-0'
         >
-          Dicono di<span className='text-accent'> noi</span>
+          Testimonial and<span className='text-accent'> references</span>
         </motion.h2>
         {/* slider */}
         <motion.div
@@ -30,6 +32,7 @@ const Testimonials = () => {
         </motion.div>
       </div>
     </div>
+    </LayoutEnUs>
   );
 };
 

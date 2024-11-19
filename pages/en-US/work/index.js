@@ -1,17 +1,19 @@
 // components
-import WorkSlider from '../../components/WorkSlider';
-import Bulb from '../../components/Bulb';
-import Circles from '../../components/Circles';
+import LayoutEnUs from '../../../components/LayoutEnUs';
+import WorkSlider from '../../../components/WorkSlider';
+import Bulb from '../../../components/Bulb';
+import Circles from '../../../components/Circles';
 
 // framer motion
 import { motion } from 'framer-motion';
-import { fadeIn } from '../../variants';
+import { fadeIn } from '../../../variants';
 
 // icons
 import { BsArrowRight } from 'react-icons/bs';
 
 const Work = () => {
   return (
+    <LayoutEnUs>
     <div className='h-full bg-primary py-36 flex items-center bg-gradient-to-r from-primary via-black/30 to-black/10'>
       <Circles />
       <div className='container mx-auto'>
@@ -34,12 +36,12 @@ const Work = () => {
               exit='hidden'
               className='mb-4 max-w-[400px] mx-auto lg:mx-0'
             >
-              Materiali formativi, risorse didattiche sempre accessibili per i nostri clienti
+              Training materials, educational resources always accessible for our customers.
               
             </motion.p>
             <button className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
               <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
-                Accedi
+                Log in
               </span>
               <BsArrowRight className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute text-[22px]' />
             </button>
@@ -59,6 +61,7 @@ const Work = () => {
       </div>
       <Bulb />
     </div>
+    </LayoutEnUs>
   );
 };
 

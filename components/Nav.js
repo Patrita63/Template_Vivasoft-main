@@ -10,18 +10,18 @@ import {
 
 // nav data
 export const navData = [
-  { name: 'Home', path: '/', icon: <HiHome /> },
-  { name: 'Vivasoft', path: '/about', icon: <HiUser /> },
-  { name: 'Servizi', path: '/services', icon: <HiRectangleGroup /> },
-  { name: 'Academy', path: '/work', icon: <HiViewColumns /> },
+  { name: 'Home', path: '/it-IT/', icon: <HiHome /> },
+  { name: 'Vivasoft', path: '/it-IT/about', icon: <HiUser /> },
+  { name: 'Servizi', path: '/it-IT/services', icon: <HiRectangleGroup /> },
+  { name: 'Academy', path: '/it-IT/work', icon: <HiViewColumns /> },
   {
     name: 'Dicono di noi ',
-    path: '/testimonials',
+    path: '/it-IT/testimonials',
     icon: <HiChatBubbleBottomCenterText />,
   },
   {
     name: 'Contatti',
-    path: '/contact',
+    path: '/it-IT/contact',
     icon: <HiEnvelope />,
   },
 ];

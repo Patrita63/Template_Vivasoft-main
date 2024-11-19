@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+// components
+import Layout from '../../../components/Layout';
+
 // icons
 import {
   FaHtml5,
@@ -86,11 +89,11 @@ export const aboutData = [
 ];
 
 // components
-import Circles from '../../components/Circles';
+import Circles from '../../../components/Circles';
 
 // framer motion
 import { motion } from 'framer-motion';
-import { fadeIn } from '../../variants';
+import { fadeIn } from '../../../variants';
 
 // counter
 import CountUp from 'react-countup';
@@ -99,6 +102,7 @@ const About = () => {
   const [index, setIndex] = useState(0);
   console.log(index);
   return (
+    <Layout>
     <div className='h-full bg-primary py-32 text-center xl:text-left bg-gradient-to-r from-primary via-black/30 to-black/10'>
       <Circles />
       <div className='container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6'>
@@ -219,6 +223,7 @@ const About = () => {
         </motion.div>
       </div>
     </div>
+    </Layout>
   );
 };
 

@@ -1,4 +1,5 @@
 // components
+import LayoutEnUs from '../../../components/LayoutEnUs';
 // import Circles from '/components/Circles';
 
 // icons
@@ -8,10 +9,10 @@ import { BsArrowRight } from 'react-icons/bs';
 import { motion } from 'framer-motion';
 
 // variants
-import { fadeIn } from '../../variants';
+import { fadeIn } from '../../../variants';
 
 // 
-import { SendMailResend } from '../api/send'
+import { SendMailResend } from '../../api/send'
 // https://resend.com/nextjs
 import { useState, useEffect } from 'react';
 // import { Resend } from 'resend';
@@ -151,6 +152,7 @@ const Contact = () => {
 
 
   return (
+    <LayoutEnUs>
     <div className='h-full bg-primary'>
       <div className='container mx-auto py-32 text-center xl:text-left flex items-center justify-center overflow-hidden h-full'>
         {/* text & form */}
@@ -163,7 +165,7 @@ const Contact = () => {
             exit='hidden'
             className='h2 text-center mb-12'
           >
-          Richiedi<span className='text-accent'> info</span>
+          Request<span className='text-accent'> info</span>
           </motion.h2>
           {/* form */}
           
@@ -177,14 +179,14 @@ const Contact = () => {
               
                 {/* input group */}
                 <div className='flex gap-x-6 w-full'>
-                  <input type='text' placeholder='nome e cognome' name='nominativo' className='input' defaultValue={fullname} onChange={(event)=>nominativoInputChangedHandler(event)}  />
+                  <input type='text' placeholder='name and surname' name='nominativo' className='input' defaultValue={fullname} onChange={(event)=>nominativoInputChangedHandler(event)}  />
                   <input type='text' placeholder='email' name='email' className='input' defaultValue={mailAddress} onChange={(event)=>mailAddressInputChangedHandler(event)} />
                 </div>
-                <input type='text' placeholder='soggetto' name='subject' className='input' defaultValue={mailSubject} onChange={(event)=>mailSubjectInputChangedHandler(event)} />
-                <textarea placeholder='messaggio' name='body' className='textarea' defaultValue={mailBody} onChange={(event)=>mailBodyInputChangedHandler(event)}></textarea>
+                <input type='text' placeholder='subject' name='subject' className='input' defaultValue={mailSubject} onChange={(event)=>mailSubjectInputChangedHandler(event)} />
+                <textarea placeholder='body' name='body' className='textarea' defaultValue={mailBody} onChange={(event)=>mailBodyInputChangedHandler(event)}></textarea>
                 <button onClick={(event)=>SendMail(event)} className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' >
                   <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
-                    Invia
+                    Send
                   </span>
                   <BsArrowRight className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute text-[22px]' />
                 </button>
@@ -195,6 +197,7 @@ const Contact = () => {
         </div>
       </div>
     </div>
+    </LayoutEnUs>
   );
 };
 

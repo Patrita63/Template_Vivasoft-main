@@ -1,14 +1,16 @@
 // components
-import ServiceSlider from '../../components/ServiceSlider';
-import Bulb from '../../components/Bulb';
-import Circles from '../../components/Circles';
+import Layout from '../../../components/Layout';
+import ServiceSlider from '../../../components/ServiceSlider';
+import Bulb from '../../../components/Bulb';
+import Circles from '../../../components/Circles';
 
 // framer motion
 import { motion } from 'framer-motion';
-import { fadeIn } from '../../variants';
+import { fadeIn } from '../../../variants';
 
 const Services = () => {
   return (
+    <Layout>
     <div className='h-full bg-primary py-36 flex items-center bg-gradient-to-r from-primary via-black/30 to-black/10'>
       <Circles />
       <div className='container mx-auto'>
@@ -50,6 +52,7 @@ const Services = () => {
       </div>
       <Bulb />
     </div>
+    </Layout>
   );
 };
 
