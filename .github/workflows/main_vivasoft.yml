@@ -59,4 +59,4 @@ jobs:
           app-name: 'vivasoft'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_794FAB3DDD4744DAA2372B018B1454EB }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
