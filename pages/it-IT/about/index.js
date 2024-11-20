@@ -21,6 +21,8 @@ import {
 } from 'react-icons/si';
 
 //  about data
+// https://stackoverflow.com/questions/76795198/getting-missing-key-prop-for-element-in-array-react-jsx-key-on-build
+// RESOLVE Error: Missing "key" prop for element in array  react/jsx-key
 export const aboutData = [
   {
     title: 'skills',
@@ -28,18 +30,18 @@ export const aboutData = [
       {
         title: 'Web Development',
         icons: [
-          <FaHtml5 />,
-          <FaCss3 />,
-          <FaJs />,
-          <FaReact />,
-          <SiNextdotjs />,
-          <SiFramer />,
-          <FaWordpress />,
+          <FaHtml5 key={1} />,
+          <FaCss3 key={2} />,
+          <FaJs key={3} />,
+          <FaReact key={4} />,
+          <SiNextdotjs key={5} />,
+          <SiFramer key={6} />,
+          <FaWordpress key={7} />
         ],
       },
       {
         title: 'UI/UX Design',
-        icons: [<FaFigma />, <SiAdobexd />, <SiAdobephotoshop />],
+        icons: [<FaFigma key={1} />, <SiAdobexd key={2} />, <SiAdobephotoshop key={3} />]
       },
     ],
   },
@@ -124,7 +126,7 @@ const About = () => {
             exit='hidden'
             className='max-w-[500px] mx-auto xl:mx-0 mb-6 xl:mb-12 px-2 xl:px-0'
           >
-             Da oltre 10 anni è una realtà consolidata nel settore IT, specializzata nell'insegnamento e nella realizzazione 
+             Da oltre 10 anni è una realtà consolidata nel settore IT, specializzata nell`&apos;`insegnamento e nella realizzazione 
              di soluzioni basate sulle piattaforme <span className='text-secondary text-bold'>Microsoft Power Apps, Power BI e Power Automate.</span>
           </motion.p>
           {/* counters */}
@@ -212,9 +214,11 @@ const About = () => {
                   <div>{item.stage}</div>
                   <div className='flex gap-x-4'>
                     {/* icons */}
-                    {item.icons?.map((icon, itemIndex) => {
-                      return <div className='text-2xl text-white'>{icon}</div>;
-                    })}
+                    {/* https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
+                    {item.icons?.map(icon => {
+                      return <div key={itemIndex} className='text-2xl text-white'>{icon}</div>;
+                    }
+                    )}
                   </div>
                 </div>
               );
