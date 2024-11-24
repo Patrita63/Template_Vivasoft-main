@@ -10,7 +10,7 @@ const Testimonials = () => {
   return (
     <Layout>
     <div className='h-full bg-primary py-32 text-center'>
-      <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden pt-60'>
+      <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden xl:pt-0 pt-80'>
         {/* title */}
         <motion.h2
           variants={fadeIn('up', 0.2)}

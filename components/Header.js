@@ -20,10 +20,13 @@ const Header = () => {
               height={40}
               alt=''
               priority={true}
+               className='-mt-4'
             />
           </Link>
-          {/* socials */}
-          <Socials />
+          <div class="">
+            <a href="" onclick="">IT</a> | 
+            <a href="" onclick=""> EN</a>
+          </div>
         </div>
       </div>
     </header>

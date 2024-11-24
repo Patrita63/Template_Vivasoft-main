@@ -55,7 +55,10 @@ const Work = () => {
             exit='hidden'
             className='w-full xl:max-w-[65%]'
           >
-            <WorkSlider />
+            <div className='hidden lg:block'>
+               <WorkSlider />
+            </div>
+           
           </motion.div>
         </div>
       </div>

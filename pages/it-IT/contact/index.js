@@ -154,9 +154,9 @@ const Contact = () => {
   return (
     <Layout>
     <div className='h-full bg-primary'>
-      <div className='container mx-auto py-32 text-center xl:text-left flex items-center justify-center overflow-hidden h-full'>
+      <div className='container mx-auto  text-center xl:text-left flex items-center justify-center overflow-hidden h-full xl:pt-0 pt-60'>
         {/* text & form */}
-        <div className='flex flex-col w-full max-w-[700px]'>
+        <div className='flex flex-col w-full max-w-[700px] '>
           {/* text */}
           <motion.h2
             variants={fadeIn('up', 0.2)}
@@ -183,7 +183,23 @@ const Contact = () => {
                   <input type='text' placeholder='email' name='email' className='input' defaultValue={mailAddress} onChange={(event)=>mailAddressInputChangedHandler(event)} />
                 </div>
                 <input type='text' placeholder='soggetto' name='subject' className='input' defaultValue={mailSubject} onChange={(event)=>mailSubjectInputChangedHandler(event)} />
-                <textarea placeholder='messaggio' name='body' className='textarea' defaultValue={mailBody} onChange={(event)=>mailBodyInputChangedHandler(event)}></textarea>
+                <textarea placeholder='messaggio' name='body' className='textarea xl:h-full h-20' defaultValue={mailBody} onChange={(event)=>mailBodyInputChangedHandler(event)}></textarea>
+                
+                <div className="flex items-center space-x-2">
+                  <input 
+                    type="checkbox" 
+                    id="gdpr-checkbox" 
+                    className="accent-accent" 
+                  
+                  />
+                  <label htmlFor="gdpr-checkbox" className="text-sm">
+                    Acconsento al trattamento dei miei dati personali in conformità con la{' '}
+                    <a href="#" className="text-accent" target="_blank">
+                      Policy Privacy
+                    </a>.
+                  </label>
+                </div>
+
                 <button onClick={(event)=>SendMail(event)} className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' >
                   <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
                     Invia
