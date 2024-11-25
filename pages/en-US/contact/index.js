@@ -184,6 +184,22 @@ const Contact = () => {
                 </div>
                 <input type='text' placeholder='subject' name='subject' className='input' defaultValue={mailSubject} onChange={(event)=>mailSubjectInputChangedHandler(event)} />
                 <textarea placeholder='body' name='body' className='textarea' defaultValue={mailBody} onChange={(event)=>mailBodyInputChangedHandler(event)}></textarea>
+                
+                <div className="flex items-center space-x-2">
+                  <input 
+                    type="checkbox" 
+                    id="gdpr-checkbox" 
+                    className="accent-accent" 
+                  
+                  />
+                  <label htmlFor="gdpr-checkbox" className="text-sm">
+                    I consent to the processing of my personal data in accordance with the{' '}
+                    <a href="#" className="text-accent" target="_blank">
+                      Policy Privacy
+                    </a>.
+                  </label>
+                </div>
+
                 <button onClick={(event)=>SendMail(event)} className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' >
                   <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
                     Send

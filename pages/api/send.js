@@ -1,4 +1,11 @@
-"use server";
+// "use server";
+
+/* ./pages/api/send.js
+Error:
+  To use Server Actions, please enable the feature flag in your Next.js config. 
+  Read more: 
+  https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations#convention
+*/
 
 import { Resend } from 'resend';
 

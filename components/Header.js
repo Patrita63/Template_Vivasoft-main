@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 // components
-import Socials from '../components/Socials';
+// import Socials from '../components/Socials';
 
 const Header = () => {
   return (
@@ -16,16 +16,16 @@ const Header = () => {
           <Link href={'/'}>
             <Image
               src={'/Log_V.svg'}
-              width={150}
+              width={200}
               height={40}
-              alt=''
+              alt='Vivasoft S.R.L.'
               priority={true}
                className='-mt-4'
             />
           </Link>
-          <div class="">
-            <a href="" onclick="">IT</a> | 
-            <a href="" onclick=""> EN</a>
+          <div className="">
+            <a href="\it-IT\" >IT</a> | 
+            <a href="\en-US\" > EN</a>
           </div>
         </div>
       </div>

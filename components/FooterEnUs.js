@@ -8,7 +8,7 @@ import Link from "next/link";
 import Socials from "../components/Socials";
 import Credits from "./Credits";
 
-const Footer = () => {
+const FooterEnUs = () => {
   return (
     <footer className="bg-primary/80 text-white py-2 translate-z-0">
     <div className="container mx-auto text-center">
@@ -24,20 +24,18 @@ const Footer = () => {
         {/* Dati azienda al centro */}
         <div className="text-center  mb-4 md:mb-0">
           <div className="text-sm">
-            <span className="text-accent">VivaSoft S.R.L.</span> P.I. 12888541005
+            <span className="text-accent">VivaSoft S.R.L.</span> P.I. IT 12888541005
             <address>Via Copenaghen, 10 - 00144 Roma (RM)</address> 
-            © {new Date().getFullYear()} Tutti i diritti riservati. 
+            © {new Date().getFullYear()} All rights reserved. 
           </div>
         </div>
   
        {/* Contatti a destra */}
         <div className="text-center">
           <div className="text-sm">
-            <span className="text-accent">Info utili</span>
+            <span className="text-accent">Contact us</span>
             <p className="text-sm text-white hover:text-accent transition-all duration-300"><a href="tel:+393482350751">+39 348 235 0751</a></p> 
             <p className="text-sm text-white hover:text-accent transition-all duration-300"><a href="mailto:info@vivasoft.it">info@vivasoft.it</a></p> 
-          
-           
           </div>
         </div>
       </div>
@@ -51,4 +49,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default FooterEnUs;
