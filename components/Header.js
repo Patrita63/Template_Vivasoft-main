@@ -35,11 +35,12 @@ debugger;
             />
           </Link>
           <div className="">
-          {isITA == 'true' ? (
+          {(isITA == 'true') &&
             <a href="\en-US\"><img alt="EN" src="/GB.svg" width={60} /></a>
-          ) : (
+          }
+          {(isITA == 'false') &&
             <a href="\it-IT\"><img alt="IT" src="/IT.svg" width={60} /></a>
-          )}
+          }
           </div>
         </div>
       </div>
