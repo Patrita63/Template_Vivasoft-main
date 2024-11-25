@@ -7,7 +7,7 @@ const Home = () => {
 
   useEffect(() => {
     // Redirect to home page it-IT
-    router.push("/it-IT/");
+    router.push("/it-IT");
   })
 
   return (
