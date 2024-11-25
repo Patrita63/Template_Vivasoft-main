@@ -1,11 +1,9 @@
 // next image
-import Image from 'next/image';
 import Head from 'next/head'; // Importa il componente Head di Next.js
 
 // components
 import Layout from '../../components/Layout';
 import ParticlesContainer from '../../components/ParticlesContainer';
-import ProjectsBtn from '../../components/ProjectsBtn';
 
 // framer motion
 import { motion } from 'framer-motion';
@@ -13,7 +11,14 @@ import { motion } from 'framer-motion';
 // variants
 import { fadeIn } from '../../variants';
 
+import { useEffect } from 'react';
+
 const Home = () => {
+  useEffect(() => {
+    window.localStorage.setItem("isLanguageIta", 'true');
+  }, [])
+  
+
   return (
     <Layout>
       <Head>

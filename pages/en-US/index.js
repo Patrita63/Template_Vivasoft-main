@@ -13,7 +13,13 @@ import { motion } from 'framer-motion';
 // variants
 import { fadeIn } from '../../variants';
 
+import { useEffect } from 'react';
+
 const Home = () => {
+  useEffect(() => {
+    window.localStorage.setItem("isLanguageIta", 'false');
+  }, [])
+
   return (
     <LayoutEnUs>
       <Head>

@@ -7,7 +7,18 @@ import Link from 'next/link';
 // components
 // import Socials from '../components/Socials';
 
+import { useEffect, useState } from 'react';
+
 const Header = () => {
+
+  let [isITA, setIsITA] = useState('');
+  useEffect(() => {
+    const isLanguageIta = window.localStorage.getItem("isLanguageIta");
+    console.log('isLanguageIta: ' + isLanguageIta);
+    setIsITA(isLanguageIta);
+  }, [])
+  
+debugger;
   return (
     <header className='absolute z-30 w-full flex items-center px-16 xl:px-0 xl:h-[90px] pt-20'>
       <div className='container mx-auto'>
@@ -24,8 +35,11 @@ const Header = () => {
             />
           </Link>
           <div className="">
-            <a href="\it-IT\" >IT</a> | 
-            <a href="\en-US\" > EN</a>
+          {isITA == 'true' ? (
+            <a href="\en-US\"><img alt="EN" src="/GB.svg" width={60} /></a>
+          ) : (
+            <a href="\it-IT\"><img alt="IT" src="/IT.svg" width={60} /></a>
+          )}
           </div>
         </div>
       </div>
