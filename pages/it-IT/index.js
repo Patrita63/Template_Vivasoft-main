@@ -30,7 +30,7 @@ const Home = () => {
         <meta name="keywords" content="App Power Apps , Power BI e Power Automate, consulenza, formazione, Microsoft" />
         <meta name="author" content="Vivasoft" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link href="/favicon.ico?v=1" rel="shortcut icon" type="image/x-icon"></link>
       </Head>
       <div className='bg-primary/60 h-full'>
         {/* text */}
