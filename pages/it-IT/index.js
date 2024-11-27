@@ -22,12 +22,12 @@ const Home = () => {
   return (
     <Layout>
       <Head>
-        <title>VivaSoft Consulenza e Formazione</title>
+        <title>Vivasoft Consulenza e Formazione</title>
         <meta
           name="description"
           content="Siamo un'azienda specializzata in consulenza e formazione con tecnologia Microsoft. Offriamo soluzioni innovative e siamo operativi dal 2014, pronti ad affrontare nuove sfide."
         />
-        <meta name="keywords" content="App Power Apps , Power BI e Power Automate, consulenza, formazione, Microsoft" />
+        <meta name="keywords" content="Microsoft Azure, Microsoft 365, Microsoft Power Platform, Microsoft Power Apps, Microsoft Power BI, Microsoft Power Automate, Consulenza, Formazione, Microsoft" />
         <meta name="author" content="Vivasoft" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="/favicon.ico?v=1" rel="shortcut icon" type="image/x-icon"></link>

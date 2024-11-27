@@ -83,7 +83,7 @@ const Contact = () => {
     // alert('SendMail');
     event.preventDefault();
     console.log(event.target);
-    debugger;
+    // debugger;
     const dataMailFullName = fullname; // event.target.form[0].value; // event.target.nominativo.value;
     // alert('Nominativo = ' + dataMailFullName);
     const dataMailAddress = mailAddress; //event.target.form[1].value; //event.target.email.value;

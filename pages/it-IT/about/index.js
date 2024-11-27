@@ -4,90 +4,207 @@ import React, { useState } from 'react';
 import Layout from '../../../components/Layout';
 
 // icons
+import { 
+  VscAzure,
+  VscAzureDevops
+
+} from "react-icons/vsc";
+
+import { PiMicrosoftExcelLogo } from "react-icons/pi";
+import { TbBrandCSharp } from "react-icons/tb";
+
 import {
   FaHtml5,
   FaCss3,
   FaJs,
   FaReact,
-  FaWordpress,
-  FaFigma,
+  FaPython,
+  FaAngular
 } from 'react-icons/fa';
+
 
 import {
   SiNextdotjs,
-  SiFramer,
-  SiAdobexd,
-  SiAdobephotoshop,
+  SiAzurefunctions,
+  SiMicrosoftsharepoint,
+  SiMicrosoftonedrive,
+  SiMicrosoftsqlserver,
+  SiDotnet
 } from 'react-icons/si';
 
+const CurYear = new Date().getFullYear().toString();
+const NextYear = new Date().getFullYear() + 1;
+console.log('CurYear: ' + CurYear);
 //  about data
 // https://stackoverflow.com/questions/76795198/getting-missing-key-prop-for-element-in-array-react-jsx-key-on-build
 // RESOLVE Error: Missing "key" prop for element in array  react/jsx-key
+// https://react-icons.github.io/react-icons/
+// https://bobbyhadz.com/blog/react-encountered-two-children-with-the-same-key
 export const aboutData = [
   {
-    title: 'skills',
+    title: 'Competenze',
     info: [
+      {
+        title: 'Tecnologie',
+        icons: [<VscAzure  key={1} />, <VscAzureDevops  key={2} />, <SiAzurefunctions key={3} />, 
+        <SiMicrosoftsharepoint key={4} />, <SiMicrosoftonedrive key={5} />, <SiMicrosoftsqlserver key={6} />,
+        <PiMicrosoftExcelLogo key={7} />, <SiDotnet key={8} />]
+      },
       {
         title: 'Web Development',
         icons: [
-          <FaHtml5 key={1} />,
-          <FaCss3 key={2} />,
-          <FaJs key={3} />,
-          <FaReact key={4} />,
-          <SiNextdotjs key={5} />,
-          <SiFramer key={6} />,
-          <FaWordpress key={7} />
-        ],
+          <FaHtml5 key={9} />,
+          <FaCss3 key={10} />,
+          <FaJs key={11} />,
+          <FaReact key={12} />,
+          <SiNextdotjs key={13} />
+        ]
       },
       {
-        title: 'UI/UX Design',
-        icons: [<FaFigma key={1} />, <SiAdobexd key={2} />, <SiAdobephotoshop key={3} />]
-      },
-    ],
-  },
-  {
-    title: 'awards',
-    info: [
-      {
-        title: 'Webby Awards - Honoree',
-        stage: '2011 - 2012',
-      },
-      {
-        title: 'Adobe Design Achievement Awards - Finalist',
-        stage: '2009 - 2010',
+        title: 'Linguaggi',
+        icons: [
+          <TbBrandCSharp key={14}  />,
+          <FaReact key={15} />,
+          <FaPython key={16} />,
+          <FaAngular key={17} />
+        ]
       },
     ],
   },
   {
-    title: 'experience',
+    title: 'Certificazioni',
     info: [
       {
-        title: 'UX/UI Designer - XYZ Company',
-        stage: '2012 - 2023',
+        title: 'Microsoft Certified Trainer',
+        stage: `Dal 27 Mar 2017 al ${CurYear}`,
       },
       {
-        title: 'Web Developer - ABC Agency',
-        stage: '2010 - 2012',
+        title: 'Microsoft Certified: DevOps Engineer Expert',
+        stage: `Dal 22 Nov 2024 al 23 Nov ${NextYear}`,
       },
       {
-        title: 'Intern - DEF Corporation',
-        stage: '2008 - 2010',
-      },
-    ],
-  },
-  {
-    title: 'credentials',
-    info: [
-      {
-        title: 'Web Development - ABC University, LA, CA',
-        stage: '2011',
+        title: 'Microsoft Certified: Azure Administrator Associate',
+        stage: `Dal 22 Nov 2024 al 23 Nov ${NextYear}`,
       },
       {
-        title: 'Computer Science Diploma - AV Technical Institute',
-        stage: '2009',
+        title: 'MCSA: Web Applications',
+        stage: `Dal 24 Mar 2017 al ${CurYear}`,
+      },
+      {
+        title: 'Microsoft Certified Solutions Developer: SharePoint Applications',
+        stage: `Dal 24 Mar 2017 al ${CurYear}`,
+      },
+      {
+        title: 'MCSD: App Builder',
+        stage: `Dal 24 Mar 2017 al ${CurYear}`,
+      },
+      {
+        title: 'Microsoft Specialist: Programming in HTML5 with JavaScript and CSS3',
+        stage: `Dal 16 Gen 2017 al ${CurYear}`,
+      },
+      {
+        title: 'Microsoft Certified Professional',
+        stage: `Dal 21 Ott 2014 al ${CurYear}`,
+      },
+      {
+        title: 'Microsoft® Certified Technology Specialist: SharePoint 2010, Application Development',
+        stage: `Dal 12 Sett 2013 al ${CurYear}`,
       }
     ],
   },
+  {
+    title: 'Corsi Erogati',
+    info: [
+      {
+        title: 'AZ-305: Designing Microsoft Azure Infrastructure Solutions',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/exams/az-305/',
+      },
+      {
+        title: 'AZ-204: Developing Solutions for Microsoft Azure - Azure Developer Associate',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-developer/?practice-assessment-type=certification',
+      },
+      {
+        title: 'AZ-104: Microsoft Azure Administrator Associate',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/?practice-assessment-type=certification',
+      },
+      {
+        title: 'AZ-400: Designing and Implementing Microsoft DevOps Solutions',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/exams/az-400/',
+      },
+      {
+        title: 'AZ-220: Microsoft Azure IoT Developer',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-220',
+      },
+      {
+        title: 'AZ-900: Microsoft Azure Fundamentals',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/?practice-assessment-type=certification',
+      },
+      {
+        title: 'AI-900: Microsoft Azure AI Fundamentals',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-900',
+      },
+      {
+        title: 'Azure AI Engineer Associate - AI-102',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/?practice-assessment-type=certification',
+      },
+      {
+        title: 'AI-102: Designing and Implementing a Microsoft Azure AI Solution',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102',
+      },
+      {
+        title: 'DP-100: Designing and Implementing a Data Science Solution on Azure',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-100',
+      },
+      {
+        title: 'DP-203: Data Engineering on Microsoft Azure',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-203',
+      },
+      {
+        title: 'PL-200: Microsoft Power Platform Functional Consultant',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-200',
+      },
+      {
+        title: 'PL-300: Microsoft Power BI Data Analyst Associate',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/data-analyst-associate/?practice-assessment-type=certification',
+      },
+      {
+        title: 'PL-400: Microsoft Power Platform Developer',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-400',
+      },
+      {
+        title: 'PL-500: Microsoft Power Automate RPA Developer',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-500',
+      },
+      {
+        title: 'PL-600: Microsoft Power Platform Solution Architect',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-600',
+      },
+      {
+        title: 'PL-900 Corso Power Platform Fundamentals',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-900',
+      },
+      {
+        title: 'Microsoft 365 Certified: Fundamentals',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/microsoft-365-fundamentals/?practice-assessment-type=certification',
+      },
+      {
+        title: 'Microsoft 365 Certified: Administrator Expert',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/m365-administrator-expert/',
+      },
+      {
+        title: 'MS-900: Microsoft 365 Fundamentals',
+        stage: 'https://learn.microsoft.com/en-us/credentials/certifications/microsoft-365-fundamentals/?practice-assessment-type=certification',
+      },
+      {
+        title: 'Certified Kubernetes Administrator (CKA)',
+        stage: 'https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/',
+      },
+      {
+        title: 'Certified Kubernetes Application Developer (CKAD))',
+        stage: 'https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/',
+      }
+    ],
+  }
 ];
 
 // components
@@ -99,10 +216,11 @@ import { fadeIn } from '../../../variants';
 
 // counter
 import CountUp from 'react-countup';
+import { isAbsoluteUrl } from 'next/dist/shared/lib/utils';
 
 const About = () => {
   const [index, setIndex] = useState(0);
-  console.log(index);
+  // console.log(index);
   return (
     <Layout>
     <div className='h-full bg-primary py-32 text-center xl:text-left bg-gradient-to-r from-primary via-black/30 to-black/10'>
@@ -120,7 +238,7 @@ const About = () => {
           <span className='text-accent'>Vivasoft</span>
           </motion.h2>
           <motion.p
-            variants={fadeIn('right', 0.4)}
+            variants={fadeIn('right', 0.2)}
             initial='hidden'
             animate='show'
             exit='hidden'
@@ -131,7 +249,7 @@ const About = () => {
           </motion.p>
           {/* counters */}
           <motion.div
-            variants={fadeIn('right', 0.6)}
+            variants={fadeIn('right', 0.2)}
             initial='hidden'
             animate='show'
             exit='hidden'
@@ -150,7 +268,7 @@ const About = () => {
               {/* clients */}
               <div className='relative flex-1 after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0'>
                 <div className='text-2xl xl:text-4xl font-extrabold text-secondary mb-2'>
-                  <CountUp start={0} end={250} duration={5} /> +
+                  <CountUp start={0} end={50} duration={5} /> +
                 </div>
                 <div className='text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]'>
                   Clienti
@@ -159,7 +277,7 @@ const About = () => {
               {/* projects */}
               <div className='relative flex-1 after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0'>
                 <div className='text-2xl xl:text-4xl font-extrabold text-secondary mb-2'>
-                  <CountUp start={0} end={650} duration={5} /> +
+                  <CountUp start={0} end={100} duration={5} /> +
                 </div>
                 <div className='text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]'>
                   Progetti
@@ -168,7 +286,7 @@ const About = () => {
               {/* awards */}
               <div className='relative flex-1'>
                 <div className='text-2xl xl:text-4xl font-extrabold text-secondary mb-2'>
-                  <CountUp start={0} end={4} duration={5} /> +
+                  <CountUp start={0} end={8} duration={5} /> +
                 </div>
                 <div className='text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]'>
                   Certificazioni
@@ -179,7 +297,7 @@ const About = () => {
         </div>
         {/* info */}
         <motion.div
-          variants={fadeIn('left', 0.4)}
+          variants={fadeIn('left', 0.2)}
           initial='hidden'
           animate='show'
           exit='hidden'
@@ -211,11 +329,19 @@ const About = () => {
                   {/* title */}
                   <div className='font-light mb-2 md:mb-0'>{item.title}</div>
                   <div className='hidden md:flex'>-</div>
-                  <div>{item.stage}</div>
+                  {(String(item.stage).startsWith('http') == false) &&
+                     <div>{item.stage}</div>
+                  }
+                  {(String(item.stage).startsWith('http') == true) &&
+                    <a href={item.stage} target="_blank" rel="noopener noreferrer">Info corso</a>
+                  }
+                  
                   <div className='flex gap-x-4'>
                     {/* icons */}
-                    {/* https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
-                    {item.icons?.map(icon => {
+                    {/* https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key 
+                      https://bobbyhadz.com/blog/react-encountered-two-children-with-the-same-key
+                    */}
+                    {item.icons?.map((icon, itemIndex) => {
                       return <div key={itemIndex} className='text-2xl text-white'>{icon}</div>;
                     }
                     )}

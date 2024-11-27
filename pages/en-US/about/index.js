@@ -21,6 +21,7 @@ import {
 } from 'react-icons/si';
 
 //  about data
+// https://bobbyhadz.com/blog/react-encountered-two-children-with-the-same-key
 export const aboutData = [
   {
     title: 'skills',
@@ -211,8 +212,10 @@ const About = () => {
                   <div>{item.stage}</div>
                   <div className='flex gap-x-4'>
                     {/* icons */}
-                    {/* https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key */}
-                    {item.icons?.map(icon => {
+                    {/* https://stackoverflow.com/questions/54401481/eslint-missing-key-prop-for-element-in-iterator-react-jsx-key 
+                      https://bobbyhadz.com/blog/react-encountered-two-children-with-the-same-key
+                    */}
+                    {item.icons?.map((icon, itemIndex) => {
                       return <div key={itemIndex} className='text-2xl text-white'>{icon}</div>;
                     }
                     )}

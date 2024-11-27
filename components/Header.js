@@ -36,10 +36,10 @@ debugger;
           </Link>
           <div className="">
           {(isITA == 'true') &&
-            <a href="\en-US\"><img alt="EN" src="/GB.svg" width={60} /></a>
+            <a href="\en-US\"><Image alt="EN" src="/GB.svg" width={60} height={60} /></a>
           }
           {(isITA == 'false') &&
-            <a href="\it-IT\"><img alt="IT" src="/IT.svg" width={60} /></a>
+            <a href="\it-IT\"><Image alt="IT" src="/IT.svg" width={60} height={60} /></a>
           }
           </div>
         </div>
