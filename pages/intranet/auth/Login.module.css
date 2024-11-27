@@ -1,0 +1,22 @@
+/* .Login {
+    background-color: aqua;
+} */
+
+.Login {
+    background-color: #2A5BAF;
+}
+
+.LoginCancel {
+    background-color: red;
+}
+
+.CenterDiv {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.UnderLine {
+    text-decoration: underline;
+}

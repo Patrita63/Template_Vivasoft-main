@@ -1,0 +1,18 @@
+.Register {
+    background-color: #2A5BAF;
+}
+
+.RegisterCancel {
+    background-color: red;
+}
+
+.CenterDiv {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.UnderLine {
+    text-decoration: underline;
+}

@@ -1,0 +1,18 @@
+/* .Logout {
+    background-color: aqua;
+} */
+
+.Logout {
+    background-color: #2A5BAF;
+}
+
+.LogoutCancel {
+    background-color: red;
+}
+
+.CenterDiv {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}

@@ -18,13 +18,13 @@ const Header = () => {
     setIsITA(isLanguageIta);
   }, [])
   
-debugger;
+  // debugger;
   return (
     <header className='absolute z-30 w-full flex items-center px-16 xl:px-0 xl:h-[90px] pt-20'>
       <div className='container mx-auto'>
         <div className='flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8'>
           {/* logo */}
-          <Link href={'/'}>
+          <Link href={'/intranet/home'}>
             <Image
               src={'/Log_V.svg'}
               width={200}
