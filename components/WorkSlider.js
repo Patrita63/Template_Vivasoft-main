@@ -1,115 +1,55 @@
-// work slider data
-export const workSlider = {
-  slides: [
-    {
-      images: [
-        {
-          title: 'title',
-          path: '/Agent.jpg',
-        },
-        {
-          title: 'title',
-          path: '/Mic.jpg',
-        },
-        {
-          title: 'title',
-          path: '/powerbi-microsoft.jpg',
-        },
-        {
-          title: 'title',
-          path: '/app.jpg',
-        },
-      ],
-    },
-    {
-      images: [
-        {
-          title: 'title',
-          path: '/Agent.jpg',
-        },
-        {
-          title: 'title',
-          path: '/Mic.jpg',
-        },
-        {
-          title: 'title',
-          path: '/powerbi-microsoft.jpg',
-        },
-        {
-          title: 'title',
-          path: '/app.jpg',
-        },
-      ],
-    },
-  ],
-};
+import Image from 'next/image'; // Se stai usando Next.js
 
-// import swiper react components
-import { Swiper, SwiperSlide } from 'swiper/react';
+// service data
+export const serviceData = [
+  {
+    image: '/Agent.jpg',
+  },
+  {
+    image: '/Power-Automate.jpg',
+  },
+  {
+    image: '/power-BI.jpg',
+  },
+  {
+    image: '/pplatform.jpg',
+  },
+  {
+    image: '/platform.jpg',
+  },
+  {
+    image: '/powerbi-microsoft.jpg',
+  },
+];
 
-// import swiper styles
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-
-// import required modules
-import { Pagination } from 'swiper';
-
-// icons
-import { BsArrowRight } from 'react-icons/bs';
-// next image
-import Image from 'next/image';
-
-const WorkSlider = () => {
+const ServiceCards = () => {
   return (
-    <Swiper
-      spaceBetween={10}
-      pagination={{
-        clickable: true,
-      }}
-      modules={[Pagination]}
-      className='h-[280px] sm:h-[480px]'
-    >
-      {workSlider.slides.map((slide, index) => {
-        return (
-          <SwiperSlide key={index}>
-            <div className='grid grid-cols-2 grid-rows-2 gap-4 cursor-pointer'>
-              {slide.images.map((image, index) => {
-                return (
-                  <div
-                    className='relative rounded-lg overflow-hidden flex items-center justify-center group'
-                    key={index}
-                  >
-                    <div className='flex items-center justify-center relative overflow-hidden group'>
-                      {/* image */}
-                      <Image src={image.path} width={500} height={300} alt='' />
-                      {/* overlay gradient */}
-                      <div className='absolute inset-0 bg-gradient-to-l from-transparent via-[#e838cc] to-[#4a22bd] opacity-0 group-hover:opacity-80 transition-all duration-700'></div>
-                      {/* title */}
-                      <div className='absolute bottom-0 translate-y-full group-hover:-translate-y-10 group-hover:xl:-translate-y-20 transition-all duration-300'>
-                        <div className='flex items-center gap-x-2 text-[13px] tracking-[0.2em]'>
-                          {/* title part 1 */}
-                          <div className='delay-100'>Accedi al</div>
-                          {/* title part 2 */}
-                          <div className='translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-150'>
-                            Materiale
-                          </div>
-                          {/* icon */}
-                          <div className='text-xl translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-200'>
-                            <BsArrowRight />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {serviceData.map((item, index) => (
+        <div
+          key={index}
+          className="bg-[rgba(65,47,123,0.15)] h-max rounded-lg px-6 py-8 flex flex-col gap-2 group cursor-pointer hover:bg-[rgba(89,65,169,0.15)] transition-all duration-300"
+        >
+          {/* Contenitore dell'immagine con il testo di hover */}
+          <div className="relative w-full h-48">
+            <Image
+              src={item.image}  
+              alt={`Immagine servizio ${index + 1}`}   // Descrizione per l'accessibilità
+              layout="fill"      
+              objectFit="cover"   
+              className="rounded-lg"
+            />
+            {/* Overlay e testo al passaggio del mouse */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 text-white text-xl font-bold transition-opacity duration-300">
+              Scarica Brochure
             </div>
-          </SwiperSlide>
-        );
-      })}
-    </Swiper>
+          </div>
+
+          
+        </div>
+      ))}
+    </div>
   );
 };
 
-export default WorkSlider;
+export default ServiceCards;

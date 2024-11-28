@@ -1,12 +1,3 @@
-// import swiper react components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// import swiper styles
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-
-// icons
 import {
   RxCrop,
   RxDesktop,
@@ -16,82 +7,78 @@ import {
   RxArrowTopRight,
 } from 'react-icons/rx';
 
-// import required modules
-import { FreeMode, Pagination } from 'swiper';
-
 // service data
 export const serviceData = [
   {
-    icon: <RxCrop />,
-    title: 'Processi Aziendali',
-    description: 'Creare dashboard per il monitoraggio in tempo reale delle performance aziendali',
+
+    title: 'Azure',
+    description: 'Soluzioni scalabili e sicure su Microsoft Azure, per supportare le tue esigenze di computing, storage e networking.',
   },
   {
-    icon: <RxPencil2 />,
+    
+    title: 'Microsoft 365',
+    description: 'Suite integrata di strumenti, come Word, Excel, Teams e Outlook per migliorare la gestione dei documenti.',
+  },
+  {
+    
+    title: 'Data Analysis',
+    description: 'Analizziamo e interpretiamo i tuoi dati per identificare tendenze e opportunità, migliorando i processi aziendali.',
+  },
+  {
+    
     title: 'Power Apps',
-    description: 'Una soluzione mobile-friendly per la gestione di una piattaforma di raccolta dati sul campo.',
+    description: 'Semplifica i tuoi processi aziendali con la piattaforma low-code che ti consente di creare applicazioni personalizzate',
   },
   {
-    icon: <RxDesktop />,
+    
     title: 'Power BI',
-    description: 'Dashboard per analizzare vendite, KPI finanziari o dati operativi in tempo reale',
+    description: 'Strumento potente di business intelligence che trasforma i dati complessi in report visivi e interattivi,con dashboard personalizzate',
   },
   {
-    icon: <RxReader />,
+   
     title: 'Power Automate',
-    description: 'Automatizzare l’invio di notifiche, l’archiviazione di documenti o il recupero di dati da diverse piattaforme.',
+    description: 'Creiamo flussi di lavoro che collegano le tue applicazioni e servizi, riducendo il tempo speso su attività ripetitive',
   },
   {
-    icon: <RxRocket />,
-    title: 'Workshop Personalizzati',
-    description: 'Programmi formativi ad hoc per sviluppatori, analisti o manager.',
+   
+    title: 'Sharepoint Online',
+    description: 'Ti aiutiamo a creare e gestire siti intranet sicuri, condividere informazioni in tempo reale e migliorare la produttività del team',
   },
+  {
+   
+    title: 'Sharepoint On-Premises',
+    description: 'Per chi preferisce mantenere il controllo totale sulla propria infrastruttura IT.',
+  },
+  {
+    
+    title: 'Processi Aziendali',
+    description: 'Aiutiamo la tua azienda a migliorare e a ridurre i costi con soluzioni su misura, ottimizzando i flussi aziendali',
+  },
+ 
 ];
 
-const ServiceSlider = () => {
+const ServiceCards = () => {
   return (
-    <Swiper
-      breakpoints={{
-        320: {
-          slidesPerView: 1,
-          spaceBetween: 15,
-        },
-
-        640: {
-          slidesPerView: 3,
-          spaceBetween: 15,
-        },
-      }}
-      freeMode={true}
-      pagination={{
-        clickable: true,
-      }}
-      modules={[FreeMode, Pagination]}
-      className='h-[240px] sm:h-[340px]'
-    >
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {serviceData.map((item, index) => {
         return (
-          <SwiperSlide key={index}>
-            <div className='bg-[rgba(65,47,123,0.15)] h-max rounded-lg px-6 py-8 flex sm:flex-col gap-x-6 sm:gap-x-0 group cursor-pointer hover:bg-[rgba(89,65,169,0.15)] transition-all duration-300 pt-10'>
-              {/* icon */}
-              <div className='text-4xl text-accent mb-4'>{item.icon}</div>
-              {/* title & desc */}
-              <div className='mb-8'>
-                <div className='mb-2 text-lg'>{item.title}</div>
-                <p className='max-w-[350px] leading-normal'>
-                  {item.description}
-                </p>
-              </div>
-              {/* arrow */}
-              <div className='text-3xl'>
-                <RxArrowTopRight className='group-hover:rotate-45 group-hover:text-accent transition-all duration-300' />
-              </div>
+          <div key={index} className="bg-[rgba(65,47,123,0.15)] h-max rounded-lg px-6 py-8 flex flex-col gap-6 group cursor-pointer hover:bg-[rgba(89,65,169,0.15)] transition-all duration-300">
+            {/* Icon */}
+            {/* <div className="text-4xl text-accent mb-4">{item.icon}</div> */}
+            {/* Title & Description */}
+            <div>
+              <div className="text-accent text-lg font-semibold mb-2">{item.title}</div>
+              <p className="max-w-[350px] leading-normal text-sm">{item.description}</p>
             </div>
-          </SwiperSlide>
+            {/* Arrow */}
+            {/* <div className="text-3xl mt-4">
+              <RxArrowTopRight className="group-hover:rotate-45 group-hover:text-accent transition-all duration-300" />
+            </div> */}
+          </div>
         );
       })}
-    </Swiper>
+    </div>
   );
 };
 
-export default ServiceSlider;
+export default ServiceCards;

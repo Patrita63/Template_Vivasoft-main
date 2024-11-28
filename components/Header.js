@@ -16,7 +16,7 @@ const Header = () => {
     const isLanguageIta = window.localStorage.getItem("isLanguageIta");
     console.log('isLanguageIta: ' + isLanguageIta);
     setIsITA(isLanguageIta);
-  }, [])
+  }, []);
   
   // debugger;
   return (
@@ -26,20 +26,20 @@ const Header = () => {
           {/* logo */}
           <Link href={'/intranet/home'}>
             <Image
-              src={'/Log_V.svg'}
-              width={200}
-              height={40}
+              src={'/Logo_Vivasoft.png'}
+              width={150}
+              height={20}
               alt='Vivasoft S.R.L.'
               priority={true}
-               className='-mt-4'
+              className='-mt-4 md:w-[100] md:h-[20]'
             />
           </Link>
           <div className="">
           {(isITA == 'true') &&
-            <a href="\en-US\"><Image alt="EN" src="/GB.svg" width={60} height={60} /></a>
+            <a href="\en-US\"><Image alt="EN" src="/GB.svg" width={35} height={35} /></a>
           }
           {(isITA == 'false') &&
-            <a href="\it-IT\"><Image alt="IT" src="/IT.svg" width={60} height={60} /></a>
+            <a href="\it-IT\"><Image alt="IT" src="/IT.svg" width={35} height={35} /></a>
           }
           </div>
         </div>

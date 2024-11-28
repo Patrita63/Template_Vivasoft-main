@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './ConfirmedMail.module.css';
 
-import { RegisterData } from '../../Models/registerdata';
 
 import {
     Avatar,
@@ -10,9 +9,7 @@ import {
     Button,
     Container,
     CssBaseline,
-    Grid,
-    TextField,
-    Typography,
+    Typography
 } from "@mui/material";
 
 import { LockOutlined } from "@mui/icons-material";

@@ -1,6 +1,7 @@
 // components
 import Layout from '../../../components/Layout';
 // import Circles from '/components/Circles';
+import Head from 'next/head'; // Importa il componente Head di Next.js
 
 // icons
 import { BsArrowRight } from 'react-icons/bs';
@@ -153,8 +154,18 @@ const Contact = () => {
 
   return (
     <Layout>
-    <div className='h-full bg-primary'>
-      <div className='container mx-auto  text-center xl:text-left flex items-center justify-center overflow-hidden h-full xl:pt-0 pt-60'>
+      <Head>
+        <title>Vivasoft - Contattaci per soluzioni IT e Microsoft</title>
+        <meta name="description" content="Hai domande? Contatta Vivasoft per ricevere consulenze su soluzioni IT, Power Apps, Power BI, Power Automate, e molto altro. Siamo qui per aiutarti." />
+        <meta name="keywords" content="contatti Vivasoft, supporto IT, consulenza IT, soluzioni Microsoft, Power Apps, Power BI, Power Automate, assistenza clienti" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content="Vivasoft - Contattaci per soluzioni IT e Microsoft" />
+        <meta property="og:description" content="Contattaci oggi per ricevere supporto sui nostri servizi IT, consulenze su Power Apps, Power BI, Power Automate e altre soluzioni Microsoft." />
+        <meta property="og:image" content="/images/vivasoft-logo.jpg" />
+        <meta property="og:url" content="https://www.vivasoft.it/contact" />
+      </Head>
+    <div className='h-full bg-primary py-40'>
+      <div className='container mx-auto  text-center xl:text-left flex items-center justify-center overflow-hidden h-full'>
         {/* text & form */}
         <div className='flex flex-col w-full max-w-[700px] '>
           {/* text */}
@@ -163,7 +174,7 @@ const Contact = () => {
             initial='hidden'
             animate='show'
             exit='hidden'
-            className='h2 text-center mb-12'
+            className='h2 text-center mb-10'
           >
           Richiedi<span className='text-accent'> info</span>
           </motion.h2>
@@ -206,12 +217,25 @@ const Contact = () => {
                   </span>
                   <BsArrowRight className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute text-[22px]' />
                 </button>
-            
-              
             </motion.form>
-         
         </div>
       </div>
+      {/* Mappa di Google */}
+      <div className="container mx-auto mt-20">
+          <h3 className="text-center text-2xl">Dove trovarci</h3>
+          <div className="relative w-full">
+            <frame
+              src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Via+Copenaghen+10,Roma"
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              style={{ border: 0 }}
+              allowFullScreen
+              aria-hidden="false"
+              tabIndex="0"
+            ></frame>
+          </div>
+        </div>
     </div>
     </Layout>
   );

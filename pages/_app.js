@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 
 // components
-import Transition from '../components/Transition';
+
 
 // router
 import { useRouter } from 'next/router';
@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
     
       <AnimatePresence mode='wait'>
         <motion.div key={router.route} className='h-full'>
-          <Transition />
+          
           <Component {...pageProps} />
         </motion.div>
       </AnimatePresence>

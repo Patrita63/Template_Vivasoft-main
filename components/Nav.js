@@ -1,4 +1,3 @@
-// icons
 import {
   HiHome,
   HiUser,
@@ -36,33 +35,43 @@ const Nav = () => {
   const router = useRouter();
   const pathname = router.pathname;
   return (
-    <nav className='flex flex-col items-center xl:justify-center gap-y-4 fixed h-max top-0 mt-auto xl:right-[93%] z-50 top-0 w-full xl:w-16 xl:max-w-md xl:h-screen'>
+    <nav className='flex flex-col items-center xl:justify-center gap-y-2 fixed h-max top-0 mt-auto xl:right-[93%] z-50 top-0 w-full xl:w-16 xl:max-w-md xl:h-screen'>
       {/* inner */}
       <div
-        className='flex w-full xl:flex-col items-center justify-between xl:justify-center gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10
-      backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full'
+        className='flex w-full xl:flex-col items-center justify-between xl:justify-center gap-y-2 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10
+        backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full'
       >
         {navData.map((link, index) => {
+          const isActive = link.path === pathname; // Verifica se il link è attivo
           return (
             <Link
               className={`${
-                link.path === pathname && 'text-accent'
-              } relative flex items-center group hover:text-accent transition-all duration-300`}
+                isActive
+                  // ? 'border-b-2 border-accent'  // Linea gialla sotto quando il link è attivo
+                  // : 'border-b-2 border-transparent'  // Linea trasparente quando il link non è attivo
+              } relative flex items-center group hover:text-accent transition-all duration-300 py-2 px-4 rounded-xl xl:rounded-none w-full xl:w-auto`}
               href={link.path}
               key={index}
             >
-              {/* tooltip */}
-              <div className='absolute pr-14 right-0 hidden xl:group-hover:flex'>
-                <div className='bg-white relative flex text-primary items-center p-[6px] rounded-[3px]'>
-                  <div className='text-[12px] leading-none font-semibold capitalize'>
-                    {link.name}
-                  </div>
-                  {/* triangle */}
-                  <div className='border-solid border-l-white border-l-8 border-y-transparent border-y-[6px] border-r-0 absolute -right-2'></div>
+              {/* Icona e nome della pagina sotto l'icona */}
+              <div className="flex flex-col items-center">
+                {/* Icona con colore giallo quando il link è attivo */}
+                <div
+                  className={`${
+                    isActive ? 'text-accent' : 'text-white'
+                  } transition-all duration-300`} // Aggiungi il cambio colore dell'icona
+                >
+                  {link.icon}
                 </div>
+                {/* Nome della pagina sotto l'icona con colore giallo quando attivo */}
+                <span
+                  className={`mt-2 ${
+                    isActive ? 'text-accent' : 'text-white'
+                  } xl:block hidden text-[11px] transition-all duration-300`}
+                >
+                  {link.name}
+                </span>
               </div>
-              {/* icon */}
-              <div>{link.icon}</div>
             </Link>
           );
         })}

@@ -1,5 +1,5 @@
 // fonts
-import { Sora } from "next/font/google";
+import { Sora } from 'next/font/google';
 
 // font settings
 const sora = Sora({
@@ -17,12 +17,12 @@ import Footer from '../components/Footer';
 const Layout = ({ children }) => {
   return (
     <div
-      className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative min-h-screen flex flex-col`}
+      className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative min-h-screen flex flex-col flex-grow overflow-y-auto`}
     >
      
       <Nav />
       <Header />
-      <main className="flex-grow overflow-y-auto">{children}</main>
+      <main className="">{children}</main>
       <Footer/>
     </div>
   );
