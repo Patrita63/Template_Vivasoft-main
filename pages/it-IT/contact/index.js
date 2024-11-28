@@ -205,7 +205,7 @@ const Contact = () => {
                   />
                   <label htmlFor="gdpr-checkbox" className="text-sm">
                     Acconsento al trattamento dei miei dati personali in conformità con la{' '}
-                    <a href="#" className="text-accent" target="_blank">
+                    <a href="/privacy-policy" className="text-accent" target="_blank">
                       Policy Privacy
                     </a>.
                   </label>
@@ -217,25 +217,23 @@ const Contact = () => {
                   </span>
                   <BsArrowRight className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute text-[22px]' />
                 </button>
+
+                {/* Mappa di Google */}
+                <h3 className="text-center text-2xl">Dove trovarci</h3>
+                <div className="relative w-full">
+                  <iframe
+                    width="100%"
+                    height="400"
+                    style={{ border: 0 }}
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBSVFfjhxqyHKGTAxKBfEX624qK_hkT_pc&q=Ing. Tardiolo Bonifazi Patrizio, Via+Copenaghen+10,Roma"
+                    allowFullScreen
+                    aria-hidden="false"
+                    tabIndex="0"
+                  ></iframe>
+                </div>
             </motion.form>
         </div>
       </div>
-      {/* Mappa di Google */}
-      <div className="container mx-auto mt-20">
-          <h3 className="text-center text-2xl">Dove trovarci</h3>
-          <div className="relative w-full">
-            <frame
-              src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=Via+Copenaghen+10,Roma"
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              style={{ border: 0 }}
-              allowFullScreen
-              aria-hidden="false"
-              tabIndex="0"
-            ></frame>
-          </div>
-        </div>
     </div>
     </Layout>
   );
