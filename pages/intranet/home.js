@@ -76,7 +76,7 @@ const Home = () => {
                             {/* logo */}
                             <Link href={'/'}>
                             <Image 
-                                src={'/Logo_Vivasoft.png'}
+                                src={'/Logo_VivaSoft.png'}
                                 width={85}
                                 height={20}
                                 alt="Logo Vivasoft S.R.L."
