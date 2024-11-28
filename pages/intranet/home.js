@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './Home.module.css';
 
+import Image from 'next/image';
+import Link from 'next/link';
+
 import {
     AppBar,
     Box,
@@ -65,14 +68,27 @@ const Home = () => {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        sx={{ mr: 4 }}
                         >
                         </IconButton>
-                        <Button color="inherit" className={styles.MarginLeftAuto} onClick={handleHome}>Home</Button>
+                        {/* Logo azienda */}
+                        <div className="flex justify-center items-center">
+                            {/* logo */}
+                            <Link href={'/'}>
+                            <Image 
+                                src={'/Logo_Vivasoft.png'}
+                                width={85}
+                                height={20}
+                                alt="Logo Vivasoft S.R.L."
+                                priority={true}
+                            />
+                            </Link>
+                        </div>
+                        {/* <Button color="inherit" startIcon={svgLogoIcon} className={styles.MarginRightAuto} onClick={handleHome}>Home</Button> */}
 
-                        <Stack direction="row" spacing={2}>
+                        {/* <Stack direction="row" spacing={2}>
                             <Avatar variant="square" { ...stringAvatar('Intranet Vivasoft') } />
-                        </Stack>
+                        </Stack> */}
                         
                         {isAuthenticated && (
                             <>
@@ -94,7 +110,9 @@ const Home = () => {
 
                         {!isAuthenticated && (
                             <>
-                                <Button  color="inherit" className={styles.MarginLeftAuto} onClick={handleLogin}>Login</Button>
+                                <div >
+                                    <Button  color="inherit" onClick={handleLogin}>Login</Button>
+                                </div>
                             </>
                         )}
 
