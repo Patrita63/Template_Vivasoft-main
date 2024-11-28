@@ -26,7 +26,7 @@ const Header = () => {
           {/* logo */}
           <Link href={'/intranet/home'}>
             <Image
-              src={'/Logo_Vivasoft.png'}
+              src={'/Logo_VivaSoft.png'}
               width={150}
               height={20}
               alt='Vivasoft S.R.L.'

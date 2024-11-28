@@ -16,7 +16,7 @@ const Footer = () => {
               {/* Link all'area intranet */}
               <Link href={'/intranet/home'} className="mt-4 text-white text-sm hover:text-secondary" >
                 <Image
-                  src={'/Logo_Vivasoft.png'}
+                  src={'/Logo_VivaSoft.png'}
                   width={85}
                   height={20}
                   alt="Logo Vivasoft S.R.L."
