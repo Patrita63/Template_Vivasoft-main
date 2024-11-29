@@ -1,6 +1,11 @@
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+
 // next image
 import Head from 'next/head'; // Importa il componente Head di Next.js
 import Image from 'next/image';
+
+import styles from './Popup.module.css';
 // components
 import Layout from '../../components/Layout';
 import ParticlesContainer from '../../components/ParticlesContainer';
@@ -11,13 +16,56 @@ import { motion } from 'framer-motion';
 // variants
 import { fadeIn } from '../../variants';
 
-import { useEffect } from 'react';
+// Modal popup MUI
+// https://stackoverflow.com/questions/72506034/module-not-found-error-cant-resolve-mui-base
+// npm install @mui/base
+// import { Modal } from '@mui/base/Modal';
+
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, IconButton, Stack } from "@mui/material";
+// import FormControlContext from '@mui/material/FormControl/FormControlContext';
+// ERROR
+/* Collecting page data  .C:\Vivasoft\Template_Vivasoft\Template_Vivasoft-main\node_modules\@mui\material\FormControl\FormControlContext.js:1
+import * as React from 'react'; */
+import CloseIcon from "@mui/icons-material/Close";
 
 const Home = () => {
+
+  const [isPopupOpened, setIsPopupOpened]=useState(false);
+  const [isPopupSettingsOpened, setIsPopupSettingsOpened]=useState(false);
+  
   useEffect(() => {
     window.localStorage.setItem("isLanguageIta", 'true');
+    openPopup();
   }, [])
   
+  const openPopup = () =>{
+    setIsPopupOpened(true);
+  } 
+
+  // https://stackoverflow.com/questions/58597397/how-do-i-prevent-material-ui-dialog-from-being-dismissed-upon-clicking-the-backd
+  const handleClose = (event, reason) => {
+    if (reason && reason === "backdropClick") 
+        return;
+    closePopup();
+  }
+
+  const closePopup = () =>{
+    setIsPopupOpened(false);
+  } 
+
+  const goToImpostazioni = () =>{
+    setIsPopupSettingsOpened(true);
+  } 
+
+  const closeSettingsPopup = () =>{
+    setIsPopupSettingsOpened(false);
+  } 
+
+  const handlePopupSettingsClose = (event, reason) => {
+    if (reason && reason === "backdropClick") 
+        return;
+    closeSettingsPopup();
+  }
 
   return (
     <Layout>
@@ -36,6 +84,43 @@ const Home = () => {
         {/* text */}
         <div className='w-full h-full bg-gradient-to-r from-primary via-black/30 to-black/10 py-80'>
           <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto'>
+            {/* Modal popup MUI fullScreen in <Dialog */}
+            <Dialog open={isPopupOpened} onClose={handleClose} fullWidth maxWidth="sm">
+              <DialogTitle>Questo sito utilizza cookies <IconButton style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Sul nostro sito utilizziamo cookies tecnici ed analitici. Questi sono necessari per il corretto funzionamento del nostro sito e per fornirci informazioni su come viene utilizzato il nostro sito.
+                </DialogContentText>
+              </DialogContent>
+
+              <DialogActions>
+                <Button variant='outlined' onClick={goToImpostazioni}>Impostazioni</Button>
+                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={closePopup}>Ho capito, accetto</Button>
+                {/* <Button color="error" className={styles.PopupButtonError} variant='contained' onClick={closePopup}>Close</Button> */}
+              </DialogActions>
+              
+            </Dialog>
+
+            <Dialog open={isPopupSettingsOpened} onClose={handlePopupSettingsClose} fullWidth maxWidth="sm">
+              <DialogTitle>Impostazioni dei cookies <IconButton style={{float:'right'}} onClick={closeSettingsPopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
+              <DialogContent>
+                <Stack spacing={2} margin={2}>
+                  {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Agree terms & conditions"></FormControlLabel> */}
+                  {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Accetto termini e condizioni"></FormControlLabel> */}
+                  <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Tecnici"></FormControlLabel>
+                  <span className={styles.TextAlignJustify}>I cookie tecnici sono essenziali per il corretto funzionamento di questo sito e vengono utilizzati per motivi legati alla navigazione, al salvataggio delle preferenze e al caricamento delle immagini.</span>
+                  <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Analitici"></FormControlLabel>
+                  <span className={styles.TextAlignJustify}>I cookie analitici vengono utilizzati per analizzare e valutare le prestazioni di questo sito Web e fornire informazioni su come viene utilizzato. I dati raccolti tramite questi cookies vengono aggregati per eseguire delle analisi e sono utilizzati per miglioramenti ed ottimizzazioni.</span>
+                  <FormControlLabel control={<Checkbox></Checkbox>} label="Marketing"></FormControlLabel>
+                  <span className={styles.TextAlignJustify}>I cookie di marketing vengono utilizzati per tracciare i visitatori sui siti Web. L'intenzione è quella di mostrare annunci pertinenti e coinvolgenti per il singolo utente e quindi di maggior valore per editori ed inserzionisti terzi.</span>
+                </Stack>
+              </DialogContent>
+
+              <DialogActions>
+                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={closeSettingsPopup}>Naviga con i cookies selezionati</Button>
+              </DialogActions>
+              
+            </Dialog>
             {/* title */}
             <motion.h1
               variants={fadeIn('down', 0.2)}
