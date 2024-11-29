@@ -112,7 +112,7 @@ const Home = () => {
                   <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Analitici"></FormControlLabel>
                   <span className={styles.TextAlignJustify}>I cookie analitici vengono utilizzati per analizzare e valutare le prestazioni di questo sito Web e fornire informazioni su come viene utilizzato. I dati raccolti tramite questi cookies vengono aggregati per eseguire delle analisi e sono utilizzati per miglioramenti ed ottimizzazioni.</span>
                   <FormControlLabel control={<Checkbox></Checkbox>} label="Marketing"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>I cookie di marketing vengono utilizzati per tracciare i visitatori sui siti Web. L'intenzione è quella di mostrare annunci pertinenti e coinvolgenti per il singolo utente e quindi di maggior valore per editori ed inserzionisti terzi.</span>
+                  <span className={styles.TextAlignJustify}>I cookie di marketing vengono utilizzati per tracciare i visitatori sui siti Web. Li utilizziamo per mostrare annunci pertinenti e coinvolgenti per il singolo utente e quindi di maggior valore per editori ed inserzionisti terzi.</span>
                 </Stack>
               </DialogContent>
 
