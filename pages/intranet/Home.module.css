@@ -1,5 +1,12 @@
+.HomeToolbar {
+    background-color: #005f6a;  /* Verde Petrolio */
+}
+
 .Home {
-    background-color: blue;
+    /* background-color: #81D8D0; Tiffany */
+    background-color: #6bbbae;
+    text-align: center;
+    color: #005f6a;
 }
 
 .MarginLeftAuto {

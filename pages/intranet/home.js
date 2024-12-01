@@ -62,7 +62,7 @@ const Home = () => {
         <>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
-                    <Toolbar>
+                    <Toolbar className={styles.HomeToolbar}>
                         <IconButton
                         size="large"
                         edge="start"
@@ -119,6 +119,15 @@ const Home = () => {
                     </Toolbar>
                 </AppBar>
             </Box>
+            
+            <div className={styles.Home}>
+                <div className='container mx-auto'>
+                    <h1 class='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
+                </div>
+                {/* <div className='flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8'>
+
+                </div> */}
+            </div>
         </>
     );
 }
