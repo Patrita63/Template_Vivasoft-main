@@ -32,7 +32,7 @@ const Footer = () => {
           </div>
   
           <span className="text-accent">
-            Vivasoft S.R.L. <span className="text-white">P.I. 12888541005</span>
+            Vivasoft S.R.L. <span className="text-white">P. IVA 12888541005</span>
           </span>
   
           {/* Certificazioni */}

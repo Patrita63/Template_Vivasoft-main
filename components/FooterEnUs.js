@@ -24,7 +24,7 @@ const FooterEnUs = () => {
         {/* Dati azienda al centro */}
         <div className="text-center  mb-4 md:mb-0">
           <div className="text-sm">
-            <span className="text-accent">Vivasoft S.R.L.</span> P.I. IT 12888541005
+            <span className="text-accent">Vivasoft S.R.L.</span> P. IVA IT 12888541005
             <address>Via Copenaghen, 10 - 00144 Roma (RM)</address> 
             © {new Date().getFullYear()} All rights reserved. 
           </div>
