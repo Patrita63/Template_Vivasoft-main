@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './Home.module.css';
 
@@ -22,14 +22,21 @@ const Home = () => {
     // To navigate to another page
     const router = useRouter();
 
+    const DATABASE_NAME = 'IntranetVivasoft.sqlite';
+    const [db, setDb] = useState(null);
+    const [users, setUsers] = useState([]);
+    
+
     // https://nextjs.org/docs/messages/react-hydration-error
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [username, setUsername] = useState('');
- 
+
+    // Initialize IndexedDB-backed SQLite
     useEffect(() => {
         // https://stackoverflow.com/questions/73853069/solve-referenceerror-localstorage-is-not-defined-in-next-js
         setIsAuthenticated(global?.localStorage?.getItem("isAuthenticated"));
-        setUsername(global?.localStorage?.getItem("username"))
+        setUsername(global?.localStorage?.getItem("username"));
+
     }, []);
 
     const handleHome = () => {

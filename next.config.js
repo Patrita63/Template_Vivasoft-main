@@ -4,4 +4,14 @@ const nextConfig = {
   swcMinify: true,
 }
 
-module.exports = nextConfig
+module.exports = {
+  webpack: (config, { isServer }) => {
+      if (!isServer) {
+          config.resolve.fallback = {
+              fs: false, // Mock 'fs' module for the browser
+          };
+      }
+      return config;
+  },
+};
+
