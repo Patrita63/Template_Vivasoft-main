@@ -3,10 +3,17 @@ import { useState, useEffect } from 'react';
 import initSqlJs from 'sql.js';
 import localforage from 'localforage';
 // https://mui.com/x/react-data-grid/
-import Box from '@mui/material/Box';
+import {
+    Box,
+    Container,
+    CssBaseline
+} from '@mui/material';
 
 import { Button } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
+
+import styles from './Home.module.css';
+import { red } from '@mui/material/colors';
 
 export default function Home() {
     const [db, setDb] = useState(null);
@@ -21,19 +28,19 @@ export default function Home() {
                     locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/${file}`,
                 });
 
-                // const savedDb = await localforage.getItem('IntranetVivasoft.sqlite');
+                const savedDb = await localforage.getItem('/IntranetVivasoft.sqlite');
                 let database;
 
-                /* if (savedDb) {
+                if (savedDb) {
                     console.log('Loading database from IndexedDB');
                     database = new SQL.Database(new Uint8Array(savedDb));
-                } else { */
+                } else { 
                     console.log('Loading database from public folder');
                     const response = await fetch('/IntranetVivasoft.sqlite');
                     if (!response.ok) throw new Error('Failed to fetch database file');
                     const buffer = await response.arrayBuffer();
                     database = new SQL.Database(new Uint8Array(buffer));
-                /* } */
+                } 
 
                 setDb(database);
             } catch (err) {
@@ -52,10 +59,11 @@ export default function Home() {
                 "SELECT name FROM sqlite_master WHERE type='table' AND name='T_Utente'"
             );
             if (tableExists.length === 0) throw new Error('Table T_Utente does not exist');
-
-            const result = db.exec('SELECT * FROM T_Utente');
+            // const query = 'SELECT * FROM T_Utente';
+            const query = 'SELECT ut.[Id],ut.[Nome],ut.[Cognome],ut.[Email],ut.[DataDiNascita],ut.[IdTipoUtente],tu.TipoUtente FROM T_Utente AS ut INNER JOIN T_TipoUtente AS tu ON tu.Id = ut.IdTipoUtente';
+            const result = db.exec(query);
             const rows = result[0]?.values || [];
-            setData(rows.map(([id, nome, cognome, email,datadinascita,idtipoutente]) => ({ id, nome, cognome, email, datadinascita, idtipoutente })));
+            setData(rows.map(([id, nome, cognome, email,datadinascita,idtipoutente,tipoutente]) => ({ id, nome, cognome, email, datadinascita, idtipoutente, tipoutente })));
         } catch (err) {
             console.error('Query error:', err);
             setError(err.message);
@@ -98,22 +106,23 @@ export default function Home() {
 
     const saveDatabase = async () => {
         if (!db) return;
-        const data = db.export();
-        await localforage.setItem(DATABASE_NAME, data);
+        const data = db.export(); // Export as Uint8Array
+        await localforage.setItem('IntranetVivasoft.sqlite', data);
         console.log('Database saved to IndexedDB');
     };
+
     const columns = [
         { field: 'id', headerName: 'ID', width: 50 },
         {
           field: 'nome',
           headerName: 'Nome',
-          width: 100,
+          width: 150,
           editable: true,
         },
         {
           field: 'cognome',
           headerName: 'Cognome',
-          width: 150,
+          width: 250,
           editable: true,
         },
         {
@@ -126,16 +135,23 @@ export default function Home() {
           field: 'datadinascita',
           headerName: 'Data Di Nascita',
           sortable: true,
-          width: 110,
+          width: 150,
           // valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
         },
         {
             field: 'idtipoutente',
             headerName: 'Id Tipo Utente',
             type: 'number',
-            width: 50,
+            width: 150,
             editable: false,
-          }
+        },
+        {
+            field: 'tipoutente',
+            headerName: 'Tipo Utente',
+            sortable: true,
+            width: 150,
+            editable: true,
+        }
       ];
 
     return (
@@ -151,33 +167,44 @@ export default function Home() {
         //         ))}
         //     </ul>
         // </div>
-        <div>
-            
+        <div className={styles.Home}>
             <h1>Embedded SQLite with Next.js</h1>
-            {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-            <Button onClick={fetchUsers}>Load Users</Button>
-            {data.length > 0 && (
-                <>
-                <Box sx={{ height: 400, width: '100%' }}>
-                
-                    <DataGrid
-                        rows={data}
-                        columns={columns}
-                        initialState={{
-                        pagination: {
-                            paginationModel: {
-                            pageSize: 5,
-                            },
-                        },
-                        }}
-                        pageSizeOptions={[5]}
-                        checkboxSelection
-                        disableRowSelectionOnClick
-                    />
+            <br ></br>
+            <Button className={styles.BtnLoadUsers} variant="contained" onClick={fetchUsers}>Load Users</Button>
                     
+            <Container maxWidth="xs" >
+                <CssBaseline />
+                <Box
+                    sx={{
+                        mt: 5,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center"                
+                    }}
+                    >
+                    
+                    {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+                    {data.length > 0 && (
+                        <>
+                        <Box sx={{ height: 600, width: 1300, background: '#abca79' }}>
+                            <DataGrid
+                                rows={data}
+                                columns={columns}
+                                initialState={{
+                                pagination: {
+                                    paginationModel: {
+                                    pageSize: 5,
+                                    },
+                                },
+                                }}
+                                pageSizeOptions={[5]}
+                                // checkboxSelection
+                                disableRowSelectionOnClick
+                            />
+                        </Box>
+                    </>)}
                 </Box>
-            </>)}
-            
+            </Container>
         </div>
     );
 }
