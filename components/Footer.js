@@ -12,7 +12,8 @@ const Footer = () => {
   
           {/* Logo azienda */}
           <div className="flex flex-col justify-center items-center">
-            {/* logo */}
+              {/* Logo azienda */}
+              {/* https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height */}
               {/* Link all'area intranet */}
               <Link href={'/intranet/home'} className="mt-4 text-white text-sm hover:text-secondary" >
                 <Image
@@ -21,7 +22,7 @@ const Footer = () => {
                   height={20}
                   alt="Logo Vivasoft S.R.L."
                   priority={true}
-                  className="mt-4"
+                  style={{ width: '100%', height: 'auto' }}
                 />
              </Link>
 

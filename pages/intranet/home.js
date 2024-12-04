@@ -79,6 +79,7 @@ const Home = () => {
                         >
                         </IconButton>
                         {/* Logo azienda */}
+                        {/* https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height */}
                         <div className="flex justify-center items-center">
                             {/* logo */}
                             <Link href={'/'}>
@@ -88,6 +89,7 @@ const Home = () => {
                                 height={20}
                                 alt="Logo Vivasoft S.R.L."
                                 priority={true}
+                                style={{ width: '100%', height: 'auto' }}
                             />
                             </Link>
                         </div>
@@ -129,7 +131,7 @@ const Home = () => {
             
             <div className={styles.Home}>
                 <div className='container mx-auto'>
-                    <h1 class='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
+                    <h1 className='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
                 </div>
                 {/* <div className='flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8'>
 
