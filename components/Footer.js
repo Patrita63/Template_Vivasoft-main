@@ -12,17 +12,16 @@ const Footer = () => {
   
           {/* Logo azienda */}
           <div className="flex flex-col justify-center items-center">
-              {/* Logo azienda */}
-              {/* https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height */}
+            {/* logo */}
               {/* Link all'area intranet */}
               <Link href={'/intranet/home'} className="mt-4 text-white text-sm hover:text-secondary" >
                 <Image
-                  src={'/Logo_VivaSoft.png'}
-                  width={85}
-                  height={20}
+                  src={'/LogoClaim_F.png'}
+                  width={110}
+                  height={50}
                   alt="Logo Vivasoft S.R.L."
                   priority={true}
-                  style={{ width: '100%', height: 'auto' }}
+                  className="mt-4"
                 />
              </Link>
 
@@ -33,7 +32,7 @@ const Footer = () => {
           </div>
   
           <span className="text-accent">
-            Vivasoft S.R.L. <span className="text-white">P. IVA 12888541005</span>
+            Vivasoft S.R.L. <span className="text-white">P.IVA 12888541005</span>
           </span>
   
           {/* Certificazioni */}
@@ -99,7 +98,7 @@ const Footer = () => {
           {/* Contatti */}
           <div className="text-center">
             <div className="text-sm">
-              <span className="text-accent">Info utili</span>
+              <span className="text-accent">Contattaci</span>
               <p className="text-sm text-white hover:text-accent transition-all duration-300">
                 <a href="mailto:info@vivasoft.it">info@vivasoft.it</a>
               </p>

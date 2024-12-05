@@ -118,7 +118,7 @@ export const aboutData = [
     ],
   },
   {
-    title: "Corsi Erogati",
+    title: "Corsi",
     info: [
       {
         title: "AZ-305: Designing Microsoft Azure Infrastructure Solutions",
@@ -260,7 +260,7 @@ const About = () => {
         />
         <meta
           name="keywords"
-          content="Vivasoft, soluzioni IT, Microsoft Power Apps, Power BI, Power Automate, consulenza IT, certificazioni Microsoft"
+          content="Vivasoft, soluzioni IT, Microsoft Power Apps, Power BI, Power Automate, consulenza IT, certificazioni Microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD"
         />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Chi Siamo" />
@@ -271,7 +271,7 @@ const About = () => {
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
         <meta property="og:url" content="https://www.vivasoft.it/about" />
       </Head>
-      <div className="h-full bg-primary py-60 text-center xl:text-left bg-gradient-to-r from-primary via-black/30 to-black/10">
+      <div className="h-full bg-primary py-80 text-center xl:text-left bg-gradient-to-r from-primary via-black/30 to-black/10">
         <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6">
           {/* text */}
           <div className="flex-1 flex flex-col justify-center xl:pt-20 pt-20">
@@ -289,7 +289,7 @@ const About = () => {
               initial="hidden"
               animate="show"
               exit="hidden"
-              className="max-w-[500px] mx-auto xl:mx-0 mb-6 xl:mb-12 px-2 xl:px-0"
+              className="max-w-[600px] mx-auto xl:mx-0 mb-6 xl:mb-12 px-2 xl:px-0"
             >
               Da oltre 10 anni è una realtà consolidata nel settore IT,
               specializzata nell&apos;insegnamento e nella realizzazione di

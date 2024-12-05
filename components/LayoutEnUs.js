@@ -10,7 +10,7 @@ const sora = Sora({
 
 // components
 import NavEnUS from '../components/NavEnUs';
-import Header from '../components/Header';
+import HeaderEnUS from '../components/HeaderEnUs';
 import FooterEnUs from '../components/FooterEnUs';
 
 
@@ -21,7 +21,7 @@ const LayoutEnUs = ({ children }) => {
     >
      
       <NavEnUS />
-      <Header />
+      <HeaderEnUS />
       <main className="flex-grow overflow-y-auto">{children}</main>
       <FooterEnUs/>
     </div>

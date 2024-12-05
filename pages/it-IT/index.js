@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 // next image
 import Head from 'next/head'; // Importa il componente Head di Next.js
-import Image from 'next/image';
+// import Image from 'next/image';
 
 import styles from './Popup.module.css';
 // components
@@ -67,8 +67,6 @@ const Home = () => {
     setIsPopupOpened(false);
   } 
 
-  
-
   const goToImpostazioni = () =>{
     setIsPopupSettingsOpened(true);
   } 
@@ -110,7 +108,7 @@ const Home = () => {
               <DialogTitle>Questo sito utilizza cookies <IconButton style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  Sul nostro sito utilizziamo cookies tecnici ed analitici. Questi sono necessari per il corretto funzionamento del nostro sito e per fornirci informazioni su come viene utilizzato il nostro sito.
+                  Sul nostro sito utilizziamo cookies tecnici ed analitici. Questi sono necessari per il corretto funzionamento del nostro sito e per fornirci informazioni su come viene utilizzato.
                 </DialogContentText>
               </DialogContent>
 
@@ -169,7 +167,8 @@ const Home = () => {
           </div>
         </div>
         {/* image */}
-        <div className='w-[1200px] h-full absolute right-0 bottom-0'>
+        <div className='w-[1200px] h-full absolute -right-40 bottom-0'>
+
           {/* bg img */}
           <div className='bg-none xl:bg-explosion xl:bg-auto xl:bg-center xl:bg-no-repeat w-full h-full absolute mix-blend-color-dodge translate-z-0' style={{ backgroundSize: '35%' }}></div>
           {/* particles */}

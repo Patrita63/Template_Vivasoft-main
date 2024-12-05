@@ -1,0 +1,25 @@
+.PopupButtonInfo {
+    background-color: yellow;
+}
+
+.PopupButtonSuccess {
+    background-color: green;
+}
+
+.PopupButtonError {
+    background-color: red;
+}
+
+.MarginLeftAuto {
+    margin-left: auto;
+}
+
+.MarginRightAuto {
+    margin-right: auto;
+}
+
+.TextAlignJustify {
+    text-align: justify;
+    padding-left: 50px;
+}
+

@@ -7,7 +7,7 @@ import Link from 'next/link';
 // components
 // import Socials from '../components/Socials';
 
-const Header = () => {
+const HeaderEnUS = () => {
 
   return (
     <header className='absolute z-30 w-full flex items-center px-16 xl:px-0 xl:h-[90px] pt-20'>
@@ -26,13 +26,13 @@ const Header = () => {
             />
           </Link>
           <div className="">
-            <h1 className='sloganIT'>Tecnologia + Conoscenza = Innovazione.</h1>
+            <h1 className='slogan'>Tecnology + Learning = Innovation.</h1>
           </div>
-            <a href="\en-US\"><Image alt="EN" src="/GB.svg" width={85} height={45} /></a>
+            <a href="\it-IT\"><Image alt="IT" src="/IT.svg" width={85} height={45} style={{ height: 'auto' }} /></a>
         </div>
       </div>
     </header>
   );
 };
 
-export default Header;
+export default HeaderEnUS;

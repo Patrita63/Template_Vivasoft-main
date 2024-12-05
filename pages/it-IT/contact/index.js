@@ -174,7 +174,7 @@ const Contact = () => {
             initial='hidden'
             animate='show'
             exit='hidden'
-            className='h2 text-center mb-10'
+            className='h2 text-center mt-40 xl:mt-5'
           >
           Richiedi<span className='text-accent'> info</span>
           </motion.h2>
@@ -219,12 +219,14 @@ const Contact = () => {
                 </button>
 
                 {/* Mappa di Google */}
-                <h3 className="text-center text-2xl">Dove trovarci</h3>
-                <div className="relative w-full">
+               <h3 className="mt-20 text-center text-2xl h3 text-accent">Dove <span className='text-white'>trovarci</span></h3>
+                <div className="my-5 relative w-full">
                   <iframe
                     width="100%"
                     height="400"
-                    style={{ border: 0 }}
+                    style={{
+                      border: '4px solid #D1660C', 
+                      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)', }}
                     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBSVFfjhxqyHKGTAxKBfEX624qK_hkT_pc&q=Ing. Tardiolo Bonifazi Patrizio, Via+Copenaghen+10,Roma"
                     allowFullScreen
                     aria-hidden="false"
