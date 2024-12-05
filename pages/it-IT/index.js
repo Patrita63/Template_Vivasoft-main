@@ -29,13 +29,22 @@ import * as React from 'react'; */
 import CloseIcon from "@mui/icons-material/Close";
 
 const Home = () => {
-
+  // COOKIES Management
+  const [isCookiesAccepted, setIsCookiesAccepted] = useState(false);
   const [isPopupOpened, setIsPopupOpened]=useState(false);
   const [isPopupSettingsOpened, setIsPopupSettingsOpened]=useState(false);
   
   useEffect(() => {
     window.localStorage.setItem("isLanguageIta", 'true');
-    openPopup();
+    debugger;
+    
+    const isPopupToShow = Boolean(window.localStorage.getItem("isCookiesAccepted"));
+    console.log('isPopupToShow: ' + isPopupToShow);
+    setIsCookiesAccepted(isPopupToShow);
+
+    if(!isPopupToShow){
+      openPopup();
+    }
   }, [])
   
   const openPopup = () =>{
@@ -53,11 +62,23 @@ const Home = () => {
     setIsPopupOpened(false);
   } 
 
+  const cookiesAcceptedFirtPopup = () =>{
+    localStorage.setItem("isCookiesAccepted", true);
+    setIsPopupOpened(false);
+  } 
+
+  
+
   const goToImpostazioni = () =>{
     setIsPopupSettingsOpened(true);
   } 
 
   const closeSettingsPopup = () =>{
+    setIsPopupSettingsOpened(false);
+  } 
+
+  const cookiesAcceptedPopupSettings = () =>{
+    localStorage.setItem("isCookiesAccepted", true);
     setIsPopupSettingsOpened(false);
   } 
 
@@ -95,7 +116,7 @@ const Home = () => {
 
               <DialogActions>
                 <Button variant='outlined' onClick={goToImpostazioni}>Impostazioni</Button>
-                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={closePopup}>Ho capito, accetto</Button>
+                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedFirtPopup}>Ho capito, accetto</Button>
                 {/* <Button color="error" className={styles.PopupButtonError} variant='contained' onClick={closePopup}>Close</Button> */}
               </DialogActions>
               
@@ -117,7 +138,7 @@ const Home = () => {
               </DialogContent>
 
               <DialogActions>
-                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={closeSettingsPopup}>Naviga con i cookies selezionati</Button>
+                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}>Naviga con i cookies selezionati</Button>
               </DialogActions>
               
             </Dialog>

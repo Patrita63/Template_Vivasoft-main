@@ -36,13 +36,13 @@ const Header = () => {
             />
           </Link>
           <div className="">
-            <h1 class='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
+            <h1 className='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
           </div>
           {(isITA == 'true') &&
-              <a href="\en-US\"><Image alt="EN" src="/GB.svg" width={35} height={35} /></a>
+              <a href="\en-US\"><Image alt="EN" src="/GB.svg" width={85} height={45} /></a>
           }
           {(isITA == 'false') &&
-            <a href="\it-IT\"><Image alt="IT" src="/IT.svg" width={35} height={35} /></a>
+            <a href="\it-IT\"><Image alt="IT" src="/IT.svg" width={85} height={45} /></a>
           }
         </div>
       </div>
