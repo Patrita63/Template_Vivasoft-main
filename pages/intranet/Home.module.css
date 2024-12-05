@@ -23,4 +23,31 @@
     color: whitesmoke;
 }
 
+.tableCalendar {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+.td, .th {
+border: 1px solid #dddddd;
+text-align: left;
+padding: 8px;
+}
+
+.tdRed, .thRed {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    background-color: rgb(211, 80, 80);
+}
+  
+.tr:nth-child(even) {
+background-color: #dddddd;
+}
+
+.CalendarBackgroud{
+    border: 3px solid #dddddd;
+    background-color: white;
+}
 
