@@ -12,8 +12,6 @@ import { motion } from 'framer-motion';
 // variants
 import { fadeIn } from '../../../variants';
 
-// 
-import { SendMailResend } from '../../api/send'
 // https://resend.com/nextjs
 import { useState, useEffect } from 'react';
 // import { Resend } from 'resend';
@@ -67,89 +65,44 @@ const Contact = () => {
     setMailBody(event.target.value);
   }
 
-  const SendMail = async (event) => {
-   // https://resend.com/docs/knowledge-base/how-do-i-fix-cors-issues
-/*     Access to XMLHttpRequest at 'https://api.resend.com/emails'
-    from origin 'http://localhost:3000' has been blocked by CORS policy:
-    Response to preflight request doesn't pass access control check:
-    No 'Access-Control-Allow-Origin' header is present on the requested resource. */
-
-    const RESEND_API_KEY = "re_EPLAJcV9_6RyTtaemEfcSnVBnUinGkNV1";
-    // from: 'onboarding@resend.dev'
-    // https://resend.com/onboarding
-
-    // Access to fetch at 'https://api.resend.com/emails' from origin 'http://localhost:3000' has been blocked by CORS policy: 
-    const RESEND_MAIL_FROM = "onboarding@resend.dev";
-    const RESEND_MAIL_TO = "p.tardiolobonifazi@vivasoft.it";
-    // alert('SendMail');
-    event.preventDefault();
-    console.log(event.target);
-    // debugger;
-    const dataMailFullName = fullname; // event.target.form[0].value; // event.target.nominativo.value;
-    // alert('Nominativo = ' + dataMailFullName);
-    const dataMailAddress = mailAddress; //event.target.form[1].value; //event.target.email.value;
-    const dataMailSubject = mailSubject; //event.target.form[2].value; //event.target.subject.value;
-
-    const body =  `${dataMailFullName}  sent an email from ${dataMailAddress} - Subject: ${dataMailSubject} - Body: ${mailBody}`
-    // alert(body);
-
-    const dataMailBody = body; // event.target.form[3].value; //event.target.body.value;
-
-    SendMailResend(mailSubject, dataMailBody);
-
-    // TODO PATRIZIO
-    // Gestire il ritorno dell'invio della mail
-    // Attualmente non la manda
-
-    // Redirect to home page 
-    router.push("/it-IT");
-
-
-    // https://resend.com/nextjs
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-
-   // https://resend.com/docs/api-reference/emails/send-email
-   // const resend = new Resend(RESEND_API_KEY);
-
-    /* try {
-      const response = await fetch('https://api.resend.com/emails/api/send', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer re_EPLAJcV9_6RyTtaemEfcSnVBnUinGkNV1'
-          },
-          from: RESEND_MAIL_FROM,
-          to: RESEND_MAIL_TO,
-          subject: mailSubject,
-          html: dataMailBody
-          // body: JSON.stringify(values)
-      });
-
-      if (response.ok) {
-          console.log('Email sent successfully!');
-      } else {
-          const errorDetails = await response.json();
-          console.error('Error sending email:', errorDetails.message);
-      }
-    } catch (error) {
-      console.error('There was a problem sending the email:', error);
-    } */
-
-    /* const response = await resend.emails.send({
-      from: RESEND_MAIL_FROM,
-      to: RESEND_MAIL_TO,
-      subject: mailSubject,
-      html: dataMailBody
-    });
-
-    console.log(response); */
-
-    /* if (error) {
-      return res.status(400).json(error);
-    }
+  const sendEmail = async () => {
+    try {
+      const dataMailFullName = fullname; 
+      const dataMailAddress = mailAddress; 
+      const dataMailSubject = mailSubject; 
   
-    return res.status(200).json(data); */
+      const dataMailBody =  `${dataMailFullName}  sent an email from ${dataMailAddress} - Subject: ${dataMailSubject} - Body: ${mailBody}`
+      console.log(dataMailBody);
+  
+      debugger;
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'p.tardiolobonifazi@vivasoft.it', // Replace with recipient email
+          from: 'onboarding@resend.dev', // Replace with sender email
+          subject: `${dataMailSubject}`,
+          text: `${dataMailBody}`
+        }),
+      });
+      /* .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.error('Error:', err)); */
+  
+      if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Error:', errorData);
+      throw new Error('Failed to send email');
+    }
+
+    const data = await response.json();
+    console.log('Email sent successfully:', data);
+  } catch (error) {
+    console.error('Error sending email:', error.message);
   }
+};
 
 
   return (
@@ -211,7 +164,7 @@ const Contact = () => {
                   </label>
                 </div>
 
-                <button onClick={(event)=>SendMail(event)} className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' >
+                <button onClick={sendEmail} className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' >
                   <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
                     Invia
                   </span>
@@ -219,7 +172,7 @@ const Contact = () => {
                 </button>
 
                 {/* Mappa di Google */}
-               <h3 className="mt-20 text-center text-2xl h3 text-accent">Dove <span className='text-white'>trovarci</span></h3>
+                <h3 className="mt-20 text-center text-2xl h3 text-accent">Dove <span className='text-white'>trovarci</span></h3>
                 <div className="my-5 relative w-full">
                   <iframe
                     width="100%"
