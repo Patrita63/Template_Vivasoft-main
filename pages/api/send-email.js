@@ -1,41 +1,44 @@
 const RESEND_API_KEY = "re_EPLAJcV9_6RyTtaemEfcSnVBnUinGkNV1";
-// pages/api/proxy.js  now   pages/api/send-email.js
-export default async function handler(req, res) {
 
-  console.log('handler sendEmail');
+export default async function handler(req, res) {
   if (req.method === 'POST') {
-    console.log('Incoming Request Body:', req.body);
+    const { fullname, mailAddress, mailSubject, mailBody } = req.body;
+
+    // Validate the input
+    if (!fullname || !mailAddress || !mailSubject || !mailBody) {
+      return res.status(400).json({ success: false, error: 'All fields are required.' });
+    }
+
     try {
-      const response = await fetch('https://api.resend.com/emails', {
+      // Call Resend API
+      const apiResponse = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${RESEND_API_KEY}`, // Replace with your actual API key
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          // 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, // Store the API key securely
         },
-        body: JSON.stringify(req.body), // Pass the request body to the API
+        body: JSON.stringify({
+          to: mailAddress,
+          from: 'onboarding@resend.dev', // Your verified sender email
+          subject: mailSubject,
+          text: `${fullname} says: ${mailBody}`,
+        }),
       });
 
-      const data = await response.json();
-
-      // Log the response for debugging
-      console.log('API Response Status:', response.status);
-      console.log('API Response Data:', data);
-
-      if (!response.ok) {
-        // Forward the error response from the API
-        console.log('handler sendEmai Forward the error response from the API: ', response.status);
-        return res.status(response.status).json(data);
+      // Handle Resend API response
+      if (apiResponse.ok) {
+        return res.status(200).json({ success: true });
+      } else {
+        const errorData = await apiResponse.json();
+        return res.status(apiResponse.status).json({ success: false, error: errorData });
       }
-
-      // Forward the successful response
-      console.log('handler sendEmai Forward the successful response: ', res.status(200).json(data));
-      return res.status(200).json(data);
     } catch (error) {
-      console.error('Error in Proxy Handler:', error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      console.error('Error sending email:', error.message);
+      return res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
   } else {
     res.setHeader('Allow', ['POST']);
-    res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+    return res.status(405).json({ success: false, error: `Method ${req.method} Not Allowed` });
   }
 }
