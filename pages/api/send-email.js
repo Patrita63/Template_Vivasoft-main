@@ -1,28 +1,26 @@
-const RESEND_API_KEY = "re_EPLAJcV9_6RyTtaemEfcSnVBnUinGkNV1";
-
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { fullname, mailAddress, mailSubject, mailBody } = req.body;
 
     // Validate the input
+    debugger;
     if (!fullname || !mailAddress || !mailSubject || !mailBody) {
       return res.status(400).json({ success: false, error: 'All fields are required.' });
     }
 
     try {
-      // Call Resend API
-      const apiResponse = await fetch('https://api.resend.com/emails', {
+      // Call Resend API  
+      const apiResponse = await fetch(`${process.env.REACT_APP_RESEND_API_URL}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${RESEND_API_KEY}`,
-          // 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, // Store the API key securely
+          'Authorization': `Bearer ${process.env.REACT_APP_RESEND_API_KEY}`, 
         },
         body: JSON.stringify({
-          to: mailAddress,
-          from: 'onboarding@resend.dev', // Your verified sender email
+          to: `${process.env.REACT_APP_RESEND_MAIL_TO}`,
+          from: `${process.env.REACT_APP_RESEND_MAIL_FROM}`, 
           subject: mailSubject,
-          text: `${fullname} says: ${mailBody}`,
+          text: `Gentile ${fullname} grazie per averci mandato questa mail. Subject: ${mailSubject} Body: ${mailBody}`
         }),
       });
 

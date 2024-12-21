@@ -40,7 +40,7 @@ const ContactPage = () => {
           fullname,
           mailAddress,
           mailSubject,
-          mailBody,
+          mailBody
         }),
       });
 
