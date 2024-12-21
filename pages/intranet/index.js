@@ -13,22 +13,32 @@ import { Button } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 
 import styles from './Home.module.css';
-import { red } from '@mui/material/colors';
 
 export default function Home() {
     const [db, setDb] = useState(null);
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
-    const DATABASE_NAME = 'IntranetVivasoft.sqlite';
+    const DATABASE_SQLITE = '/IntranetVivasoft.sqlite';
 
     useEffect(() => {
         const loadDatabase = async () => {
+            setError(null);
+            // debugger;
+            // console.log('process.env: ' + process.env);
+            let databasePath = process.env.REACT_APP_DATABASE_SQLITE;
+            console.log("Database Path from process.env.REACT_APP_DATABASE_SQLITE: " + databasePath);
+            console.log("DATABASE_SQLITE:" + DATABASE_SQLITE);
+            if(databasePath === undefined){
+                databasePath = DATABASE_SQLITE;
+                console.log("Database Path (DATABASE_SQLITE): ", databasePath);
+            }
+
             try {
                 const SQL = await initSqlJs({
                     locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/${file}`,
                 });
 
-                const savedDb = await localforage.getItem('/IntranetVivasoft.sqlite');
+                const savedDb = await localforage.getItem(databasePath);
                 let database;
 
                 if (savedDb) {
@@ -36,7 +46,7 @@ export default function Home() {
                     database = new SQL.Database(new Uint8Array(savedDb));
                 } else { 
                     console.log('Loading database from public folder');
-                    const response = await fetch('/IntranetVivasoft.sqlite');
+                    const response = await fetch(databasePath);
                     if (!response.ok) throw new Error('Failed to fetch database file');
                     const buffer = await response.arrayBuffer();
                     database = new SQL.Database(new Uint8Array(buffer));
@@ -50,6 +60,7 @@ export default function Home() {
         };
 
         loadDatabase();
+
     }, []);
 
     const fetchUsers = () => {
@@ -70,30 +81,7 @@ export default function Home() {
         }
     };
 
-    /* const fetchUsers = () => {
-        debugger;
-        if (!db) return;
-
-        const resultTable = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='T_Utente'");
-        if (resultTable.length === 0) {
-            throw new Error('Table T_Utente does not exist');
-        }
-        // Query the database
-        const result = db.exec('SELECT * FROM T_Utente');
-        if (result.length) {
-            const rows = result[0].values.map(([id, nome, cognome, email, datadinascita, idtipoutente]) => ({
-                id,
-                nome,
-                cognome,
-                email,
-                datadinascita, 
-                idtipoutente
-            }));
-            setData(rows);
-        }
-    }; */
-
-    const addUser = async () => {
+    /* const addUser = async () => {
         if (!db) return;
         // Insert a new user
         db.run(`
@@ -103,7 +91,7 @@ export default function Home() {
         await saveDatabase(); // Save changes to IndexedDB
         fetchUsers();
     };
-
+ */
     const saveDatabase = async () => {
         if (!db) return;
         const data = db.export(); // Export as Uint8Array

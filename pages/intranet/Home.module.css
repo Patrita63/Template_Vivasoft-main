@@ -51,3 +51,9 @@ background-color: #dddddd;
     background-color: white;
 }
 
+.today {
+    background-color: yellow; /* Highlight today */
+    font-weight: bold;
+    border: 2px solid orange;
+}
+

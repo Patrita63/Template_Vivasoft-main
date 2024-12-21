@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import initSqlJs from 'sql.js';
 import localforage from 'localforage';
 // https://mui.com/x/react-data-grid/
-import { DataGrid } from '@mui/x-data-grid';
+// import { DataGrid } from '@mui/x-data-grid';
 
-import { red } from '@mui/material/colors';
+// import { red } from '@mui/material/colors';
 
 import { useRouter } from 'next/router';
 import styles from './Home.module.css';
@@ -25,6 +25,9 @@ import {
   } from "@mui/material";
 
 import { AccountCircle } from '@mui/icons-material';
+import { Underdog } from 'next/font/google';
+
+const DATABASE_SQLITE = '/IntranetVivasoft.sqlite';
 
 const Home = () => {
     // To navigate to another page
@@ -33,7 +36,6 @@ const Home = () => {
     const [db, setDb] = useState(null);
     const [calendarData, setCalendarData] = useState([]);
     const [error, setError] = useState(null);
-    const DATABASE_NAME = 'IntranetVivasoft.sqlite';
 
     // https://nextjs.org/docs/messages/react-hydration-error
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,42 +43,66 @@ const Home = () => {
     const [month, setMonth] = useState(0);
     const [year, setYear] = useState(0);
 
+    const [message, setMessage] = useState('');
+
     // Initialize IndexedDB-backed SQLite
     useEffect(() => {
         // https://stackoverflow.com/questions/73853069/solve-referenceerror-localstorage-is-not-defined-in-next-js
         setIsAuthenticated(global?.localStorage?.getItem("isAuthenticated"));
         setUsername(global?.localStorage?.getItem("username"));
+        
         const loadDatabase = async () => {
+            // debugger;
+            // console.log('process.env: ' + process.env);
+            setMessage('Please wait');
+            let databasePath = process.env.REACT_APP_DATABASE_SQLITE;
+            console.log("Database Path from process.env.REACT_APP_DATABASE_SQLITE: " + databasePath);
+            console.log("DATABASE_SQLITE:" + DATABASE_SQLITE);
+            if(databasePath === undefined){
+                databasePath = DATABASE_SQLITE;
+                console.log("Database Path (DATABASE_SQLITE): ", databasePath);
+            }
+
             try {
                 const SQL = await initSqlJs({
                     locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/${file}`,
                 });
 
-                const savedDb = await localforage.getItem('/IntranetVivasoft.sqlite');
+                const savedDb = await localforage.getItem(databasePath);
                 let database;
 
                 if (savedDb) {
                     console.log('Loading database from IndexedDB');
+                    setMessage('Loading database from IndexedDB');
                     database = new SQL.Database(new Uint8Array(savedDb));
+                    setMessage('Database ready to use');
                 } else { 
                     console.log('Loading database from public folder');
-                    const response = await fetch('/IntranetVivasoft.sqlite');
+                    setMessage('Loading database from public folder');
+                    
+                    const response = await fetch(databasePath);
                     if (!response.ok) throw new Error('Failed to fetch database file');
                     const buffer = await response.arrayBuffer();
                     database = new SQL.Database(new Uint8Array(buffer));
+                    // console.log(database.db);
+                    setMessage('Database ready to use');
                 } 
 
                 setDb(database);
+                
             } catch (err) {
-                console.error('Failed to load database:', err);
+                console.error('Failed to load database: ', err);
+                setMessage('Failed to load database: ', err);
                 setError(err.message);
+
             }
         };
 
         loadDatabase();
     }, []);
 
-    const getCalendarioMensile = () => {
+    const getCalendarioMensile = async () => {
+        
         try {
             if (!db) throw new Error('Database not loaded');
             const tableExists = db.exec(
@@ -118,11 +144,19 @@ const Home = () => {
                     NumeroSettimanaAnno;
             `;
             // debugger;
-            const result = db.exec(query);
+            const result = await db.exec(query);
             const rows = result[0]?.values || [];
-            setCalendarData(rows.map(([NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday]) => ({ NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday })));
+            console.log(rows.length);
+            if(rows.length > 0){
+                setCalendarData(rows.map(([NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday]) => ({ NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday })));
+                setMessage('');
+            } else {
+                setMessage('Please retry to load data.');
+            }
+
         } catch (err) {
             console.error('Query error:', err);
+            setMessage('Query error:', err);
             setError(err.message);
         }
     };
@@ -136,6 +170,23 @@ const Home = () => {
         // Redirect to intranet login page
         router.push("/intranet/auth/logout");
     }
+
+    const isToday = (dateString) => {
+        // console.log('dateString: ' + dateString);
+        // Parse the input date string
+        const inputDate = new Date(dateString);
+
+        // console.log('inputDate: ' + inputDate);
+        
+        // Get today's date
+        const today = new Date();
+        // Check if year, month, and date are the same
+        return (
+            inputDate.getFullYear() === today.getFullYear() &&
+            inputDate.getMonth() === today.getMonth() &&
+            inputDate.getDate() === today.getDate()
+        );
+    };
 
     const handleSunDayClick = (cellInfo) => {
         if(cellInfo.Sunday != null){
@@ -253,8 +304,15 @@ const Home = () => {
                 </div> */}
             
                 <br ></br>
-                <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>Calendario Mensile</Button>
-                        
+                {message && <p>{message}</p>}
+                <br ></br>  
+
+                { (message === "Database ready to use" || message === 'Please retry to load data.') &&
+                    <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
+                        Visualizza Calendario Mensile
+                    </Button>
+                }
+                 
                 <Container maxWidth="xs" >
                     <CssBaseline />
                     <Box
@@ -271,7 +329,7 @@ const Home = () => {
                             <>
                             <Box sx={{ height: 600, width: 1300 }}>
                             <div className={styles.CalendarBackgroud}>
-                                <h1>Calendar for {month}/{year}</h1>
+                                <h1>Calendar of {month}/{year}</h1>
                                 <table className={ styles.tableCalendar }>
                                     <thead>
                                         <tr className={ styles.tr }>
@@ -289,13 +347,16 @@ const Home = () => {
                                         {calendarData.map((week, index) => (
                                             <tr className={ styles.tr } key={index}>
                                                 <td className={ styles.td}>{week.NumeroSettimanaAnno || ''}</td>
-                                                <td onClick={() => handleSunDayClick(week)} className={ styles.tdRed}>{week.Sunday || ''}</td>
-                                                <td onClick={() => handleMonDayClick(week)} className={ styles.td}>{week.Monday || ''}</td>
-                                                <td onClick={() => handleTuesDayClick(week)} className={ styles.td}>{week.Tuesday || ''}</td>
-                                                <td onClick={() => handleWedDayClick(week)} className={ styles.td}>{week.Wednesday || ''}</td>
-                                                <td onClick={() => handleThurDayClick(week)} className={ styles.td}>{week.Thursday || ''}</td>
-                                                <td onClick={() => handleFriDayClick(week)} className={ styles.td}>{week.Friday || ''}</td>
-                                                <td onClick={() => handleSatDayClick(week)} className={ styles.tdRed}>{week.Saturday || ''}</td>
+                                                <td onClick={() => handleSunDayClick(week)} className={ styles.tdRed }>{week.Sunday || ''}</td>
+                                                <td onClick={() => handleMonDayClick(week)} className={ styles.td }>{week.Monday || ''}</td>
+                                                <td onClick={() => handleTuesDayClick(week)} className={ styles.td }>{week.Tuesday || ''}</td>
+                                                <td onClick={() => handleWedDayClick(week)} className={ styles.td }>{week.Wednesday || ''}</td>
+                                                <td onClick={() => handleThurDayClick(week)} className={ styles.td }>{week.Thursday || ''}</td>
+                                                <td onClick={() => handleFriDayClick(week)} className={ styles.td }>{week.Friday || ''}</td>
+                                                <td onClick={() => handleSatDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Saturday}`) ? styles.today : ''}`}
+                                                >
+                                                    {week.Saturday || ''}
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -306,6 +367,7 @@ const Home = () => {
                     </Box>
                 </Container>
             </div>
+            
         </>
     );
 }
