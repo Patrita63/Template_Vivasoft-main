@@ -5,8 +5,16 @@
 .Home {
     /* background-color: #81D8D0; Tiffany #81d8d0 */
     /*  background-color: #6bbbae; */
+    margin-top: 0px;
     background-color: #81d8d0;
     text-align: center;
+    color: #005f6a;
+}
+
+.wrapperbody {
+    background-color: #81d8d0;
+    height: 100vh;
+    width: 100vw;
     color: #005f6a;
 }
 

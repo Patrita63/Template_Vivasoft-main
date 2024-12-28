@@ -1,7 +1,28 @@
+// import dynamic from "next/dynamic";
+// // N.B. 
+// // Next.js provides a way to disable SSR for specific components using dynamic imports. 
+// // This is particularly useful for client-only code like the loadDatabase function.
+// // This ensures that DatabaseComponent (and the loadDatabase function within it) is only executed on the client side.
+
+// const DynamicDatabaseComponent = dynamic(() => import('../../components/DatabaseComponent'), {
+//     ssr: false, // Disable server-side rendering
+// });
+
+// const HomePage = () => {
+//     return (
+//         <div>
+//             <h1>SQLite Database Loader</h1>
+//             <DynamicDatabaseComponent />
+//         </div>
+//     );
+// };
+
+// export default HomePage;
+
 // Use embedded sqlite database with IndexedDB
 import React, { useState, useEffect } from 'react';
-import initSqlJs from 'sql.js';
-import localforage from 'localforage';
+import loadDatabase from '../../lib/databasesqlite';
+
 // https://mui.com/x/react-data-grid/
 // import { DataGrid } from '@mui/x-data-grid';
 
@@ -25,16 +46,13 @@ import {
   } from "@mui/material";
 
 import { AccountCircle } from '@mui/icons-material';
-import { Underdog } from 'next/font/google';
-
-const DATABASE_SQLITE = '/IntranetVivasoft.sqlite';
+// import { Underdog } from 'next/font/google';
 
 const Home = () => {
     // To navigate to another page
     const router = useRouter();
-
-    const [db, setDb] = useState(null);
     const [calendarData, setCalendarData] = useState([]);
+    const [db, setDb] = useState(null);
     const [error, setError] = useState(null);
 
     // https://nextjs.org/docs/messages/react-hydration-error
@@ -43,63 +61,23 @@ const Home = () => {
     const [month, setMonth] = useState(0);
     const [year, setYear] = useState(0);
 
-    const [message, setMessage] = useState('');
-
-    // Initialize IndexedDB-backed SQLite
     useEffect(() => {
-        // https://stackoverflow.com/questions/73853069/solve-referenceerror-localstorage-is-not-defined-in-next-js
-        setIsAuthenticated(global?.localStorage?.getItem("isAuthenticated"));
-        setUsername(global?.localStorage?.getItem("username"));
-        
-        const loadDatabase = async () => {
-            // debugger;
-            // console.log('process.env: ' + process.env);
-            setMessage('Please wait');
-            let databasePath = process.env.REACT_APP_DATABASE_SQLITE;
-            console.log("Database Path from process.env.REACT_APP_DATABASE_SQLITE: " + databasePath);
-            console.log("DATABASE_SQLITE:" + DATABASE_SQLITE);
-            if(databasePath === undefined){
-                databasePath = DATABASE_SQLITE;
-                console.log("Database Path (DATABASE_SQLITE): ", databasePath);
-            }
-
+        const initializeDatabase = async () => {
             try {
-                const SQL = await initSqlJs({
-                    locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/${file}`,
-                });
-
-                const savedDb = await localforage.getItem(databasePath);
-                let database;
-
-                if (savedDb) {
-                    console.log('Loading database from IndexedDB');
-                    setMessage('Loading database from IndexedDB');
-                    database = new SQL.Database(new Uint8Array(savedDb));
-                    setMessage('Database ready to use');
-                } else { 
-                    console.log('Loading database from public folder');
-                    setMessage('Loading database from public folder');
-                    
-                    const response = await fetch(databasePath);
-                    if (!response.ok) throw new Error('Failed to fetch database file');
-                    const buffer = await response.arrayBuffer();
-                    database = new SQL.Database(new Uint8Array(buffer));
-                    // console.log(database.db);
-                    setMessage('Database ready to use');
-                } 
-
+                const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
+                console.log('DatabaseComponent - databasePath: ' + databasePath);
+                const database = await loadDatabase(databasePath);
                 setDb(database);
-                
             } catch (err) {
-                console.error('Failed to load database: ', err);
-                setMessage('Failed to load database: ', err);
                 setError(err.message);
-
             }
         };
 
-        loadDatabase();
+        initializeDatabase();
     }, []);
+
+    if (error) return <div>Error: {error}</div>;
+    if (!db) return <div>Loading database...</div>;
 
     const getCalendarioMensile = async () => {
         
@@ -149,14 +127,11 @@ const Home = () => {
             console.log(rows.length);
             if(rows.length > 0){
                 setCalendarData(rows.map(([NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday]) => ({ NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday })));
-                setMessage('');
             } else {
-                setMessage('Please retry to load data.');
             }
 
         } catch (err) {
             console.error('Query error:', err);
-            setMessage('Query error:', err);
             setError(err.message);
         }
     };
@@ -194,36 +169,42 @@ const Home = () => {
             alert(msg);
         }
     };
+
     const handleMonDayClick = (cellInfo) => {
         if(cellInfo.Monday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Monday} Monday  - ${month} - ${year}`;
             alert(msg);
         }
     };
+
     const handleTuesDayClick = (cellInfo) => {
         if(cellInfo.Tuesday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Tuesday} Tuesday  - ${month} - ${year}`;
             alert(msg);
         }
     };
+
     const handleWedDayClick = (cellInfo) => {
         if(cellInfo.Wednesday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Wednesday} Wednesday  - ${month} - ${year}`;
             alert(msg);
          }
     };
+
     const handleThurDayClick = (cellInfo) => {
         if(cellInfo.Thursday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Thursday} Thursday  - ${month} - ${year}`;
             alert(msg);
         }
     };
+
     const handleFriDayClick = (cellInfo) => {
         if(cellInfo.Friday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Friday} Friday  - ${month} - ${year}`;
             alert(msg);
         }
     };
+
     const handleSatDayClick = (cellInfo) => {
         if(cellInfo.Saturday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Saturday} Saturday  - ${month} - ${year}`;
@@ -303,15 +284,9 @@ const Home = () => {
 
                 </div> */}
             
-                <br ></br>
-                {message && <p>{message}</p>}
-                <br ></br>  
-
-                { (message === "Database ready to use" || message === 'Please retry to load data.') &&
-                    <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
-                        Visualizza Calendario Mensile
-                    </Button>
-                }
+                <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
+                    Visualizza Calendario Mensile
+                </Button>
                  
                 <Container maxWidth="xs" >
                     <CssBaseline />

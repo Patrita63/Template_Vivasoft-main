@@ -1,15 +1,15 @@
-// Use embedded sqlite database with IndexedDB
+
 import { useState, useEffect } from 'react';
-import initSqlJs from 'sql.js';
-import localforage from 'localforage';
-// https://mui.com/x/react-data-grid/
+import loadDatabase from '../../lib/databasesqlite';
+
 import {
     Box,
     Container,
-    CssBaseline
+    CssBaseline,
+    Button,
+    Typography
 } from '@mui/material';
 
-import { Button } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 
 import styles from './Home.module.css';
@@ -18,50 +18,25 @@ export default function Home() {
     const [db, setDb] = useState(null);
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
-    const DATABASE_SQLITE = '/IntranetVivasoft.sqlite';
+   
 
     useEffect(() => {
-        const loadDatabase = async () => {
-            setError(null);
-            // debugger;
-            // console.log('process.env: ' + process.env);
-            let databasePath = process.env.REACT_APP_DATABASE_SQLITE;
-            console.log("Database Path from process.env.REACT_APP_DATABASE_SQLITE: " + databasePath);
-            console.log("DATABASE_SQLITE:" + DATABASE_SQLITE);
-            if(databasePath === undefined){
-                databasePath = DATABASE_SQLITE;
-                console.log("Database Path (DATABASE_SQLITE): ", databasePath);
-            }
-
+        const initializeDatabase = async () => {
             try {
-                const SQL = await initSqlJs({
-                    locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/${file}`,
-                });
-
-                const savedDb = await localforage.getItem(databasePath);
-                let database;
-
-                if (savedDb) {
-                    console.log('Loading database from IndexedDB');
-                    database = new SQL.Database(new Uint8Array(savedDb));
-                } else { 
-                    console.log('Loading database from public folder');
-                    const response = await fetch(databasePath);
-                    if (!response.ok) throw new Error('Failed to fetch database file');
-                    const buffer = await response.arrayBuffer();
-                    database = new SQL.Database(new Uint8Array(buffer));
-                } 
-
+                const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
+                console.log('DatabaseComponent - databasePath: ' + databasePath);
+                const database = await loadDatabase(databasePath);
                 setDb(database);
             } catch (err) {
-                console.error('Failed to load database:', err);
                 setError(err.message);
             }
         };
 
-        loadDatabase();
-
+        initializeDatabase();
     }, []);
+
+    if (error) return <div>Error: {error}</div>;
+    if (!db) return <div>Loading database...</div>;
 
     const fetchUsers = () => {
         try {
@@ -92,12 +67,12 @@ export default function Home() {
         fetchUsers();
     };
  */
-    const saveDatabase = async () => {
+    /* const saveDatabase = async () => {
         if (!db) return;
         const data = db.export(); // Export as Uint8Array
         await localforage.setItem('IntranetVivasoft.sqlite', data);
         console.log('Database saved to IndexedDB');
-    };
+    }; */
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 50 },
@@ -155,44 +130,57 @@ export default function Home() {
         //         ))}
         //     </ul>
         // </div>
-        <div className={styles.Home}>
-            <h1>Embedded SQLite with Next.js</h1>
-            <br ></br>
-            <Button className={styles.BtnLoadUsers} variant="contained" onClick={fetchUsers}>Load Users</Button>
-                    
-            <Container maxWidth="xs" >
-                <CssBaseline />
-                <Box
-                    sx={{
-                        mt: 5,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center"                
-                    }}
-                    >
-                    
-                    {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-                    {data.length > 0 && (
-                        <>
-                        <Box sx={{ height: 600, width: 1300, background: '#abca79' }}>
-                            <DataGrid
-                                rows={data}
-                                columns={columns}
-                                initialState={{
-                                pagination: {
-                                    paginationModel: {
-                                    pageSize: 5,
+        <div className={styles.wrapperbody}>
+            <Box
+                sx={{
+                mt: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                height: "100%"
+                }}
+            >
+                
+                <Typography variant="h4">Embedded SQLite with Next.js</Typography>
+            
+                <br ></br>
+                <Button className={styles.BtnLoadUsers} variant="contained" onClick={fetchUsers}>Load Users</Button>
+                        
+                <Container maxWidth="xs" height="100%" >
+                    <CssBaseline />
+                    <Box
+                        sx={{
+                            mt: 5,
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            height: "100%"            
+                        }}
+                        >
+                        
+                        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+                        {data.length > 0 && (
+                            <>
+                            <Box sx={{ height: 600, width: 1300, background: '#abca79' }}>
+                                <DataGrid
+                                    rows={data}
+                                    columns={columns}
+                                    initialState={{
+                                    pagination: {
+                                        paginationModel: {
+                                        pageSize: 5,
+                                        },
                                     },
-                                },
-                                }}
-                                pageSizeOptions={[5]}
-                                // checkboxSelection
-                                disableRowSelectionOnClick
-                            />
-                        </Box>
-                    </>)}
-                </Box>
-            </Container>
+                                    }}
+                                    pageSizeOptions={[5]}
+                                    // checkboxSelection
+                                    disableRowSelectionOnClick
+                                />
+                            </Box>
+                        </>)}
+                    </Box>
+                </Container>
+            </Box>
         </div>
     );
 }
