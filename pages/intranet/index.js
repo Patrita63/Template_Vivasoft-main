@@ -24,7 +24,7 @@ export default function Home() {
         const initializeDatabase = async () => {
             try {
                 const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
-                console.log('DatabaseComponent - databasePath: ' + databasePath);
+                console.log('intranet\index.js - databasePath: ' + databasePath);
                 const database = await loadDatabase(databasePath);
                 setDb(database);
             } catch (err) {

@@ -61,14 +61,23 @@ const Home = () => {
     const [month, setMonth] = useState(0);
     const [year, setYear] = useState(0);
 
+    const [message, setMessage] = useState('');
+
     useEffect(() => {
+        // https://stackoverflow.com/questions/73853069/solve-referenceerror-localstorage-is-not-defined-in-next-js
+        setIsAuthenticated(global?.localStorage?.getItem("isAuthenticated"));
+        setUsername(global?.localStorage?.getItem("username"));
+        
         const initializeDatabase = async () => {
             try {
+                setMessage('Please wait');
                 const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
-                console.log('DatabaseComponent - databasePath: ' + databasePath);
+                console.log('intranet\home.js - databasePath: ' + databasePath);
                 const database = await loadDatabase(databasePath);
                 setDb(database);
+                setMessage('Database ready to use');
             } catch (err) {
+                setMessage('Failed to load database: ', err);
                 setError(err.message);
             }
         };
@@ -127,11 +136,14 @@ const Home = () => {
             console.log(rows.length);
             if(rows.length > 0){
                 setCalendarData(rows.map(([NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday]) => ({ NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday })));
+                setMessage('');
             } else {
+                setMessage('Please retry to load data.');
             }
 
         } catch (err) {
             console.error('Query error:', err);
+            setMessage('Query error:', err);
             setError(err.message);
         }
     };
@@ -276,17 +288,23 @@ const Home = () => {
                 </AppBar>
             </Box>
             
-            <div className={styles.Home}>
+            <div className={styles.wrapperbody}>
                 <div className='container mx-auto'>
                     <h1 className='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
                 </div>
                 {/* <div className='flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8'>
 
                 </div> */}
+
+                <br ></br>
+                {message && <p>{message}</p>}
+                <br ></br>  
             
-                <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
-                    Visualizza Calendario Mensile
-                </Button>
+                { (message === "Database ready to use" || message === 'Please retry to load data.') &&
+                    <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
+                        Visualizza Calendario Mensile
+                    </Button>
+                }
                  
                 <Container maxWidth="xs" >
                     <CssBaseline />
