@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { FormControl, FormGroup, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField } from "@mui/material";
+import { FormControl, FormGroup, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField, CircularProgress } from "@mui/material";
 import React, {useState, useEffect } from "react";
+import loadDatabase from '../../../lib/databasesqlite';
 
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 
@@ -18,43 +19,144 @@ const UserContainer = styled(FormGroup)`
     margin: 5% auto 0 auto;
     background-color: white;
 `
-// Validation
-const initialValues = {
-    nome: '',
-    cognome: '',
-    email: '',
-    datadinascita: '',
-    idtipoutente: 0,
-    tipoutente: ''
-};
-
 
 const UserDetails = () => {
+    const [loading, setLoading] = useState(true); // Loading state
     const router = useRouter();
     const { id } = router.query; // Extract the dynamic route parameter
 
-    /* const [listRoles, setListRoles] = useState([]);
+    const [db, setDb] = useState(null);
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        getUserRoles();
-    }, []);
+    const [isDataReady, setIsDataReady] = useState(false);
 
-    const getUserRoles = async () => {
-        let response = await getRoles();
-        console.log(response);
-        // Prima far vedere la response da Developers tools
-        setListRoles(response.data);
-    }; */
+    const [listTipoUtente, setListTipoUtente] = useState([]);
 
     // Validation
-    const { handleSubmit, control, watch, formState: { errors } } = useForm({
+    const initialValues = {
+        nome: '',
+        cognome: '',
+        email: '',
+        datadinascita: '',
+        phone: '',
+        idtipoutente: 0,
+        tipoutente: ''
+    };
+
+    // Validation
+   /*  const { handleSubmit, control, watch, setValue, formState: { errors } } = useForm({
         defaultValues: initialValues
+    }); */
+    const [formValues, setFormValues] = useState(initialValues);
+    const {
+        control,
+        watch,
+        handleSubmit,
+        setValue,
+        formState: { errors }
+    } = useForm({
+        defaultValues: formValues
     });
+
+    useEffect(() => {
+        if (id) {
+            // Perform some action with the id
+            console.log('ID from query:', id);
+        }
+
+        const initializeDatabase = async (idUser) => {
+            
+            try {
+                setIsDataReady(false);
+                const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
+                console.log('intranet-userdetails.js - databasePath: ' + databasePath);
+                const database = await loadDatabase(databasePath);
+                setDb(database);
+                console.log('database: ' + database);
+                // debugger;
+
+                if(database){
+                    const query = 'SELECT Id, TipoUtente, Descrizione FROM T_TipoUtente';
+                    console.log('query: ' + query);
+                    const result = database.exec(query);
+                    // debugger;
+                    const rows = result[0]?.values || [];
+
+                    const transformedArray = rows.map(item => ({
+                        value: item[0],
+                        TipoUtente: item[1]
+                    }));
+                      
+                    console.log(transformedArray);
+
+                    setListTipoUtente(transformedArray);
+                    
+                    setIsDataReady(true);
+                    setLoading(false); // Data is loaded
+                }
+
+                if(database){
+                    // const query = `SELECT Id,Nome,Cognome,Email,DataDiNascita,Phone,IdTipoUtente FROM T_Utente WHERE Id=${idUser}`;
+                    const query = `SELECT ut.[Id],ut.[Nome],ut.[Cognome],ut.[Email],ut.[DataDiNascita],ut.[Phone],ut.[IdTipoUtente],tu.TipoUtente FROM T_Utente AS ut INNER JOIN T_TipoUtente AS tu ON tu.Id = ut.IdTipoUtente WHERE ut.[Id]=${idUser}`;
+                    
+                    console.log('query: ' + query);
+                    const result = database.exec(query);
+                    // debugger;
+                    const rows = result[0]?.values || [];
+                    // setData(rows.map(([id, nome, cognome, email,datadinascita,phone,idtipoutente]) => ({ id, nome, cognome, email, datadinascita, phone, idtipoutente })));
+                    
+                    // Update formValues with the API response
+                    // setFormValues(rows.map(([id, nome, cognome, email,datadinascita,phone,idtipoutente]) => ({ id, nome, cognome, email, datadinascita, phone, idtipoutente })));
+                    
+                    // Set values in the form
+                    setValue('nome', rows[0][1]);
+                    setValue('cognome', rows[0][2]);
+                    setValue('email', rows[0][3]);
+                    setValue('datadinascita', rows[0][4]);
+                    if(rows[0][5] === null){
+                        setValue('phone','');
+                    } else {
+                        setValue('phone', rows[0][5]);
+                    }
+                    
+                    setValue('idtipoutente', rows[0][6]);
+
+                    const transformedSelectedValue = {
+                        value: rows[0][6],
+                        TipoUtente: rows[0][7]
+                    };
+                
+                    // Set the default value for 'tipoutente'
+                    setValue('tipoutente', transformedSelectedValue);
+
+                    /* Object.entries(rows).forEach(([key, value]) => {
+                        setValue(key, value);
+                    }); */
+
+                    setIsDataReady(true);
+                    setLoading(false); // Data is loaded
+                }
+                
+            } catch (err) {
+                setIsDataReady(false);
+                setError(err.message);
+                console.log('UserDetails - useEffect error' + err.message);
+            }
+        };
+
+        if(id !== undefined){
+            initializeDatabase(id);
+        }
+       
+    }, [id]);
+
 
     // Validation
     const onSubmit = async (data) => {
+        console.log('Form Submitted:', data);
         // debugger;
-        console.log('Form Data:', data);
+        /* console.log('Form Data:', data);
         const alreadyExist = await checkUserByEmailExists(data.email);
         if(!alreadyExist) {
             AddUserData(data);
@@ -62,10 +164,10 @@ const UserDetails = () => {
         else
         {
             alert("Already exists a user with mail " + data.email);
-        }
+        } */
     };
 
-        // Validation
+    // Validation
     const watchAllFields = watch(); // Watch all fields for enabling the button.
     // Validation
     const isFormValid = () => {
@@ -73,7 +175,7 @@ const UserDetails = () => {
         watchAllFields.cognome &&
         watchAllFields.email &&
         // watchAllFields.phone &&
-        // !errors.role && // No errors on role
+        !errors.tipoutente && // No errors on tipoutente
         !errors.nome && // No errors on name
         !errors.cognome && // No errors on username
         !errors.email && // No errors on email
@@ -86,7 +188,7 @@ const UserDetails = () => {
         );
     };
 
-    const AddUserData = async () => {
+    const UpdateUserData = async () => {
         // await addUser(user);
         // Redirect to AllUsers page intranet
         router.push("/intranet/allusers");
@@ -96,8 +198,12 @@ const UserDetails = () => {
       router.push("/intranet/allusers");
     }
 
-    const DeleteUser = async () => {
+    const DeleteUserData = async () => {
       router.push("/intranet/allusers");
+    }
+
+    if (loading) {
+        return <CircularProgress />; // Show a loading spinner while data is being fetched
     }
 
     return (
@@ -121,7 +227,6 @@ const UserDetails = () => {
                         </FormControl>
                     )}
                 />
-                
                 <Controller
                     name="cognome"
                     control={control}
@@ -152,47 +257,47 @@ const UserDetails = () => {
                         </FormControl>
                     )}
                 />
-                {/* <Controller
-                name="phone"
-                control={control}
-                rules={{
-                    required: 'Phone is required',
-                    pattern: {
-                    value: /^[0-9]+$/,
-                    message: 'Enter a valid phone number',
-                    },
-                }}
-                render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.phone}>
-                    <InputLabel htmlFor="phone">Phone</InputLabel>
-                    <Input {...field} id="phone" />
-                    <FormHelperText>{errors.phone?.message}</FormHelperText>
-                    </FormControl>
-                )}
-                /> */}
-                {/* <Controller
-                    name="role"
+                <Controller
+                    name="phone"
                     control={control}
                     rules={{
-                    required: 'Role is required',
+                        required: 'Phone is required',
+                        pattern: {
+                        value: /^[0-9]+$/,
+                        message: 'Enter a valid phone number',
+                        },
                     }}
                     render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.role}>
+                        <FormControl fullWidth error={!!errors.phone}>
+                        <InputLabel htmlFor="phone">Phone</InputLabel>
+                        <Input {...field} id="phone" />
+                        <FormHelperText>{errors.phone?.message}</FormHelperText>
+                        </FormControl>
+                    )}
+                />
+                <Controller
+                    name="tipoutente"
+                    control={control}
+                    rules={{
+                    required: 'User Type is required',
+                    }}
+                    render={({ field }) => (
+                    <FormControl fullWidth error={!!errors.tipoutente}>
                         <Autocomplete
-                        id="role"
-                        options={listRoles}
-                        getOptionLabel={(option) => option?.name || ''}
+                        id="tipoutente"
+                        options={listTipoUtente}
+                        getOptionLabel={(option) => option?.TipoUtente || ''}
                         isOptionEqualToValue={(option, value) => option.value === value?.value}
                         value={field.value || null}
                         onChange={(event, newValue) => field.onChange(newValue)}
                         renderInput={(params) => (
-                            <TextField {...params} label="Select a role" />
+                            <TextField {...params} label="Select a User Type" />
                         )}
                         />
-                        <FormHelperText>{errors.role?.message}</FormHelperText>
+                        <FormHelperText>{errors.tipoutente?.message}</FormHelperText>
                     </FormControl>
                     )}
-                /> */}
+                />
                 <Button
                     type="submit"
                     variant="contained"
@@ -208,6 +313,7 @@ const UserDetails = () => {
                     className={styles.BtnUpdateUser}
                     sx={{ mt: 2 }}
                     disabled={!isFormValid()} // Button is disabled if the form is invalid
+                    onClick={UpdateUserData}
                 >
                     Update User
                 </Button>
@@ -216,7 +322,7 @@ const UserDetails = () => {
                     variant="contained"
                     className={styles.BtnDeleteUser}
                     sx={{ mt: 2 }}
-                    onClick={DeleteUser}
+                    onClick={DeleteUserData}
                 >
                     Delete
                 </Button>

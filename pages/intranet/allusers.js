@@ -46,10 +46,10 @@ const AllUsers = () => {
                 setDb(database);
 
                 if(database){
-                    const query = 'SELECT ut.[Id],ut.[Nome],ut.[Cognome],ut.[Email],ut.[DataDiNascita],ut.[IdTipoUtente],tu.TipoUtente FROM T_Utente AS ut INNER JOIN T_TipoUtente AS tu ON tu.Id = ut.IdTipoUtente';
+                    const query = 'SELECT ut.[Id],ut.[Nome],ut.[Cognome],ut.[Email],ut.[DataDiNascita],ut.[IdTipoUtente],ut.[Phone],tu.TipoUtente FROM T_Utente AS ut INNER JOIN T_TipoUtente AS tu ON tu.Id = ut.IdTipoUtente';
                     const result = database.exec(query);
                     const rows = result[0]?.values || [];
-                    setData(rows.map(([id, nome, cognome, email,datadinascita,idtipoutente,tipoutente,phone]) => ({ id, nome, cognome, email, datadinascita, idtipoutente, tipoutente, phone })));
+                    setData(rows.map(([id, nome, cognome, email,datadinascita,idtipoutente,phone,tipoutente]) => ({ id, nome, cognome, email, datadinascita, idtipoutente, phone, tipoutente })));
                     
                     setIsDataReady(true);
                 }
