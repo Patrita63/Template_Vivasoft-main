@@ -6,6 +6,12 @@ import loadDatabase from '../../../lib/databasesqlite';
 
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+
 import { Box } from "@mui/material";
 
 // Validation - npm install react-hook-form
@@ -113,7 +119,15 @@ const UserDetails = () => {
                     setValue('nome', rows[0][1]);
                     setValue('cognome', rows[0][2]);
                     setValue('email', rows[0][3]);
-                    setValue('datadinascita', rows[0][4]);
+
+                    if(rows[0][4] === null){
+                        setValue('datadinascita','2024-01-01');
+                    } else {
+                        setValue('datadinascita', new Date(rows[0][4])); // Convert to Date object
+                        // setValue('datadinascita', rows[0][4]);
+                    }
+
+                    
                     if(rows[0][5] === null){
                         setValue('phone','');
                     } else {
@@ -149,12 +163,20 @@ const UserDetails = () => {
             initializeDatabase(id);
         }
        
-    }, [id]);
+    }, [id, setValue]);
 
 
     // Validation
-    const onSubmit = async (data) => {
+    const onSubmit = async (data, event) => {
         console.log('Form Submitted:', data);
+        const clickedButton = event.nativeEvent.submitter.name; // Access submitter's name
+        // Get the name of the button clicked
+
+        if (clickedButton === 'update') {
+            UpdateUserData(data);
+        } else if (clickedButton === 'delete') {
+            DeleteUserData(data);
+        }
         // debugger;
         /* console.log('Form Data:', data);
         const alreadyExist = await checkUserByEmailExists(data.email);
@@ -188,18 +210,22 @@ const UserDetails = () => {
         );
     };
 
-    const UpdateUserData = async () => {
+    const UpdateUserData = async (dataUser) => {
         // await addUser(user);
+        console.log('UpdateUserData dataUser:', dataUser);
+
         // Redirect to AllUsers page intranet
-        router.push("/intranet/allusers");
+        // router.push("/intranet/allusers");
     }
 
     const GoBack = async () => {
-      router.push("/intranet/allusers");
+        router.push("/intranet/allusers");
     }
 
-    const DeleteUserData = async () => {
-      router.push("/intranet/allusers");
+    const DeleteUserData = async (dataUser) => {
+        console.log('DeleteUserData dataUser:', dataUser);
+        // Redirect to AllUsers page intranet
+        // router.push("/intranet/allusers");
     }
 
     if (loading) {
@@ -275,6 +301,27 @@ const UserDetails = () => {
                         </FormControl>
                     )}
                 />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <Controller
+                    name="datadinascita"
+                    control={control}
+                    rules={{
+                        required: 'Date of Birth is required',
+                    }}
+                    render={({ field }) => (
+                        <FormControl fullWidth error={!!errors.datadinascita}>
+                        <DatePicker
+                            label="Date of Birth"
+                            value={field.value}
+                            onChange={(newValue) => field.onChange(newValue)} // Update the form state
+                            // OLD renderInput={(params) => <TextField {...params} />}
+                            slots={{ textField: (props) => <TextField {...props} /> }}
+                        />
+                        <FormHelperText>{errors.datadinascita?.message}</FormHelperText>
+                        </FormControl>
+                    )}
+                    />
+                </LocalizationProvider>
                 <Controller
                     name="tipoutente"
                     control={control}
@@ -309,20 +356,20 @@ const UserDetails = () => {
                 </Button>
                 <Button
                     type="submit"
+                    name="update" // Unique name to identify the button
                     variant="contained"
                     className={styles.BtnUpdateUser}
                     sx={{ mt: 2 }}
                     disabled={!isFormValid()} // Button is disabled if the form is invalid
-                    onClick={UpdateUserData}
                 >
                     Update User
                 </Button>
                 <Button
                     type="submit"
+                    name="delete" // Unique name to identify the button
                     variant="contained"
                     className={styles.BtnDeleteUser}
                     sx={{ mt: 2 }}
-                    onClick={DeleteUserData}
                 >
                     Delete
                 </Button>
