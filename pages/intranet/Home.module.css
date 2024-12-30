@@ -27,6 +27,10 @@
     margin-right: auto;
 }
 
+.MarginTop {
+    margin-top: 10px;
+}
+
 .BtnLoadUsers {
     background-color: blue;
     color: whitesmoke;

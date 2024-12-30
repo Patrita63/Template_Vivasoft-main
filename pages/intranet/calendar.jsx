@@ -48,7 +48,10 @@ import {
 import { AccountCircle } from '@mui/icons-material';
 // import { Underdog } from 'next/font/google';
 
-const Home = () => {
+import NavIntranetMenu from '../../components/NavIntranetMenu';
+import DynamicBreadCrumbs from '../../components/DynamicBreadCrumbs';
+
+const CalendarVivasoft = () => {
     // To navigate to another page
     const router = useRouter();
     const [calendarData, setCalendarData] = useState([]);
@@ -63,7 +66,11 @@ const Home = () => {
 
     const [message, setMessage] = useState('');
 
+    const [isClient, setIsClient] = useState(false);
+
     useEffect(() => {
+        setIsClient(true); // This ensures the component knows it's running on the client
+
         // https://stackoverflow.com/questions/73853069/solve-referenceerror-localstorage-is-not-defined-in-next-js
         setIsAuthenticated(global?.localStorage?.getItem("isAuthenticated"));
         setUsername(global?.localStorage?.getItem("username"));
@@ -148,7 +155,7 @@ const Home = () => {
         }
     };
 
-    const handleLogin = () => {
+    /* const handleLogin = () => {
        // Redirect to intranet login page
        router.push("/intranet/auth/login");
     }
@@ -156,7 +163,7 @@ const Home = () => {
    const handleLogout = () => {
         // Redirect to intranet login page
         router.push("/intranet/auth/logout");
-    }
+    } */
 
     const isToday = (dateString) => {
         // console.log('dateString: ' + dateString);
@@ -226,7 +233,19 @@ const Home = () => {
 
     return ( 
         <>
-            <Box sx={{ flexGrow: 1 }}>
+            {/* NavIntranetMenu */}
+            {isClient && (
+                <div>
+                    <NavIntranetMenu />
+                </div>
+            )}
+            {/* Breadcrumbs */}
+            <Box sx={{ margin: '16px' } }>
+                <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
+            </Box>
+
+            
+            {/* <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar className={styles.HomeToolbar}>
                         <IconButton
@@ -237,10 +256,9 @@ const Home = () => {
                         sx={{ mr: 4 }}
                         >
                         </IconButton>
-                        {/* Logo azienda */}
-                        {/* https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height */}
+                        
                         <div className="flex justify-center items-center">
-                            {/* logo */}
+                           
                             <Link href={'/'}>
                             <Image 
                                 src={'/Logo_VivaSoft.png'}
@@ -252,11 +270,6 @@ const Home = () => {
                             />
                             </Link>
                         </div>
-                        {/* <Button color="inherit" startIcon={svgLogoIcon} className={styles.MarginRightAuto} onClick={handleHome}>Home</Button> */}
-
-                        {/* <Stack direction="row" spacing={2}>
-                            <Avatar variant="square" { ...stringAvatar('Intranet Vivasoft') } />
-                        </Stack> */}
                         
                         {isAuthenticated && (
                             <>
@@ -286,17 +299,16 @@ const Home = () => {
 
                     </Toolbar>
                 </AppBar>
-            </Box>
+            </Box> */}
+            
             
             <div className={styles.wrapperbody}>
-                <div className='container mx-auto'>
+                {/* <div className='container mx-auto'>
                     <h1 className='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
                 </div>
-                {/* <div className='flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8'>
+                
 
-                </div> */}
-
-                <br ></br>
+                <br ></br> */}
                 {message && <p>{message}</p>}
                 <br ></br>  
             
@@ -340,14 +352,25 @@ const Home = () => {
                                         {calendarData.map((week, index) => (
                                             <tr className={ styles.tr } key={index}>
                                                 <td className={ styles.td}>{week.NumeroSettimanaAnno || ''}</td>
-                                                <td onClick={() => handleSunDayClick(week)} className={ styles.tdRed }>{week.Sunday || ''}</td>
-                                                <td onClick={() => handleMonDayClick(week)} className={ styles.td }>{week.Monday || ''}</td>
-                                                <td onClick={() => handleTuesDayClick(week)} className={ styles.td }>{week.Tuesday || ''}</td>
-                                                <td onClick={() => handleWedDayClick(week)} className={ styles.td }>{week.Wednesday || ''}</td>
-                                                <td onClick={() => handleThurDayClick(week)} className={ styles.td }>{week.Thursday || ''}</td>
-                                                <td onClick={() => handleFriDayClick(week)} className={ styles.td }>{week.Friday || ''}</td>
-                                                <td onClick={() => handleSatDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Saturday}`) ? styles.today : ''}`}
-                                                >
+                                                <td onClick={() => handleSunDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Sunday}`) ? styles.today : ''}`}>
+                                                    {week.Sunday || ''}
+                                                </td>
+                                                <td onClick={() => handleMonDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Monday}`) ? styles.today : ''}`}>
+                                                    {week.Monday || ''}
+                                                </td>
+                                                <td onClick={() => handleTuesDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Tuesday}`) ? styles.today : ''}`}>
+                                                    {week.Tuesday || ''}
+                                                </td>
+                                                <td onClick={() => handleWedDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Wednesday}`) ? styles.today : ''}`}>
+                                                    {week.Wednesday || ''}
+                                                </td>
+                                                <td onClick={() => handleThurDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Thursday}`) ? styles.today : ''}`}>
+                                                    {week.Thursday || ''}
+                                                </td>
+                                                <td onClick={() => handleFriDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Friday}`) ? styles.today : ''}`}>
+                                                    {week.Friday || ''}
+                                                </td>
+                                                <td onClick={() => handleSatDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Saturday}`) ? styles.today : ''}`}>
                                                     {week.Saturday || ''}
                                                 </td>
                                             </tr>
@@ -365,4 +388,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default CalendarVivasoft;
