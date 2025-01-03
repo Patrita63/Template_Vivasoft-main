@@ -1,12 +1,14 @@
 export class RegisterData {
-    Username;
+    Name;
+    Surname;
     Email;
     Password;
     ConfirmPassword;
     Address;
 
-    constructor(Username, Email, Password, ConfirmPassword, Address) {
-        this.Username = Username;
+    constructor(Name, Surname, Email, Password, ConfirmPassword, Address) {
+        this.Name = Name;
+        this.Surname = Surname;
         this.Email = Email;
         this.Password = Password;
         this.ConfirmPassword = ConfirmPassword;
@@ -21,5 +23,4 @@ export class RegisterData {
         }  
         return isPasswordConfirmed
     }
-    
 }

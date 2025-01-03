@@ -31,17 +31,10 @@ import loadDatabase from '../../lib/databasesqlite';
 import { useRouter } from 'next/router';
 import styles from './Home.module.css';
 
-import Image from 'next/image';
-import Link from 'next/link';
-
 import {
-    AppBar,
     Box,
     Container,
     CssBaseline,
-    Toolbar,
-    IconButton,
-    Typography,
     MenuItem, Select, FormControl, InputLabel,
     Button
   } from "@mui/material";
@@ -53,16 +46,14 @@ import NavIntranetMenu from '../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../components/DynamicBreadCrumbs';
 
 const CalendarVivasoft = () => {
+    // https://nextjs.org/docs/messages/react-hydration-error
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [username, setUsername] = useState('');
     // To navigate to another page
     const router = useRouter();
     const [calendarData, setCalendarData] = useState([]);
     const [db, setDb] = useState(null);
     const [error, setError] = useState(null);
-
-    // https://nextjs.org/docs/messages/react-hydration-error
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [username, setUsername] = useState('');
-    
 
     const [message, setMessage] = useState('');
 
@@ -174,16 +165,6 @@ const CalendarVivasoft = () => {
         }
     };
 
-    /* const handleLogin = () => {
-       // Redirect to intranet login page
-       router.push("/intranet/auth/login");
-    }
-
-   const handleLogout = () => {
-        // Redirect to intranet login page
-        router.push("/intranet/auth/logout");
-    } */
-
     const isToday = (dateString) => {
         // console.log('dateString: ' + dateString);
         // Parse the input date string
@@ -262,171 +243,116 @@ const CalendarVivasoft = () => {
             <Box sx={{ margin: '16px' } }>
                 <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
             </Box>
-
             
-            {/* <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
-                    <Toolbar className={styles.HomeToolbar}>
-                        <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 4 }}
-                        >
-                        </IconButton>
-                        
-                        <div className="flex justify-center items-center">
-                           
-                            <Link href={'/'}>
-                            <Image 
-                                src={'/Logo_VivaSoft.png'}
-                                width={85}
-                                height={20}
-                                alt="Logo Vivasoft S.R.L."
-                                priority={true}
-                                style={{ width: '100%', height: 'auto' }}
-                            />
-                            </Link>
-                        </div>
-                        
-                        {isAuthenticated && (
-                            <>
-                                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                    Welcome {username}
-                                </Typography>
-                                <IconButton
-                                    size="large"
-                                    aria-label="account of current user"
-                                    aria-controls="primary-search-account-menu"
-                                    aria-haspopup="true"
-                                    color="inherit"
-                                >
-                                <AccountCircle />
-                                </IconButton>
-                                <Button color="inherit" className={styles.MarginLeftAuto} onClick={handleLogout}>Logout</Button>
-                            </>
-                        )}
-
-                        {!isAuthenticated && (
-                            <>
-                                <div >
-                                    <Button  color="inherit" onClick={handleLogin}>Login</Button>
-                                </div>
-                            </>
-                        )}
-
-                    </Toolbar>
-                </AppBar>
-            </Box> */}
-            
-            
-            <div className={styles.wrapperbody}>
-                {/* <div className='container mx-auto'>
-                    <h1 className='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
-                </div>
-                
-
-                <br ></br> */}
-                {message && <p>{message}</p>}
-                <br ></br>  
-            
-                { (message === "Database ready to use" || message === 'Please retry to load data.') &&
-                    <>
-                        <div style={{ display: "flex", marginLeft: "625px", gap: "20px", alignItems: "center" }}>
-                            {/* Year Select */}
-                            <FormControl style={{ minWidth: 120 }}>
-                            <InputLabel>Year</InputLabel>
-                            <Select value={year} onChange={(e) => setYear(e.target.value)}>
-                                {years.map((yr) => (
-                                <MenuItem key={yr} value={yr}>{yr}</MenuItem>
-                                ))}
-                            </Select>
-                            </FormControl>
+            {isAuthenticated && (
+            <>
+                <div className={styles.wrapperbody}>
+                    {/* <div className='container mx-auto'>
+                        <h1 className='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
+                    </div>
                     
-                            {/* Month Select */}
-                            <FormControl style={{ minWidth: 120 }}>
-                            <InputLabel>Month</InputLabel>
-                            <Select value={month} onChange={(e) => setMonth(e.target.value)}>
-                                {months.map((mo, index) => (
-                                <MenuItem key={index} value={mo}>{mo}</MenuItem>
-                                ))}
-                            </Select>
-                            </FormControl>
-                        </div>
-                        <br></br>
-                        <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
-                            Visualizza Calendario Mensile
-                        </Button>
-                    </>
-                }
-                 
-                <Container maxWidth="xs" >
-                    <CssBaseline />
-                    <Box
-                        sx={{
-                            mt: 5,
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center"                
-                        }}
-                        >
+
+                    <br ></br> */}
+                    {message && <p>{message}</p>}
+                    <br ></br>  
+                
+                    { (message === "Database ready to use" || message === 'Please retry to load data.') &&
+                        <>
+                            <div style={{ display: "flex", marginLeft: "625px", gap: "20px", alignItems: "center" }}>
+                                {/* Year Select */}
+                                <FormControl style={{ minWidth: 120 }}>
+                                <InputLabel>Year</InputLabel>
+                                <Select value={year} onChange={(e) => setYear(e.target.value)}>
+                                    {years.map((yr) => (
+                                    <MenuItem key={yr} value={yr}>{yr}</MenuItem>
+                                    ))}
+                                </Select>
+                                </FormControl>
                         
-                        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-                        {calendarData.length > 0 && (
-                            <>
-                            <Box sx={{ height: 600, width: 1300 }}>
-                            <div className={styles.CalendarBackgroud}>
-                                <h1>Calendar of {month}/{year}</h1>
-                                <table className={ styles.tableCalendar }>
-                                    <thead>
-                                        <tr className={ styles.tr }>
-                                            <th className={ styles.th }>Week</th>
-                                            <th className={ styles.thRed }>Sunday</th>
-                                            <th className={ styles.th }>Monday</th>
-                                            <th className={ styles.th }>Tuesday</th>
-                                            <th className={ styles.th }>Wednesday</th>
-                                            <th className={ styles.th }>Thursday</th>
-                                            <th className={ styles.th }>Friday</th>
-                                            <th className={ styles.thRed }>Saturday</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {calendarData.map((week, index) => (
-                                            <tr className={ styles.tr } key={index}>
-                                                <td className={ styles.td}>{week.NumeroSettimanaAnno || ''}</td>
-                                                <td onClick={() => handleSunDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Sunday}`) ? styles.today : ''}`}>
-                                                    {week.Sunday || ''}
-                                                </td>
-                                                <td onClick={() => handleMonDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Monday}`) ? styles.today : ''}`}>
-                                                    {week.Monday || ''}
-                                                </td>
-                                                <td onClick={() => handleTuesDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Tuesday}`) ? styles.today : ''}`}>
-                                                    {week.Tuesday || ''}
-                                                </td>
-                                                <td onClick={() => handleWedDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Wednesday}`) ? styles.today : ''}`}>
-                                                    {week.Wednesday || ''}
-                                                </td>
-                                                <td onClick={() => handleThurDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Thursday}`) ? styles.today : ''}`}>
-                                                    {week.Thursday || ''}
-                                                </td>
-                                                <td onClick={() => handleFriDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Friday}`) ? styles.today : ''}`}>
-                                                    {week.Friday || ''}
-                                                </td>
-                                                <td onClick={() => handleSatDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Saturday}`) ? styles.today : ''}`}>
-                                                    {week.Saturday || ''}
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                {/* Month Select */}
+                                <FormControl style={{ minWidth: 120 }}>
+                                <InputLabel>Month</InputLabel>
+                                <Select value={month} onChange={(e) => setMonth(e.target.value)}>
+                                    {months.map((mo, index) => (
+                                    <MenuItem key={index} value={mo}>{mo}</MenuItem>
+                                    ))}
+                                </Select>
+                                </FormControl>
                             </div>
-                            </Box>
-                        </>)}
-                    </Box>
-                </Container>
-            </div>
-            
+                            <br></br>
+                            <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
+                                Visualizza Calendario Mensile
+                            </Button>
+                        </>
+                    }
+                    
+                    <Container maxWidth="xs" >
+                        <CssBaseline />
+                        <Box
+                            sx={{
+                                mt: 5,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center"                
+                            }}
+                            >
+                            
+                            {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+                            {calendarData.length > 0 && (
+                                <>
+                                <Box sx={{ height: 600, width: 1300 }}>
+                                <div className={styles.CalendarBackgroud}>
+                                    <h1>Calendar of {month}/{year}</h1>
+                                    <table className={ styles.tableCalendar }>
+                                        <thead>
+                                            <tr className={ styles.tr }>
+                                                <th className={ styles.th }>Week</th>
+                                                <th className={ styles.thRed }>Sunday</th>
+                                                <th className={ styles.th }>Monday</th>
+                                                <th className={ styles.th }>Tuesday</th>
+                                                <th className={ styles.th }>Wednesday</th>
+                                                <th className={ styles.th }>Thursday</th>
+                                                <th className={ styles.th }>Friday</th>
+                                                <th className={ styles.thRed }>Saturday</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {calendarData.map((week, index) => (
+                                                <tr className={ styles.tr } key={index}>
+                                                    <td className={ styles.td}>{week.NumeroSettimanaAnno || ''}</td>
+                                                    <td onClick={() => handleSunDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Sunday}`) ? styles.today : ''}`}>
+                                                        {week.Sunday || ''}
+                                                    </td>
+                                                    <td onClick={() => handleMonDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Monday}`) ? styles.today : ''}`}>
+                                                        {week.Monday || ''}
+                                                    </td>
+                                                    <td onClick={() => handleTuesDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Tuesday}`) ? styles.today : ''}`}>
+                                                        {week.Tuesday || ''}
+                                                    </td>
+                                                    <td onClick={() => handleWedDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Wednesday}`) ? styles.today : ''}`}>
+                                                        {week.Wednesday || ''}
+                                                    </td>
+                                                    <td onClick={() => handleThurDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Thursday}`) ? styles.today : ''}`}>
+                                                        {week.Thursday || ''}
+                                                    </td>
+                                                    <td onClick={() => handleFriDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Friday}`) ? styles.today : ''}`}>
+                                                        {week.Friday || ''}
+                                                    </td>
+                                                    <td onClick={() => handleSatDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Saturday}`) ? styles.today : ''}`}>
+                                                        {week.Saturday || ''}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </Box>
+                            </>)}
+                        </Box>
+                    </Container>
+                </div>
+            </>
+            )}
         </>
     );
 }

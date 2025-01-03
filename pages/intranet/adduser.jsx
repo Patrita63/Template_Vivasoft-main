@@ -89,7 +89,7 @@ const AddUser = () => {
             } catch (err) {
                 setIsDataReady(false);
                 setError(err.message);
-                console.log('AddUser - useEffect error' + err.message);
+                console.log('AddUser - useEffect error: ' + err.message);
             }
         };
 
@@ -132,7 +132,7 @@ const AddUser = () => {
             
             // Check if the user exists before addition
             const checkUser = db.exec(`SELECT * FROM T_Utente WHERE Email = '${user.email}'`);
-            console.log("User already exists:", checkUser);
+            console.log('AddUserData - ' + `SELECT * FROM T_Utente WHERE Email = '${user.email}'`);
     
             if (!checkUser || checkUser.length === 0) {
                 // Add the user
@@ -163,6 +163,8 @@ const AddUser = () => {
         
                 // Redirect to AllUsers page
                 router.push("/intranet/allusers");
+            } else {
+                console.log('AddUserData - User already exists: ' + checkUser)
             }
     
         } catch (error) {
@@ -186,7 +188,7 @@ const AddUser = () => {
         watchAllFields.tipoutente &&
         !errors.tipoutente && // No errors on tipoutente
         !errors.nome && // No errors on name
-        !errors.cognome && // No errors on username
+        !errors.cognome && // No errors on cognome
         !errors.email && // No errors on email
         !errors.phone && // No errors on phone
         !errors.datadinascita && // No errors on datadinascita
@@ -207,7 +209,7 @@ const AddUser = () => {
                     control={control}
                     rules={{ required: 'Name is required' }}
                     render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.name}>
+                        <FormControl fullWidth error={!!errors.nome}>
                             <InputLabel htmlFor="nome">Nome</InputLabel>
                             <Input {...field} id="nome" />
                             <FormHelperText>{errors.nome?.message}</FormHelperText>
@@ -217,9 +219,9 @@ const AddUser = () => {
                 <Controller
                     name="cognome"
                     control={control}
-                    rules={{ required: 'Username is required' }}
+                    rules={{ required: 'Surname is required' }}
                     render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.username}>
+                        <FormControl fullWidth error={!!errors.cognome}>
                         <InputLabel htmlFor="cognome">Cognome</InputLabel>
                         <Input {...field} id="cognome" />
                         <FormHelperText>{errors.cognome?.message}</FormHelperText>

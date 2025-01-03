@@ -1,7 +1,7 @@
-// PATRIZIO
+// PATRIZIO N.B. NO si usa import { useRouter } from 'next/router';
 // import { Link, useNavigate } from "react-router-dom";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './Login.module.css';
 
@@ -19,23 +19,43 @@ import { LockOutlined } from "@mui/icons-material";
 // next link
 import Link from 'next/link';
 
+import loadDatabase from '../../../lib/databasesqlite';
+const localforage = require("localforage");
+
 const Login = () => {
 
     // To navigate to another page
     const router = useRouter();
+    const [db, setDb] = useState(null);
+    const [error, setError] = useState(null);
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // TODO Manage the data from settings
-    const urlRootMVCController = "https://localhost:7054/Account/";
-    // const urlRootAPI = "https://localhost:7078/api/";
-    const urlRootAPI = "https://localhost:44316/api/";
+    useEffect(() => {
+      const initializeDatabase = async () => {
+          
+          try {
+              const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
+              console.log('Login - databasePath: ' + databasePath);
+              const database = await loadDatabase(databasePath);
+              setDb(database);
+              console.log('database: ' + database);
+              // debugger;
+          } catch (err) {
+              setError(err.message);
+              console.log('Login - useEffect error: ' + err.message);
+          }
+      };
+
+      initializeDatabase();
+
+    }, []);
 
     const handleCancel = () => {
       // Redirect to home page intranet
-      router.push("/intranet/home");
+      router.push("/intranet");
     }
 
     const handleLogin = async () => {
@@ -46,39 +66,29 @@ const Login = () => {
 
       localStorage.setItem("username", email);
 
-      const API_URL = urlRootMVCController + "LoginFromReact";
-      console.log(API_URL);
-      debugger;
+      if (!db) {
+        console.error('Database is not initialized');
+        return;
+      }
 
-      /* await axios.post(API_URL, formData, {
-          headers: {
-          "Content-Type": "multipart/form-data"
-          }
-      })
-      .then((response) => {
-          if(response.data){
-              setIsAuthenticated(response.data);
-              console.log(response.data);
-              console.log(response.status);
-              localStorage.setItem("isAuthenticated", response.data);
-      
-              // To navigate to another component
-              navigate("/");
-          }
-      })
-      .catch((error) => {
-          localStorage.clear();
-          console.log(error);
-      });
-      */
+      try {
+          
+        // Check if the user is already registered
+        const checkUser = db.exec(`SELECT * FROM T_Register WHERE Email = '${email}' AND Password = '${password}'`);
+        console.log('handleLogin - ' + `SELECT * FROM T_Register WHERE Email = '${email}' AND Password = '${password}'`);
 
-      if(email === 'p.tardiolobonifazi@vivasoft.it' || password === 'Paperino'){
-        setIsAuthenticated(true);
-        localStorage.setItem("isAuthenticated", 'true');
-        // alert('Benvenuto ' + email);
+        if (!checkUser || checkUser.length === 0) {
+          alert('Utente NON Registrato!!!');
+        } else {
+          setIsAuthenticated(true);
+          localStorage.setItem("isAuthenticated", 'true');
+  
+          // Redirect to home page intranet
+          router.push("/intranet");
+        }
 
-        // Redirect to home page intranet
-        router.push("/intranet/home");
+      } catch (error) {
+        console.error("Error registering user:", error);
       }
     };
 

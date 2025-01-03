@@ -155,7 +155,7 @@ const UserDetails = () => {
             } catch (err) {
                 setIsDataReady(false);
                 setError(err.message);
-                console.log('UserDetails - useEffect error' + err.message);
+                console.log('UserDetails - useEffect error: ' + err.message);
             }
         };
 
@@ -191,7 +191,7 @@ const UserDetails = () => {
         watchAllFields.tipoutente &&
         !errors.tipoutente && // No errors on tipoutente
         !errors.nome && // No errors on name
-        !errors.cognome && // No errors on username
+        !errors.cognome && // No errors on surname
         !errors.email && // No errors on email
         !errors.phone && // No errors on phone
         !errors.datadinascita && // No errors on datadinascita
@@ -215,7 +215,7 @@ const UserDetails = () => {
             
             // Check if the user exists before addition
             const checkUser = db.exec(`SELECT * FROM T_Utente WHERE Id = ${id}`);
-            console.log("User already exists:", checkUser);
+            console.log('UpdateUserData - ' + `SELECT * FROM T_Utente WHERE Id = ${id}`);
 
             if (!checkUser || checkUser.length === 0) {
                 console.warn("User not found. Nothing to update.");
@@ -272,11 +272,13 @@ const UserDetails = () => {
         try {
             // Check if the user exists before deletion
             const checkUser = db.exec(`SELECT * FROM T_Utente WHERE Id = ${id}`);
-            console.log("User exists before deletion:", checkUser);
+            console.log('DeleteUserData - ' + `SELECT * FROM T_Utente WHERE Id = ${id}`);
     
             if (!checkUser || checkUser.length === 0) {
                 console.warn("User not found. Nothing to delete.");
                 return;
+            } else {
+                console.log("DeleteUserData - User exists before deletion:", checkUser);
             }
     
             // Delete the user
@@ -327,9 +329,9 @@ const UserDetails = () => {
                 <Controller
                     name="cognome"
                     control={control}
-                    rules={{ required: 'Username is required' }}
+                    rules={{ required: 'Surname is required' }}
                     render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.username}>
+                        <FormControl fullWidth error={!!errors.cognome}>
                         <InputLabel htmlFor="cognome">Cognome</InputLabel>
                         <Input {...field} id="cognome" />
                         <FormHelperText>{errors.cognome?.message}</FormHelperText>

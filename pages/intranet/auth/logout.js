@@ -21,39 +21,14 @@ const Logout = () => {
 
     const handleCancel = () => {
         // Redirect to home page intranet
-        router.push("/intranet/home");
+        router.push("/intranet");
     }
 
-    const handleAPILogout = async () => {
-
-        /* const API_URL = urlRootAPI + "ManageAccount/Logout";
-        console.log(API_URL);
-        debugger;
-        await axios.post(API_URL, "", {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        .then((response) => {
-          if(response.data){
-            setIsAuthenticated(response.data);
-            console.log(response.data);
-            console.log(response.status);
-    
-            localStorage.clear();
-            // To navigate to another component
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          localStorage.clear()
-          console.log(error);
-        }); */
-        
+    const handleLogout = async () => {
         setIsAuthenticated(false);
         localStorage.clear();
         // Redirect to home page intranet
-        router.push("/intranet/home");
+        router.push("/intranet");
       };
 
     return (
@@ -85,7 +60,7 @@ const Logout = () => {
                 <Button className={styles.Logout}
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  onClick={handleAPILogout}
+                  onClick={handleLogout}
                 >
                   Logout
                 </Button>

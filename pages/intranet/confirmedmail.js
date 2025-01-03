@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './ConfirmedMail.module.css';
 
-
 import {
     Avatar,
     Box,
     Button,
     Container,
     CssBaseline,
-    Typography
+    Typography,
+    TextField
 } from "@mui/material";
 
 import { LockOutlined } from "@mui/icons-material";
@@ -17,12 +17,21 @@ import { LockOutlined } from "@mui/icons-material";
 import Link from 'next/link';
 
 const ConfirmedMail = () => {
+    const [value, setValue] = useState("");
     // To navigate to another page
     const router = useRouter();
 
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
+
     const handleMailConfirmed = () => {
-        // Redirect to home page intranet
-        router.push("/intranet/home");
+        if(value === "abcd1234") {
+            // Redirect to home page intranet
+            router.push("/intranet");
+        } else {
+            alert("Codice Non Verificato. Controlla la mail che ti abbia inviato.");
+        }
     }
 
     return (
@@ -40,9 +49,16 @@ const ConfirmedMail = () => {
                 <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
                 <LockOutlined />
                 </Avatar>
-                <Typography variant="h5">Mail Verificata</Typography>
+                <Typography variant="h5">Inserire il codice ricevuto via mail</Typography>
                 <Box sx={{ mt: 3 }}>
-                
+                <TextField
+                    label="Enter code (case sensitive)"
+                    variant="outlined"
+                    fullWidth
+                    value={value}
+                    onChange={handleChange}
+                    margin="normal"
+                />
 
                 <Button className={styles.ConfirmedMail}
                     fullWidth
@@ -50,7 +66,7 @@ const ConfirmedMail = () => {
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleMailConfirmed}
                 >
-                    Ok
+                    Verifica
                 </Button>
 
                 </Box>

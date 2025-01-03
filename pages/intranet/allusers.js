@@ -35,8 +35,15 @@ const AllUsers = () => {
 
     const [isClient, setIsClient] = useState(false);
 
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [username, setUsername] = useState('');
+
     useEffect(() => {
         setIsClient(true); // This ensures the component knows it's running on the client
+         // https://stackoverflow.com/questions/73853069/solve-referenceerror-localstorage-is-not-defined-in-next-js
+         setIsAuthenticated(global?.localStorage?.getItem("isAuthenticated"));
+         setUsername(global?.localStorage?.getItem("username"));
+
         const initializeDatabase = async () => {
             
             try {
@@ -181,75 +188,78 @@ const AllUsers = () => {
 
     return (
         <>
-        {/* NavIntranetMenu */}
-        {isClient && (
-            <div>
-                <NavIntranetMenu />
-            </div>
-        )}
-        {/* Breadcrumbs */}
-        <Box sx={{ margin: '16px' } }>
-        <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
-        </Box>
-
-        <div className={styles.wrapperbody}>
-            
-            <Box
-                sx={{
-                mt: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                height: "100%"
-                }}
-            >
-                
-                {!isDataReady && (
-                    <>
-                    <Typography variant="h4">Embedded SQLite with Next.js</Typography>
-            
-                    <br ></br>
-                    <Button className={styles.BtnLoadUsers} variant="contained" onClick={fetchUsers}>Load Users</Button>
-                    </>
-                )}
-                <Container maxWidth="xs" height="100%" >
-                    <CssBaseline />
-                    <Box
-                        sx={{
-                            mt: 5,
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            height: "100%"            
-                        }}
-                        >
-                        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-                        {data.length > 0 && (
-                            <>
-                            <Box sx={{ height: 600, width: 1350, background: '#abca79' }}>
-                                {data.length > 0 && (
-                                    <Link className={`${styles.LeftDiv} ${styles.UnderLine}`} href={'/intranet/adduser'}>Add a new User</Link>
-                                )}
-                                <DataGrid
-                                    rows={data}
-                                    columns={columns}
-                                    initialState={{
-                                    pagination: {
-                                        paginationModel: {
-                                        pageSize: 5,
-                                        },
-                                    },
-                                    }}
-                                    pageSizeOptions={[5]}
-                                    // checkboxSelection
-                                    disableRowSelectionOnClick
-                                />
-                            </Box>
-                        </>)}
-                    </Box>
-                </Container>
+            {/* NavIntranetMenu */}
+            {isClient && (
+                <div>
+                    <NavIntranetMenu />
+                </div>
+            )}
+            {/* Breadcrumbs */}
+            <Box sx={{ margin: '16px' } }>
+            <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
             </Box>
-        </div>
+            {isAuthenticated && (
+            <>
+            <div className={styles.wrapperbody}>
+                
+                <Box
+                    sx={{
+                    mt: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    height: "100%"
+                    }}
+                >
+                    
+                    {!isDataReady && (
+                        <>
+                        <Typography variant="h4">Embedded SQLite with Next.js</Typography>
+                
+                        <br ></br>
+                        <Button className={styles.BtnLoadUsers} variant="contained" onClick={fetchUsers}>Load Users</Button>
+                        </>
+                    )}
+                    <Container maxWidth="xs" height="100%" >
+                        <CssBaseline />
+                        <Box
+                            sx={{
+                                mt: 5,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                height: "100%"            
+                            }}
+                            >
+                            {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+                            {data.length > 0 && (
+                                <>
+                                <Box sx={{ height: 600, width: 1350, background: '#abca79' }}>
+                                    {data.length > 0 && (
+                                        <Link className={`${styles.LeftDiv} ${styles.UnderLine}`} href={'/intranet/adduser'}>Add a new User</Link>
+                                    )}
+                                    <DataGrid
+                                        rows={data}
+                                        columns={columns}
+                                        initialState={{
+                                        pagination: {
+                                            paginationModel: {
+                                            pageSize: 5,
+                                            },
+                                        },
+                                        }}
+                                        pageSizeOptions={[5]}
+                                        // checkboxSelection
+                                        disableRowSelectionOnClick
+                                    />
+                                </Box>
+                            </>)}
+                        </Box>
+                    </Container>
+                </Box>
+            </div>
+            </>
+            )}
         </>
     );
 }

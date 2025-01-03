@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import styles from './Register.module.css';
 
 import { RegisterData } from '../../Models/registerdata';
+import loadDatabase from '../../lib/databasesqlite';
+const localforage = require("localforage");
 
 import {
     Avatar,
@@ -22,70 +24,143 @@ import Link from 'next/link';
 const Register = () => {
     // To navigate to another page
     const router = useRouter();
+    const [db, setDb] = useState(null);
+    const [error, setError] = useState(null);
 
     const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
     const [email, setEmail] = useState("");
-
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
     const [address, setAddress] = useState("");
 
-    const [isRegistered, setIsRegistered] = useState(false);
+    const [fullname, setFullname] = useState('');
+    const [mailAddress, setMailAddress] = useState('');
+    const [mailSubject, setMailSubject] = useState('');
+    const [mailBody, setMailBody] = useState('');
+    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        const initializeDatabase = async () => {
+            
+            try {
+                const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
+                console.log('register.js - databasePath: ' + databasePath);
+                const database = await loadDatabase(databasePath);
+                setDb(database);
+                console.log('database: ' + database);
+                // debugger;
+            } catch (err) {
+                setError(err.message);
+                console.log('RegisterUser - useEffect error: ' + err.message);
+            }
+        };
+
+        initializeDatabase();
+
+    }, []);
+
 
     const handleCancel = () => {
         // Redirect to home page intranet
-        router.push("/intranet/home");
+        router.push("/intranet");
     }
 
-    // Call rest api using AXIOS ASYNC
+    const sendEmail = async (fullname,mailAddress,mailSubject,mailBody) => {
+        console.log(fullname + ' - ' + mailAddress + ' - ' +  mailSubject + ' - ' +  mailBody);
+        setMessage('');
+        try {
+          const response = await fetch('/api/send-register-code', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              fullname,
+              mailAddress,
+              mailSubject,
+              mailBody
+            }),
+          });
+    
+          const result = await response.json();
+    
+          if (response.ok) {
+            setMessage('Email sent successfully!');
+          } else {
+            setMessage(`Failed to send email: ${result.error || 'Unknown error'}`);
+          }
+        } catch (error) {
+          console.error('Error:', error.message);
+          setMessage('An unexpected error occurred. Please try again.');
+        }
+    
+    };
+
     const handleRegister = async () => {
-        localStorage.setItem("username", name);
-        localStorage.setItem("mail", email);
-        localStorage.setItem("password", password);
-        localStorage.setItem("confirmpassword", confirmpassword);
-        localStorage.setItem("address", address);
 
-        /* const API_URL = urlRootAPI + "ManageAccount/Register";
-        console.log(API_URL); */
-
-        const registerUserData = new RegisterData(name, email, password, confirmpassword, address);
+        const registerUserData = new RegisterData(name, surname, email, password, confirmpassword, address);
         const isPasswordOK = registerUserData.checkPassword();
         console.log("Register - Password Confirmed = " + isPasswordOK);
         debugger;
-        /* await axios.post(API_URL, registerUserData, {
-            headers: {
-            "Content-Type": "application/json"
-            }
-        })
-        .then((response) => {
-            debugger;
-            if(response.data){
-            setIsRegistered(response.data);
-            console.log(response.data);
-            console.log(response.status);
-            localStorage.setItem("isRegisterd", response.data);
 
-            if(response.data)
-            {
-                // SEND MAIL CON IN CC p.tardiolobonifazi@vivasoft.it
-                // To navigate to another component ConfirmedMail
-                navigate("/");
-            }
-            
-            }
-        })
-        .catch((error) => {
-            localStorage.clear();
-            console.log(error);
-        }); */
-
-        setIsRegistered(isPasswordOK);
-        localStorage.setItem("isRegistered", String(isPasswordOK));
+        setFullname('Patrizio Tardiolo Bonifazi');
+        setMailAddress('p.tardiolobonifazi@vivasoft.it');
+        setMailSubject('Benvenuto ' + name + ' ' + surname);
+        setMailBody('Questo è il codice da inserire nel pannello di conferma mail: abcd1234');
 
         if(isPasswordOK){
             
-            // Redirect to ConfirmedMail page intranet
-            router.push("/intranet/confirmedmail");
+            if (!db) {
+                console.error('Database is not initialized');
+                return;
+            }
+    
+            try {
+                
+                // Check if the user is already registered
+                const checkUser = db.exec(`SELECT * FROM T_Register WHERE Email = '${email}'`);
+                console.log('handleRegister - ' + `SELECT * FROM T_Register WHERE Email = '${email}'`);
+        
+                if (!checkUser || checkUser.length === 0) {
+                    // Register the user
+                    const query = `
+                        INSERT INTO [T_Register]
+                            ([Name]
+                            ,[Surname]
+                            ,[Email]
+                            ,[Password]
+                            ,[Address]
+                            ,[Code])
+                        VALUES
+                            ('${name}'
+                            ,'${surname}'
+                            ,'${email}'
+                            ,'${password}'
+                            ,'${address}'
+                            ,'')`;
+                    db.run(query);
+                    console.log("User registered successfully.");
+            
+                    // ✅ Save the updated database back to IndexedDB
+                    const updatedDb = db.export();
+                    const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
+                    console.log('handleRegister - databasePath: ' + databasePath);
+                    await localforage.setItem(databasePath, updatedDb);
+                    console.log("Database saved to IndexedDB after registration");
+
+                    await sendEmail(fullname,mailAddress,mailSubject,mailBody);
+            
+                    // Redirect to ConfirmedMail page intranet
+                    router.push("/intranet/confirmedmail");
+                } else {
+                    console.log('handleRegister - User already exists: ' + checkUser)
+                }
+        
+            } catch (error) {
+                console.error("Error registering user:", error);
+            }
+            
         }
 
     };
@@ -96,7 +171,7 @@ const Register = () => {
             <CssBaseline />
             <Box
                 sx={{
-                mt: 20,
+                mt: 2,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -118,6 +193,19 @@ const Register = () => {
                         autoFocus
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                    />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                    <TextField
+                        name="surname"
+                        required
+                        fullWidth
+                        id="surname"
+                        label="Surname"
+                        autoFocus
+                        value={surname}
+                        onChange={(e) => setSurname(e.target.value)}
                     />
                     </Grid>
 
