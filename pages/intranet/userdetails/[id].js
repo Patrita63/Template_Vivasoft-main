@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { FormControl, FormGroup, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField, CircularProgress } from "@mui/material";
 import React, {useState, useEffect } from "react";
 import loadDatabase from '../../../lib/databasesqlite';
+const localforage = require("localforage");
 
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 
@@ -17,8 +18,6 @@ import { Box } from "@mui/material";
 // Validation - npm install react-hook-form
 import { useForm, Controller } from 'react-hook-form';
 
-// PATRIZIO TODO
-// import { addUser, getRoles, checkUserByEmailExists } from "../service/api";
 import styles from '../AllUsers.module.css';
 
 const UserContainer = styled(FormGroup)`
@@ -128,7 +127,7 @@ const UserDetails = () => {
                         // setValue('datadinascita', rows[0][4]);
                     }
 
-                    
+                    debugger;
                     if(rows[0][5] === null){
                         setValue('phone','');
                     } else {
@@ -178,16 +177,6 @@ const UserDetails = () => {
         } else if (clickedButton === 'delete') {
             DeleteUserData(data);
         }
-        // debugger;
-        /* console.log('Form Data:', data);
-        const alreadyExist = await checkUserByEmailExists(data.email);
-        if(!alreadyExist) {
-            AddUserData(data);
-        }
-        else
-        {
-            alert("Already exists a user with mail " + data.email);
-        } */
     };
 
     // Validation
@@ -197,37 +186,118 @@ const UserDetails = () => {
         const isValid = watchAllFields.nome &&
         watchAllFields.cognome &&
         watchAllFields.email &&
-        // watchAllFields.phone &&
+        watchAllFields.phone &&
+        watchAllFields.datadinascita &&
+        watchAllFields.tipoutente &&
         !errors.tipoutente && // No errors on tipoutente
         !errors.nome && // No errors on name
         !errors.cognome && // No errors on username
         !errors.email && // No errors on email
-        // !errors.phone && // No errors on phone
+        !errors.phone && // No errors on phone
+        !errors.datadinascita && // No errors on datadinascita
         Object.keys(errors).length === 0;
-        // console.log('errors.role: ' + errors.role);
+        // console.log('errors.tipoutente: ' + errors.tipoutente);
         // console.log('isValid: ' + isValid);
         return (
             isValid
         );
     };
 
-    const UpdateUserData = async (dataUser) => {
-        // await addUser(user);
-        console.log('UpdateUserData dataUser:', dataUser);
+    const UpdateUserData = async (user) => {
+        console.log('UpdateUserData dataUser:', user);
 
-        // Redirect to AllUsers page intranet
-        // router.push("/intranet/allusers");
+        if (!db) {
+            console.error('Database is not initialized');
+            return;
+        }
+
+        try {
+            
+            // Check if the user exists before addition
+            const checkUser = db.exec(`SELECT * FROM T_Utente WHERE Id = ${id}`);
+            console.log("User already exists:", checkUser);
+
+            if (!checkUser || checkUser.length === 0) {
+                console.warn("User not found. Nothing to update.");
+                return;
+            }
+    
+            
+            // Update the user
+            const query = `
+                UPDATE [T_Utente]
+                SET [Nome] = '${user.nome}'
+                    ,[Cognome] = '${user.cognome}'
+                    ,[Email] = '${user.email}'
+                    ,[Phone] = '${user.phone}'
+                    ,[DataDiNascita] = '${user.datadinascita}'
+                    ,[IdTipoUtente] = ${user.tipoutente.value}
+                WHERE Id = ${id}
+                `;
+            db.run(query);
+            console.log("User updated successfully.");
+    
+            // ✅ Save the updated database back to IndexedDB
+            const updatedDb = db.export();
+            const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
+            console.log('UpdateUserData - databasePath: ' + databasePath);
+            await localforage.setItem(databasePath, updatedDb);
+            console.log("Database saved to IndexedDB after update.");
+    
+            // Redirect to AllUsers page
+            router.push("/intranet/allusers");
+            
+    
+        } catch (error) {
+            console.error("Error updating user:", error);
+        }
     }
 
     const GoBack = async () => {
         router.push("/intranet/allusers");
     }
 
+
+    // Your loadDatabase function loads an SQLite database in a client-side JavaScript environment using SQL.js (a WebAssembly-based SQLite implementation). 
+    // However, since SQL.js operates entirely in memory, it does not persist changes (like deletions) to a file-based database unless explicitly saved. 
+    // This explains why deleted records reappear after a page refresh.
     const DeleteUserData = async (dataUser) => {
         console.log('DeleteUserData dataUser:', dataUser);
-        // Redirect to AllUsers page intranet
-        // router.push("/intranet/allusers");
-    }
+    
+        if (!db) {
+            console.error('Database is not initialized');
+            return;
+        }
+    
+        try {
+            // Check if the user exists before deletion
+            const checkUser = db.exec(`SELECT * FROM T_Utente WHERE Id = ${id}`);
+            console.log("User exists before deletion:", checkUser);
+    
+            if (!checkUser || checkUser.length === 0) {
+                console.warn("User not found. Nothing to delete.");
+                return;
+            }
+    
+            // Delete the user
+            db.run(`DELETE FROM T_Utente WHERE Id = ${id}`);
+            console.log("User deleted successfully.");
+    
+            // ✅ Save the updated database back to IndexedDB
+            const updatedDb = db.export();
+            const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
+            console.log('DeleteUserData - databasePath: ' + databasePath);
+            await localforage.setItem(databasePath, updatedDb);
+            console.log("Database saved to IndexedDB after deletion.");
+    
+            // Redirect to AllUsers page
+            router.push("/intranet/allusers");
+    
+        } catch (error) {
+            console.error("Error deleting user:", error);
+        }
+    };
+    
 
     if (loading) {
         return <CircularProgress />; // Show a loading spinner while data is being fetched
