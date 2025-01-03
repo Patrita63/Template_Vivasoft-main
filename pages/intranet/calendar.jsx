@@ -42,6 +42,7 @@ import {
     Toolbar,
     IconButton,
     Typography,
+    MenuItem, Select, FormControl, InputLabel,
     Button
   } from "@mui/material";
 
@@ -61,12 +62,29 @@ const CalendarVivasoft = () => {
     // https://nextjs.org/docs/messages/react-hydration-error
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [username, setUsername] = useState('');
-    const [month, setMonth] = useState(0);
-    const [year, setYear] = useState(0);
+    
 
     const [message, setMessage] = useState('');
 
     const [isClient, setIsClient] = useState(false);
+
+    const years = Array.from({ length: 11 }, (_, i) => 2020 + i);
+    const currentYear = new Date().getFullYear(); // Get the current year
+    
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    // new Date().getMonth(); // Get current month (0-11)
+    const currentMonth = months[new Date().getMonth()]; // Get current month name
+
+    const [month, setMonth] = useState(currentMonth);
+    const [year, setYear] = useState(currentYear); // Set default year
+
+    const getMonthNumber = (monthName) => {
+        const index = months.indexOf(monthName);
+        return index !== -1 ? index + 1 : null;
+    };
 
     useEffect(() => {
         setIsClient(true); // This ensures the component knows it's running on the client
@@ -79,7 +97,7 @@ const CalendarVivasoft = () => {
             try {
                 setMessage('Please wait');
                 const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
-                console.log('intranet\home.js - databasePath: ' + databasePath);
+                console.log('intranet\calendar.js - databasePath: ' + databasePath);
                 const database = await loadDatabase(databasePath);
                 setDb(database);
                 setMessage('Database ready to use');
@@ -104,8 +122,8 @@ const CalendarVivasoft = () => {
             );
             if (tableExists.length === 0) throw new Error('Table T_Calendario does not exist');
 
-            setYear(2024);
-            setMonth(12);
+            // setYear(2024);
+            // setMonth(12);
 
             const query = `
                 SELECT 
@@ -130,7 +148,7 @@ const CalendarVivasoft = () => {
                     FROM 
                         T_Calendario
                     WHERE 
-                        Anno = ` + year + ` AND Mese = ` + month + `
+                        Anno = ` + year + ` AND Mese = ` + getMonthNumber(month) + `
                 ) AS WeeklyData
                 GROUP BY 
                     NumeroSettimanaAnno, NomeMese, Anno
@@ -138,6 +156,7 @@ const CalendarVivasoft = () => {
                     NumeroSettimanaAnno;
             `;
             // debugger;
+            console.log('getCalendarioMensile - query' + query);
             const result = await db.exec(query);
             const rows = result[0]?.values || [];
             console.log(rows.length);
@@ -313,9 +332,33 @@ const CalendarVivasoft = () => {
                 <br ></br>  
             
                 { (message === "Database ready to use" || message === 'Please retry to load data.') &&
-                    <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
-                        Visualizza Calendario Mensile
-                    </Button>
+                    <>
+                        <div style={{ display: "flex", marginLeft: "625px", gap: "20px", alignItems: "center" }}>
+                            {/* Year Select */}
+                            <FormControl style={{ minWidth: 120 }}>
+                            <InputLabel>Year</InputLabel>
+                            <Select value={year} onChange={(e) => setYear(e.target.value)}>
+                                {years.map((yr) => (
+                                <MenuItem key={yr} value={yr}>{yr}</MenuItem>
+                                ))}
+                            </Select>
+                            </FormControl>
+                    
+                            {/* Month Select */}
+                            <FormControl style={{ minWidth: 120 }}>
+                            <InputLabel>Month</InputLabel>
+                            <Select value={month} onChange={(e) => setMonth(e.target.value)}>
+                                {months.map((mo, index) => (
+                                <MenuItem key={index} value={mo}>{mo}</MenuItem>
+                                ))}
+                            </Select>
+                            </FormControl>
+                        </div>
+                        <br></br>
+                        <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
+                            Visualizza Calendario Mensile
+                        </Button>
+                    </>
                 }
                  
                 <Container maxWidth="xs" >
