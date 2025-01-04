@@ -70,7 +70,7 @@ const Register = () => {
         console.log(fullname + ' - ' + mailAddress + ' - ' +  mailSubject + ' - ' +  mailBody);
         setMessage('');
         try {
-          const response = await fetch('/api/send-register-code', {
+          const response = await fetch('/api/sendemail-acsazure', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -104,8 +104,8 @@ const Register = () => {
         console.log("Register - Password Confirmed = " + isPasswordOK);
         debugger;
 
-        setFullname('Patrizio Tardiolo Bonifazi');
-        setMailAddress('p.tardiolobonifazi@vivasoft.it');
+        setFullname(name + ' ' + surname);
+        setMailAddress(email);
         setMailSubject('Benvenuto ' + name + ' ' + surname);
         setMailBody('Questo è il codice da inserire nel pannello di conferma mail: abcd1234');
 

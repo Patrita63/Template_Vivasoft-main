@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@azure/communication-email": "^1.0.0",
+    "@azure/identity": "^4.5.0",
     "@date-io/date-fns": "^2.10.11",
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
