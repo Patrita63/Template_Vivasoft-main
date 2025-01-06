@@ -66,48 +66,72 @@ const Register = () => {
         router.push("/intranet");
     }
 
-    const sendEmail = async (fullname,mailAddress,mailSubject,mailBody) => {
-        console.log(fullname + ' - ' + mailAddress + ' - ' +  mailSubject + ' - ' +  mailBody);
-        setMessage('');
+    const sendEmail = async (fullname, mailAddress, mailSubject, mailBody) => {
+        console.log(`📧 Sending email: ${mailAddress}, Subject: ${mailSubject}`);
+    
         try {
-          const response = await fetch('/api/sendemail-acsazure', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              fullname,
-              mailAddress,
-              mailSubject,
-              mailBody
-            }),
-          });
+            const response = await fetch('/api/sendemail-acsazure', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ toEmail: mailAddress, subject: mailSubject, body: mailBody })
+            });
     
-          const result = await response.json();
+            console.log("📤 API Response:", response);
     
-          if (response.ok) {
-            setMessage('Email sent successfully!');
-          } else {
-            setMessage(`Failed to send email: ${result.error || 'Unknown error'}`);
-          }
+            const result = await response.json();
+            console.log("📩 API Result:", result);
+    
+            if (response.ok) {
+                setMessage('✅ Email sent successfully!');
+            } else {
+                console.error(`❌ Email failed: ${result.error || 'Unknown error'}`);
+                setMessage(`❌ Failed to send email: ${result.error || 'Unknown error'}`);
+            }
         } catch (error) {
-          console.error('Error:', error.message);
-          setMessage('An unexpected error occurred. Please try again.');
+            console.error("❌ Error in fetch:", error.message);
+            setMessage('An unexpected error occurred.');
         }
-    
     };
+    
+    // This function generate a code of 8 characters with this rules: 4 characters in lowercase and 4 numbers in a shuffled order
+    // (to mix letters and numbers randomly). 
+    // The generated code will have four lowercase letters and four numbers in a shuffled order.
+    function generateCode() {
+        const letters = 'abcdefghijklmnopqrstuvwxyz';
+        const numbers = '0123456789';
+        
+        let codeArray = [];
+        
+        // Generate 4 random lowercase letters
+        for (let i = 0; i < 4; i++) {
+            codeArray.push(letters.charAt(Math.floor(Math.random() * letters.length)));
+        }
+        
+        // Generate 4 random numbers
+        for (let i = 0; i < 4; i++) {
+            codeArray.push(numbers.charAt(Math.floor(Math.random() * numbers.length)));
+        }
+        
+        // Shuffle the array to mix letters and numbers
+        codeArray = codeArray.sort(() => Math.random() - 0.5);
+        
+        return codeArray.join('');
+    }
 
     const handleRegister = async () => {
 
         const registerUserData = new RegisterData(name, surname, email, password, confirmpassword, address);
         const isPasswordOK = registerUserData.checkPassword();
         console.log("Register - Password Confirmed = " + isPasswordOK);
+        const code = generateCode();
+        console.log('Register - email: ' + email);
+        console.log('Register- code: ' + code);
         debugger;
 
         setFullname(name + ' ' + surname);
         setMailAddress(email);
         setMailSubject('Benvenuto ' + name + ' ' + surname);
-        setMailBody('Questo è il codice da inserire nel pannello di conferma mail: abcd1234');
+        setMailBody(`Questo è il codice da inserire nel pannello di conferma mail: ${code}`);
 
         if(isPasswordOK){
             
@@ -138,7 +162,7 @@ const Register = () => {
                             ,'${email}'
                             ,'${password}'
                             ,'${address}'
-                            ,'')`;
+                            ,'${code}')`;
                     db.run(query);
                     console.log("User registered successfully.");
             
@@ -149,7 +173,10 @@ const Register = () => {
                     await localforage.setItem(databasePath, updatedDb);
                     console.log("Database saved to IndexedDB after registration");
 
-                    await sendEmail(fullname,mailAddress,mailSubject,mailBody);
+                    localStorage.setItem("registrationmail", email);
+                    localStorage.setItem("registrationcode", code);
+
+                    await sendEmail(name + ' ' + surname,email,'Benvenuto ' + name + ' ' + surname,`Questo è il codice da inserire nel pannello di conferma mail: ${code}`);
             
                     // Redirect to ConfirmedMail page intranet
                     router.push("/intranet/confirmedmail");

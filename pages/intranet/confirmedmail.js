@@ -26,7 +26,15 @@ const ConfirmedMail = () => {
     };
 
     const handleMailConfirmed = () => {
-        if(value === "abcd1234") {
+        debugger;
+        // localStorage.setItem("registrationmail", 'p.tardiolobonifazi@vivasoft.it');
+        // localStorage.setItem("registrationcode", 'e0p5m19s');
+
+        const email = global?.localStorage?.getItem("registrationmail");
+        const code = global?.localStorage?.getItem("registrationcode");
+
+        if(value === code && email !== '') {
+            localStorage.clear();
             // Redirect to home page intranet
             router.push("/intranet");
         } else {
