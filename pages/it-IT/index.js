@@ -102,7 +102,7 @@ const Home = () => {
       <div className='bg-primary/60 h-full'>
         {/* text */}
         <div className='w-full h-full bg-gradient-to-r from-primary via-black/30 to-black/10 py-80'>
-          <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto'>
+          <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto xl:pt-0 pt-20'>
             {/* Modal popup MUI fullScreen in <Dialog */}
             <Dialog open={isPopupOpened} onClose={handleClose} fullWidth maxWidth="sm">
               <DialogTitle>Questo sito utilizza cookies <IconButton style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>

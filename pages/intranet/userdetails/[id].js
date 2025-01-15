@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 
+import Cookies from "js-cookie";
+
 import { FormControl, FormGroup, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField, CircularProgress } from "@mui/material";
 import React, {useState, useEffect } from "react";
-import loadDatabase from '../../../lib/databasesqlite';
-const localforage = require("localforage");
 
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 
@@ -13,6 +13,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
+import { format, parseISO } from 'date-fns';
+
 import { Box } from "@mui/material";
 
 // Validation - npm install react-hook-form
@@ -20,27 +22,42 @@ import { useForm, Controller } from 'react-hook-form';
 
 import styles from '../AllUsers.module.css';
 
-const UserContainer = styled(FormGroup)`
+// const UserContainer = styled(FormGroup)`
+//     width: 50%;
+//     margin: 5% auto 0 auto;
+//     background-color: white;
+// `
+
+const UserContainer = styled(Box)`
     width: 50%;
     margin: 5% auto 0 auto;
+    padding: 20px;
     background-color: white;
-`
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+`;
 
 const UserDetails = () => {
-    const [loading, setLoading] = useState(true); // Loading state
+    // const [loading, setLoading] = useState(true); // Loading state
     const router = useRouter();
     const { id } = router.query; // Extract the dynamic route parameter
-
-    const [db, setDb] = useState(null);
-    const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 
     const [isDataReady, setIsDataReady] = useState(false);
 
     const [listTipoUtente, setListTipoUtente] = useState([]);
+    const [isClient, setIsClient] = useState(false);
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [username, setUsername] = useState('');
 
     // Validation
+    // N.B. Issue: data Object Lacks id Property in onSubmit
+    // The problem is that react-hook-form does not automatically include the id field unless it's explicitly registered in the form.
+    // Solution: Add id to defaultValues in useForm
+    // Ensure the id field is included in the form defaults:
     const initialValues = {
+        id: 0,  // ✅ Ensure `id` is included
         nome: '',
         cognome: '',
         email: '',
@@ -54,6 +71,7 @@ const UserDetails = () => {
    /*  const { handleSubmit, control, watch, setValue, formState: { errors } } = useForm({
         defaultValues: initialValues
     }); */
+
     const [formValues, setFormValues] = useState(initialValues);
     const {
         control,
@@ -65,117 +83,148 @@ const UserDetails = () => {
         defaultValues: formValues
     });
 
+    // Stops Checking When Component Unmounts (clearInterval)
     useEffect(() => {
-        if (id) {
-            // Perform some action with the id
-            console.log('ID from query:', id);
-        }
+        if (!id) return; // Prevent running the effect when id is undefined
 
-        const initializeDatabase = async (idUser) => {
-            
-            try {
-                setIsDataReady(false);
-                const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
-                console.log('intranet-userdetails.js - databasePath: ' + databasePath);
-                const database = await loadDatabase(databasePath);
-                setDb(database);
-                console.log('database: ' + database);
-                // debugger;
+        console.log("Fetching user with ID:", id);
+        getUserById(id);
+        getAllTipoUtente();
 
-                if(database){
-                    const query = 'SELECT Id, TipoUtente, Descrizione FROM T_TipoUtente';
-                    console.log('query: ' + query);
-                    const result = database.exec(query);
-                    // debugger;
-                    const rows = result[0]?.values || [];
+        setIsClient(true); // This ensures the component knows it's running on the client
+        const checkAuth = () => {
+            const auth = Cookies.get("isAuthenticated") === "true"; // Convert to boolean
+            const user = Cookies.get("username");
+            setIsAuthenticated(auth);
+            setUsername(user || "");
+        };
+    
+        checkAuth(); // Run once when component mounts
+    
+        const interval = setInterval(checkAuth, 1000); // Check cookies every second
+    
+        return () => clearInterval(interval); // Cleanup on unmount
+        
+    }, [id]); // Runs when `id` changes
 
-                    const transformedArray = rows.map(item => ({
-                        value: item[0],
-                        TipoUtente: item[1]
-                    }));
-                      
-                    console.log(transformedArray);
-
-                    setListTipoUtente(transformedArray);
-                    
-                    setIsDataReady(true);
-                    setLoading(false); // Data is loaded
-                }
-
-                if(database){
-                    // const query = `SELECT Id,Nome,Cognome,Email,DataDiNascita,Phone,IdTipoUtente FROM T_Utente WHERE Id=${idUser}`;
-                    const query = `SELECT ut.[Id],ut.[Nome],ut.[Cognome],ut.[Email],ut.[DataDiNascita],ut.[Phone],ut.[IdTipoUtente],tu.TipoUtente FROM T_Utente AS ut INNER JOIN T_TipoUtente AS tu ON tu.Id = ut.IdTipoUtente WHERE ut.[Id]=${idUser}`;
-                    
-                    console.log('query: ' + query);
-                    const result = database.exec(query);
-                    // debugger;
-                    const rows = result[0]?.values || [];
-                    // setData(rows.map(([id, nome, cognome, email,datadinascita,phone,idtipoutente]) => ({ id, nome, cognome, email, datadinascita, phone, idtipoutente })));
-                    
-                    // Update formValues with the API response
-                    // setFormValues(rows.map(([id, nome, cognome, email,datadinascita,phone,idtipoutente]) => ({ id, nome, cognome, email, datadinascita, phone, idtipoutente })));
-                    
-                    // Set values in the form
-                    setValue('nome', rows[0][1]);
-                    setValue('cognome', rows[0][2]);
-                    setValue('email', rows[0][3]);
-
-                    if(rows[0][4] === null){
-                        setValue('datadinascita','2024-01-01');
-                    } else {
-                        setValue('datadinascita', new Date(rows[0][4])); // Convert to Date object
-                        // setValue('datadinascita', rows[0][4]);
-                    }
-
-                    debugger;
-                    if(rows[0][5] === null){
-                        setValue('phone','');
-                    } else {
-                        setValue('phone', rows[0][5]);
-                    }
-                    
-                    setValue('idtipoutente', rows[0][6]);
-
-                    const transformedSelectedValue = {
-                        value: rows[0][6],
-                        TipoUtente: rows[0][7]
-                    };
-                
-                    // Set the default value for 'tipoutente'
-                    setValue('tipoutente', transformedSelectedValue);
-
-                    /* Object.entries(rows).forEach(([key, value]) => {
-                        setValue(key, value);
-                    }); */
-
-                    setIsDataReady(true);
-                    setLoading(false); // Data is loaded
-                }
-                
-            } catch (err) {
-                setIsDataReady(false);
-                setError(err.message);
-                console.log('UserDetails - useEffect error: ' + err.message);
+    const getAllTipoUtente = async () => {
+        try {
+            const response = await fetch("/api/utente/getalltipoutente", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+            });
+        
+            const data = await response.json();
+        
+            if (!response.ok) {
+                setError(data.message || "Errore durante getAllTipoUtente");
+                return;
             }
+
+            // Ensure `user` exists and is an array
+            if (!Array.isArray(data?.user)) {
+                throw new Error("Unexpected API response: 'user' field is not an array");
+            }
+            console.log(data?.user);
+
+            setListTipoUtente(data?.user);
+        
+            if (!response.ok) {
+                alert(data.error || "Errore durante la getAllTipoUtente");
+                return;
+            }
+      
+            console.log("get AllTipoUtente successfully!");
+
+        } catch (err) {
+            console.error("getAllTipoUtente Error:", err);
+        }
+    };
+
+    // // Ensure the date is parsed correctly before setting it
+    // const formattedDate = (dateString) => {
+    //     if (!dateString) return ""; // Handle empty/null values
+    //     return format(parseISO(dateString), "yyyy-MM-dd");
+    // };
+
+    // fetch getUserById
+    const getUserById = async (id) => {
+        if (!id) {
+            console.error("Error: User ID is undefined");
+            setError("Invalid User ID");
+            // alert("Error: User ID is undefined");
+            return;
         };
 
-        if(id !== undefined){
-            initializeDatabase(id);
-        }
-       
-    }, [id, setValue]);
+        try {
+            const response = await fetch(`/api/utente/manageuser?id=${id}`, {
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' }
+            });
+      
+            const data = await response.json();
+            debugger;
+      
+            if (!response.ok) {
+              setError(data.message || "Errore durante getUserById");
+              alert("Errore nel recupero dell'utente. " + data.error);
+              return;
+            }
 
+            console.log("User Data:", data.users[0]); // First user in the array
+            // N.B. After fetching user data, you must update the form fields using setValue from react-hook-form.
+
+            // // Format and map user data correctly
+            // const user = data.users[0];
+            // const formattedUser = {
+            //     id: user.Id,
+            //     nome: user.Nome,
+            //     cognome: user.Cognome,
+            //     email: user.Email,
+            //     datadinascita: user.DataDiNascita ? format(parseISO(user.DataDiNascita), "yyyy-MM-dd") : "",
+            //     idtipoutente: user.IdTipoUtente,
+            //     phone: user.Phone,
+            //     tipoutente: user.TipoUtente
+            // };
+            // setFormValues(formattedUser);
+
+            // Extract user details
+            const user = data.users[0];
+
+            // Convert Date to "yyyy-MM-dd" format
+            const formattedDate = user.DataDiNascita ? format(parseISO(user.DataDiNascita), "yyyy-MM-dd") : "";
+
+            // Populate form fields with fetched data
+            setValue("id", user.Id);
+            setValue("nome", user.Nome);
+            setValue("cognome", user.Cognome);
+            setValue("email", user.Email);
+            setValue("datadinascita", formattedDate); // Correct format
+            setValue("phone", user.Phone);
+            setValue("tipoutente", { id: user.IdTipoUtente, TipoUtente: user.TipoUtente }); // Ensure object format
+
+            setIsDataReady(true);
+      
+          } catch (err) {
+            setIsDataReady(false);
+            console.error('Error fetching getUserById:', err);
+            
+            setError(err.message);
+            console.error("Error during getUserById:", err);
+          }
+    }
 
     // Validation
     const onSubmit = async (data, event) => {
+        debugger;
         console.log('Form Submitted:', data);
         const clickedButton = event.nativeEvent.submitter.name; // Access submitter's name
         // Get the name of the button clicked
 
         if (clickedButton === 'update') {
-            UpdateUserData(data);
+            handleUpdateUser(data);
         } else if (clickedButton === 'delete') {
-            DeleteUserData(data);
+            handleDeleteUser(data.id);
         }
     };
 
@@ -203,107 +252,76 @@ const UserDetails = () => {
         );
     };
 
-    const UpdateUserData = async (user) => {
-        console.log('UpdateUserData dataUser:', user);
-
-        if (!db) {
-            console.error('Database is not initialized');
-            return;
-        }
-
+    const handleUpdateUser = async (newUserData) => {
+        console.log("Sending data to API:", newUserData); // Log data before sending
         try {
             
-            // Check if the user exists before addition
-            const checkUser = db.exec(`SELECT * FROM T_Utente WHERE Id = ${id}`);
-            console.log('UpdateUserData - ' + `SELECT * FROM T_Utente WHERE Id = ${id}`);
-
-            if (!checkUser || checkUser.length === 0) {
-                console.warn("User not found. Nothing to update.");
+            const response = await fetch("/api/utente/manageuser", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                id: newUserData.id,
+                nome: newUserData.nome,
+                cognome: newUserData.cognome,
+                email: newUserData.email,
+                datadinascita: newUserData.datadinascita,
+                phone: newUserData.phone,
+                idtipoutente: newUserData.tipoutente.id
+                }),
+            });
+            debugger;
+            console.log("Full API response:", response);
+            console.log("Response status:", response.status);
+      
+            const data = await response.json();
+        
+            if (!response.ok) {
+                alert(data.error || "Errore durante l'aggiornamento dell'utente");
                 return;
             }
-    
-            
-            // Update the user
-            const query = `
-                UPDATE [T_Utente]
-                SET [Nome] = '${user.nome}'
-                    ,[Cognome] = '${user.cognome}'
-                    ,[Email] = '${user.email}'
-                    ,[Phone] = '${user.phone}'
-                    ,[DataDiNascita] = '${user.datadinascita}'
-                    ,[IdTipoUtente] = ${user.tipoutente.value}
-                WHERE Id = ${id}
-                `;
-            db.run(query);
-            console.log("User updated successfully.");
-    
-            // ✅ Save the updated database back to IndexedDB
-            const updatedDb = db.export();
-            const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
-            console.log('UpdateUserData - databasePath: ' + databasePath);
-            await localforage.setItem(databasePath, updatedDb);
-            console.log("Database saved to IndexedDB after update.");
-    
+        
+            console.log("User updated successfully!");
             // Redirect to AllUsers page
             router.push("/intranet/allusers");
-            
-    
-        } catch (error) {
-            console.error("Error updating user:", error);
+        } catch (err) {
+          console.error("Update User Error: ", err);
         }
-    }
+    };
 
     const GoBack = async () => {
         router.push("/intranet/allusers");
     }
 
-
-    // Your loadDatabase function loads an SQLite database in a client-side JavaScript environment using SQL.js (a WebAssembly-based SQLite implementation). 
-    // However, since SQL.js operates entirely in memory, it does not persist changes (like deletions) to a file-based database unless explicitly saved. 
-    // This explains why deleted records reappear after a page refresh.
-    const DeleteUserData = async (dataUser) => {
-        console.log('DeleteUserData dataUser:', dataUser);
     
-        if (!db) {
-            console.error('Database is not initialized');
-            return;
-        }
-    
+    const handleDeleteUser = async (userId) => {
+        console.log("Sending data to API:", id); // Log data before sending
         try {
-            // Check if the user exists before deletion
-            const checkUser = db.exec(`SELECT * FROM T_Utente WHERE Id = ${id}`);
-            console.log('DeleteUserData - ' + `SELECT * FROM T_Utente WHERE Id = ${id}`);
-    
-            if (!checkUser || checkUser.length === 0) {
-                console.warn("User not found. Nothing to delete.");
+            
+            const response = await fetch(`/api/utente/manageuser?id=${userId}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                id: id
+                }),
+            });
+
+            console.log("Full API response:", response);
+            console.log("Response status:", response.status);
+      
+            const data = await response.json();
+        
+            if (!response.ok) {
+                alert(data.error || "Errore durante la cancellazione dell'utente");
                 return;
-            } else {
-                console.log("DeleteUserData - User exists before deletion:", checkUser);
             }
-    
-            // Delete the user
-            db.run(`DELETE FROM T_Utente WHERE Id = ${id}`);
-            console.log("User deleted successfully.");
-    
-            // ✅ Save the updated database back to IndexedDB
-            const updatedDb = db.export();
-            const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
-            console.log('DeleteUserData - databasePath: ' + databasePath);
-            await localforage.setItem(databasePath, updatedDb);
-            console.log("Database saved to IndexedDB after deletion.");
-    
+        
+            console.log("User deleted successfully!");
             // Redirect to AllUsers page
             router.push("/intranet/allusers");
-    
-        } catch (error) {
-            console.error("Error deleting user:", error);
+        } catch (err) {
+          console.error("Delete User Error:", err);
         }
     };
-    
-
-    if (loading) {
-        return <CircularProgress />; // Show a loading spinner while data is being fetched
-    }
 
     return (
         <>
@@ -312,14 +330,19 @@ const UserDetails = () => {
             <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
         </Box>
         <UserContainer>
-            <Typography variant="h4">User Details with ID: {id}</Typography>
+            <Typography variant="h4">User Details with ID: {id} - Edit</Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                    name="id"
+                    control={control}
+                    render={({ field }) => <input type="hidden" {...field} />}
+                />
                 <Controller 
                     name="nome"
                     control={control}
                     rules={{ required: 'Name is required' }}
                     render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.name}>
+                        <FormControl fullWidth margin="normal" error={!!errors.name}>
                             <InputLabel htmlFor="nome">Nome</InputLabel>
                             <Input {...field} id="nome" />
                             <FormHelperText>{errors.nome?.message}</FormHelperText>
@@ -331,7 +354,7 @@ const UserDetails = () => {
                     control={control}
                     rules={{ required: 'Surname is required' }}
                     render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.cognome}>
+                        <FormControl fullWidth margin="normal" error={!!errors.cognome}>
                         <InputLabel htmlFor="cognome">Cognome</InputLabel>
                         <Input {...field} id="cognome" />
                         <FormHelperText>{errors.cognome?.message}</FormHelperText>
@@ -349,7 +372,7 @@ const UserDetails = () => {
                         },
                     }}
                     render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.email}>
+                        <FormControl fullWidth margin="normal" error={!!errors.email}>
                         <InputLabel htmlFor="email">Email</InputLabel>
                         <Input {...field} id="email" />
                         <FormHelperText>{errors.email?.message}</FormHelperText>
@@ -367,7 +390,7 @@ const UserDetails = () => {
                         },
                     }}
                     render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.phone}>
+                        <FormControl fullWidth margin="normal" error={!!errors.phone}>
                         <InputLabel htmlFor="phone">Phone</InputLabel>
                         <Input {...field} id="phone" />
                         <FormHelperText>{errors.phone?.message}</FormHelperText>
@@ -376,23 +399,25 @@ const UserDetails = () => {
                 />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <Controller
-                    name="datadinascita"
-                    control={control}
-                    rules={{
-                        required: 'Date of Birth is required',
-                    }}
-                    render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.datadinascita}>
-                        <DatePicker
-                            label="Date of Birth"
-                            value={field.value}
-                            onChange={(newValue) => field.onChange(newValue)} // Update the form state
-                            // OLD renderInput={(params) => <TextField {...params} />}
-                            slots={{ textField: (props) => <TextField {...props} /> }}
-                        />
-                        <FormHelperText>{errors.datadinascita?.message}</FormHelperText>
-                        </FormControl>
-                    )}
+                        name="datadinascita"
+                        control={control}
+                        rules={{
+                            required: 'Date of Birth is required',
+                        }}
+                        render={({ field }) => (
+                            <FormControl fullWidth margin="normal" error={!!errors.datadinascita}>
+                            <DatePicker
+                                label="Date of Birth"
+                                value={field.value ? parseISO(field.value) : null} // Convert string to Date
+                                onChange={(newValue) => {
+                                    const formatted = newValue ? format(newValue, "yyyy-MM-dd") : "";
+                                    field.onChange(formatted);
+                                }}
+                                slots={{ textField: (props) => <TextField {...props} /> }}
+                            />
+                            <FormHelperText>{errors.datadinascita?.message}</FormHelperText>
+                            </FormControl>
+                        )}
                     />
                 </LocalizationProvider>
                 <Controller
@@ -402,7 +427,7 @@ const UserDetails = () => {
                     required: 'User Type is required',
                     }}
                     render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.tipoutente}>
+                    <FormControl fullWidth margin="normal" error={!!errors.tipoutente}>
                         <Autocomplete
                         id="tipoutente"
                         options={listTipoUtente}
@@ -419,7 +444,6 @@ const UserDetails = () => {
                     )}
                 />
                 <Button
-                    type="submit"
                     variant="contained"
                     className={styles.BtnBackAllUsers}
                     sx={{ mt: 2 }}
@@ -431,17 +455,18 @@ const UserDetails = () => {
                     type="submit"
                     name="update" // Unique name to identify the button
                     variant="contained"
-                    className={styles.BtnUpdateUser}
+                    className={`${styles.BtnUpdateUser} ${styles.BtnUpdateMarginLeft}`}
                     sx={{ mt: 2 }}
                     disabled={!isFormValid()} // Button is disabled if the form is invalid
                 >
                     Update User
                 </Button>
                 <Button
+                    hidden={true}
                     type="submit"
                     name="delete" // Unique name to identify the button
                     variant="contained"
-                    className={styles.BtnDeleteUser}
+                    className={`${styles.BtnDeleteUser} ${styles.BtnUpdateMarginLeft}`}
                     sx={{ mt: 2 }}
                 >
                     Delete

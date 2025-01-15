@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './Logout.module.css';
 
+import Cookies from "js-cookie";
+
 import {
     Container,
     CssBaseline,
@@ -17,16 +19,14 @@ const Logout = () => {
     // To navigate to another page
     const router = useRouter();
     
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-
     const handleCancel = () => {
         // Redirect to home page intranet
         router.push("/intranet");
     }
 
     const handleLogout = async () => {
-        setIsAuthenticated(false);
-        localStorage.clear();
+        Cookies.remove("isAuthenticated");
+        Cookies.remove("username");
         // Redirect to home page intranet
         router.push("/intranet");
       };

@@ -1,20 +1,22 @@
+import Layout from '../components/Layout';
 import Head from "next/head"; // Importa il componente Head di Next.js
 import Image from 'next/image';
 
 const CurYear = new Date().getFullYear().toString();
 const PrivacyPolicy = () => {
   return (
-    <>
+    <Layout>
       <Head>
         <title>Privacy Policy</title>
       </Head>
-      <div className="container mx-auto p-8">
+      <div className='bg-primary/60 h-full'>
+      <div className="container mx-auto p-8 pt-40">
         <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
           <h1 className="text-3xl font-bold text-center text-primary mb-6">
             Privacy Policy
           </h1>
           <p className="text-center text-gray-600 mb-4">
-            Ultimo aggiornamento: 29/11/{CurYear}
+            Ultimo aggiornamento: {CurYear}
           </p>
           
                 <Image
@@ -197,7 +199,8 @@ const PrivacyPolicy = () => {
           </p>
         </div>
       </div>
-    </>
+      </div>
+      </Layout>
   );
 };
 

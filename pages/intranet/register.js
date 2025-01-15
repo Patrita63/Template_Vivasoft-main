@@ -3,8 +3,7 @@ import { useRouter } from 'next/router';
 import styles from './Register.module.css';
 
 import { RegisterData } from '../../Models/registerdata';
-import loadDatabase from '../../lib/databasesqlite';
-const localforage = require("localforage");
+import getConnection from '../../lib/dbsqlazure';
 
 import {
     Avatar,
@@ -166,11 +165,9 @@ const Register = () => {
                     db.run(query);
                     console.log("User registered successfully.");
             
-                    // ✅ Save the updated database back to IndexedDB
-                    const updatedDb = db.export();
+                    
                     const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
                     console.log('handleRegister - databasePath: ' + databasePath);
-                    await localforage.setItem(databasePath, updatedDb);
                     console.log("Database saved to IndexedDB after registration");
 
                     localStorage.setItem("registrationmail", email);

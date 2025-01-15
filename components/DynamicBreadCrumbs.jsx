@@ -12,6 +12,12 @@ const DynamicBreadCrumbs = () => {
   const isUserDetailsPage = pathnames.includes("userdetails");
   const isAllUsersPage = pathnames.includes("allusers");
 
+  // Custom logic to handle combined "All Users / View User Details"
+  const isViewUserDetailsPage = pathnames.includes("viewuserdetails");
+
+  // Custom logic to handle combined "All Users / Delete User"
+  const isDeleteUserPage = pathnames.includes("deleteuser");
+
   return (
     <Breadcrumbs aria-label="breadcrumb" sx={{ margin: "16px 0" }}>
       {/* Home and Intranet Links */}
@@ -29,7 +35,31 @@ const DynamicBreadCrumbs = () => {
             <Link href="/intranet/allusers" passHref>
               All Users
             </Link>{" "}
-            / User Details ({router.query.id || "N/A"})
+            / Edit User Details ({router.query.id || "N/A"})
+          </Typography>
+        ) : (
+          <Typography color="text.primary">All Users</Typography>
+        )
+      ) : null}
+      {isAllUsersPage || isViewUserDetailsPage ? (
+        isViewUserDetailsPage ? (
+          <Typography color="text.primary">
+            <Link href="/intranet/allusers" passHref>
+              All Users
+            </Link>{" "}
+            / View User Details ({router.query.id || "N/A"})
+          </Typography>
+        ) : (
+          <Typography color="text.primary">All Users</Typography>
+        )
+      ) : null}
+      {isAllUsersPage || isDeleteUserPage ? (
+        isDeleteUserPage ? (
+          <Typography color="text.primary">
+            <Link href="/intranet/allusers" passHref>
+              All Users
+            </Link>{" "}
+            / Delete User ({router.query.id || "N/A"})
           </Typography>
         ) : (
           <Typography color="text.primary">All Users</Typography>

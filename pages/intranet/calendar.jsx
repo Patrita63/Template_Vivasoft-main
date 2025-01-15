@@ -21,7 +21,7 @@
 
 // Use embedded sqlite database with IndexedDB
 import React, { useState, useEffect } from 'react';
-import loadDatabase from '../../lib/databasesqlite';
+import getConnection from '../../lib/dbsqlazure';
 
 // https://mui.com/x/react-data-grid/
 // import { DataGrid } from '@mui/x-data-grid';

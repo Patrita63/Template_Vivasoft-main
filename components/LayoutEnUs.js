@@ -17,7 +17,7 @@ import FooterEnUs from '../components/FooterEnUs';
 const LayoutEnUs = ({ children }) => {
   return (
     <div
-      className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative min-h-screen flex flex-col`}
+      className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative min-h-screen flex flex-col scroll-container`}
     >
      
       <NavEnUS />

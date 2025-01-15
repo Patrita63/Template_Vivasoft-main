@@ -32,14 +32,27 @@
     color: #005f6a;
 }
 
+.BtnTopUsers {
+    margin-top: 10px;
+}
+
 .BtnLoadUsers {
     background-color: blue;
     color: whitesmoke;
 }
 
-.BtnUpdateUser {
+.BtnEditUser {
     background-color: blue;
     color: whitesmoke;
+}
+
+.BtnUpdateUser {
+    background-color: rgb(66, 87, 35);
+    color: whitesmoke;
+}
+
+.BtnUpdateMarginLeft {
+    margin-left: 525px;
 }
 
 .BtnBackAllUsers {
@@ -51,7 +64,17 @@
     background-color: rgb(221, 25, 25);
     color: whitesmoke;
 }
+.BtnDeleteUser:hover {
+    background-color: darkred !important;
+}
+
+.BtnDeleteMarginLeft {
+    margin-left: 565px;
+}
 
 .MarginTop {
     margin-top: 10px;
 }
+
+  
+ 

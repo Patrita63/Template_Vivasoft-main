@@ -1,107 +1,67 @@
-// PATRIZIO N.B. NO si usa import { useRouter } from 'next/router';
-// import { Link, useNavigate } from "react-router-dom";
-
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import styles from './Login.module.css';
-
+import { useState } from "react";
+import { useRouter } from "next/router";
+import styles from "./Login.module.css";
 import {
-    Container,
-    CssBaseline,
-    Box,
-    Avatar,
-    Typography,
-    TextField,
-    Button
+  Container,
+  CssBaseline,
+  Box,
+  Avatar,
+  Typography,
+  TextField,
+  Button
 } from "@mui/material";
-
 import { LockOutlined } from "@mui/icons-material";
-// next link
-import Link from 'next/link';
+import Link from "next/link";
 
-import loadDatabase from '../../../lib/databasesqlite';
-const localforage = require("localforage");
+import Cookies from "js-cookie";
 
 const Login = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-    // To navigate to another page
-    const router = useRouter();
-    const [db, setDb] = useState(null);
-    const [error, setError] = useState(null);
-    
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const handleCancel = () => {
+    router.push("/intranet");
+  };
 
-    useEffect(() => {
-      const initializeDatabase = async () => {
-          
-          try {
-              const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
-              console.log('Login - databasePath: ' + databasePath);
-              const database = await loadDatabase(databasePath);
-              setDb(database);
-              console.log('database: ' + database);
-              // debugger;
-          } catch (err) {
-              setError(err.message);
-              console.log('Login - useEffect error: ' + err.message);
-          }
-      };
+  const handleLogin = async () => {
+    localStorage.setItem("username", email);
 
-      initializeDatabase();
+    try {
+      const response = await fetch('/api/authenticate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    }, []);
+      const data = await response.json();
 
-    const handleCancel = () => {
-      // Redirect to home page intranet
-      router.push("/intranet");
-    }
-
-    const handleLogin = async () => {
-
-      const formData = new FormData();
-      formData.set('Username', email);
-      formData.set('Password', password);
-
-      localStorage.setItem("username", email);
-
-      if (!db) {
-        console.error('Database is not initialized');
+      if (!response.ok) {
+        setError(data.message || "Errore durante il login");
         return;
       }
 
-      try {
-          
-        // Check if the user is already registered
-        const checkUser = db.exec(`SELECT * FROM T_Register WHERE Email = '${email}' AND Password = '${password}'`);
-        console.log('handleLogin - ' + `SELECT * FROM T_Register WHERE Email = '${email}' AND Password = '${password}'`);
+      Cookies.set("isAuthenticated", "true", { expires: 1 / 48, secure: true }); // Expires in 30 minutes
+      Cookies.set("username", email, { expires: 1 / 48, secure: true });
+      router.push("/intranet");
 
-        if (!checkUser || checkUser.length === 0) {
-          alert('Utente NON Registrato!!!');
-        } else {
-          setIsAuthenticated(true);
-          localStorage.setItem("isAuthenticated", 'true');
-  
-          // Redirect to home page intranet
-          router.push("/intranet");
-        }
+    } catch (err) {
+      console.error("Error during login:", err);
+      setError("Errore di connessione al server");
+    }
+  };
 
-      } catch (error) {
-        console.error("Error registering user:", error);
-      }
-    };
-
-    return (
-        <>
-        <Container maxWidth="xs">
+  return (
+    <>
+      <Container maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
             mt: 20,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "center"
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
@@ -130,12 +90,13 @@ const Login = () => {
               label="Password"
               type="password"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
-            <Button className={styles.LoginCancel}
+            {error && <Typography color="error">{error}</Typography>}
+
+            <Button
+              className={styles.LoginCancel}
               fullWidth
               color="error"
               variant="contained"
@@ -145,7 +106,8 @@ const Login = () => {
               Cancel
             </Button>
 
-            <Button className={styles.Login}
+            <Button
+              className={styles.Login}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -153,14 +115,18 @@ const Login = () => {
             >
               Login
             </Button>
-            {/* https://stackoverflow.com/questions/38382153/multiple-classnames-with-css-modules-and-react */}
-            <Link className={`${styles.CenterDiv} ${styles.UnderLine}`} href={'/intranet/register'}>Non hai un account? Registrati</Link>
-              
+
+            <Link
+              className={`${styles.CenterDiv} ${styles.UnderLine}`}
+              href={"/intranet/register"}
+            >
+              Non hai un account? Registrati
+            </Link>
           </Box>
         </Box>
       </Container>
-      </>
-    );
+    </>
+  );
 };
 
 export default Login;

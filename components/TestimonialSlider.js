@@ -1,21 +1,20 @@
 // testimonial slider data
 export const testimonialSlider = [
   {
-    image: '/t-avt-1.png',
-    name: 'Anne Smith',
-    position: 'Customer',
-    message:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum expedita odit beatae, cupiditate saepe quam officia aut placeat quas neque!',
+    
+    name: 'Eduard Stefanica',
+    position: 'Studente',
+    message:"Consiglio vivamente il signor Patrizio come esperto nel campo dello sviluppo software e delle reti. Durante il corso presso l'academy .Net 2023/24, ha dimostrato una conoscenza approfondita e una capacità straordinaria di insegnamento. La sua leadership empatica e la sua passione per l'insegnamento lo rendono un prezioso asset per qualsiasi team o progetto tecnologico. Inoltre, la sua vasta esperienza è supportata da numerose certificazioni Microsoft, confermando ulteriormente il suo livello di competenza nel settore.",
   },
   {
-    image: '/t-avt-2.png',
+    
     name: 'Jane Doe',
     position: 'Customer',
     message:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum expedita odit beatae, cupiditate saepe quam officia aut placeat quas neque!',
   },
   {
-    image: '/t-avt-3.png',
+    
     name: 'Jhon Doe',
     position: 'Customer',
     message:
@@ -43,11 +42,11 @@ const TestimonialSlider = () => {
   return (
     <Swiper
       navigation={true}
-      pagination={{
-        clickable: true,
-      }}
-      modules={[Navigation, Pagination]}
-      className='h-[400px]'
+      // pagination={{
+      //   clickable: true,
+      // }}
+      modules={[Navigation]}
+      className='h-[600px]'
     >
       {testimonialSlider.map((person, index) => {
         return (
@@ -71,7 +70,7 @@ const TestimonialSlider = () => {
               {/* quote & message */}
               <div className=' flex flex-col justify-center before:w-[1px] xl:before:bg-white/20 xl:before:absolute xl:before:left-0 xl:before:h-[200px] relative xl:pl-20'>
                 {/* quote icon */}
-                <div className=''>
+                <div className='py-2'>
                   <FaQuoteLeft className='text-4xl xl:text-6xl text-white/20 mx-auto md:mx-0' />
                 </div>
                 {/* message */}

@@ -4,27 +4,27 @@ import Image from 'next/image'; // Se stai usando Next.js
 export const serviceData = [
   {
     image: '/kuber.jpg',
-    pdf: '/brochures/Brochure_kubernets.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/Kubernetes.pdf',  // Percorso del file PDF per questo corso
   },
   {
-    image: '/Power-Automate.jpg',
-    pdf: '/brochures/power-automate-course.pdf',  // Percorso del file PDF per questo corso
+    image: '/PowerAutomate.png',
+    pdf: '/brochures/PowerAutomate.pdf',  // Percorso del file PDF per questo corso
   },
   {
-    image: '/power-BI.jpg',
-    pdf: '/brochures/power-bi-course.pdf',  // Percorso del file PDF per questo corso
+    image: '/PowerBI.png',
+    pdf: '/brochures/PowerBI.pdf',  // Percorso del file PDF per questo corso
   },
   {
-    image: '/pplatform.jpg',
-    pdf: '/brochures/pplatform-course.pdf',  // Percorso del file PDF per questo corso
+    image: '/Power_APPS.png',
+    pdf: '/brochures/PowerApps.pdf',  // Percorso del file PDF per questo corso
   },
   {
-    image: '/platform.jpg',
-    pdf: '/brochures/platform-course.pdf',  // Percorso del file PDF per questo corso
+    image: '/Azure.png',
+    pdf: '/brochures/Azure.pdf',  // Percorso del file PDF per questo corso
   },
   {
-    image: '/powerbi-microsoft.jpg',
-    pdf: '/brochures/powerbi-microsoft-course.pdf',  // Percorso del file PDF per questo corso
+    image: '/Sharepoint.jpg',
+    pdf: '/brochures/Sharepoint.pdf',  // Percorso del file PDF per questo corso
   },
 ];
 

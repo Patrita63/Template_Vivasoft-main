@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 
 import { AccountCircle } from '@mui/icons-material';
 
+import Cookies from "js-cookie";
+
 import {
   // AppBar,
   // Toolbar,
@@ -49,10 +51,20 @@ const NavIntranetMenu = () => {
         router.push("/intranet/auth/logout");
   }
 
+  // Stops Checking When Component Unmounts (clearInterval)
   useEffect(() => {
-    // https://stackoverflow.com/questions/73853069/solve-referenceerror-localstorage-is-not-defined-in-next-js
-    setIsAuthenticated(global?.localStorage?.getItem("isAuthenticated"));
-    setUsername(global?.localStorage?.getItem("username"));
+    const checkAuth = () => {
+        const auth = Cookies.get("isAuthenticated") === "true"; // Convert to boolean
+        const user = Cookies.get("username");
+        setIsAuthenticated(auth);
+        setUsername(user || "");
+    };
+
+    checkAuth(); // Run once when component mounts
+
+    const interval = setInterval(checkAuth, 1000); // Check cookies every second
+
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   return (
@@ -124,16 +136,16 @@ const NavIntranetMenu = () => {
           </MenuItem>
           {isAuthenticated && (
            <>
-          <MenuItem onClick={handleMenuClose}>
-            <Link href="/intranet/calendar" passHref>
-              Calendario Vivasoft
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose}>
-            <Link href="/intranet/allusers" passHref>
-              Utenti ...
-            </Link>
-          </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+              <Link href="/intranet/calendar" passHref>
+                Calendario Vivasoft
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+              <Link href="/intranet/allusers" passHref>
+                Utenti ...
+              </Link>
+            </MenuItem>
           </>
           )}
         </Menu>

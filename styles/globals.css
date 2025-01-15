@@ -4,7 +4,16 @@
 
 html, body {
   height: 100%; /* Imposta l'altezza al 100% della finestra */
-  overflow-y: auto; /* Attiva lo scroll verticale se il contenuto è più lungo del viewport */
+  overflow:hidden; /* Attiva lo scroll verticale se il contenuto è più lungo del viewport */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Per nascondere la scrollbar su Firefox */
+.scroll-container {
+  scrollbar-width: none; /* Nasconde la scrollbar in Firefox */
 }
 
 html{
