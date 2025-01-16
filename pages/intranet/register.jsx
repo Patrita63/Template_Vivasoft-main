@@ -108,7 +108,7 @@ const Register = () => {
             setListTipoUtente(data?.user);
         
             if (!response.ok) {
-                alert(data.error || "Errore durante la getAllTipoUtente");
+                (data.error || "Errore durante la getAllTipoUtente");
                 return;
             }
       
@@ -265,7 +265,7 @@ const Register = () => {
         }
         else
         {
-            alert("Already exists a user with mail " + data.email);
+            // alert("Already exists a user with mail " + data.email);
         } */
     };
 

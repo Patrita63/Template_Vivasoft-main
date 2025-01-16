@@ -80,17 +80,17 @@ const Contact = () => {
     // Access to fetch at 'https://api.resend.com/emails' from origin 'http://localhost:3000' has been blocked by CORS policy: 
     const RESEND_MAIL_FROM = "onboarding@resend.dev";
     const RESEND_MAIL_TO = "p.tardiolobonifazi@vivasoft.it";
-    // alert('SendMail');
+    // // alert('SendMail');
     event.preventDefault();
     console.log(event.target);
     // debugger;
     const dataMailFullName = fullname; // event.target.form[0].value; // event.target.nominativo.value;
-    // alert('Nominativo = ' + dataMailFullName);
+    // // alert('Nominativo = ' + dataMailFullName);
     const dataMailAddress = mailAddress; //event.target.form[1].value; //event.target.email.value;
     const dataMailSubject = mailSubject; //event.target.form[2].value; //event.target.subject.value;
 
     const body =  `${dataMailFullName}  sent an email from ${dataMailAddress} - Subject: ${dataMailSubject} - Body: ${mailBody}`
-    // alert(body);
+    // // alert(body);
 
     const dataMailBody = body; // event.target.form[3].value; //event.target.body.value;
 

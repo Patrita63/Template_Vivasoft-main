@@ -52,7 +52,7 @@ const ConfirmedMail = () => {
         debugger;
 
         if(codetocheck === coderegistration && mailregistration !== '') {
-            alert(mailregistration + ' - ' + coderegistration);
+            // alert(mailregistration + ' - ' + coderegistration);
             handleCheckIfUserIsRegistered(mailregistration, coderegistration)
             // Redirect to home page intranet
             // router.push("/intranet");

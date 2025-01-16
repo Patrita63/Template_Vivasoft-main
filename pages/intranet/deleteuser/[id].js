@@ -109,7 +109,7 @@ const DeleteUser = () => {
         if (!id) {
             console.error("Error: User ID is undefined");
             setError("Invalid User ID");
-            // alert("Error: User ID is undefined");
+            alert("Error: User ID is undefined");
             return;
         };
 

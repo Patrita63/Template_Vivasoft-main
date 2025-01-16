@@ -185,49 +185,49 @@ const CalendarVivasoft = () => {
     const handleSunDayClick = (cellInfo) => {
         if(cellInfo.Sunday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Sunday} Sunday  - ${month} - ${year}`;
-            alert(msg);
+            // alert(msg);
         }
     };
 
     const handleMonDayClick = (cellInfo) => {
         if(cellInfo.Monday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Monday} Monday  - ${month} - ${year}`;
-            alert(msg);
+            // alert(msg);
         }
     };
 
     const handleTuesDayClick = (cellInfo) => {
         if(cellInfo.Tuesday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Tuesday} Tuesday  - ${month} - ${year}`;
-            alert(msg);
+            // alert(msg);
         }
     };
 
     const handleWedDayClick = (cellInfo) => {
         if(cellInfo.Wednesday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Wednesday} Wednesday  - ${month} - ${year}`;
-            alert(msg);
+            // alert(msg);
          }
     };
 
     const handleThurDayClick = (cellInfo) => {
         if(cellInfo.Thursday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Thursday} Thursday  - ${month} - ${year}`;
-            alert(msg);
+            // alert(msg);
         }
     };
 
     const handleFriDayClick = (cellInfo) => {
         if(cellInfo.Friday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Friday} Friday  - ${month} - ${year}`;
-            alert(msg);
+            // alert(msg);
         }
     };
 
     const handleSatDayClick = (cellInfo) => {
         if(cellInfo.Saturday != null){
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Saturday} Saturday  - ${month} - ${year}`;
-            alert(msg);
+            // alert(msg);
         }
     };
 
