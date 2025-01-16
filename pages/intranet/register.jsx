@@ -54,10 +54,6 @@ const Register = () => {
     // const [tipoutente, setTipoUtente] = useState('');
     // const [code, setCode] = useState('');
 
-    const [fullname, setFullname] = useState('');
-    const [mailAddress, setMailAddress] = useState('');
-    const [mailSubject, setMailSubject] = useState('');
-    const [mailBody, setMailBody] = useState('');
     const [message, setMessage] = useState('');
 
     const [listTipoUtente, setListTipoUtente] = useState([]);
@@ -120,6 +116,7 @@ const Register = () => {
 
 
     const sendEmail = async (fullname, mailAddress, mailSubject, mailBody) => {
+        debugger;
         console.log(`📧 Sending email: ${mailAddress}, Subject: ${mailSubject}, Body: ${mailBody}, FullName: ${fullname}`);
     
         try {
@@ -196,7 +193,10 @@ const Register = () => {
             Cookies.set("mailregistration", newUserData.Email, { expires: 1 / 48, secure: true }); // Expires in 30 minutes
             Cookies.set("coderegistration", newUserData.Code, { expires: 1 / 48, secure: true });
 
-            await sendEmail(fullname,mailAddress,mailSubject,mailBody);
+            const nominativo = newUserData.Nome + ' ' + newUserData.Cognome;
+            const mailSubject = 'Benvenuto ' + nominativo;
+            const mailBody = `Questo è il codice da inserire nel pannello di conferma mail: ${newUserData.Code}`;
+            await sendEmail(nominativo,newUserData.Email,mailSubject,mailBody);
             
             // Redirect to ConfirmedMail page intranet
             router.push("/intranet/confirmedmail");
@@ -237,11 +237,6 @@ const Register = () => {
                 console.log('Register- code: ' + code);
                 registerUserData.Code = code;
 
-                setFullname(registerUserData.Nome + ' ' + registerUserData.Cognome);
-                setMailAddress(registerUserData.Email);
-                setMailSubject('Benvenuto ' + registerUserData.Nome + ' ' + registerUserData.Cognome);
-                setMailBody(`Questo è il codice da inserire nel pannello di conferma mail: ${registerUserData.Code}`);
-
                 registerUserData.IdTipoUtente = data.tipoutente?.id;
                 console.log('Form Data - data.tipoutente.id: ' + data.tipoutente.id);
                 handleAddRegisteredUser(registerUserData);
@@ -258,7 +253,7 @@ const Register = () => {
         // // setFormValues(data);
 
         // handleAddRegisteredUser(data);
-
+// TODO PATRIZIO
         /* const alreadyExist = await checkUserByEmailExists(data.email);
         if(!alreadyExist) {
             AddUserData(data);

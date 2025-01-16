@@ -6,15 +6,25 @@ export default async function handler(req, res) {
     }
 
     try {
-        // Debugging: Log environment variables
-        // console.log("🔍 AZURE_EMAIL_CONNECTION_STRING:" + process.env.NEXT_PUBLIC_AZURE_EMAIL_CONNECTION_STRING);
-        // console.log("🔍 AZURE_EMAIL_SENDER:" + process.env.NEXT_PUBLIC_AZURE_EMAIL_SENDER);
-
+        debugger;
+        console.log("📨 Request Body:", req.body);
         // Load connection string and sender
         const connectionString = process.env.NEXT_PUBLIC_AZURE_EMAIL_CONNECTION_STRING;
+        console.log("🔍 NEXT_PUBLIC_AZURE_EMAIL_CONNECTION_STRING Loaded:", connectionString ? "Yes" : "No");
+
         const senderEmail = process.env.NEXT_PUBLIC_AZURE_EMAIL_SENDER;
-        // console.log("connectionString: " + connectionString);
+        console.log("🔍 NEXT_PUBLIC_AZURE_EMAIL_SENDER Loaded:", senderEmail ? "Yes" : "No");
+        console.log("🔍 Sender Email:", senderEmail);
+
+        const connectionStringA = process.env.AZURE_EMAIL_CONNECTION_STRING;
+        console.log("🔍 AZURE_EMAIL_CONNECTION_STRING Loaded:", connectionStringA ? "Yes" : "No");
+        const senderEmailA = process.env.AZURE_EMAIL_SENDER;
+        console.log("🔍 AZURE_EMAIL_SENDER Loaded:", senderEmailA ? "Yes" : "No");
+        console.log("🔍 Sender EmailA:", senderEmailA);
+
+        debugger;
         console.log("senderEmail: " + senderEmail);
+        console.log("🔍 Sender EmailA:", senderEmailA);
         if (!connectionString || !senderEmail) {
             console.error("❌ Missing environment variables.");
             return res.status(500).json({ error: "Server misconfiguration. Missing environment variables." });
@@ -23,12 +33,16 @@ export default async function handler(req, res) {
         // Initialize Azure Email Client
         const emailClient = new EmailClient(connectionString);
 
-        // Extract email details from request
+        // Debug incoming request body
+        console.log("📨 Request Body:", req.body);
+
+        // Extract email details
         const { toEmail, subject, body } = req.body;
 
         console.log(`📧 Sending email to: ${toEmail}, Subject: ${subject}, Body: ${body}`);
 
         if (!toEmail || !subject || !body) {
+            console.error("❌ Missing required fields:", { toEmail, subject, body });
             return res.status(400).json({ error: "❌ Missing required fields: toEmail, subject, or body." });
         }
 
