@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         return res.status(200).json({ user: result.recordset });
 
     } catch (err) {
-        console.error("AllUsers Error:", err);
+        console.error("AllUsers Error:"+ err);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }

@@ -93,7 +93,7 @@ const CalendarVivasoft = () => {
                 setDb(database);
                 setMessage('Database ready to use');
             } catch (err) {
-                setMessage('Failed to load database: ', err);
+                setMessage('Failed to load database: '+ err);
                 setError(err.message);
             }
         };
@@ -159,8 +159,8 @@ const CalendarVivasoft = () => {
             }
 
         } catch (err) {
-            console.error('Query error:', err);
-            setMessage('Query error:', err);
+            console.error('Query error:'+ err);
+            setMessage('Query error:'+ err);
             setError(err.message);
         }
     };

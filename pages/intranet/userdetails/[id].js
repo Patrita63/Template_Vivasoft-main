@@ -68,7 +68,7 @@ const UserDetails = () => {
     };
 
     // Validation
-   /*  const { handleSubmit, control, watch, setValue, formState: { errors } } = useForm({
+    /*  const { handleSubmit, control, watch, setValue, formState: { errors } } = useForm({
         defaultValues: initialValues
     }); */
 
@@ -137,7 +137,7 @@ const UserDetails = () => {
             console.log("get AllTipoUtente successfully!");
 
         } catch (err) {
-            console.error("getAllTipoUtente Error:", err);
+            console.error("getAllTipoUtente Error:"+ err);
         }
     };
 
@@ -171,7 +171,7 @@ const UserDetails = () => {
               return;
             }
 
-            console.log("User Data:", data.users[0]); // First user in the array
+            console.log("User Data:" + data.users[0]); // First user in the array
             // N.B. After fetching user data, you must update the form fields using setValue from react-hook-form.
 
             // // Format and map user data correctly
@@ -207,17 +207,17 @@ const UserDetails = () => {
       
           } catch (err) {
             setIsDataReady(false);
-            console.error('Error fetching getUserById:', err);
+            console.error('Error fetching getUserById:'+ err);
             
             setError(err.message);
-            console.error("Error during getUserById:", err);
+            console.error("Error during getUserById:"+ err);
           }
     }
 
     // Validation
     const onSubmit = async (data, event) => {
         debugger;
-        console.log('Form Submitted:', data);
+        console.log('Form Submitted:' + data);
         const clickedButton = event.nativeEvent.submitter.name; // Access submitter's name
         // Get the name of the button clicked
 
@@ -253,7 +253,7 @@ const UserDetails = () => {
     };
 
     const handleUpdateUser = async (newUserData) => {
-        console.log("Sending data to API:", newUserData); // Log data before sending
+        console.log("Sending data to API:" + newUserData); // Log data before sending
         try {
             
             const response = await fetch("/api/utente/manageuser", {
@@ -270,8 +270,8 @@ const UserDetails = () => {
                 }),
             });
             debugger;
-            console.log("Full API response:", response);
-            console.log("Response status:", response.status);
+            console.log("Full API response:" + response);
+            console.log("Response status:"+ response.status);
       
             const data = await response.json();
         
@@ -284,7 +284,7 @@ const UserDetails = () => {
             // Redirect to AllUsers page
             router.push("/intranet/allusers");
         } catch (err) {
-          console.error("Update User Error: ", err);
+          console.error("Update User Error: "+ err);
         }
     };
 
@@ -305,8 +305,8 @@ const UserDetails = () => {
                 }),
             });
 
-            console.log("Full API response:", response);
-            console.log("Response status:", response.status);
+            console.log("Full API response:" + response);
+            console.log("Response status:"+ response.status);
       
             const data = await response.json();
         
@@ -319,7 +319,7 @@ const UserDetails = () => {
             // Redirect to AllUsers page
             router.push("/intranet/allusers");
         } catch (err) {
-          console.error("Delete User Error:", err);
+          console.error("Delete User Error:"+ err);
         }
     };
 

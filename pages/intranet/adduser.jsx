@@ -106,13 +106,13 @@ const AddUser = () => {
       
             console.log("get AllTipoUtente successfully!");
         } catch (err) {
-            console.error("getAllTipoUtente Error:", err);
+            console.error("getAllTipoUtente Error:"+ err);
         }
     };
 
     // nome, cognome, email, datadinascita, phone, idtipoutente
     const handleAddUser = async (newUserData) => {
-        console.log("Sending data to API:", newUserData); // Log data before sending
+        console.log("Sending data to API:" + newUserData); // Log data before sending
         try {
             
             const response = await fetch("/api/utente/manageuser", {
@@ -128,8 +128,8 @@ const AddUser = () => {
                 }),
             });
 
-            console.log("Full API response:", response);
-            console.log("Response status:", response.status);
+            console.log("Full API response:" + response);
+            console.log("Response status:"+ response.status);
       
             const data = await response.json();
         
@@ -142,29 +142,29 @@ const AddUser = () => {
             // Redirect to AllUsers page
             router.push("/intranet/allusers");
         } catch (err) {
-          console.error("Add User Error:", err);
+          console.error("Add User Error:"+ err);
         }
     };
 
     // Validation
     const onSubmit = async (data) => {
         debugger;
-        console.log('Form Data:', data);
+        console.log('Form Data:' + data);
 
         if (!data.tipoutente || !data.tipoutente.id) {
-            console.error("Error: tipoutente does not have an ID", data.tipoutente);
+            console.error("Error: tipoutente does not have an ID"+ data.tipoutente);
             alert("Please select a valid User Type.");
             return;
         }
 
-        console.log('AFTER data.datadinascita: ' + data.datadinascita);
+        console.log('BEFORE data.datadinascita: ' + data.datadinascita);
 
         const formattedDate = format(data.datadinascita, 'yyyy-MM-dd');
         // console.log(formattedDate); // Output: "2025-01-01"
         data.datadinascita = formattedDate;
-        console.log('BEFORE data.datadinascita: ' + data.datadinascita);
+        console.log('After data.datadinascita: ' + data.datadinascita);
 
-        console.log('Form Data - data.tipoutente.id: ', data.tipoutente.id);
+        console.log('Form Data - data.tipoutente.id: '+ data.tipoutente.id);
 
         // setFormValues(data);
 
@@ -185,7 +185,7 @@ const AddUser = () => {
         router.push("/intranet/allusers");
     }
 
-        // Validation
+    // Validation
     const watchAllFields = watch(); // Watch all fields for enabling the button.
     // Validation
     const isFormValid = () => {
@@ -256,22 +256,22 @@ const AddUser = () => {
                     )}
                 />
                 <Controller
-                name="phone"
-                control={control}
-                rules={{
-                    required: 'Phone is required',
-                    pattern: {
-                    value: /^[0-9]+$/,
-                    message: 'Enter a valid phone number',
-                    },
-                }}
-                render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.phone}>
-                    <InputLabel htmlFor="phone">Phone</InputLabel>
-                    <Input {...field} id="phone" />
-                    <FormHelperText>{errors.phone?.message}</FormHelperText>
-                    </FormControl>
-                )}
+                    name="phone"
+                    control={control}
+                    rules={{
+                        required: 'Phone is required',
+                        pattern: {
+                        value: /^[0-9]+$/,
+                        message: 'Enter a valid phone number',
+                        },
+                    }}
+                    render={({ field }) => (
+                        <FormControl fullWidth error={!!errors.phone}>
+                        <InputLabel htmlFor="phone">Phone</InputLabel>
+                        <Input {...field} id="phone" />
+                        <FormHelperText>{errors.phone?.message}</FormHelperText>
+                        </FormControl>
+                    )}
                 />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <Controller

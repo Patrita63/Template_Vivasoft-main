@@ -44,7 +44,7 @@ async function getUsers(req, res) {
 
     return res.status(200).json({ users: result.recordset });
   } catch (err) {
-    console.error("Error fetching users:", err);
+    console.error("Error fetching users:"+ err);
     // return res.status(500).json({ error: "Internal Server Error." });
     return res.status(500).json({ error: "Internal Server Error. " + err });
   }
@@ -82,7 +82,7 @@ async function addUser(req, res) {
 
     return res.status(201).json({ message: "User added successfully" });
   } catch (err) {
-    console.error("Add User Error:", err);
+    console.error("Add User Error:"+ err);
     return res.status(500).json({ error: "Internal Server Error: " + err });
   }
 }
@@ -123,7 +123,7 @@ async function updateUser(req, res) {
 
     return res.status(200).json({ message: "User updated successfully" });
   } catch (err) {
-    console.error("Update Error:", err);
+    console.error("Update Error:"+ err);
     return res.status(500).json({ error: "Internal Server Error: " + err.message });
   }
 }
@@ -145,7 +145,7 @@ async function deleteUser(req, res) {
 
     return res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
-    console.error("Delete Error:", err);
+    console.error("Delete Error:"+ err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }

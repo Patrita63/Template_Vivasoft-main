@@ -47,7 +47,7 @@ const Login = () => {
       router.push("/intranet");
 
     } catch (err) {
-      console.error("Error during login:", err);
+      console.error("Error during login:"+ err);
       setError("Errore di connessione al server");
     }
   };

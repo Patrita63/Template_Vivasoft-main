@@ -129,10 +129,10 @@ const Contact = () => {
           console.log('Email sent successfully!');
       } else {
           const errorDetails = await response.json();
-          console.error('Error sending email:', errorDetails.message);
+          console.error('Error sending email:' + errorDetails.message);
       }
     } catch (error) {
-      console.error('There was a problem sending the email:', error);
+      console.error('There was a problem sending the email:' + error);
     } */
 
     /* const response = await resend.emails.send({

@@ -1,10 +1,24 @@
 import getConnection from "../../../lib/dbsqlazure";
 
+// If email and code are provided in the POST request, assume the request is for checking user registration.
+// If all parameters required for adding a user are provided, assume the request is for user creation.
+
+// Use precise conditional checks to avoid unintended operation mismatches.
 export default async function handler(req, res) {
   if (req.method === "GET") {
     return await getUsers(req, res);
   } else if (req.method === "POST") {
-    return await addUser(req, res);
+    const { email, code, nome, cognome, phone, dataregistrazione, idtipoutente, password } = req.body;
+
+    if (email && code && !nome && !cognome && !phone && !dataregistrazione && !idtipoutente && !password) {
+      // Check if user is registered
+      return await checkUserRegistered(req, res);
+    } else if (nome && cognome && email && phone && dataregistrazione && idtipoutente && password && code) {
+      // Add a new user
+      return await addUser(req, res);
+    } else {
+      return res.status(400).json({ error: "Invalid parameters provided" });
+    }
   } else if (req.method === "PUT") {
     return await updateUser(req, res);
   } else if (req.method === "DELETE") {
@@ -37,24 +51,26 @@ async function getUsers(req, res) {
 
     return res.status(200).json({ users: result.recordset });
   } catch (err) {
-    console.error("Error fetching users:", err);
+    console.error("Error fetching users:"+ err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
 // 🔹 Add New User
 async function addUser(req, res) {
-  const { nome, cognome, email, password, phone, idTipoUtente } = req.body;
+  // console.log("Incoming request body:", req.body);
+  // debugger;
+  const { nome, cognome, email, phone, dataregistrazione, idtipoutente, password, code } = req.body;
 
-  if (!nome || !cognome || !email || !password || !phone || !idTipoUtente) {
-    return res.status(400).json({ error: "Missing required fields" });
+  if (!nome || !cognome || !email || !phone || !dataregistrazione || !idtipoutente || !password || !code) {
+    return res.status(400).json({ error: "addUser REGISTERED - Missing required fields" });
   }
 
   try {
     const pool = await getConnection();
     const query = `
-      INSERT INTO [T_Register] (Nome, Cognome, Email, Password, Phone, IdTipoUtente, DataRegistrazione)
-      VALUES (@Nome, @Cognome, @Email, @Password, @Phone, @IdTipoUtente, GETDATE())
+      INSERT INTO [T_Register] (Nome, Cognome, Email, Phone, DataRegistrazione, IdTipoUtente, Password, Code)
+      VALUES (@Nome, @Cognome, @Email, @Phone, @DataRegistrazione, @IdTipoUtente, @Password, @Code) -- GETDATE()
     `;
 
     await pool
@@ -62,14 +78,16 @@ async function addUser(req, res) {
       .input("Nome", nome)
       .input("Cognome", cognome)
       .input("Email", email)
-      .input("Password", password) // Consider hashing the password!
       .input("Phone", phone)
-      .input("IdTipoUtente", idTipoUtente)
+      .input("DataRegistrazione", dataregistrazione)
+      .input("IdTipoUtente", idtipoutente)
+      .input("Password", password) // Consider hashing the password!
+      .input("Code", code)
       .query(query);
 
     return res.status(201).json({ message: "User added successfully" });
   } catch (err) {
-    console.error("Add User Error:", err);
+    console.error("Add User Error:"+ err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
@@ -100,7 +118,7 @@ async function updateUser(req, res) {
 
     return res.status(200).json({ message: "User updated successfully" });
   } catch (err) {
-    console.error("Update Error:", err);
+    console.error("Update Error:"+ err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
@@ -121,7 +139,39 @@ async function deleteUser(req, res) {
 
     return res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
-    console.error("Delete Error:", err);
+    console.error("Delete Error:"+ err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
+// 🔹 Check if User is Registered
+async function checkUserRegistered(req, res) {
+  const { email, code } = req.body; // Read from the request body
+
+  if (!email || !code) {
+    return res.status(400).json({ error: "Email and Code are required" });
+  }
+
+  try {
+    const pool = await getConnection();
+    const query = `
+      SELECT * FROM [T_Register] WHERE Email = @Email AND Code = @Code
+    `;
+
+    const result = await pool
+      .request()
+      .input("Email", email)
+      .input("Code", code)
+      .query(query);
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ registered: false, message: "User not registered or code mismatch" });
+    }
+
+    return res.status(200).json({ registered: true, user: result.recordset[0] });
+  } catch (err) {
+    console.error("Check User Registered Error:", err);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+

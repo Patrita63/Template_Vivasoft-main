@@ -7,8 +7,8 @@ export default async function handler(req, res) {
 
     try {
         // Debugging: Log environment variables
-        // console.log("🔍 AZURE_EMAIL_CONNECTION_STRING:", process.env.NEXT_PUBLIC_AZURE_EMAIL_CONNECTION_STRING);
-        // console.log("🔍 AZURE_EMAIL_SENDER:", process.env.NEXT_PUBLIC_AZURE_EMAIL_SENDER);
+        // console.log("🔍 AZURE_EMAIL_CONNECTION_STRING:" + process.env.NEXT_PUBLIC_AZURE_EMAIL_CONNECTION_STRING);
+        // console.log("🔍 AZURE_EMAIL_SENDER:" + process.env.NEXT_PUBLIC_AZURE_EMAIL_SENDER);
 
         // Load connection string and sender
         const connectionString = process.env.NEXT_PUBLIC_AZURE_EMAIL_CONNECTION_STRING;
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
         const poller = await emailClient.beginSend(emailMessage);
         const response = await poller.pollUntilDone();
 
-        console.log("✅ Email sent successfully:", response);
+        console.log("✅ Email sent successfully:" + response);
 
         res.status(200).json({
             messageId: response.id,
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
         });
 
     } catch (error) {
-        console.error("❌ Error sending email:", error);
+        console.error("❌ Error sending email:" + error);
         res.status(500).json({ error: "Failed to send email" });
     }
 }

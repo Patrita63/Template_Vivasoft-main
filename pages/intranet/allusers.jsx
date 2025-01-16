@@ -99,7 +99,7 @@ const AllUsers = () => {
                     phone: Phone,
                     tipoutente: TipoUtente
                 };
-                console.log("Mapped Row:", row);  // Debug each row
+                console.log("Mapped Row:" + row);  // Debug each row
                 return row;
             });
             
@@ -108,10 +108,10 @@ const AllUsers = () => {
       
           } catch (err) {
             setIsDataReady(false);
-            console.error('Error fetching getAllUsers:', err);
+            console.error('Error fetching getAllUsers:' + err);
             
             setError(err.message);
-            console.error("Error during getAllUsers:", err);
+            console.error("Error during getAllUsers:" + err);
           }
     }
 

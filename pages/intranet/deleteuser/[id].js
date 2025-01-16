@@ -94,7 +94,7 @@ const DeleteUser = () => {
             console.log("get AllTipoUtente successfully!");
 
         } catch (err) {
-            console.error("getAllTipoUtente Error:", err);
+            console.error("getAllTipoUtente Error:"+ err);
         }
     };
 
@@ -128,7 +128,7 @@ const DeleteUser = () => {
               return;
             }
 
-            console.log("User Data:", data.users[0]); // First user in the array
+            console.log("User Data:" + data.users[0]); // First user in the array
             if (!data.users || data.users.length === 0) {
                 setError("Nessun utente trovato.");
                 return;
@@ -140,10 +140,10 @@ const DeleteUser = () => {
       
           } catch (err) {
             setLoading(false);
-            console.error('Error fetching getUserById:', err);
+            console.error('Error fetching getUserById:'+ err);
             
             setError(err.message);
-            console.error("Error during getUserById:", err);
+            console.error("Error during getUserById:"+ err);
           }
     }
     
@@ -174,7 +174,7 @@ const DeleteUser = () => {
             console.log("User deleted successfully!");
             router.push("/intranet/allusers");
         } catch (err) {
-            console.error("Delete User Error:", err);
+            console.error("Delete User Error:"+ err);
         }
     };
     

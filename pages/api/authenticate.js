@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     try {
         const pool = await getConnection();
         const query = `
-            SELECT [Id], [Nome], [Cognome], [Email], [DataDiNascita], [Phone],
+            SELECT [Id], [Nome], [Cognome], [Email], [Phone],
                    [DataRegistrazione], [IdTipoUtente], [Password], [Code]
             FROM [T_Register]
             WHERE Email = @Email AND Password = @Password
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         return res.status(200).json({ user: result.recordset[0] });
 
     } catch (err) {
-        console.error("Login Error:", err);
+        console.error("Login Error:"+ err);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }

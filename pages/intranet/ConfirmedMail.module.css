@@ -1,3 +1,7 @@
 .ConfirmedMail {
     background-color: #2A5BAF;
 }
+
+.ConfirmedMailCancel {
+    background-color: red;
+}
