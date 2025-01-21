@@ -4,7 +4,10 @@
 
 html, body {
   height: 100%; /* Imposta l'altezza al 100% della finestra */
-  overflow:hidden; /* Attiva lo scroll verticale se il contenuto è più lungo del viewport */
+  /* Attiva lo scroll verticale se il contenuto è più lungo del viewport */
+  /* overflow-hidden: Nasconde qualsiasi contenuto che supera i limiti del corpo del documento. */
+  /* PATRIZIO COMMENTATO */
+  /* overflow:hidden;  */
 }
 
 .scroll-container::-webkit-scrollbar {
@@ -38,7 +41,7 @@ html{
 
 @layer base {
   body {
-    @apply overflow-hidden leading-relaxed;
+    @apply leading-relaxed; /* Rimuovi overflow-hidden */
   }
   .page {
     @apply w-full h-screen overflow-hidden;

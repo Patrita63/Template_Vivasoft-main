@@ -7,7 +7,7 @@ import Head from 'next/head'; // Importa il componente Head di Next.js
 import { motion } from 'framer-motion';
 import { fadeIn } from '../../../variants';
 
-const Services = () => {
+const ItConsulting = () => {
   return (
     <Layout>
       <Head>
@@ -18,7 +18,7 @@ const Services = () => {
         <meta property="og:title" content="Vivasoft - Servizi Microsoft IT" />
         <meta property="og:description" content="Scopri i nostri servizi di consulenza IT e le soluzioni Microsoft per aziende." />
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
-        <meta property="og:url" content="https://www.vivasoft.it/services" />
+        <meta property="og:url" content="https://www.vivasoft.it/itconsulting" />
       </Head>
     <div className='h-full bg-primary py-40 flex items-center bg-gradient-to-r from-primary via-black/30 to-black/10'>
       
@@ -33,7 +33,7 @@ const Services = () => {
               exit='hidden'
               className='h2 pt-40'
             >
-             I nostri <span className='text-accent'>Servizi</span>
+             I nostri <span className='text-accent'>Servizi di consulenza IT</span>
             </motion.h2>
             <motion.p
               variants={fadeIn('up', 0.4)}
@@ -42,8 +42,7 @@ const Services = () => {
               exit='hidden'
               className='mb-4 max-w-[400px] mx-auto lg:mx-0'
             >
-              Ci dedichiamo con passione e professionalità alla formazione dei professionisti e delle aziende, 
-              aiutandole a trasformare le proprie idee in soluzioni concrete. 
+              Siamo un&apos;azienda IT specializzata, da più di 10 anni, nello sviluppo di soluzioni personalizzate utilizzando le più avanzate tecnologie Microsoft. Con passione e competenza, ci dedichiamo a creare prodotti su misura per le esigenze dei nostri clienti, che spaziano da applicazioni aziendali su misura a sistemi complessi integrati. Il nostro obiettivo è offrire soluzioni concrete e innovative, che ottimizzano i processi aziendali e massimizzano l&apos;efficienza, sfruttando appieno le potenzialità delle tecnologie Microsoft. 
             </motion.p>
           </div>
 
@@ -64,4 +63,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default ItConsulting;

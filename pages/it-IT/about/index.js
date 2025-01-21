@@ -260,7 +260,7 @@ const About = () => {
         />
         <meta
           name="keywords"
-          content="Vivasoft, soluzioni IT, Microsoft Power Apps, Power BI, Power Automate, consulenza IT, certificazioni Microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD"
+          content="Vivasoft, soluzioni IT, Microsoft Sharepoint online, Microsoft Sharepoint on-premises, Microsoft Power Apps, Power BI, Power Automate, consulenza IT, certificazioni Microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD"
         />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Chi Siamo" />
@@ -295,7 +295,7 @@ const About = () => {
               specializzata nell&apos;insegnamento e nella realizzazione di
               soluzioni basate sulle piattaforme{" "}
               <span className="text-secondary text-bold">
-                Microsoft Power Apps, Power BI e Power Automate.
+                Microsoft Sharepoint, Microsoft Power Apps, Power BI e Power Automate.
               </span>
             </motion.p>
             {/* counters */}

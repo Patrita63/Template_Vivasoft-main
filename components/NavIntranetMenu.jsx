@@ -130,7 +130,7 @@ const NavIntranetMenu = () => {
             </Link>
           </MenuItem>
           <MenuItem onClick={handleMenuClose}>
-            <Link href="/intranet" passHref>
+          <Link href='/intranet' target='_blank' passHref>
             Home Intranet Vivasoft
             </Link>
           </MenuItem>

@@ -27,6 +27,7 @@ import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentTe
 /* Collecting page data  .C:\Vivasoft\Template_Vivasoft\Template_Vivasoft-main\node_modules\@mui\material\FormControl\FormControlContext.js:1
 import * as React from 'react'; */
 import CloseIcon from "@mui/icons-material/Close";
+import { Bolt } from '@mui/icons-material';
 
 const Home = () => {
   // COOKIES Management
@@ -92,7 +93,7 @@ const Home = () => {
         <title>Vivasoft Consulenza e Formazione</title>
         <meta
           name="description"
-          content="Siamo un'azienda specializzata in consulenza e formazione con tecnologia Microsoft. Offriamo soluzioni innovative e siamo operativi dal 2014, pronti ad affrontare nuove sfide."
+          content="Dal 2014, plasmiamo il futuro delle aziende con soluzioni su misura, pensate per vincere ogni sfida.Grazie al nostro supporto, le aziende ottimizzano i processi, migliorano l’efficienza operativa e ottengono risultati concreti e duraturi, mantenendosi sempre un passo avanti.Tutto questo è reso possibile dalla formazione e dallo sviluppo che offriamo attraverso i nostri collaboratori, esperti nelle tecnologie più avanzate di Microsoft.Dall'utilizzo della scalabilità di Azure Cloud alla creazione di soluzioni dinamiche ed innovative con Microsoft Power Platform fino all'ottimizzazione della collaborazione aziendale con Microsoft SharePoint Online, forniamo le competenze indispensabili per trasformare il tuo team in un motore di innovazione.La nostra missione? Trasformare le sfide in opportunità.Con programmi formativi personalizzati, facciamo della tecnologia un vero vantaggio strategico per il tuo successo."
         />
         <meta name="keywords" content="Microsoft Azure, Microsoft 365, Microsoft Power Platform, Microsoft Power Apps, Microsoft Power BI, Microsoft Power Automate, Consulenza, Formazione, Microsoft" />
         <meta name="author" content="Vivasoft" />
@@ -154,15 +155,29 @@ const Home = () => {
             {/* subtitle */}
             <motion.p
               variants={fadeIn('down', 0.3)}
-              initial='hidden'
-              animate='show'
-              exit='hidden'
-              className='max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16'
+              initial="hidden"
+              animate="show"
+              exit="hidden"
+              className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
             >
-              Dal 2014, trasformiamo il futuro delle aziende con 
-              soluzioni innovative e personalizzate, 
-              progettate per affrontare e vincere ogni sfida. 
-              Con il nostro supporto, ottimizzano i processi aziendali, migliorano operatività e raggiungono risultati duraturi, rimanendo sempre un passo avanti.
+              <span style={{ fontWeight: 'bold', fontSize: '18px' }}>
+                Dal 2014, plasmiamo il futuro delle aziende con soluzioni su misura, pensate per vincere ogni sfida.
+              </span>
+              <span>
+                Grazie al nostro supporto, le aziende ottimizzano i processi, migliorano l&apos;efficienza operativa e ottengono risultati concreti e duraturi, mantenendosi sempre un passo avanti.
+              </span>
+              <span>
+                Tutto questo è reso possibile dalla formazione e dallo sviluppo che offriamo attraverso i nostri collaboratori, esperti nelle tecnologie più avanzate di Microsoft.
+              </span>
+              <span>
+                Dall&apos;utilizzo della scalabilità di <span style={{ fontWeight: 'bold', color: 'yellow' }}>Azure Cloud</span> alla creazione di soluzioni dinamiche ed innovative con <span style={{ fontWeight: 'bold', color: 'yellow' }}>Microsoft Power Platform</span> fino all&apos;ottimizzazione della collaborazione aziendale con <span style={{ fontWeight: 'bold', color: 'yellow' }}>Microsoft SharePoint Online</span>, forniamo le competenze indispensabili per trasformare il tuo team in un motore di innovazione.
+              </span>
+              <span style={{ fontWeight: 'bold', fontSize: '18px' }}>
+                La nostra missione? Trasformare le sfide in opportunità.
+              </span>
+              <span>
+                Con programmi formativi personalizzati, facciamo della tecnologia un vero vantaggio strategico per il tuo successo.
+              </span>
             </motion.p>
           </div>
         </div>

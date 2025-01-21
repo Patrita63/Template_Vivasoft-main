@@ -54,8 +54,6 @@ const ConfirmedMail = () => {
         if(codetocheck === coderegistration && mailregistration !== '') {
             // alert(mailregistration + ' - ' + coderegistration);
             handleCheckIfUserIsRegistered(mailregistration, coderegistration)
-            // Redirect to home page intranet
-            // router.push("/intranet");
         } else {
             alert("Codice Non Verificato. Controlla la mail che ti abbia inviato.");
         }
@@ -147,7 +145,7 @@ const ConfirmedMail = () => {
                         color="error"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        onClick={() => router.push("/intranet")}
+                        onClick={() => router.push('/intranet')}
                     >
                         Cancel
                 </Button>

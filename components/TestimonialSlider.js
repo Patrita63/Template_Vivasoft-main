@@ -8,10 +8,17 @@ export const testimonialSlider = [
   },
   {
     
-    name: 'Jane Doe',
-    position: 'Customer',
+    name: 'Vittorio Goletti',
+    position: 'CEO Crescendo',
     message:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum expedita odit beatae, cupiditate saepe quam officia aut placeat quas neque!',
+      `Patrizio ha lavorato con me come Formatore Senior in tecnologie Microsoft.
+      Ogni progetto che porta la sua firma è andato bene, ottenendo apprezzamento del cliente e beneficio dei partecipanti.
+      In particolare segnalo di Patrizio:
+      - La preparazione profonda e volta sempre all'uso pratico sul lavoro.
+      - La capacità di gestire le piccole e grandi difficoltà che spesso caratterizzano i progetto formativi.
+      - Il dialogo franco, a volte anche duro, ma sempre volto al miglioramento del servizio reso, al beneficio 
+      dei clienti, all'apprendimento dei partecipanti.
+      Patrizio ha molto appreso e tuttavia non si stanca mai di imparare. Il mondo Microsoft, pur nella sua crescente smisurata vastità, non lo intimidisce, ma anzi lo sprona ad approfondire ed estendere, continuamente e sistemicamente, i sui campi conoscenza e di azione.`,
   },
   {
     

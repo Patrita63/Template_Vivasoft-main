@@ -15,7 +15,7 @@ const Header = () => {
         <div className='flex flex-col lg:flex-row justify-between items-center xl:pt-2 sm:pt-0'>
           {/* Logo azienda */}
           {/* https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height */}
-          <Link href={'/intranet/home'}>
+          <Link href='/intranet' target='_blank'>
             <Image
               src={'/LogoClaim1.svg'}
               width={350}

@@ -85,9 +85,77 @@ const UserDetails = () => {
 
     // Stops Checking When Component Unmounts (clearInterval)
     useEffect(() => {
-        if (!id) return; // Prevent running the effect when id is undefined
 
+        // fetch getUserById
+        const getUserById = async (id) => {
+            if (!id) {
+                console.error("Error: User ID is undefined");
+                setError("Invalid User ID");
+                alert("Error: User ID is undefined");
+                return;
+            };
+
+            try {
+                const response = await fetch(`/api/utente/manageuser?id=${id}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+                });
+        
+                const data = await response.json();
+                debugger;
+        
+                if (!response.ok) {
+                setError(data.message || "Errore durante getUserById");
+                alert("Errore nel recupero dell'utente. " + data.error);
+                return;
+                }
+
+                console.log("User Data:" + data.users[0]); // First user in the array
+                // N.B. After fetching user data, you must update the form fields using setValue from react-hook-form.
+
+                // // Format and map user data correctly
+                // const user = data.users[0];
+                // const formattedUser = {
+                //     id: user.Id,
+                //     nome: user.Nome,
+                //     cognome: user.Cognome,
+                //     email: user.Email,
+                //     datadinascita: user.DataDiNascita ? format(parseISO(user.DataDiNascita), "yyyy-MM-dd") : "",
+                //     idtipoutente: user.IdTipoUtente,
+                //     phone: user.Phone,
+                //     tipoutente: user.TipoUtente
+                // };
+                // setFormValues(formattedUser);
+
+                // Extract user details
+                const user = data.users[0];
+
+                // Convert Date to "yyyy-MM-dd" format
+                const formattedDate = user.DataDiNascita ? format(parseISO(user.DataDiNascita), "yyyy-MM-dd") : "";
+
+                // Populate form fields with fetched data
+                setValue("id", user.Id);
+                setValue("nome", user.Nome);
+                setValue("cognome", user.Cognome);
+                setValue("email", user.Email);
+                setValue("datadinascita", formattedDate); // Correct format
+                setValue("phone", user.Phone);
+                setValue("tipoutente", { id: user.IdTipoUtente, TipoUtente: user.TipoUtente }); // Ensure object format
+
+                setIsDataReady(true);
+        
+            } catch (err) {
+                setIsDataReady(false);
+                console.error('Error fetching getUserById:'+ err);
+                
+                setError(err.message);
+                console.error("Error during getUserById:"+ err);
+            }
+        };
+
+        if (!id) return; // Prevent running the effect when id is undefined
         console.log("Fetching user with ID:", id);
+
         getUserById(id);
         getAllTipoUtente();
 
@@ -105,7 +173,7 @@ const UserDetails = () => {
     
         return () => clearInterval(interval); // Cleanup on unmount
         
-    }, [id]); // Runs when `id` changes
+    }, [id, setValue]); // Runs when `id` changes
 
     const getAllTipoUtente = async () => {
         try {
@@ -146,73 +214,6 @@ const UserDetails = () => {
     //     if (!dateString) return ""; // Handle empty/null values
     //     return format(parseISO(dateString), "yyyy-MM-dd");
     // };
-
-    // fetch getUserById
-    const getUserById = async (id) => {
-        if (!id) {
-            console.error("Error: User ID is undefined");
-            setError("Invalid User ID");
-            alert("Error: User ID is undefined");
-            return;
-        };
-
-        try {
-            const response = await fetch(`/api/utente/manageuser?id=${id}`, {
-              method: 'GET',
-              headers: { 'Content-Type': 'application/json' }
-            });
-      
-            const data = await response.json();
-            debugger;
-      
-            if (!response.ok) {
-              setError(data.message || "Errore durante getUserById");
-              alert("Errore nel recupero dell'utente. " + data.error);
-              return;
-            }
-
-            console.log("User Data:" + data.users[0]); // First user in the array
-            // N.B. After fetching user data, you must update the form fields using setValue from react-hook-form.
-
-            // // Format and map user data correctly
-            // const user = data.users[0];
-            // const formattedUser = {
-            //     id: user.Id,
-            //     nome: user.Nome,
-            //     cognome: user.Cognome,
-            //     email: user.Email,
-            //     datadinascita: user.DataDiNascita ? format(parseISO(user.DataDiNascita), "yyyy-MM-dd") : "",
-            //     idtipoutente: user.IdTipoUtente,
-            //     phone: user.Phone,
-            //     tipoutente: user.TipoUtente
-            // };
-            // setFormValues(formattedUser);
-
-            // Extract user details
-            const user = data.users[0];
-
-            // Convert Date to "yyyy-MM-dd" format
-            const formattedDate = user.DataDiNascita ? format(parseISO(user.DataDiNascita), "yyyy-MM-dd") : "";
-
-            // Populate form fields with fetched data
-            setValue("id", user.Id);
-            setValue("nome", user.Nome);
-            setValue("cognome", user.Cognome);
-            setValue("email", user.Email);
-            setValue("datadinascita", formattedDate); // Correct format
-            setValue("phone", user.Phone);
-            setValue("tipoutente", { id: user.IdTipoUtente, TipoUtente: user.TipoUtente }); // Ensure object format
-
-            setIsDataReady(true);
-      
-          } catch (err) {
-            setIsDataReady(false);
-            console.error('Error fetching getUserById:'+ err);
-            
-            setError(err.message);
-            console.error("Error during getUserById:"+ err);
-          }
-    }
 
     // Validation
     const onSubmit = async (data, event) => {

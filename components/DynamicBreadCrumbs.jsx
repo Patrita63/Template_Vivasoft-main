@@ -24,7 +24,7 @@ const DynamicBreadCrumbs = () => {
       <Link href="/" passHref>
         Home web site
       </Link>
-      <Link href="/intranet" passHref>
+      <Link href="/intranet" target="_blank" passHref>
         Intranet Home
       </Link>
 

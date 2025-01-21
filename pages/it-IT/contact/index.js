@@ -68,20 +68,7 @@ const Contact = () => {
   }
 
   const SendMail = async (event) => {
-   // https://resend.com/docs/knowledge-base/how-do-i-fix-cors-issues
-/*     Access to XMLHttpRequest at 'https://api.resend.com/emails'
-    from origin 'http://localhost:3000' has been blocked by CORS policy:
-    Response to preflight request doesn't pass access control check:
-    No 'Access-Control-Allow-Origin' header is present on the requested resource. */
-
-    const RESEND_API_KEY = "re_EPLAJcV9_6RyTtaemEfcSnVBnUinGkNV1";
-    // from: 'onboarding@resend.dev'
-    // https://resend.com/onboarding
-
-    // Access to fetch at 'https://api.resend.com/emails' from origin 'http://localhost:3000' has been blocked by CORS policy: 
-    const RESEND_MAIL_FROM = "onboarding@resend.dev";
-    const RESEND_MAIL_TO = "p.tardiolobonifazi@vivasoft.it";
-    // alert('SendMail');
+   
     event.preventDefault();
     console.log(event.target);
     // debugger;
@@ -95,60 +82,15 @@ const Contact = () => {
 
     const dataMailBody = body; // event.target.form[3].value; //event.target.body.value;
 
-    SendMailResend(mailSubject, dataMailBody);
+    const result = await SendMailResend(mailSubject, dataMailBody);
 
-    // TODO PATRIZIO
-    // Gestire il ritorno dell'invio della mail
-    // Attualmente non la manda
-
-    // Redirect to home page 
-    router.push("/it-IT");
-
-
-    // https://resend.com/nextjs
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-
-   // https://resend.com/docs/api-reference/emails/send-email
-   // const resend = new Resend(RESEND_API_KEY);
-
-    /* try {
-      const response = await fetch('https://api.resend.com/emails/api/send', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer re_EPLAJcV9_6RyTtaemEfcSnVBnUinGkNV1'
-          },
-          from: RESEND_MAIL_FROM,
-          to: RESEND_MAIL_TO,
-          subject: mailSubject,
-          html: dataMailBody
-          // body: JSON.stringify(values)
-      });
-
-      if (response.ok) {
-          console.log('Email sent successfully!');
-      } else {
-          const errorDetails = await response.json();
-          console.error('Error sending email:' + errorDetails.message);
-      }
-    } catch (error) {
-      console.error('There was a problem sending the email:' + error);
-    } */
-
-    /* const response = await resend.emails.send({
-      from: RESEND_MAIL_FROM,
-      to: RESEND_MAIL_TO,
-      subject: mailSubject,
-      html: dataMailBody
-    });
-
-    console.log(response); */
-
-    /* if (error) {
-      return res.status(400).json(error);
+    if (result.success) {
+      alert("Email sent successfully!"); // Show alert on success
+      // Redirect to home page 
+      router.push("/it-IT");
+    } else {
+        alert(`Failed to send email: ${result.error}`); // Show alert on failure
     }
-  
-    return res.status(200).json(data); */
   }
 
 

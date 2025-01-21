@@ -19,18 +19,36 @@ const RESEND_MAIL_TO = "p.tardiolobonifazi@vivasoft.it";
 
 // https://stackoverflow.com/questions/77596101/cors-issue-in-next-js-14-server-actions-with-third-party-api-calls
 export const SendMailResend = async (mailSubject, dataMailBody) => {
+  const resend = new Resend(RESEND_API_KEY);
+
+  try {
+      const response = await resend.emails.send({
+          from: RESEND_MAIL_FROM,
+          to: RESEND_MAIL_TO,
+          subject: mailSubject,
+          html: dataMailBody
+      });
+
+      console.log("Email sent successfully:", response);
+      return { success: true, data: response };
+  } catch (error) {
+      console.error("Error sending email:", error);
+      return { success: false, error: error.message || error };
+  }
+};
+
+// export const SendMailResend = async (mailSubject, dataMailBody) => {
+//     const resend = new Resend(RESEND_API_KEY);
+
+//     const response = await resend.emails.send({
+//         from: RESEND_MAIL_FROM,
+//         to: RESEND_MAIL_TO,
+//         subject: mailSubject,
+//         html: dataMailBody
+//     });
+
+//     console.log(response);
     
-
-    const resend = new Resend(RESEND_API_KEY);
-
-    const response = await resend.emails.send({
-        from: RESEND_MAIL_FROM,
-        to: RESEND_MAIL_TO,
-        subject: mailSubject,
-        html: dataMailBody
-    });
-
-    console.log(response);
     
     /* await resend.emails.send({
     from: 'Acme <onboarding@resend.dev>',
@@ -39,4 +57,4 @@ export const SendMailResend = async (mailSubject, dataMailBody) => {
     html: '<p>it works!</p>',
     });
     */
-}
+// }

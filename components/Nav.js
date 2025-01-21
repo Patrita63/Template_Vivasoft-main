@@ -11,8 +11,9 @@ import {
 export const navData = [
   { name: 'Home', path: '/it-IT', icon: <HiHome /> },
   { name: 'Vivasoft', path: '/it-IT/about', icon: <HiUser /> },
-  { name: 'Servizi', path: '/it-IT/services', icon: <HiRectangleGroup /> },
-  { name: 'Academy', path: '/it-IT/work', icon: <HiViewColumns /> },
+  { name: 'Consulenza', path: '/it-IT/itconsulting', icon: <HiRectangleGroup /> },
+  { name: 'Corsi', path: '/it-IT/course', icon: <HiViewColumns /> },
+  { name: 'Academy', path: '/it-IT/academy', icon: <HiViewColumns /> },
   {
     name: 'Dicono di noi ',
     path: '/it-IT/testimonials',

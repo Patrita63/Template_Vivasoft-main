@@ -69,4 +69,101 @@ background-color: #dddddd;
     font-weight: bold;
     border: 2px solid orange;
 }
+/* Aggiungi un comportamento di overflow e altezza minima al contenitore principale: 
+Assicurati che il contenitore principale (bodycontainer) gestisca correttamente il contenuto che supera l'altezza disponibile della finestra.
+*/
 
+.bodycontainer {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #0078D4;
+}
+
+.bodycontainer {
+    /* font-family: Arial, sans-serif; */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #0078D4;
+}
+.bodycontainer body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+.header {
+    background-color: #0078D4;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+.container {
+    flex: 1;
+    padding: 10px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+.hero {
+    background-color: #e3f2fd;
+    padding: 40px;
+    text-align: center;
+    border-radius: 8px;
+}
+.hero h1 {
+    color: #0078D4;
+}
+.hero p {
+    color: black;
+    font-size: 1.2em;
+    margin: 20px 0;
+}
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+}
+.feature {
+    flex: 1 1 calc(33.333% - 20px);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+.feature p {
+    color: black;
+    font-size: 1.2em;
+    margin: 20px 0;
+}
+.feature h3 {
+    color: #0078D4;
+}
+.cta {
+    text-align: center;
+    margin: 40px 0;
+}
+.cta a {
+    background-color: #0078D4;
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.2em;
+}
+.cta p {
+    line-height: 2.5em;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 1.2em;
+}
+.footer {
+    background-color: #0078D4;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}

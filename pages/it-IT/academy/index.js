@@ -1,6 +1,6 @@
 // components
 import Layout from '../../../components/Layout';
-import WorkSlider from '../../../components/WorkSlider';
+import AcademySlider from '../../../components/AcademySlider';
 import Head from 'next/head'; // Importa il componente Head di Next.js
 
 // framer motion
@@ -8,10 +8,9 @@ import { motion } from 'framer-motion';
 import { fadeIn } from '../../../variants';
 
 // icons
-import { BsArrowRight } from 'react-icons/bs';
+// import { BsArrowRight } from 'react-icons/bs';
 
-
-const Work = () => {
+const Academy = () => {
   return (
     <Layout>
        <Head>
@@ -22,7 +21,7 @@ const Work = () => {
         <meta property="og:title" content="Vivasoft Academy - Formazione Microsoft e Certificazioni" />
         <meta property="og:description" content="Vivi l'esperienza di Vivasoft Academy. Partecipa ai nostri corsi di formazione su Microsoft Power Apps, Power BI, Power Automate e ottieni le certificazioni ufficiali." />
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
-        <meta property="og:url" content="https://www.vivasoft.it/services" />
+        <meta property="og:url" content="https://www.vivasoft.it/academy" />
       </Head>
     <div className='h-full bg-primary py-60 flex items-center bg-gradient-to-r from-primary via-black/30 to-black/10'>
      
@@ -46,10 +45,9 @@ const Work = () => {
               exit='hidden'
               className='mb-4 max-w-[400px] mx-auto lg:mx-0'
             >
-              Ogni corso è progettato per fornire le competenze pratiche necessarie e affrontare le sfide moderne in ogni area, da client-side development a machine learning, 
-              passando per Kubernetes e le soluzioni Microsoft.
-              Inoltre saranno sempre accessibili materiali formativi e risorse didattiche.
-              
+              Creiamo soluzioni di formazione completa per le aziende, progettando e gestendo <span style={{ fontWeight: 'bold', color: 'yellow' }}>Academy Aziendali</span> su misura. Le nostre Academy sono ambienti di apprendimento esclusivi che rispondono alle esigenze di crescita professionale delle tue risorse, offrendo programmi formativi strutturati e innovativi.
+              Formazione In Aula e Online: La nostra formazione è disponibile sia in aula che tramite piattaforme online, offrendo flessibilità e comodità.
+              Piani di Certificazione: Aiutiamo le aziende a far certificare i propri dipendenti, ottenendo qualifiche che valorizzano il brand aziendale.
             </motion.p>
             {/* <button className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
               <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
@@ -68,7 +66,7 @@ const Work = () => {
             className='w-full xl:max-w-[65%]'
           >
             <div className=''>
-               <WorkSlider />
+               <AcademySlider />
             </div>
            
           </motion.div>
@@ -80,4 +78,4 @@ const Work = () => {
   );
 };
 
-export default Work;
+export default Academy;

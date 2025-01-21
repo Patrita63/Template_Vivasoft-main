@@ -42,6 +42,54 @@ const AllUsers = () => {
 
     // Stops Checking When Component Unmounts (clearInterval)
     useEffect(() => {
+        // fetchAllUsers 
+        const getAllUsers = async () => {
+            try {
+                const response = await fetch('/api/utente/manageuser', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+                });
+        
+                const data = await response.json();
+                debugger;
+        
+                if (!response.ok) {
+                setError(data.message || "Errore durante getAllUsers");
+                return;
+                }
+
+                // Ensure `users` exists and is an array
+                if (!Array.isArray(data?.users)) {
+                    throw new Error("Unexpected API response: 'users' field is not an array");
+                }
+                console.log(data?.users);
+                // Correct mapping function
+                const rows = data.users.map(({ Id, Nome, Cognome, Email, DataDiNascita, IdTipoUtente, Phone, TipoUtente }) => {
+                    const row = {
+                        id: Id,  // MUI DataGrid needs this field
+                        nome: Nome,
+                        cognome: Cognome,
+                        email: Email,
+                        datadinascita: formattedDate(DataDiNascita),
+                        idtipoutente: IdTipoUtente,
+                        phone: Phone,
+                        tipoutente: TipoUtente
+                    };
+                    console.log("Mapped Row:" + row);  // Debug each row
+                    return row;
+                });
+                
+                setData(rows);
+                setIsDataReady(true);
+        
+            } catch (err) {
+                setIsDataReady(false);
+                console.error('Error fetching getAllUsers:' + err);
+                
+                setError(err.message);
+                console.error("Error during getAllUsers:" + err);
+            }
+        }
         getAllUsers();
 
         setIsClient(true); // This ensures the component knows it's running on the client
@@ -66,54 +114,7 @@ const AllUsers = () => {
         return format(parseISO(dateString), "yyyy-MM-dd");
     };
 
-    // fetchAllUsers 
-    const getAllUsers = async () => {
-        try {
-            const response = await fetch('/api/utente/manageuser', {
-              method: 'GET',
-              headers: { 'Content-Type': 'application/json' }
-            });
-      
-            const data = await response.json();
-            debugger;
-      
-            if (!response.ok) {
-              setError(data.message || "Errore durante getAllUsers");
-              return;
-            }
-
-            // Ensure `users` exists and is an array
-            if (!Array.isArray(data?.users)) {
-                throw new Error("Unexpected API response: 'users' field is not an array");
-            }
-            console.log(data?.users);
-            // Correct mapping function
-            const rows = data.users.map(({ Id, Nome, Cognome, Email, DataDiNascita, IdTipoUtente, Phone, TipoUtente }) => {
-                const row = {
-                    id: Id,  // MUI DataGrid needs this field
-                    nome: Nome,
-                    cognome: Cognome,
-                    email: Email,
-                    datadinascita: formattedDate(DataDiNascita),
-                    idtipoutente: IdTipoUtente,
-                    phone: Phone,
-                    tipoutente: TipoUtente
-                };
-                console.log("Mapped Row:" + row);  // Debug each row
-                return row;
-            });
-            
-            setData(rows);
-            setIsDataReady(true);
-      
-          } catch (err) {
-            setIsDataReady(false);
-            console.error('Error fetching getAllUsers:' + err);
-            
-            setError(err.message);
-            console.error("Error during getAllUsers:" + err);
-          }
-    }
+    
 
     if (error) return <div>Error: {error}</div>;
     // if (!db){

@@ -14,7 +14,7 @@ const FooterEnUs = () => {
           <div className="flex flex-col justify-center items-center">
             {/* logo */}
               {/* Link all'area intranet */}
-              <Link href={'/intranet/home'} className="mt-4 text-white text-sm hover:text-secondary" >
+              <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
                 <Image
                   src={'/Logo_VivaSoft.png'}
                   width={85}
@@ -26,7 +26,7 @@ const FooterEnUs = () => {
              </Link>
 
               {/* Link all'area intranet */}
-              <Link href={'/intranet/home'} className="mt-4 text-white text-sm hover:text-secondary" >
+              <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
                 <small>INTRANET</small>
               </Link>
           </div>

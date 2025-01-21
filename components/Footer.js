@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="flex flex-col justify-center items-center">
             {/* logo */}
               {/* Link all'area intranet */}
-              <Link href={'/intranet/home'} className="mt-4 text-white text-sm hover:text-secondary" >
+              <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
                 <Image
                   src={'/LogoClaim_F.png'}
                   width={110}
@@ -26,7 +26,7 @@ const Footer = () => {
              </Link>
 
               {/* Link all'area intranet */}
-              <Link href={'/intranet/home'} className="mt-4 text-white text-sm hover:text-secondary" >
+              <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
                 <small>INTRANET</small>
               </Link>
           </div>
@@ -116,7 +116,9 @@ const Footer = () => {
         </div>
   
         {/* Powered by */}
-        <Credits />
+        <div className=' items-center gap-x-6 text-sm mt-2'>
+          <Credits />
+        </div>
       </div>
     </footer>
   );
