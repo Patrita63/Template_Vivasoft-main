@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { FormControl, FormGroup, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField, CircularProgress } from "@mui/material";
 import React, {useState, useEffect } from "react";
 
+import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -254,6 +255,7 @@ const UserDetails = () => {
     };
 
     const handleUpdateUser = async (newUserData) => {
+        debugger;
         console.log("Sending data to API:" + newUserData); // Log data before sending
         try {
             
@@ -267,7 +269,7 @@ const UserDetails = () => {
                 email: newUserData.email,
                 datadinascita: newUserData.datadinascita,
                 phone: newUserData.phone,
-                idtipoutente: newUserData.tipoutente.id
+                idtipoutente: newUserData.tipoutente.Id
                 }),
             });
             debugger;
@@ -293,39 +295,14 @@ const UserDetails = () => {
         router.push("/intranet/allusers");
     }
 
-    
-    const handleDeleteUser = async (userId) => {
-        console.log("Sending data to API:", id); // Log data before sending
-        try {
-            
-            const response = await fetch(`/api/utente/manageuser?id=${userId}`, {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                id: id
-                }),
-            });
-
-            console.log("Full API response:" + response);
-            console.log("Response status:"+ response.status);
-      
-            const data = await response.json();
-        
-            if (!response.ok) {
-                alert(data.error || "Errore durante la cancellazione dell'utente");
-                return;
-            }
-        
-            console.log("User deleted successfully!");
-            // Redirect to AllUsers page
-            router.push("/intranet/allusers");
-        } catch (err) {
-          console.error("Delete User Error:"+ err);
-        }
-    };
-
     return (
         <>
+        {/* NavIntranetMenu */}
+        {isClient && (
+            <div>
+                <NavIntranetMenu />
+            </div>
+        )}
         {/* Breadcrumbs */}
         <Box sx={{ margin: '16px' } }>
             <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
@@ -461,16 +438,6 @@ const UserDetails = () => {
                     disabled={!isFormValid()} // Button is disabled if the form is invalid
                 >
                     Update User
-                </Button>
-                <Button
-                    hidden={true}
-                    type="submit"
-                    name="delete" // Unique name to identify the button
-                    variant="contained"
-                    className={`${styles.BtnDeleteUser} ${styles.BtnUpdateMarginLeft}`}
-                    sx={{ mt: 2 }}
-                >
-                    Delete
                 </Button>
             </form>
         </UserContainer>

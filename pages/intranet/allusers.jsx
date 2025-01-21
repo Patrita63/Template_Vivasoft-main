@@ -114,12 +114,7 @@ const AllUsers = () => {
         return format(parseISO(dateString), "yyyy-MM-dd");
     };
 
-    
-
     if (error) return <div>Error: {error}</div>;
-    // if (!db){
-    //     return <div>Loading database...</div>;
-    // } 
     
     const columns = [
         { field: 'id', headerName: 'ID', width: 50 },
@@ -245,7 +240,7 @@ const AllUsers = () => {
                                             },
                                         },
                                         }}
-                                        pageSizeOptions={[5]}
+                                        pageSizeOptions={[5,10,25,50,100]}
                                         // checkboxSelection
                                         // disableRowSelectionOnClick
                                     />

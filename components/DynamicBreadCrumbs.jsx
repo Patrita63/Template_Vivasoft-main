@@ -8,15 +8,24 @@ const DynamicBreadCrumbs = () => {
   const router = useRouter();
   const pathnames = router.asPath.split("/").filter((x) => x);
 
-  // Custom logic to handle combined "All Users / User Details"
+  // Custom logic to check for user pages
+  const isUserPage = pathnames.includes("allusers");
   const isUserDetailsPage = pathnames.includes("userdetails");
-  const isAllUsersPage = pathnames.includes("allusers");
-
-  // Custom logic to handle combined "All Users / View User Details"
   const isViewUserDetailsPage = pathnames.includes("viewuserdetails");
-
-  // Custom logic to handle combined "All Users / Delete User"
   const isDeleteUserPage = pathnames.includes("deleteuser");
+
+  // Helper to create user-related breadcrumb
+  const renderUserBreadcrumb = (type, id) => {
+    return (
+      <Typography color="text.primary">
+        <Link href="/intranet/allusers" passHref>
+          All Users
+        </Link>
+        {" "}
+        / {type} User Details ({id || "N/A"})
+      </Typography>
+    );
+  };
 
   return (
     <Breadcrumbs aria-label="breadcrumb" sx={{ margin: "16px 0" }}>
@@ -28,51 +37,15 @@ const DynamicBreadCrumbs = () => {
         Intranet Home
       </Link>
 
-      {/* Conditional "All Users / User Details" with All Users that go to allusers page */}
-      {isAllUsersPage || isUserDetailsPage ? (
-        isUserDetailsPage ? (
-          <Typography color="text.primary">
-            <Link href="/intranet/allusers" passHref>
-              All Users
-            </Link>{" "}
-            / Edit User Details ({router.query.id || "N/A"})
-          </Typography>
-        ) : (
-          <Typography color="text.primary">All Users</Typography>
-        )
-      ) : null}
-      {isAllUsersPage || isViewUserDetailsPage ? (
-        isViewUserDetailsPage ? (
-          <Typography color="text.primary">
-            <Link href="/intranet/allusers" passHref>
-              All Users
-            </Link>{" "}
-            / View User Details ({router.query.id || "N/A"})
-          </Typography>
-        ) : (
-          <Typography color="text.primary">All Users</Typography>
-        )
-      ) : null}
-      {isAllUsersPage || isDeleteUserPage ? (
-        isDeleteUserPage ? (
-          <Typography color="text.primary">
-            <Link href="/intranet/allusers" passHref>
-              All Users
-            </Link>{" "}
-            / Delete User ({router.query.id || "N/A"})
-          </Typography>
-        ) : (
-          <Typography color="text.primary">All Users</Typography>
-        )
-      ) : null}
-      {/* Conditional "All Users / User Details" */}
-      {/* {isUserDetailsPage || isAllUsersPage ? (
-        <Typography color="text.primary">
-          {isAllUsersPage && !isUserDetailsPage && "All Users"}
-          {isUserDetailsPage &&
-            `All Users / User Details (${router.query.id || "N/A"})`}
-        </Typography>
-      ) : null} */}
+      {/* Conditional "All Users" page breadcrumb */}
+      {isUserPage && !isUserDetailsPage && !isViewUserDetailsPage && !isDeleteUserPage && (
+        <Typography color="text.primary">All Users</Typography>
+      )}
+
+      {/* Conditional breadcrumbs for specific user pages */}
+      {isUserDetailsPage && renderUserBreadcrumb("Edit", router.query.id)}
+      {isViewUserDetailsPage && renderUserBreadcrumb("View", router.query.id)}
+      {isDeleteUserPage && renderUserBreadcrumb("Delete", router.query.id)}
     </Breadcrumbs>
   );
 };

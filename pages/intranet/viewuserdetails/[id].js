@@ -5,11 +5,12 @@ import Cookies from "js-cookie";
 import { Box, Typography, TextField, CircularProgress, Button, FormControl, styled } from "@mui/material";
 import React, {useState, useEffect } from "react";
 
+import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
@@ -153,6 +154,12 @@ const ViewUserDetails = () => {
 
     return (
         <>
+        {/* NavIntranetMenu */}
+        {isClient && (
+            <div>
+                <NavIntranetMenu />
+            </div>
+        )}
         {/* Breadcrumbs */}
         <Box sx={{ margin: '16px' } }>
             <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />

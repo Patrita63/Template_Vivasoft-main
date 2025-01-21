@@ -1,5 +1,9 @@
-import { FormControl, FormGroup, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField } from "@mui/material";
+import { Box, FormControl, FormGroup, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField } from "@mui/material";
 import React, {useState, useEffect } from "react";
+
+import NavIntranetMenu from '../../components/NavIntranetMenu';
+import DynamicBreadCrumbs from '../../components/DynamicBreadCrumbs';
+
 import { useRouter } from 'next/router';
 
 import Cookies from "js-cookie";
@@ -14,12 +18,15 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 import { format, parseISO } from 'date-fns';
 
-// import styles from './AllUsers.module.css';
+import styles from './AllUsers.module.css';
 
 const UserContainer = styled(FormGroup)`
     width: 50%;
     margin: 5% auto 0 auto;
+    padding: 20px;
     background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 `
 
 const AddUser = () => {
@@ -146,44 +153,26 @@ const AddUser = () => {
         }
     };
 
-    // Validation
     const onSubmit = async (data) => {
         debugger;
-        console.log('Form Data:' + data);
-
-        if (!data.tipoutente || !data.tipoutente.id) {
-            console.error("Error: tipoutente does not have an ID"+ data.tipoutente);
-            alert("Please select a valid User Type.");
-            return;
-        }
-
-        console.log('BEFORE data.datadinascita: ' + data.datadinascita);
-
+        console.log('Form Data:', data);
+    
+                // Format the date correctly before sending
         const formattedDate = format(data.datadinascita, 'yyyy-MM-dd');
-        // console.log(formattedDate); // Output: "2025-01-01"
         data.datadinascita = formattedDate;
-        console.log('After data.datadinascita: ' + data.datadinascita);
-
-        console.log('Form Data - data.tipoutente.id: '+ data.tipoutente.id);
-
-        // setFormValues(data);
-
+        console.log('After data.datadinascita:', data.datadinascita);
+    
+        console.log('Form Data - data.tipoutente.id:', data.tipoutente.id);
+    
+        // Proceed to add the user if email doesn't already exist
         handleAddUser(data);
-
-        /* const alreadyExist = await checkUserByEmailExists(data.email);
-        if(!alreadyExist) {
-            AddUserData(data);
-        }
-        else
-        {
-            alert("Already exists a user with mail " + data.email);
-        } */
     };
 
     
-    const GoBack = async () => {
-        router.push("/intranet/allusers");
-    }
+    
+    // const GoBack = async () => {
+    //     router.push("/intranet/allusers");
+    // }
 
     // Validation
     const watchAllFields = watch(); // Watch all fields for enabling the button.
@@ -210,143 +199,171 @@ const AddUser = () => {
     };
 
     return (
-        <UserContainer>
-            <Typography variant="h4">Add User</Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Controller 
-                    name="nome"
-                    control={control}
-                    rules={{ required: 'Name is required' }}
-                    render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.nome}>
-                            <InputLabel htmlFor="nome">Nome</InputLabel>
-                            <Input {...field} id="nome" />
-                            <FormHelperText>{errors.nome?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="cognome"
-                    control={control}
-                    rules={{ required: 'Surname is required' }}
-                    render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.cognome}>
-                        <InputLabel htmlFor="cognome">Cognome</InputLabel>
-                        <Input {...field} id="cognome" />
-                        <FormHelperText>{errors.cognome?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="email"
-                    control={control}
-                    rules={{
-                        required: 'Email is required',
-                        pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: 'Enter a valid email address',
-                        },
-                    }}
-                    render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.email}>
-                        <InputLabel htmlFor="email">Email</InputLabel>
-                        <Input {...field} id="email" />
-                        <FormHelperText>{errors.email?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="phone"
-                    control={control}
-                    rules={{
-                        required: 'Phone is required',
-                        pattern: {
-                        value: /^[0-9]+$/,
-                        message: 'Enter a valid phone number',
-                        },
-                    }}
-                    render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.phone}>
-                        <InputLabel htmlFor="phone">Phone</InputLabel>
-                        <Input {...field} id="phone" />
-                        <FormHelperText>{errors.phone?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <Controller
-                    name="datadinascita"
-                    control={control}
-                    rules={{
-                        required: 'Date of Birth is required',
-                    }}
-                    render={({ field }) => (
-                        <FormControl fullWidth error={!!errors.datadinascita}>
-                        <DatePicker
-                            label="Date of Birth"
-                            value={field.value}
-                            onChange={(newValue) => field.onChange(newValue)} // Update the form state
-                            // OLD renderInput={(params) => <TextField {...params} />}
-                            slots={{ textField: (props) => <TextField {...props} /> }}
-                        />
-                        <FormHelperText>{errors.datadinascita?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                    />
-                </LocalizationProvider>
-                <Controller
-                    name="tipoutente"
-                    control={control}
-                    rules={{
-                    required: 'User Type is required',
-                    }}
-                    render={({ field }) => (
-                    <FormControl fullWidth error={!!errors.tipoutente}>
-                        <Autocomplete
-                        id="tipoutente"
-                        options={listTipoUtente}
-                        getOptionLabel={(option) => option?.TipoUtente || ''}
-                        isOptionEqualToValue={(option, value) => option.Id === value?.id}
-                        value={field.value || null}
-                        onChange={(event, newValue) => {
-                            field.onChange(newValue ? { id: newValue.Id, TipoUtente: newValue.TipoUtente } : null);
-                        }}
-
-                        renderInput={(params) => (
-                            <TextField {...params} label="Select a User Type" />
+        <>
+        {/* NavIntranetMenu */}
+        {isClient && (
+            <div>
+                <NavIntranetMenu />
+            </div>
+        )}
+        {/* Breadcrumbs */}
+        <Box sx={{ margin: '16px' } }>
+            <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
+        </Box>
+        {isAuthenticated && (
+            <UserContainer>
+                <Typography variant="h4">Add User</Typography>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Controller 
+                        name="nome"
+                        control={control}
+                        rules={{ required: 'Name is required' }}
+                        render={({ field }) => (
+                            <FormControl fullWidth error={!!errors.nome}>
+                                <InputLabel htmlFor="nome">Nome</InputLabel>
+                                <Input {...field} id="nome" />
+                                <FormHelperText>{errors.nome?.message}</FormHelperText>
+                            </FormControl>
                         )}
-
+                    />
+                    <Controller
+                        name="cognome"
+                        control={control}
+                        rules={{ required: 'Surname is required' }}
+                        render={({ field }) => (
+                            <FormControl fullWidth error={!!errors.cognome}>
+                            <InputLabel htmlFor="cognome">Cognome</InputLabel>
+                            <Input {...field} id="cognome" />
+                            <FormHelperText>{errors.cognome?.message}</FormHelperText>
+                            </FormControl>
+                        )}
+                    />
+                    <Controller
+                        name="email"
+                        control={control}
+                        rules={{
+                            required: 'Email is required',
+                            pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: 'Enter a valid email address',
+                            },
+                        }}
+                        render={({ field }) => (
+                            <FormControl fullWidth error={!!errors.email}>
+                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <Input {...field} id="email" />
+                            <FormHelperText>{errors.email?.message}</FormHelperText>
+                            </FormControl>
+                        )}
+                    />
+                    <Controller
+                        name="phone"
+                        control={control}
+                        rules={{
+                            required: 'Phone is required',
+                            pattern: {
+                            value: /^[0-9]+$/,
+                            message: 'Enter a valid phone number',
+                            },
+                        }}
+                        render={({ field }) => (
+                            <FormControl fullWidth error={!!errors.phone}>
+                            <InputLabel htmlFor="phone">Phone</InputLabel>
+                            <Input {...field} id="phone" />
+                            <FormHelperText>{errors.phone?.message}</FormHelperText>
+                            </FormControl>
+                        )}
+                    />
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <Controller
+                        name="datadinascita"
+                        control={control}
+                        rules={{
+                            required: 'Date of Birth is required',
+                        }}
+                        render={({ field }) => (
+                            <FormControl fullWidth error={!!errors.datadinascita}>
+                            <DatePicker
+                                label="Date of Birth"
+                                value={field.value}
+                                onChange={(newValue) => field.onChange(newValue)} // Update the form state
+                                // OLD renderInput={(params) => <TextField {...params} />}
+                                slots={{ textField: (props) => <TextField {...props} /> }}
+                            />
+                            <FormHelperText>{errors.datadinascita?.message}</FormHelperText>
+                            </FormControl>
+                        )}
                         />
-                        <FormHelperText>{errors.tipoutente?.message}</FormHelperText>
-                    </FormControl>
-                    )}
-                />
-                <Button
-                    type="submit"
-                    variant="contained"
-                    // className={styles.BtnBackAllUsers}
-                    sx={{ 
-                        mt: 2,
-                        backgroundColor: "primary.dark",
-                        "&:hover": {
-                            backgroundColor: "primary.dark"
-                        }
-                     }}
-                    onClick={GoBack}
-                >
-                    Back
-                </Button>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary.dark"
-                    sx={{ mt: 2 }}
-                    disabled={!isFormValid()} // Button is disabled if the form is invalid
+                    </LocalizationProvider>
+                    <Controller
+                        name="tipoutente"
+                        control={control}
+                        rules={{
+                        required: 'User Type is required',
+                        }}
+                        render={({ field }) => (
+                        <FormControl fullWidth error={!!errors.tipoutente}>
+                            <Autocomplete
+                            id="tipoutente"
+                            options={listTipoUtente}
+                            getOptionLabel={(option) => option?.TipoUtente || ''}
+                            isOptionEqualToValue={(option, value) => option.Id === value?.id}
+                            value={field.value || null}
+                            onChange={(event, newValue) => {
+                                field.onChange(newValue ? { id: newValue.Id, TipoUtente: newValue.TipoUtente } : null);
+                            }}
+
+                            renderInput={(params) => (
+                                <TextField {...params} label="Select a User Type" />
+                            )}
+
+                            />
+                            <FormHelperText>{errors.tipoutente?.message}</FormHelperText>
+                        </FormControl>
+                        )}
+                    />
+                    {/* <Button
+                        variant="contained"
+                        sx={{ 
+                            mt: 2,
+                            backgroundColor: "blue !important", // Force the background color to blue
+                            color: "whitesmoke", // Set text color
+                            "&:hover": {
+                                backgroundColor: "darkblue !important" // Force the hover color
+                            }
+                        }}
+                        onClick={GoBack}
                     >
-                    Add User
-                </Button>
-            </form>
-        </UserContainer>
+                        Back
+                    </Button> */}
+                    <Button
+                            variant="contained"
+                            sx={{ mt: 2 }}
+                            className={styles.BtnBackAllUsers}
+                            onClick={() => router.push("/intranet/allusers")}
+                        >
+                            Back
+                    </Button>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary.dark"
+                        sx={{  mt: 2,
+                            backgroundColor: "blue !important", // Force the background color to blue
+                            marginLeft: "545px !important",
+                            color: "whitesmoke !important", // Set text color
+                            "&:hover": {
+                                backgroundColor: "darkblue !important" // Force the hover color
+                            } 
+                        }}
+                        disabled={!isFormValid()} // Button is disabled if the form is invalid
+                        >
+                        Add User
+                    </Button>
+                </form>
+            </UserContainer>
+        )}
+    </>
     );
 }
 
