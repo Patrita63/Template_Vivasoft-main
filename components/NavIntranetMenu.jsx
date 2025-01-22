@@ -30,6 +30,7 @@ const NavIntranetMenu = () => {
   // https://nextjs.org/docs/messages/react-hydration-error
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
+  const [role, setRole] = useState('');
   // To navigate to another page
   const router = useRouter();
 
@@ -143,7 +144,12 @@ const NavIntranetMenu = () => {
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/allusers" passHref>
-                Utenti ...
+                Utenti Corsi
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+              <Link href="/intranet/allregisteredusers" passHref>
+                Utenti Registrati
               </Link>
             </MenuItem>
           </>

@@ -14,6 +14,12 @@ const DynamicBreadCrumbs = () => {
   const isViewUserDetailsPage = pathnames.includes("viewuserdetails");
   const isDeleteUserPage = pathnames.includes("deleteuser");
 
+  // Custom logic to check for registereduser pages
+  const isRegisteredUserPage = pathnames.includes("allregisteredusers");
+  const isRegisteredUserDetailsPage = pathnames.includes("registereduserdetails");
+  const isViewRegisteredUserDetailsPage = pathnames.includes("viewregistereduserdetails");
+  const isDeleteRegisteredUserPage = pathnames.includes("deleteregistereduser");
+
   // Helper to create user-related breadcrumb
   const renderUserBreadcrumb = (type, id) => {
     return (
@@ -23,6 +29,18 @@ const DynamicBreadCrumbs = () => {
         </Link>
         {" "}
         / {type} User Details ({id || "N/A"})
+      </Typography>
+    );
+  };
+
+  const renderRegisteredUserBreadcrumb = (type, id) => {
+    return (
+      <Typography color="text.primary">
+        <Link href="/intranet/allregisteredusers" passHref>
+          All Registered Users
+        </Link>
+        {" "}
+        / {type} Register User Details ({id || "N/A"})
       </Typography>
     );
   };
@@ -46,6 +64,16 @@ const DynamicBreadCrumbs = () => {
       {isUserDetailsPage && renderUserBreadcrumb("Edit", router.query.id)}
       {isViewUserDetailsPage && renderUserBreadcrumb("View", router.query.id)}
       {isDeleteUserPage && renderUserBreadcrumb("Delete", router.query.id)}
+
+      {/* Conditional "All Registered Users" page breadcrumb */}
+      {isRegisteredUserPage && !isRegisteredUserDetailsPage && !isViewRegisteredUserDetailsPage && !isDeleteRegisteredUserPage && (
+        <Typography color="text.primary">All Registered Users</Typography>
+      )}
+
+      {/* Conditional breadcrumbs for specific registered user pages */}
+      {isRegisteredUserDetailsPage && renderRegisteredUserBreadcrumb("Edit", router.query.id)}
+      {isViewRegisteredUserDetailsPage && renderRegisteredUserBreadcrumb("View", router.query.id)}
+      {isDeleteRegisteredUserPage && renderRegisteredUserBreadcrumb("Delete", router.query.id)}
     </Breadcrumbs>
   );
 };

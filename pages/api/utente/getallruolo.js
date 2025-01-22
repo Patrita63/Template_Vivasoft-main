@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     try {
         const pool = await getConnection();
         const query = `
-            SELECT Id, TipoUtente, Descrizione FROM T_TipoUtente
+            SELECT Id, Ruolo, Descrizione FROM T_Ruolo
         `;
 
         const result = await pool
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         return res.status(200).json({ user: result.recordset });
 
     } catch (err) {
-        console.error("GetAllTipoUtente Error:" + err);
+        console.error("GetAllRuolo Error:"+ err);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }

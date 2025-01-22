@@ -38,10 +38,21 @@ async function getUsers(req, res) {
     let result;
 
     if (id) {
-      query = `SELECT * FROM [T_Register] WHERE Id = @Id`;
+      query = `SELECT Reg.Id,Reg.Nome,Reg.Cognome,Reg.Email,Reg.Phone,Reg.DataRegistrazione,Reg.Password,Reg.Code,Reg.Note
+      ,tipoUt.Id AS IdTipoUtente,tipoUt.TipoUtente,tipoUt.Descrizione AS DescrizioneTipoUtente
+	    ,ruoloUt.Id AS IdRuolo,ruoloUt.Ruolo,ruoloUt.Descrizione AS DescrizioneRuolo
+      FROM [dbo].[T_Register] AS Reg 
+      INNER JOIN [dbo].[T_TipoUtente] AS tipoUt ON Reg.IdTipoUtente = tipoUt.Id
+      INNER JOIN [dbo].[T_Ruolo] AS ruoloUt ON Reg.IdRuolo = ruoloUt.Id 
+      WHERE Reg.Id = @Id`;
       result = await pool.request().input("Id", id).query(query);
     } else {
-      query = `SELECT * FROM [T_Register]`;
+      query = `SELECT Reg.Id,Reg.Nome,Reg.Cognome,Reg.Email,Reg.Phone,Reg.DataRegistrazione,Reg.Password,Reg.Code,Reg.Note
+      ,tipoUt.Id AS IdTipoUtente,tipoUt.TipoUtente,tipoUt.Descrizione AS DescrizioneTipoUtente
+	    ,ruoloUt.Id AS IdRuolo,ruoloUt.Ruolo,ruoloUt.Descrizione AS DescrizioneRuolo
+      FROM [dbo].[T_Register] AS Reg 
+      INNER JOIN [dbo].[T_TipoUtente] AS tipoUt ON Reg.IdTipoUtente = tipoUt.Id
+      INNER JOIN [dbo].[T_Ruolo] AS ruoloUt ON Reg.IdRuolo = ruoloUt.Id`;
       result = await pool.request().query(query);
     }
 
@@ -94,9 +105,9 @@ async function addUser(req, res) {
 
 // 🔹 Update User
 async function updateUser(req, res) {
-  const { id, nome, cognome, phone } = req.body;
+  const { id, nome, cognome, phone, email, dataregistrazione, idtipoutente, idruolo, password, code, note } = req.body;
 
-  if (!id || !nome || !cognome || !phone) {
+  if (!id || !nome || !cognome || !phone || !email || !dataregistrazione || !idtipoutente || !idruolo || !password || !code || !note) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
@@ -104,7 +115,8 @@ async function updateUser(req, res) {
     const pool = await getConnection();
     const query = `
       UPDATE [T_Register]
-      SET Nome = @Nome, Cognome = @Cognome, Phone = @Phone
+      SET Nome = @Nome, Cognome = @Cognome, Phone = @Phone, Email = @Email, DataRegistrazione = @DataRegistrazione, IdTipoUtente = @IdTipoUtente 
+      ,IdRuolo = @IdRuolo, Password = @Password, Code = @Code, Note = @Note
       WHERE Id = @Id
     `;
 
@@ -114,6 +126,13 @@ async function updateUser(req, res) {
       .input("Nome", nome)
       .input("Cognome", cognome)
       .input("Phone", phone)
+      .input("Email", email)
+      .input("DataRegistrazione", dataregistrazione)
+      .input("IdTipoUtente", idtipoutente)
+      .input("IdRuolo", idruolo)
+      .input("Password", password)
+      .input("Code", code)
+      .input("Note", note)
       .query(query);
 
     return res.status(200).json({ message: "User updated successfully" });
