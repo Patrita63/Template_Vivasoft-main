@@ -19,14 +19,14 @@ import { useRouter } from 'next/router';
 import Cookies from "js-cookie";
 
 // next link
-import Link from 'next/link';
+// import Link from 'next/link';
 // import { red } from '@mui/material/colors';
 
 // I have DataDiNascita in this format 2000-01-01T00:00:00.000Z but i want display only  in this format 'yyyy-MM-dd'
 // Since your DataDiNascita is in ISO format (2000-01-01T00:00:00.000Z), you need to convert and display it in yyyy-MM-dd format.
 import { format, parseISO } from "date-fns";
 
-const AllUsers = () => {
+const AllRegistereUsers = () => {
 
     // To navigate to another page
     const router = useRouter();
@@ -251,6 +251,8 @@ const AllUsers = () => {
                                         },
                                         }}
                                         pageSizeOptions={[5,10,25,50,100]}
+                                        disableColumnMenu
+                                        disableSelectionOnClick
                                         // checkboxSelection
                                         // disableRowSelectionOnClick
                                     />
@@ -266,5 +268,5 @@ const AllUsers = () => {
     );
 }
 
-export default AllUsers;
+export default AllRegistereUsers;
 
