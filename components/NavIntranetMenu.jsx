@@ -30,6 +30,8 @@ const NavIntranetMenu = () => {
   // https://nextjs.org/docs/messages/react-hydration-error
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
+  const [nominativo, setNominativo] = useState('');
+  
   const [role, setRole] = useState('');
   // To navigate to another page
   const router = useRouter();
@@ -57,8 +59,10 @@ const NavIntranetMenu = () => {
     const checkAuth = () => {
         const auth = Cookies.get("isAuthenticated") === "true"; // Convert to boolean
         const user = Cookies.get("username");
+        const nominativoUtente = Cookies.get("nominativo");
         setIsAuthenticated(auth);
         setUsername(user || "");
+        setNominativo(nominativoUtente || "");
     };
 
     checkAuth(); // Run once when component mounts
@@ -97,7 +101,7 @@ const NavIntranetMenu = () => {
         {isAuthenticated && (
           <>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Welcome {username}
+              {nominativo}
           </Typography>
           <IconButton
               size="large"

@@ -29,7 +29,7 @@ const IntranetHome = () => {
           <div className={styles.bodycontainer}>
 
             <header className={styles.header}>
-              <h1>Benvenuto nell&apos;Intranet Aziendale</h1>
+              <h1>Benvenuto nell&apos;Intranet Aziendale di Vivasoft S.R.L.</h1>
               <p>Consulenza e Formazione Microsoft per il tuo successo</p>
             </header>
 
@@ -71,7 +71,8 @@ const IntranetHome = () => {
 
                 <section className={styles.cta}>
                     <p>Vuoi trasformare la tecnologia in un vantaggio strategico? Inizia oggi stesso!</p>
-                    <a href="#">Scopri di più</a>
+                    {/* <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} className='hover:text-accent transition-all duration-300' target='_blank'> */}
+                    <a href="https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contac" target='_blank'>Vai nella nostra pagina Microsoft | AppSource</a>
                 </section>
             </div>
 

@@ -28,7 +28,6 @@ const UserContainer = styled(Box)`
 `;
 
 const ViewRegisteredUserDetails = () => {
-    // const [loading, setLoading] = useState(true); // Loading state
     const router = useRouter();
     const { id } = router.query; // Extract the dynamic route parameter
     const [user, setUser] = useState(null);
@@ -229,6 +228,10 @@ const ViewRegisteredUserDetails = () => {
 
                         <FormControl fullWidth margin="normal">
                             <TextField label="Cognome" value={user.Cognome} InputProps={{ readOnly: true }} />
+                        </FormControl>
+
+                        <FormControl fullWidth margin="normal">
+                            <TextField label="Gender" value={user.Gender} InputProps={{ readOnly: true }} />
                         </FormControl>
 
                         <FormControl fullWidth margin="normal">

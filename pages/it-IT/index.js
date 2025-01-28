@@ -99,10 +99,15 @@ const Home = () => {
         <meta name="author" content="Vivasoft" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="/favicon.ico?v=1" rel="shortcut icon" type="image/x-icon"></link>
+        {/* Favicon in PNG per desktop e tab */}
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />  {/* Favicon più grande per schermi Retina */}
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />  {/* Una dimensione intermedia */}
       </Head>
       <div className='bg-primary/60 h-full'>
         {/* text */}
-        <div className='w-full h-full bg-gradient-to-r from-primary via-black/30 to-black/10 py-80'>
+        <div className='w-full h-full bg-gradient-to-r from-primary via-black/10 to-black/10 xl:py-60 py-80'>
           <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto xl:pt-0 pt-20'>
             {/* Modal popup MUI fullScreen in <Dialog */}
             <Dialog open={isPopupOpened} onClose={handleClose} fullWidth maxWidth="sm">
@@ -160,24 +165,13 @@ const Home = () => {
               exit="hidden"
               className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
             >
-              <span style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                Dal 2014, plasmiamo il futuro delle aziende con soluzioni su misura, pensate per vincere ogni sfida.
-              </span>
-              <span>
-                Grazie al nostro supporto, le aziende ottimizzano i processi, migliorano l&apos;efficienza operativa e ottengono risultati concreti e duraturi, mantenendosi sempre un passo avanti.
-              </span>
-              <span>
-                Tutto questo è reso possibile dalla formazione e dallo sviluppo che offriamo attraverso i nostri collaboratori, esperti nelle tecnologie più avanzate di Microsoft.
-              </span>
-              <span>
-                Dall&apos;utilizzo della scalabilità di <span style={{ fontWeight: 'bold', color: 'yellow' }}>Azure Cloud</span> alla creazione di soluzioni dinamiche ed innovative con <span style={{ fontWeight: 'bold', color: 'yellow' }}>Microsoft Power Platform</span> fino all&apos;ottimizzazione della collaborazione aziendale con <span style={{ fontWeight: 'bold', color: 'yellow' }}>Microsoft SharePoint Online</span>, forniamo le competenze indispensabili per trasformare il tuo team in un motore di innovazione.
-              </span>
-              <span style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                La nostra missione? Trasformare le sfide in opportunità.
-              </span>
-              <span>
-                Con programmi formativi personalizzati, facciamo della tecnologia un vero vantaggio strategico per il tuo successo.
-              </span>
+              <span className='text-lg font-bold'>
+                Dal 2014, plasmiamo il futuro delle aziende con soluzioni su misura, pensate per vincere ogni sfida. </span>
+              <span>Grazie al nostro supporto, le aziende ottimizzano i processi, migliorano l&apos;efficienza operativa e ottengono risultati concreti e duraturi, mantenendosi sempre un passo avanti. </span>
+              <span>Tutto questo è reso possibile dalla formazione e dallo sviluppo che offriamo attraverso i nostri collaboratori, esperti nelle tecnologie più avanzate di Microsoft. </span>
+              <span>Dall&apos;utilizzo della scalabilità di <span className='text-accent font-bold'>Azure Cloud</span> alla creazione di soluzioni dinamiche ed innovative con <span className='text-accent font-bold'>Microsoft Power Platform</span> fino all&apos;ottimizzazione della collaborazione aziendale con <span className='text-accent font-bold'>Microsoft SharePoint Online</span>, forniamo le competenze indispensabili per trasformare il tuo team in un motore di innovazione. </span>
+              <span className='text-lg font-bold'> La nostra missione? Trasformare le sfide in opportunità. </span>
+              <span>Con programmi formativi personalizzati, facciamo della tecnologia un vero vantaggio strategico per il tuo successo.</span>
             </motion.p>
           </div>
         </div>

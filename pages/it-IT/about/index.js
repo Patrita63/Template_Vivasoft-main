@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 // components
 import Layout from "../../../components/Layout";
+import ParticlesContainer from '../../../components/ParticlesContainer';
 
 // icons
 import { VscAzure, VscAzureDevops } from "react-icons/vsc";
@@ -260,7 +261,7 @@ const About = () => {
         />
         <meta
           name="keywords"
-          content="Vivasoft, soluzioni IT, Microsoft Sharepoint online, Microsoft Sharepoint on-premises, Microsoft Power Apps, Power BI, Power Automate, consulenza IT, certificazioni Microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD"
+          content="Vivasoft, soluzioni IT, Microsoft Sharepoint online, Microsoft Sharepoint on-premises, Microsoft Power Apps, Power BI, Power Automate, C#, Python, React consulenza IT, certificazioni Microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD"
         />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Chi Siamo" />
@@ -271,10 +272,10 @@ const About = () => {
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
         <meta property="og:url" content="https://www.vivasoft.it/about" />
       </Head>
-      <div className="h-full bg-primary py-80 text-center xl:text-left bg-gradient-to-r from-primary via-black/30 to-black/10">
+      <div className="h-full bg-primary xl:py-60 py-80 text-center xl:text-left bg-gradient-to-r from-primary via-black/30 to-black/10">
         <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6">
           {/* text */}
-          <div className="flex-1 flex flex-col justify-center xl:pt-20 pt-20">
+          <div className="flex-1 flex flex-col justify-center xl:pt-0 pt-20">
             <motion.h2
               variants={fadeIn("right", 0.2)}
               initial="hidden"
@@ -291,13 +292,15 @@ const About = () => {
               exit="hidden"
               className="max-w-[600px] mx-auto xl:mx-0 mb-6 xl:mb-12 px-2 xl:px-0"
             >
-              Da oltre 10 anni è una realtà consolidata nel settore IT,
+              <span className='text-lg font-bold'>Da oltre 10 anni è una realtà consolidata nel settore IT</span>,
               specializzata nell&apos;insegnamento e nella realizzazione di
               soluzioni basate sulle piattaforme{" "}
               <span className="text-secondary text-bold">
                 Microsoft Sharepoint, Microsoft Power Apps, Power BI e Power Automate.
               </span>
             </motion.p>
+                    {/* particles */}
+          <ParticlesContainer />
             {/* counters */}
             <motion.div
               variants={fadeIn("right", 0.2)}
@@ -370,7 +373,6 @@ const About = () => {
                 );
               })}
             </div>
-
             {/* Tabella */}
             <div className="overflow-x-auto py-2 xl:py-6">
               <table className="min-w-full table-auto text-white/60">

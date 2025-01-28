@@ -99,7 +99,7 @@ const Contact = () => {
       <Head>
         <title>Vivasoft - Contattaci per soluzioni IT e Microsoft</title>
         <meta name="description" content="Hai domande? Contatta Vivasoft per ricevere consulenze su soluzioni IT, Power Apps, Power BI, Power Automate, e molto altro. Siamo qui per aiutarti." />
-        <meta name="keywords" content="contatti Vivasoft, supporto IT, consulenza IT, soluzioni Microsoft, Power Apps, Power BI, Power Automate, assistenza clienti" />
+        <meta name="keywords" content="contatti Vivasoft, supporto IT, consulenza IT, soluzioni Microsoft, Power Apps, Power BI, Power Automate,C#, Python, React, assistenza clienti" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Contattaci per soluzioni IT e Microsoft" />
         <meta property="og:description" content="Contattaci oggi per ricevere supporto sui nostri servizi IT, consulenze su Power Apps, Power BI, Power Automate e altre soluzioni Microsoft." />
@@ -153,7 +153,7 @@ const Contact = () => {
                   </label>
                 </div>
 
-                <button onClick={(event)=>SendMail(event)} className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' >
+                <button onClick={(event)=>SendMail(event)} className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' aria-label="Invia email" >
                   <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
                     Invia
                   </span>
@@ -165,6 +165,7 @@ const Contact = () => {
                 <div className="my-5 relative w-full">
                   <iframe
                     width="100%"
+                    title="Mappa google"
                     height="400"
                     style={{
                       border: '4px solid #D1660C', 

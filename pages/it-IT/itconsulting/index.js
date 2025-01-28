@@ -13,7 +13,7 @@ const ItConsulting = () => {
       <Head>
         <title>Vivasoft - Servizi Microsoft IT</title>
         <meta name="description" content="Offriamo consulenza IT e soluzioni avanzate per ottimizzare i processi aziendali con Microsoft Power Apps, Power BI e altro." />
-        <meta name="keywords" content="Vivasoft, soluzioni IT, Microsoft 365 Power Apps, Power BI, Power Automate, consulenza IT, certificazioni Microsoft, Azure, SharePoint" />
+        <meta name="keywords" content="Vivasoft, soluzioni IT, Microsoft 365 Power Apps, Power BI, Power Automate, consulenza IT, certificazioni Microsoft, Azure, SharePoint, certificazioni Microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Servizi Microsoft IT" />
         <meta property="og:description" content="Scopri i nostri servizi di consulenza IT e le soluzioni Microsoft per aziende." />
@@ -25,15 +25,15 @@ const ItConsulting = () => {
       <div className='container mx-auto'>
         <div className='flex flex-col xl:flex-row gap-x-8'>
           {/* text */}
-          <div className='text-center flex xl:w-[30vw] flex-col lg:text-left mb-4 xl:mb-0 xl:pt-0 pt-20'>
+          <div className='text-center flex xl:w-[30vw] flex-col lg:text-left mb-4 xl:mb-0 xl:pt-20 pt-60'>
             <motion.h2
               variants={fadeIn('up', 0.2)}
               initial='hidden'
               animate='show'
               exit='hidden'
-              className='h2 pt-40'
+              className='h2'
             >
-             I nostri <span className='text-accent'>Servizi di consulenza IT</span>
+             I nostri <span className='text-accent' style={{fontSize:'48px'}}>Servizi di consulenza IT</span>
             </motion.h2>
             <motion.p
               variants={fadeIn('up', 0.4)}
@@ -42,7 +42,7 @@ const ItConsulting = () => {
               exit='hidden'
               className='mb-4 max-w-[400px] mx-auto lg:mx-0'
             >
-              Siamo un&apos;azienda IT specializzata, da più di 10 anni, nello sviluppo di soluzioni personalizzate utilizzando le più avanzate tecnologie Microsoft. Con passione e competenza, ci dedichiamo a creare prodotti su misura per le esigenze dei nostri clienti, che spaziano da applicazioni aziendali su misura a sistemi complessi integrati. Il nostro obiettivo è offrire soluzioni concrete e innovative, che ottimizzano i processi aziendali e massimizzano l&apos;efficienza, sfruttando appieno le potenzialità delle tecnologie Microsoft. 
+              <span className='text-lg font-bold'>Siamo un&apos;azienda IT specializzata nello sviluppo di soluzioni personalizzate</span> utilizzando le più avanzate tecnologie Microsoft.<span className='text-lg font-bold'> Con passione e competenza,</span> ci dedichiamo a creare prodotti su misura per le esigenze dei nostri clienti, che spaziano da applicazioni aziendali su misura a sistemi complessi integrati. Il nostro obiettivo è offrire soluzioni concrete e innovative, che ottimizzano i processi aziendali e massimizzano l&apos;efficienza, sfruttando appieno le potenzialità delle tecnologie Microsoft.
             </motion.p>
           </div>
 

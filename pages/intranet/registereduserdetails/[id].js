@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import Cookies from "js-cookie";
 
-import { FormControl, FormGroup, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField, CircularProgress } from "@mui/material";
+import { FormControl, FormGroup, FormLabel, FormControlLabel, InputLabel, Input, Typography, Button, styled, FormHelperText, Autocomplete, TextField, CircularProgress, RadioGroup, Radio } from "@mui/material";
 import React, {useState, useEffect } from "react";
 
 import NavIntranetMenu from '../../../components/NavIntranetMenu';
@@ -57,6 +57,7 @@ const RegisteredUserDetails = () => {
         id: 0,  // ✅ Ensure `id` is included
         nome: '',
         cognome: '',
+        gender: 'M',
         email: '',
         dataregistrazione: '',
         phone: '',
@@ -121,6 +122,7 @@ const RegisteredUserDetails = () => {
                 setValue("id", user.Id);
                 setValue("nome", user.Nome);
                 setValue("cognome", user.Cognome);
+                setValue("gender", user.Gender);
                 setValue("email", user.Email);
                 setValue("dataregistrazione", formattedDate); // Correct format
                 setValue("phone", user.Phone);
@@ -236,6 +238,7 @@ const RegisteredUserDetails = () => {
     // Validation
     const onSubmit = async (data, event) => {
         debugger;
+        data.idruolo = data.ruolo.Id;
         console.log('Form Submitted:' + data);
         const clickedButton = event.nativeEvent.submitter.name; // Access submitter's name
         // Get the name of the button clicked
@@ -251,6 +254,7 @@ const RegisteredUserDetails = () => {
     const isFormValid = () => {
         const isValid = watchAllFields.nome &&
         watchAllFields.cognome &&
+        watchAllFields.gender &&
         watchAllFields.email &&
         watchAllFields.phone &&
         watchAllFields.dataregistrazione &&
@@ -262,6 +266,7 @@ const RegisteredUserDetails = () => {
         !errors.tipoutente && // No errors on tipoutente
         !errors.nome && // No errors on name
         !errors.cognome && // No errors on surname
+        !errors.gender && // No errors on gender
         !errors.email && // No errors on email
         !errors.phone && // No errors on phone
         !errors.dataregistrazione && // No errors on dataregistrazione
@@ -285,11 +290,12 @@ const RegisteredUserDetails = () => {
                 id: newUserData.id,
                 nome: newUserData.nome,
                 cognome: newUserData.cognome,
+                gender: newUserData.gender,
                 phone: newUserData.phone,
                 email: newUserData.email,
                 dataregistrazione: newUserData.dataregistrazione,
                 idtipoutente: newUserData.tipoutente.id,
-                idruolo: newUserData.ruolo.id,
+                idruolo: newUserData.ruolo.Id,
                 password: newUserData.password,
                 code: newUserData.code,
                 note: newUserData.note
@@ -359,6 +365,29 @@ const RegisteredUserDetails = () => {
                         <InputLabel htmlFor="cognome">Cognome</InputLabel>
                         <Input {...field} id="cognome" />
                         <FormHelperText>{errors.cognome?.message}</FormHelperText>
+                        </FormControl>
+                    )}
+                />
+                <Controller
+                    name="gender"
+                    control={control}
+                    rules={{
+                    required: 'Gender is required',
+                    }}
+                    render={({ field }) => (
+                        <FormControl component="fieldset" error={!!errors.gender} fullWidth>
+                            <FormLabel component="legend">Gender</FormLabel>
+                            <RadioGroup
+                            {...field}
+                            row // Arrange options horizontally
+                            aria-label="gender"
+                            name="gender"
+                            onChange={(event) => handleGenderChange(event, field)}
+                            >
+                            <FormControlLabel value="M" control={<Radio />} label="Male" />
+                            <FormControlLabel value="F" control={<Radio />} label="Female" />
+                            </RadioGroup>
+                            <FormHelperText>{errors.gender?.message}</FormHelperText>
                         </FormControl>
                     )}
                 />
@@ -474,7 +503,7 @@ const RegisteredUserDetails = () => {
                     render={({ field }) => (
                         <FormControl fullWidth margin="normal" error={!!errors.password}>
                         <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input {...field} id="password" />
+                        <Input {...field} type='password' id="password" />
                         <FormHelperText>{errors.password?.message}</FormHelperText>
                         </FormControl>
                     )}

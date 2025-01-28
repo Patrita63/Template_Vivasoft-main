@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         const pool = await getConnection();
         const query = `
             SELECT [Id], [Nome], [Cognome], [Email], [Phone],
-                   [DataRegistrazione], [IdTipoUtente], [Password], [Code]
+                   [DataRegistrazione], [IdTipoUtente], [Password], [Code], Gender 
             FROM [T_Register]
             WHERE Email = @Email AND Password = @Password
         `;

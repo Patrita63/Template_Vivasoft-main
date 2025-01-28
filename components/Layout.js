@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
      
       <Nav />
       <Header />
-      <main className="">{children}</main>
+      <main className="">{children}</main>   
       <Footer/>
     </div>
   );

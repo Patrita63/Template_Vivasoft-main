@@ -9,152 +9,151 @@ import {
     Container,
     CssBaseline,
     Typography,
-    TextField
+    TextField,
+    CircularProgress,
 } from "@mui/material";
-
 import { LockOutlined } from "@mui/icons-material";
 import Cookies from "js-cookie";
 
 const ConfirmedMail = () => {
+    const [loading, setLoading] = useState(false); // Track loading state
     const [codetocheck, setCodetocheck] = useState("");
 
-    const [isClient, setIsClient] = useState(false);
     const [mailregistration, setMailregistration] = useState('');
     const [coderegistration, setCoderegistration] = useState('');
 
-    // To navigate to another page
     const router = useRouter();
 
-    // Stops Checking When Component Unmounts (clearInterval)
     useEffect(() => {
-
-        setIsClient(true); // This ensures the component knows it's running on the client
-        const checkAuth = () => {
-            const email = Cookies.get("mailregistration"); 
-            const code = Cookies.get("coderegistration");
-            setMailregistration(email);
-            setCoderegistration(code);
-        };
-    
-        checkAuth(); // Run once when component mounts
-    
-        const interval = setInterval(checkAuth, 1000); // Check cookies every second
-    
-        return () => clearInterval(interval); // Cleanup on unmount
-        
+        const email = Cookies.get("mailregistration");
+        const code = Cookies.get("coderegistration");
+        setMailregistration(email || '');
+        setCoderegistration(code || '');
     }, []);
 
     const handleChange = (event) => {
         setCodetocheck(event.target.value);
     };
 
-    const handleMailConfirmed = () => {
-        debugger;
+    const handleMailConfirmed = async (event) => {
+        event.preventDefault();
+        setLoading(true); // Start loading spinner
 
-        if(codetocheck === coderegistration && mailregistration !== '') {
-            // alert(mailregistration + ' - ' + coderegistration);
-            handleCheckIfUserIsRegistered(mailregistration, coderegistration)
+        if (codetocheck === coderegistration && mailregistration !== '') {
+            try {
+                await handleCheckIfUserIsRegistered(mailregistration, coderegistration);
+                setLoading(false); // Stop loading spinner
+
+                // Redirect to the intranet home page
+                router.push("/intranet");
+            } catch (error) {
+                setLoading(false); // Stop loading spinner
+                console.error("Verification failed:", error);
+                alert("Codice Non Verificato. Controlla la mail che ti abbia inviato.");
+            }
         } else {
+            setLoading(false); // Stop loading spinner
             alert("Codice Non Verificato. Controlla la mail che ti abbia inviato.");
         }
-    }
+    };
 
-    // email, code
-    // See RegisterData naming 
-    const handleCheckIfUserIsRegistered = async (mailregistration, coderegistration) => {
-        
-        if (
-            !mailregistration ||
-            !coderegistration
-        ) {
-            console.error("Missing required fields in handleCheckIfUserIsRegistered data");
+    const handleCheckIfUserIsRegistered = async (email, code) => {
+        if (!email || !code) {
+            console.error("Missing email or code for verification");
             alert("Please fill in all required fields");
             return;
         }
+
         try {
-            
             const response = await fetch("/api/registeruser/manageregistereduser", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: mailregistration,
-                    code: coderegistration
-                }),
+                body: JSON.stringify({ email, code }),
             });
 
-            console.log("Full API response:" + response);
-            console.log("Response status:" + response.status);
-      
-            const data = await response.json();
-        
             if (!response.ok) {
-                alert(data.error || "Errore durante la verifica della registrazione di un nuovo utente");
-                return;
+                const data = await response.json();
+                throw new Error(data.error || "Error during registration verification");
             }
-        
-            console.log("User registered and checked successfully!");
 
+            console.log("User verified successfully!");
             Cookies.remove("mailregistration");
             Cookies.remove("coderegistration");
-            
-            // Redirect to home page intranet
-            router.push("/intranet");
-            
-        } catch (err) {
-          console.error("Check Register User Error:"+ err);
-        } 
+        } catch (error) {
+            console.error("Verification Error:", error);
+            throw error;
+        }
     };
 
     return (
-        <>
-            <Container maxWidth="xs">
+        <Container maxWidth="xs">
             <CssBaseline />
             <Box
                 sx={{
-                mt: 20,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                    mt: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    position: 'relative',
                 }}
             >
+                {/* Spinner Overlay */}
+                {loading && (
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                            zIndex: 2,
+                        }}
+                    >
+                        <CircularProgress />
+                    </Box>
+                )}
                 <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-                <LockOutlined />
+                    <LockOutlined />
                 </Avatar>
                 <Typography variant="h5">Inserire il codice ricevuto via mail</Typography>
                 <Box sx={{ mt: 3 }}>
-                <TextField
-                    label="Enter code (case sensitive)"
-                    variant="outlined"
-                    fullWidth
-                    value={codetocheck}
-                    onChange={handleChange}
-                    margin="normal"
-                />
+                    <TextField
+                        label="Enter code (case sensitive)"
+                        variant="outlined"
+                        fullWidth
+                        value={codetocheck}
+                        onChange={handleChange}
+                        margin="normal"
+                    />
 
-                <Button className={styles.ConfirmedMail}
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={handleMailConfirmed}
-                >
-                    Verifica
-                </Button>
+                    <Button className={styles.ConfirmedMail}
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={handleMailConfirmed}
+                        disabled={loading} // Disable button while loading
+                    >
+                        Verifica
+                    </Button>
 
-                <Button className={styles.ConfirmedMailCancel}
+                    <Button className={styles.ConfirmedMailCancel}
                         fullWidth
                         color="error"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         onClick={() => router.push('/intranet')}
+                        disabled={loading} // Disable button while loading
                     >
                         Cancel
-                </Button>
-
+                    </Button>
                 </Box>
             </Box>
-            </Container>
-        </>
+        </Container>
     );
-}
+};
 
 export default ConfirmedMail;

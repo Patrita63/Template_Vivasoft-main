@@ -27,6 +27,7 @@ const Logout = () => {
     const handleLogout = async () => {
         Cookies.remove("isAuthenticated");
         Cookies.remove("username");
+        Cookies.remove("nominativo");
         // Redirect to home page intranet
         router.push("/intranet");
       };

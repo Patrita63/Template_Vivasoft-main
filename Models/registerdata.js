@@ -8,8 +8,10 @@ export class RegisterData {
     IdTipoUtente;
     Password;
     Code;
+    Gender;
+    IdRuolo;
 
-    constructor(Id, Nome, Cognome, Email, Phone, DataRegistrazione, IdTipoUtente, Password, Code) {
+    constructor(Id, Nome, Cognome, Email, Phone, DataRegistrazione, IdTipoUtente, Password, Code, Gender, IdRuolo) {
         this.Id = Id;
         this.Nome = Nome;
         this.Cognome = Cognome;
@@ -19,6 +21,8 @@ export class RegisterData {
         this.IdTipoUtente = IdTipoUtente;
         this.Password = Password;
         this.Code = Code;
+        this.Gender = Gender;
+        this.IdRuolo = IdRuolo;
     }
 
     checkPassword(ConfirmPassword) {

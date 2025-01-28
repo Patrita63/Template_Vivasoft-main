@@ -217,6 +217,10 @@ const DeleteUser = () => {
                         </FormControl>
 
                         <FormControl fullWidth margin="normal">
+                            <TextField label="Gender" value={user.Gender} InputProps={{ readOnly: true }} />
+                        </FormControl>
+
+                        <FormControl fullWidth margin="normal">
                             <TextField label="Email" value={user.Email} InputProps={{ readOnly: true }} />
                         </FormControl>
 
@@ -230,6 +234,10 @@ const DeleteUser = () => {
 
                         <FormControl fullWidth margin="normal">
                             <TextField label="Tipo Utente" value={user.TipoUtente} InputProps={{ readOnly: true }} />
+                        </FormControl>
+
+                        <FormControl fullWidth margin="normal">
+                            <TextField label="Note" value={user.Note} InputProps={{ readOnly: true }} />
                         </FormControl>
 
                         <Button

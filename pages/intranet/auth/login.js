@@ -44,6 +44,13 @@ const Login = () => {
 
       Cookies.set("isAuthenticated", "true", { expires: 1 / 48, secure: true }); // Expires in 30 minutes
       Cookies.set("username", email, { expires: 1 / 48, secure: true });
+      if(data.user.Gender === 'M') {
+        Cookies.set("nominativo", 'Benvenuto ' + data.user.Nome + ' ' + data.user.Cognome, { expires: 1 / 48, secure: true });
+      } else {
+        Cookies.set("nominativo", 'Benvenuta ' + data.user.Nome + ' ' + data.user.Cognome, { expires: 1 / 48, secure: true });  
+      }
+      
+      
       router.push("/intranet");
 
     } catch (err) {

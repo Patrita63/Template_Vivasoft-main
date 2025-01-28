@@ -2,7 +2,6 @@
 import Layout from '../../../components/Layout';
 import TestimonialSlider from '../../../components/TestimonialSlider';
 import Head from 'next/head'; // Importa il componente Head di Next.js
-
 // framer motion
 import { motion } from 'framer-motion';
 import { fadeIn } from '../../../variants';
@@ -44,6 +43,7 @@ const Testimonials = () => {
       </div>
     </div>
     </Layout>
+    
   );
 };
 

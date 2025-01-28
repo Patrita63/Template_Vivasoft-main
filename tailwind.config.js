@@ -37,7 +37,8 @@ module.exports = {
         'spin-slow': 'spin 6s linear infinite',
       },
       fontFamily: {
-        sora: [`var(--font-sora)`, 'sans-serif'],
+        segoe: ['"Segoe UI"', 'Tahoma', 'Geneva', 'sans-serif'],
+        // sora: [`var(--font-sora)`, 'sans-serif'],
       },
     },
   },

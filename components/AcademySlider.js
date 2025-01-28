@@ -27,22 +27,22 @@ export const serviceData = [
     pdf: '/brochures/PowerBI.pdf',  // Percorso del file PDF per questo corso
   },
   {
-    image: '/Power_APPS.png',
-    pdf: '/brochures/PowerApps.pdf',  // Percorso del file PDF per questo corso
+    image: '/React.png',
+    pdf: '/brochures/React.pdf',  // Percorso del file PDF per questo corso
   },
   {
-    image: '/Azure.png',
-    pdf: '/brochures/Azure.pdf',  // Percorso del file PDF per questo corso
+    image: '/Csharp.jpeg',
+    pdf: '/brochures/CSharp.pdf',  // Percorso del file PDF per questo corso
   },
   {
-    image: '/Sharepoint.jpg',
-    pdf: '/brochures/Sharepoint.pdf',  // Percorso del file PDF per questo corso
+    image: '/python.png',
+    pdf: '/brochures/Python.pdf',  // Percorso del file PDF per questo corso
   },
 ];
 
 const ServiceCards = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
       {serviceData.map((item, index) => (
         <div
           key={index}

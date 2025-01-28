@@ -24,8 +24,12 @@ const Header = () => {
               priority={true}
             />
           </Link>
-         
-            <a href="\en-US\"><Image alt="EN" src="/GB.svg" width={45} height={15} /></a>
+          <div> 
+            <a  href="https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact" target='_blank'><Image alt="Logo Partner Microsoft" src="/PartnerMic.png" width={105} height={25} /></a>
+          </div>
+         <div>
+            <a href="\en-US\"><Image alt="EN" src="/GB.svg" width={35} height={15} /></a>
+         </div>
         </div>
       </div>
     </header>
