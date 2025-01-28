@@ -52,7 +52,6 @@ const AllRegistereUsers = () => {
                 });
         
                 const data = await response.json();
-                debugger;
         
                 if (!response.ok) {
                 setError(data.message || "Errore durante getAllRegisteredUsers");
@@ -125,23 +124,23 @@ const AllRegistereUsers = () => {
     if (error) return <div>Error: {error}</div>;
     
     const columns = [
-        { field: 'id', headerName: 'ID', width: 50 },
-        { field: 'nome', headerName: 'Nome', width: 150, editable: true },
-        { field: 'cognome', headerName: 'Cognome', width: 250, editable: true },
+        // { field: 'id', headerName: 'ID', width: 50 },
+        { field: 'nome', headerName: 'Nome', width: 120, editable: true },
+        { field: 'cognome', headerName: 'Cognome', width: 230, editable: true },
         { field: 'email', headerName: 'Email', width: 250, editable: true },
         { field: 'phone', headerName: 'Phone', width: 150, editable: true },
-        { field: 'password', headerName: 'Password', width: 150, editable: true },
-        { field: 'code', headerName: 'Code', width: 150, editable: true },
+        // { field: 'password', headerName: 'Password', width: 150, editable: true },
+        // { field: 'code', headerName: 'Code', width: 150, editable: true },
         { field: 'dataregistrazione', headerName: 'Data Di Registrazione YMD', sortable: true, width: 150 },
-        { field: 'idtipoutente', headerName: 'Id Tipo Utente', type: 'number', width: 50, editable: false },
+        // { field: 'idtipoutente', headerName: 'Id Tipo Utente', type: 'number', width: 50, editable: false },
         { field: 'tipoutente', headerName: 'Tipo Utente', sortable: true, width: 150, editable: true },
-        { field: 'idruolo', headerName: 'Id Ruolo Utente', type: 'number', width: 50, editable: false },
-        { field: 'ruolo', headerName: 'Ruolo Utente', sortable: true, width: 150, editable: true },
-        { field: 'note', headerName: 'Note', sortable: true, width: 150, editable: true },
+        // { field: 'idruolo', headerName: 'Id Ruolo Utente', type: 'number', width: 50, editable: false },
+        { field: 'ruolo', headerName: 'Ruolo Utente', sortable: true, width: 120, editable: true },
+        // { field: 'note', headerName: 'Note', sortable: true, width: 150, editable: true },
         {
             field: 'action',
             headerName: 'Action',
-            width: 450,
+            width: 250,
             sortable: false,
             renderCell: (params) => (
                 <div style={{ display: "flex", gap: "10px" }}>
@@ -201,71 +200,72 @@ const AllRegistereUsers = () => {
 
     return (
         <>
-            {/* NavIntranetMenu */}
-            {isClient && (
-                <div>
-                    <NavIntranetMenu />
-                </div>
-            )}
-            {/* Breadcrumbs */}
-            <Box sx={{ margin: '16px' } }>
+          {/* NavIntranetMenu */}
+          {isClient && (
+            <NavIntranetMenu />
+          )}
+      
+          {/* Breadcrumbs */}
+          <Box sx={{ margin: "16px" }}>
             <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
-            </Box>
-            {isAuthenticated && (
-            <>
+          </Box>
+      
+          {isAuthenticated && (
             <div className={styles.wrapperbody}>
-                
                 <Box
-                    sx={{
+                sx={{
                     mt: 0,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    height: "100%"
+                    justifyContent: "flex-start",
+                    height: "100vh",
+                    boxSizing: "border-box",
+                }}
+                >
+                <Container
+                    maxWidth="xl"
+                    sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                     }}
                 >
-                    <Container maxWidth="xs" height="100%" >
-                        <CssBaseline />
-                        <Box
-                            sx={{
-                                mt: 5,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                height: "100%"            
-                            }}
-                            >
-                            {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-                            {data.length > 0 && (
-                                <>
-                                <Box sx={{ width: 1500, background: '#abca79' }}>
-                                    <DataGrid
-                                        autoHeight
-                                        rows={data}
-                                        columns={columns}
-                                        initialState={{
-                                        pagination: {
-                                            paginationModel: {
-                                            pageSize: 10,
-                                            },
-                                        },
-                                        }}
-                                        pageSizeOptions={[5,10,25,50,100]}
-                                        disableColumnMenu
-                                        disableSelectionOnClick
-                                        // checkboxSelection
-                                        // disableRowSelectionOnClick
-                                    />
-                                </Box>
-                            </>)}
-                        </Box>
-                    </Container>
+                    <Box
+                    sx={{
+                        width: "100%",
+                        maxWidth: 1450,
+                        backgroundColor: "#abca79",
+                        borderRadius: 1,
+                        overflow: "hidden",
+                        boxShadow: 2,
+                        padding: 2,
+                        minHeight: 300, // Set a minimum height for consistent layout
+                    }}
+                    >
+                    <DataGrid
+                        autoHeight
+                        rows={data}
+                        columns={columns}
+                        initialState={{
+                        pagination: {
+                            paginationModel: {
+                            pageSize: 5,
+                            },
+                        },
+                        }}
+                        pageSizeOptions={[5, 10, 25, 50, 100]}
+                        disableColumnMenu
+                        disableSelectionOnClick
+                    />
+                    </Box>
+                </Container>
                 </Box>
             </div>
-            </>
-            )}
+          )}
         </>
     );
+      
 }
 
 export default AllRegistereUsers;

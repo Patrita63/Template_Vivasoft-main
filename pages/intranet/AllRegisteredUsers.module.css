@@ -25,12 +25,21 @@
 }
 
 .wrapperbody {
-    background-color: #81d8d0;
-    height: 100vh;
-    width: 100vw;
-    text-align: center;
-    color: #005f6a;
+    background-color: #81d8d0; /* Light teal background */
+    min-height: 100vh; /* Ensure the wrapper covers the full viewport height */
+    width: 100%; /* Full width of the container */
+    text-align: center; /* Center text content */
+    color: #005f6a; /* Dark teal text color */
+    display: flex; /* Use flexbox for centering content */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: flex-start; /* Align content near the top */
+    align-items: center; /* Center content horizontally */
+    padding: 2rem; /* Increase padding for better spacing */
+    gap: 1rem; /* Add consistent spacing between child elements */
+    box-sizing: border-box; /* Include padding and border in width/height calculations */
+    overflow: auto; /* Ensure scrolling if content overflows */
 }
+
 
 .BtnTopUsers {
     margin-top: 10px !important;
@@ -58,6 +67,21 @@
 .BtnBackAllUsers {
     background-color: rgb(11, 56, 46)  !important;
     color: whitesmoke  !important;
+}
+
+.BtnBackRegisteredUserDetails {
+    background-color: rgb(11, 56, 46)  !important;
+    color: whitesmoke  !important;
+}
+
+
+.BtnUpdateRegisteredUserDetails {
+    background-color: rgb(66, 87, 35) !important;
+    color: whitesmoke  !important;
+}
+
+.BtnMarginRightRegisteredUserDetails {
+    margin-right: 100px  !important;
 }
 
 .BtnDeleteUser {

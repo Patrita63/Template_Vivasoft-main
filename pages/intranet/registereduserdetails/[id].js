@@ -237,7 +237,6 @@ const RegisteredUserDetails = () => {
 
     // Validation
     const onSubmit = async (data, event) => {
-        debugger;
         data.idruolo = data.ruolo.Id;
         console.log('Form Submitted:' + data);
         const clickedButton = event.nativeEvent.submitter.name; // Access submitter's name
@@ -295,13 +294,12 @@ const RegisteredUserDetails = () => {
                 email: newUserData.email,
                 dataregistrazione: newUserData.dataregistrazione,
                 idtipoutente: newUserData.tipoutente.id,
-                idruolo: newUserData.ruolo.Id,
+                idruolo: newUserData.ruolo.id,
                 password: newUserData.password,
                 code: newUserData.code,
                 note: newUserData.note
                 }),
             });
-            debugger;
             console.log("Full API response:" + response);
             console.log("Response status:"+ response.status);
       
@@ -336,222 +334,253 @@ const RegisteredUserDetails = () => {
         <Box sx={{ margin: '16px' } }>
             <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
         </Box>
-        <UserContainer>
-            <Typography variant="h4">Registered User Details with ID: {id} - Edit</Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Controller
-                    name="id"
-                    control={control}
-                    render={({ field }) => <input type="hidden" {...field} />}
-                />
-                <Controller 
-                    name="nome"
-                    control={control}
-                    rules={{ required: 'Name is required' }}
-                    render={({ field }) => (
-                        <FormControl fullWidth margin="normal" error={!!errors.name}>
-                            <InputLabel htmlFor="nome">Nome</InputLabel>
-                            <Input {...field} id="nome" />
-                            <FormHelperText>{errors.nome?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="cognome"
-                    control={control}
-                    rules={{ required: 'Surname is required' }}
-                    render={({ field }) => (
-                        <FormControl fullWidth margin="normal" error={!!errors.cognome}>
-                        <InputLabel htmlFor="cognome">Cognome</InputLabel>
-                        <Input {...field} id="cognome" />
-                        <FormHelperText>{errors.cognome?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="gender"
-                    control={control}
-                    rules={{
-                    required: 'Gender is required',
-                    }}
-                    render={({ field }) => (
-                        <FormControl component="fieldset" error={!!errors.gender} fullWidth>
-                            <FormLabel component="legend">Gender</FormLabel>
-                            <RadioGroup
-                            {...field}
-                            row // Arrange options horizontally
-                            aria-label="gender"
+        {isAuthenticated && (
+            <div className={styles.wrapperbody}>
+                <UserContainer>
+                    <Typography variant="h4">Registered User Details with ID: {id} - Edit</Typography>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Controller
+                            name="id"
+                            control={control}
+                            render={({ field }) => <input type="hidden" {...field} />}
+                        />
+                        <Controller 
+                            name="nome"
+                            control={control}
+                            rules={{ required: 'Name is required' }}
+                            render={({ field }) => (
+                                <FormControl fullWidth margin="normal" error={!!errors.name}>
+                                    <InputLabel htmlFor="nome">Nome</InputLabel>
+                                    <Input {...field} id="nome" />
+                                    <FormHelperText>{errors.nome?.message}</FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <Controller
+                            name="cognome"
+                            control={control}
+                            rules={{ required: 'Surname is required' }}
+                            render={({ field }) => (
+                                <FormControl fullWidth margin="normal" error={!!errors.cognome}>
+                                <InputLabel htmlFor="cognome">Cognome</InputLabel>
+                                <Input {...field} id="cognome" />
+                                <FormHelperText>{errors.cognome?.message}</FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <Controller
                             name="gender"
-                            onChange={(event) => handleGenderChange(event, field)}
-                            >
-                            <FormControlLabel value="M" control={<Radio />} label="Male" />
-                            <FormControlLabel value="F" control={<Radio />} label="Female" />
-                            </RadioGroup>
-                            <FormHelperText>{errors.gender?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="email"
-                    control={control}
-                    rules={{
-                        required: 'Email is required',
-                        pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: 'Enter a valid email address',
-                        },
-                    }}
-                    render={({ field }) => (
-                        <FormControl fullWidth margin="normal" error={!!errors.email}>
-                        <InputLabel htmlFor="email">Email</InputLabel>
-                        <Input {...field} id="email" />
-                        <FormHelperText>{errors.email?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="phone"
-                    control={control}
-                    rules={{
-                        required: 'Phone is required',
-                        pattern: {
-                        value: /^[0-9]+$/,
-                        message: 'Enter a valid phone number',
-                        },
-                    }}
-                    render={({ field }) => (
-                        <FormControl fullWidth margin="normal" error={!!errors.phone}>
-                        <InputLabel htmlFor="phone">Phone</InputLabel>
-                        <Input {...field} id="phone" />
-                        <FormHelperText>{errors.phone?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <Controller
-                        name="dataregistrazione"
-                        control={control}
-                        rules={{
-                            required: 'Date of Registration is required',
-                        }}
-                        render={({ field }) => (
-                            <FormControl fullWidth margin="normal" error={!!errors.dataregistrazione}>
-                            <DatePicker
-                                label="Date of Registration"
-                                value={field.value ? parseISO(field.value) : null} // Convert string to Date
-                                onChange={(newValue) => {
-                                    const formatted = newValue ? format(newValue, "yyyy-MM-dd") : "";
-                                    field.onChange(formatted);
+                            control={control}
+                            rules={{
+                            required: 'Gender is required',
+                            }}
+                            render={({ field }) => (
+                                <FormControl component="fieldset" error={!!errors.gender} fullWidth>
+                                    <FormLabel component="legend">Gender</FormLabel>
+                                    <RadioGroup
+                                    {...field}
+                                    row // Arrange options horizontally
+                                    aria-label="gender"
+                                    name="gender"
+                                    onChange={(event) => handleGenderChange(event, field)}
+                                    >
+                                    <FormControlLabel value="M" control={<Radio />} label="Male" />
+                                    <FormControlLabel value="F" control={<Radio />} label="Female" />
+                                    </RadioGroup>
+                                    <FormHelperText>{errors.gender?.message}</FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <Controller
+                            name="email"
+                            control={control}
+                            rules={{
+                                required: 'Email is required',
+                                pattern: {
+                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: 'Enter a valid email address',
+                                },
+                            }}
+                            render={({ field }) => (
+                                <FormControl fullWidth margin="normal" error={!!errors.email}>
+                                <InputLabel htmlFor="email">Email</InputLabel>
+                                <Input {...field} id="email" />
+                                <FormHelperText>{errors.email?.message}</FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <Controller
+                            name="phone"
+                            control={control}
+                            rules={{
+                                required: 'Phone is required',
+                                pattern: {
+                                value: /^[0-9]+$/,
+                                message: 'Enter a valid phone number',
+                                },
+                            }}
+                            render={({ field }) => (
+                                <FormControl fullWidth margin="normal" error={!!errors.phone}>
+                                <InputLabel htmlFor="phone">Phone</InputLabel>
+                                <Input {...field} id="phone" />
+                                <FormHelperText>{errors.phone?.message}</FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <Controller
+                                name="dataregistrazione"
+                                control={control}
+                                rules={{
+                                    required: 'Date of Registration is required',
                                 }}
-                                slots={{ textField: (props) => <TextField {...props} /> }}
+                                render={({ field }) => (
+                                    <FormControl fullWidth margin="normal" error={!!errors.dataregistrazione}>
+                                    <DatePicker
+                                        label="Date of Registration"
+                                        value={field.value ? parseISO(field.value) : null} // Convert string to Date
+                                        onChange={(newValue) => {
+                                            const formatted = newValue ? format(newValue, "yyyy-MM-dd") : "";
+                                            field.onChange(formatted);
+                                        }}
+                                        slots={{ textField: (props) => <TextField {...props} /> }}
+                                    />
+                                    <FormHelperText>{errors.dataregistrazione?.message}</FormHelperText>
+                                    </FormControl>
+                                )}
                             />
-                            <FormHelperText>{errors.dataregistrazione?.message}</FormHelperText>
+                        </LocalizationProvider>
+                        <Controller
+                            name="tipoutente"
+                            control={control}
+                            rules={{
+                            required: 'User Type is required',
+                            }}
+                            render={({ field }) => (
+                            <FormControl fullWidth margin="normal" error={!!errors.tipoutente}>
+                                <Autocomplete
+                                id="tipoutente"
+                                options={listTipoUtente}
+                                getOptionLabel={(option) => option?.TipoUtente || ''}
+                                isOptionEqualToValue={(option, value) => option.value === value?.value}
+                                value={field.value || null}
+                                onChange={(event, newValue) => field.onChange(newValue)}
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Select a User Type" />
+                                )}
+                                />
+                                <FormHelperText>{errors.tipoutente?.message}</FormHelperText>
                             </FormControl>
-                        )}
-                    />
-                </LocalizationProvider>
-                <Controller
-                    name="tipoutente"
-                    control={control}
-                    rules={{
-                    required: 'User Type is required',
-                    }}
-                    render={({ field }) => (
-                    <FormControl fullWidth margin="normal" error={!!errors.tipoutente}>
-                        <Autocomplete
-                        id="tipoutente"
-                        options={listTipoUtente}
-                        getOptionLabel={(option) => option?.TipoUtente || ''}
-                        isOptionEqualToValue={(option, value) => option.value === value?.value}
-                        value={field.value || null}
-                        onChange={(event, newValue) => field.onChange(newValue)}
-                        renderInput={(params) => (
-                            <TextField {...params} label="Select a User Type" />
-                        )}
+                            )}
                         />
-                        <FormHelperText>{errors.tipoutente?.message}</FormHelperText>
-                    </FormControl>
-                    )}
-                />
-                <Controller
-                    name="ruolo"
-                    control={control}
-                    rules={{
-                    required: 'User Role is required',
-                    }}
-                    render={({ field }) => (
-                    <FormControl fullWidth margin="normal" error={!!errors.ruolo}>
-                        <Autocomplete
-                        id="ruolo"
-                        options={listRuolo}
-                        getOptionLabel={(option) => option?.Ruolo || ''}
-                        isOptionEqualToValue={(option, value) => option.value === value?.value}
-                        value={field.value || null}
-                        onChange={(event, newValue) => field.onChange(newValue)}
-                        renderInput={(params) => (
-                            <TextField {...params} label="Select a User Role" />
-                        )}
+                        <Controller
+                            name="ruolo"
+                            control={control}
+                            rules={{
+                            required: 'User Role is required',
+                            }}
+                            render={({ field }) => (
+                            <FormControl fullWidth margin="normal" error={!!errors.ruolo}>
+                                <Autocomplete
+                                id="ruolo"
+                                options={listRuolo}
+                                getOptionLabel={(option) => option?.Ruolo || ''}
+                                isOptionEqualToValue={(option, value) => option.value === value?.value}
+                                value={field.value || null}
+                                onChange={(event, newValue) => field.onChange(newValue)}
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Select a User Role" />
+                                )}
+                                />
+                                <FormHelperText>{errors.ruolo?.message}</FormHelperText>
+                            </FormControl>
+                            )}
                         />
-                        <FormHelperText>{errors.ruolo?.message}</FormHelperText>
-                    </FormControl>
-                    )}
-                />
-                <Controller
-                    name="password"
-                    control={control}
-                    rules={{ required: 'Password is required' }}
-                    render={({ field }) => (
-                        <FormControl fullWidth margin="normal" error={!!errors.password}>
-                        <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input {...field} type='password' id="password" />
-                        <FormHelperText>{errors.password?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="code"
-                    control={control}
-                    rules={{ required: 'Code is required' }}
-                    render={({ field }) => (
-                        <FormControl fullWidth margin="normal" error={!!errors.code}>
-                        <InputLabel htmlFor="code">Code</InputLabel>
-                        <Input {...field} id="code" />
-                        <FormHelperText>{errors.code?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Controller
-                    name="note"
-                    control={control}
-                    rules={{ required: 'Notes are required' }}
-                    render={({ field }) => (
-                        <FormControl fullWidth margin="normal" error={!!errors.note}>
-                        <InputLabel htmlFor="note">Note</InputLabel>
-                        <Input {...field} id="note" />
-                        <FormHelperText>{errors.note?.message}</FormHelperText>
-                        </FormControl>
-                    )}
-                />
-                <Button
-                    variant="contained"
-                    className={styles.BtnBackAllUsers}
-                    sx={{ mt: 2 }}
-                    onClick={GoBack}
-                >
-                    Back
-                </Button>
-                <Button
-                    type="submit"
-                    name="update" // Unique name to identify the button
-                    variant="contained"
-                    className={`${styles.BtnUpdateUser} ${styles.BtnUpdateMarginLeft}`}
-                    sx={{ mt: 2 }}
-                    disabled={!isFormValid()} // Button is disabled if the form is invalid
-                >
-                    Update User
-                </Button>
-            </form>
-        </UserContainer>
+                        <Controller
+                            name="password"
+                            control={control}
+                            rules={{ required: 'Password is required' }}
+                            render={({ field }) => (
+                                <FormControl fullWidth margin="normal" error={!!errors.password}>
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input {...field} type='password' id="password" />
+                                <FormHelperText>{errors.password?.message}</FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <Controller
+                            name="code"
+                            control={control}
+                            rules={{ required: 'Code is required' }}
+                            render={({ field }) => (
+                                <FormControl fullWidth margin="normal" error={!!errors.code}>
+                                <InputLabel htmlFor="code">Code</InputLabel>
+                                <Input {...field} id="code" />
+                                <FormHelperText>{errors.code?.message}</FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <Controller
+                            name="note"
+                            control={control}
+                            rules={{ required: 'Notes are required' }}
+                            render={({ field }) => (
+                                <FormControl fullWidth margin="normal" error={!!errors.note}>
+                                <InputLabel htmlFor="note">Note</InputLabel>
+                                <Input {...field} id="note" />
+                                <FormHelperText>{errors.note?.message}</FormHelperText>
+                                </FormControl>
+                            )}
+                        />
+                        <Box
+                            sx={{
+                                display: "flex", // Use flexbox for layout
+                                justifyContent: "space-between", // Place one button on each end
+                                alignItems: "center", // Vertically align the buttons
+                                width: "100%", // Ensure the container spans the full width
+                                padding: "1rem 0", // Add spacing around the buttons
+                            }}
+                        >
+                            {/* Back Button (right) */}
+                            <Button
+                                variant="contained"
+                                className={styles.BtnBackRegisteredUserDetails}
+                                sx={{
+                                marginLeft: "0rem",
+                                backgroundColor: "#81d8d0", // Example custom background color
+                                color: "#fff", // Text color
+                                ":hover": {
+                                    backgroundColor: "#68b3a2", // Darker shade on hover
+                                },
+                                }}
+                                onClick={GoBack}
+                            >
+                                Back
+                            </Button>
+                            {/* Update User Button (left) */}
+                            <Button
+                                type="submit"
+                                name="update" // Unique name to identify the button
+                                variant="contained"
+                                className={styles.BtnUpdateRegisteredUserDetails}
+                                sx={{ 
+                                mt: 0, 
+                                backgroundColor: "#007bff", // Optional custom color
+                                color: "#fff", // Text color
+                                ":hover": { backgroundColor: "#0056b3" }, // Hover color
+                                }}
+                                disabled={!isFormValid()} // Button is disabled if the form is invalid
+                            >
+                                Update User
+                            </Button>
+
+                            
+                        </Box>
+
+                    </form>
+                </UserContainer>
+            </div>
+          )}
         </>
     );
 }
