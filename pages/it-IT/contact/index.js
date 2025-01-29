@@ -9,6 +9,9 @@ import Head from 'next/head';
 import Layout from '../../../components/Layout';
 import { BsArrowRight } from 'react-icons/bs';
 
+// Particelle
+import ParticlesContainer from '../../../components/ParticlesContainer';
+
 // ✅ Validation Schema with Yup
 const validationSchema = yup.object().shape({
   nominativo: yup.string().required('Nome e cognome sono obbligatori'),
@@ -53,15 +56,15 @@ const Contact = () => {
   const sendEmailAZ = async (data) => {
     debugger;
 
-    const dataMailFullName = data.nominativo; 
-    const dataMailAddress = data.email; 
-    const dataMailSubject = data.subject; 
+    const dataMailFullName = data.nominativo;
+    const dataMailAddress = data.email;
+    const dataMailSubject = data.subject;
     const dataPrivacyPolicy = data.privacyPolicy;
 
     const body = `${dataMailFullName}  has sent an email from ${dataMailAddress} - Subject: ${dataMailSubject} - Body: ${data.body} - Privacy Policy Accepted: ${dataPrivacyPolicy}`
     // alert(body);
 
-    const dataMailBody = body; 
+    const dataMailBody = body;
     console.log(`📧 Sending email: ${dataMailAddress}, Subject: ${dataMailSubject}, Body: ${body}, FullName: ${dataMailBody}`);
 
     try {
@@ -106,79 +109,86 @@ const Contact = () => {
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
         <meta property="og:url" content="https://www.vivasoft.it/contact" />
       </Head>
-      <div className="h-full bg-primary py-40">
-        <div className="container mx-auto text-center xl:text-left flex items-center justify-center h-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col w-full max-w-[700px] xl:pt-0 pt-20"
-          >
-            <motion.h2 className="h2 text-center mt-40 xl:mt-5">
-              Richiedi<span className="text-accent"> info</span>
-            </motion.h2>
+      {/* <div className="h-full bg-primary py-40">
+        <div className="container mx-auto text-center xl:text-left flex items-center justify-center h-full"> */}
+      <div className='h-full bg-primary xl:py-40 py-80 text-center xl:text-left bg-gradient-to-r from-primary via-black/30 to-black/10'>
+        {/* particles */}
+        <ParticlesContainer />
+        <div className='container mx-auto relative text-center xl:text-left flex items-center justify-center overflow-hidden h-full'>
+          {/* text & form */}
+          <div className='flex flex-col w-full max-w-[700px] xl:pt-0 pt-20'>
+            {/* text */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col w-full max-w-[700px] xl:pt-0 pt-20"
+            >
+              <motion.h2 className="h2 text-center mt-40 xl:mt-5">
+                Richiedi<span className="text-accent"> info</span>
+              </motion.h2>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto">
-              {/* Input Group */}
-              <div className="flex gap-x-6 w-full">
-                <div className="w-1/2">
-                  <input {...register('nominativo')} type="text" placeholder="Nome e cognome" className="input" />
-                  {errors.nominativo && <p className="text-red-500 text-sm">{errors.nominativo.message}</p>}
+              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto">
+                {/* Input Group */}
+                <div className="flex gap-x-6 w-full">
+                  <div className="w-1/2">
+                    <input {...register('nominativo')} type="text" placeholder="Nome e cognome" className="input" />
+                    {errors.nominativo && <p className="text-red-500 text-sm">{errors.nominativo.message}</p>}
+                  </div>
+                  <div className="w-1/2">
+                    <input {...register('email')} type="text" placeholder="Email" className="input" />
+                    {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+                  </div>
                 </div>
-                <div className="w-1/2">
-                  <input {...register('email')} type="text" placeholder="Email" className="input" />
-                  {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+
+                <input {...register('subject')} type="text" placeholder="Soggetto" className="input" />
+                {errors.subject && <p className="text-red-500 text-sm">{errors.subject.message}</p>}
+
+                <textarea {...register('body')} placeholder="Messaggio" className="textarea xl:h-full h-20"></textarea>
+                {errors.body && <p className="text-red-500 text-sm">{errors.body.message}</p>}
+
+                {/* GDPR Checkbox */}
+                <div className="flex items-center space-x-2">
+                  <input type="checkbox" {...register('privacyPolicy')} id="gdpr-checkbox" className="accent-accent" />
+                  <label htmlFor="gdpr-checkbox" className="text-sm">
+                    Acconsento al trattamento dei miei dati personali in conformità con la{' '}
+                    <a href="/privacy-policy" className="text-accent" target="_blank">Policy Privacy</a>.
+                  </label>
                 </div>
+                {errors.privacyPolicy && <p className="text-red-500 text-sm">{errors.privacyPolicy.message}</p>}
+
+                {/* Submit Button with Loader */}
+                <button
+                  type="submit"
+                  disabled={!isValid || loading} // Disabled when form is invalid
+                  className={`btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group ${!isValid || loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  aria-label="Invia email"
+                >
+                  {loading ? <CircularProgress size={24} color="inherit" /> : (
+                    <>
+                      <span className="group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500">Invia</span>
+                      <BsArrowRight className="absolute -translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 text-[22px]" />
+                    </>
+                  )}
+                </button>
+              </form>
+
+              {/* Google Maps */}
+              <h3 className="mt-20 text-center text-2xl h3 text-accent">Dove <span className="text-white">trovarci</span></h3>
+              <div className="my-5 relative w-full">
+                <iframe
+                  width="100%"
+                  title="Mappa google"
+                  height="400"
+                  style={{ border: '4px solid #D1660C', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}
+                  src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=Ing. Tardiolo Bonifazi Patrizio, Via+Copenaghen+10,Roma`}
+                  allowFullScreen
+                  aria-hidden="false"
+                  tabIndex="0"
+                ></iframe>
               </div>
-
-              <input {...register('subject')} type="text" placeholder="Soggetto" className="input" />
-              {errors.subject && <p className="text-red-500 text-sm">{errors.subject.message}</p>}
-
-              <textarea {...register('body')} placeholder="Messaggio" className="textarea xl:h-full h-20"></textarea>
-              {errors.body && <p className="text-red-500 text-sm">{errors.body.message}</p>}
-
-              {/* GDPR Checkbox */}
-              <div className="flex items-center space-x-2">
-                <input type="checkbox" {...register('privacyPolicy')} id="gdpr-checkbox" className="accent-accent" />
-                <label htmlFor="gdpr-checkbox" className="text-sm">
-                  Acconsento al trattamento dei miei dati personali in conformità con la{' '}
-                  <a href="/privacy-policy" className="text-accent" target="_blank">Policy Privacy</a>.
-                </label>
-              </div>
-              {errors.privacyPolicy && <p className="text-red-500 text-sm">{errors.privacyPolicy.message}</p>}
-
-              {/* Submit Button with Loader */}
-              <button
-                type="submit"
-                disabled={!isValid || loading} // Disabled when form is invalid
-                className={`btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group ${
-                  !isValid || loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                aria-label="Invia email"
-              >
-                {loading ? <CircularProgress size={24} color="inherit" /> : (
-                  <>
-                    <span className="group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500">Invia</span>
-                    <BsArrowRight className="absolute -translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 text-[22px]" />
-                  </>
-                )}
-              </button>
-            </form>
-
-            {/* Google Maps */}
-            <h3 className="mt-20 text-center text-2xl h3 text-accent">Dove <span className="text-white">trovarci</span></h3>
-            <div className="my-5 relative w-full">
-              <iframe
-                width="100%"
-                title="Mappa google"
-                height="400"
-                style={{ border: '4px solid #D1660C', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.5)' }}
-                src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&q=Ing. Tardiolo Bonifazi Patrizio, Via+Copenaghen+10,Roma`}
-                allowFullScreen
-                aria-hidden="false"
-                tabIndex="0"
-              ></iframe>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </Layout>

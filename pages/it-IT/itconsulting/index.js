@@ -33,7 +33,7 @@ const ItConsulting = () => {
               exit='hidden'
               className='h2'
             >
-             I nostri <span className='text-accent' style={{fontSize:'48px'}}>Servizi di consulenza IT</span>
+             I nostri <span className='text-accent'>Servizi di consulenza <small>IT</small></span>
             </motion.h2>
             <motion.p
               variants={fadeIn('up', 0.4)}

@@ -19,7 +19,6 @@ const Layout = ({ children }) => {
     <div
       className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative min-h-screen flex flex-col flex-grow overflow-y-auto scroll-container`}
     >
-     
       <Nav />
       <Header />
       <main className="">{children}</main>   

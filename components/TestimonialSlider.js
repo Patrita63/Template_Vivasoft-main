@@ -1,13 +1,19 @@
 // testimonial slider data
 export const testimonialSlider = [
   {
-    
-    name: 'Eduard Stefanica',
-    position: 'Studente',
-    message:"Consiglio vivamente il signor Patrizio come esperto nel campo dello sviluppo software e delle reti. Durante il corso presso l'academy .Net 2023/24, ha dimostrato una conoscenza approfondita e una capacità straordinaria di insegnamento. La sua leadership empatica e la sua passione per l'insegnamento lo rendono un prezioso asset per qualsiasi team o progetto tecnologico. Inoltre, la sua vasta esperienza è supportata da numerose certificazioni Microsoft, confermando ulteriormente il suo livello di competenza nel settore.",
+    name: 'Vincenzo Criscuolo',
+    position: 'Owner Multimediaform',
+    message:
+      `Ho il piacere di collaborare con Patrizio per lo sviluppo di percorsi formativi altamente qualificati nel campo dell\' IT e posso dire con certezza che ogni progetto con lui è sinonimo di eccellenza. 
+      Ci supporta con corsi progettati e realizzati con un approccio su misura che rispecchia perfettamente le nostre esigenze. 
+      Ogni corso si distingue per un\'esperienza coinvolgente, grazie alla sua capacità di rendere i concetti chiari e facilmente applicabili nella pratica. 
+      I partecipanti apprezzano la qualità dell\'insegnamento, la disponibilità a rispondere alle domande e il clima positivo che sa creare in aula o online. 
+      Inoltre, lavorare con Patrizio è sempre una garanzia di affidabilità. Rispetta ogni scadenza, è estremamente flessibile e, soprattutto, orientato al risultato. 
+      Grazie alla sua competenza e professionalità, i nostri clienti non solo acquisiscono nuove competenze, ma sviluppano una vera consapevolezza su come applicarle per migliorare il loro lavoro quotidiano. 
+      Raccomando vivamente Patrizio a chiunque stia cercando un professionista eccezionale nel campo della formazione. 
+      Sono certo che continueremo a collaborare a lungo e che ogni progetto futuro sarà all\’altezza delle aspettative, se non oltre!`,
   },
   {
-    
     name: 'Vittorio Goletti',
     position: 'CEO Crescendo',
     message:
@@ -21,18 +27,15 @@ export const testimonialSlider = [
       Patrizio ha molto appreso e tuttavia non si stanca mai di imparare. Il mondo Microsoft, pur nella sua crescente smisurata vastità, non lo intimidisce, ma anzi lo sprona ad approfondire ed estendere, continuamente e sistemicamente, i sui campi conoscenza e di azione.`,
   },
   {
-    
-    name: 'Vincenzo Criscuolo',
-    position: 'Owner Multimediaform',
-    message:
-      'Ho il piacere di collaborare con Patrizio per lo sviluppo di percorsi formativi altamente qualificati nel campo dell\' IT e posso dire con certezza che ogni progetto con lui è sinonimo di eccellenza. Ogni anno, ci supporta con almeno 10 corsi, progettati e realizzati con un approccio su misura che rispecchia perfettamente le nostre esigenze. Ogni corso si distingue per un\'esperienza coinvolgente, grazie alla sua capacità di rendere i concetti chiari e facilmente applicabili nella pratica. I partecipanti apprezzano la qualità dell\'insegnamento, la disponibilità a rispondere alle domande e il clima positivo che sa creare in aula o online. Inoltre, lavorare con Patrizio è sempre una garanzia di affidabilità. Rispetta ogni scadenza, è estremamente flessibile e, soprattutto, orientato al risultato. Grazie alla sua competenza e professionalità, i nostri clienti non solo acquisiscono nuove competenze, ma sviluppano una vera consapevolezza su come applicarle per migliorare il loro lavoro quotidiano. Raccomando vivamente Patrizio a chiunque stia cercando un professionista eccezionale nel campo della formazione. Sono certo che continueremo a collaborare a lungo e che ogni progetto futuro sarà all\’altezza delle aspettative, se non oltre!',
+    name: 'Eduard Stefanica',
+    position: 'Studente',
+    message:"Consiglio vivamente il signor Patrizio come esperto nel campo dello sviluppo software e delle reti. Durante il corso presso l'academy .Net 2023/24, ha dimostrato una conoscenza approfondita e una capacità straordinaria di insegnamento. La sua leadership empatica e la sua passione per l'insegnamento lo rendono un prezioso asset per qualsiasi team o progetto tecnologico. Inoltre, la sua vasta esperienza è supportata da numerose certificazioni Microsoft, confermando ulteriormente il suo livello di competenza nel settore.",
   },
   {
-    
     name: 'Beatrice Bottini',
     position: 'Web Designer | Web Developer',
     message:
-      'Ho avuto il piacere di lavorare con Patrizio e posso dire senza esitazioni che è una delle persone più competenti e professionali con cui abbia mai collaborato. La sua capacità di affrontare le problematiche e la sua attenzione ai dettagli sono davvero impressionanti. In particolare, mi ha colpito la sua straordinaria abilità nell\'implementare tecnologie, dimostrando una padronanza magistrale. La sua attitudine positiva e la sua dedizione sono una vera fonte di ispirazione per tutti coloro che lavorano con lui. È stato un grande onore lavorare al suo fianco',
+      'Ho avuto il piacere di lavorare con Patrizio e posso dire senza esitazioni che è una delle persone più competenti e professionali con cui abbia mai collaborato. La sua capacità di affrontare le problematiche e la sua attenzione ai dettagli sono davvero impressionanti. In particolare, mi ha colpito la sua straordinaria abilità nell\'implementare tecnologie, dimostrando una padronanza magistrale. La sua attitudine positiva e la sua dedizione sono una vera fonte di ispirazione per tutti coloro che lavorano con lui. È stato un grande onore lavorare al suo fianco.',
   },
 ];
 
@@ -45,12 +48,12 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Navigation, Pagination } from 'swiper';
+import { Navigation } from 'swiper';
 
 // icons
 import { FaQuoteLeft } from 'react-icons/fa';
 // next image
-import Image from 'next/image';
+// import Image from 'next/image';
 
 const TestimonialSlider = () => {
   return (
@@ -88,7 +91,8 @@ const TestimonialSlider = () => {
                   <FaQuoteLeft className='text-4xl xl:text-6xl text-white/20 mx-auto md:mx-0' />
                 </div>
                 {/* message */}
-                <div className='xl:text-lg text-center md:text-left'>
+                {/* <div className='xl:text-lg text-center md:text-left'> */}
+                <div className="text-center md:text-left lg:text-lg xl:text-xl">
                   {person.message}
                 </div>
               </div>

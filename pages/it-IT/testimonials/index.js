@@ -1,10 +1,15 @@
 // components
 import Layout from '../../../components/Layout';
-import TestimonialSlider from '../../../components/TestimonialSlider';
-import Head from 'next/head'; // Importa il componente Head di Next.js
-// framer motion
+import dynamic from 'next/dynamic'; // Lazy load the slider
+import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { fadeIn } from '../../../variants';
+
+// Particelle
+import ParticlesContainer from '../../../components/ParticlesContainer';
+
+// Lazy load TestimonialSlider
+const TestimonialSlider = dynamic(() => import('../../../components/TestimonialSlider'), { ssr: false });
 
 const Testimonials = () => {
   return (
@@ -16,34 +21,46 @@ const Testimonials = () => {
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Dicono di noi" />
         <meta property="og:description" content="Leggi le testimonianze di chi ha scelto Vivasoft per ottimizzare i propri processi aziendali con soluzioni basate su piattaforme Microsoft." />
-        <meta property="og:image" content="/images/vivasoft-logo.jpg" />
+        <meta property="og:image" content="https://www.vivasoft.it/images/vivasoft-logo.jpg" />
+        <meta property="og:image:alt" content="Vivasoft Logo" />
         <meta property="og:url" content="https://www.vivasoft.it/testimonials" />
       </Head>
-    <div className='h-full bg-primary py-60 text-center'>
-      <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden xl:pt-0 pt-20'>
-        {/* title */}
-        <motion.h2
-          variants={fadeIn('up', 0.2)}
-          initial='hidden'
-          animate='show'
-          exit='hidden'
-          className='h2 mb-8 pt-20 xl:pt-0 xl:mb-0'
-        >
-          Dicono di<span className='text-accent'> noi</span>
-        </motion.h2>
-        {/* slider */}
-        <motion.div
-          variants={fadeIn('up', 0.4)}
-          initial='hidden'
-          animate='show'
-          exit='hidden'
-        >
-          <TestimonialSlider />
-        </motion.div>
+
+      {/* <div className="h-full bg-primary py-20 md:py-40 text-center"> */}
+      {/* <div className='container mx-auto max-w-screen-lg px-4 md:px-0 h-full flex flex-col justify-center xl:pt-0 pt-10'> */}
+      {/* <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden xl:pt-0 pt-20'> */}
+      <div className='h-full bg-primary py-20 md:py-40 text-center bg-gradient-to-r from-primary via-black/30 to-black/10'>
+        {/* particles */}
+        <ParticlesContainer />
+        <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden xl:pt-0 pt-20'>
+          <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden xl:pt-0 pt-20'>
+            {/* title */}
+            <header>
+              <motion.h2
+                variants={fadeIn('up', 0.2)}
+                initial='hidden'
+                animate='show'
+                exit='hidden'
+                className='text-2xl md:text-4xl font-bold mb-8 pt-10 md:pt-0 md:mb-0'
+              >
+                Dicono di<span className='text-accent'> noi</span>
+              </motion.h2>
+            </header>
+
+            {/* slider */}
+            <motion.div
+              variants={fadeIn('up', 0.4)}
+              initial='hidden'
+              animate='show'
+              exit='hidden'
+              className="w-full px-2 sm:px-4 md:px-0" // Ensures slider is well-aligned across devices
+            >
+              <TestimonialSlider />
+            </motion.div>
+          </div>
+        </div>
       </div>
-    </div>
     </Layout>
-    
   );
 };
 
