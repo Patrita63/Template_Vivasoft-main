@@ -31,7 +31,14 @@ export default async function handler(req, res) {
         }
 
         // Initialize Azure Email Client
-        const emailClient = new EmailClient(connectionString);
+        // const emailClient = new EmailClient(connectionString);
+        // Modify your EmailClient setup to explicitly use TLS 1.2
+        const emailClient = new EmailClient(connectionString, {
+            retryOptions: { maxRetries: 3 },
+            requestOptions: { timeout: 10000 }, // 10-second timeout
+            allowInsecureConnection: false, // Ensure secure connection
+        });
+        
 
         // Debug incoming request body
         console.log("📨 Request Body:", req.body);
@@ -64,7 +71,7 @@ export default async function handler(req, res) {
             recipients: { to: [{ address: toEmail }] },
             content: {
                 subject: subject,
-                plainText: body, // Ensure plain text is included
+                plainText: `${body}\n\n--\nBest regards,\nVivasoft S.R.L.`, // Ensure plain text is included
                 html: `<p style="font-family: Arial, sans-serif;">${body}</p>`, // Explicitly format HTML to avoid RTF
             },
             headers: {
