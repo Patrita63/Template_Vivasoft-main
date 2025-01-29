@@ -47,7 +47,7 @@ export default async function handler(req, res) {
         }
 
         // Define email message
-        const emailMessage = {
+        /* const emailMessage = {
             senderAddress: senderEmail,
             recipients: { to: [{ address: toEmail }] },
             content: {
@@ -55,13 +55,30 @@ export default async function handler(req, res) {
                 plainText: body,
                 html: `<p>${body}</p>`,
             },
+        }; */
+
+        // Modify your emailMessage object to explicitly define only plain text and HTML to avoid RTF formatting
+        // This explicitly defines both plainText and html versions, ensuring that Outlook or other email clients interpret it correctly
+        const emailMessage = {
+            senderAddress: senderEmail,
+            recipients: { to: [{ address: toEmail }] },
+            content: {
+                subject: subject,
+                plainText: body, // Ensure plain text is included
+                html: `<p style="font-family: Arial, sans-serif;">${body}</p>`, // Explicitly format HTML to avoid RTF
+            },
+            headers: {
+                "Content-Type": "text/plain; charset=UTF-8",
+            }
         };
+        // headers explicitly tells the email service to use text/plain encoding, avoiding winmail.dat
+        
 
         // Send email
         const poller = await emailClient.beginSend(emailMessage);
         const response = await poller.pollUntilDone();
 
-        console.log("✅ Email sent successfully:" + response);
+        console.log("✅ Email sent successfully:", response);
 
         res.status(200).json({
             messageId: response.id,
@@ -69,7 +86,7 @@ export default async function handler(req, res) {
         });
 
     } catch (error) {
-        console.error("❌ Error sending email:" + error);
+        console.error("❌ Error sending email:", error);
         res.status(500).json({ error: "Failed to send email" });
     }
 }

@@ -158,7 +158,7 @@ const Register = () => {
     };
 
 
-    const sendEmail = async (fullname, mailAddress, mailSubject, mailBody) => {
+    const sendEmailAZ = async (fullname, mailAddress, mailSubject, mailBody) => {
         debugger;
         console.log(`📧 Sending email: ${mailAddress}, Subject: ${mailSubject}, Body: ${mailBody}, FullName: ${fullname}`);
     
@@ -169,10 +169,10 @@ const Register = () => {
                 body: JSON.stringify({ toEmail: mailAddress, subject: mailSubject, body: mailBody })
             });
     
-            console.log("📤 API Response:" + response);
+            console.log("📤 API Response:", response);
     
             const result = await response.json();
-            console.log("📩 API Result:" + result);
+            console.log("📩 API Result:", result);
     
             if (response.ok) {
                 setMessage('✅ Email sent successfully!');
@@ -251,7 +251,7 @@ const Register = () => {
                 mailSubject = 'Benvenuta ' + nominativo;
             }
             const mailBody = `Questo è il codice da inserire nel pannello di conferma mail: ${newUserData.Code}`;
-            await sendEmail(nominativo,newUserData.Email,mailSubject,mailBody);
+            await sendEmailAZ(nominativo,newUserData.Email,mailSubject,mailBody);
 
             setLoading(false); // Stop loading
             
@@ -310,7 +310,7 @@ const Register = () => {
                 
         
             } catch (error) {
-                console.error("Error registering user:" + error);
+                console.error("Error registering user:", error);
             }
             
         } else {
