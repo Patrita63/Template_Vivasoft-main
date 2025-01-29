@@ -71,7 +71,7 @@ const Contact = () => {
       const response = await fetch('/api/sendemail-acsazure', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ toEmail: dataMailAddress, subject: dataMailSubject, body: dataMailBody })
+        body: JSON.stringify({ toEmail: process.env.NEXT_PUBLIC_AZURE_MAIL_TO, subject: dataMailSubject, body: dataMailBody })
       });
 
       console.log("📤 API Response:", response);
