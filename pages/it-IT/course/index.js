@@ -9,49 +9,23 @@ import { fadeIn } from '../../../variants';
 // Importare il nuovo componente accordion
 import CourseAccordion from '../../../components/CourseAccordion';
 
+import { useMemo } from 'react';
+
 const Course = () => {
-  const courses = [
-    {
-      title: 'Designing Microsoft Azure Infrastructure Solutions',
-      content: 'Fornisce le competenze necessarie per progettare e implementare soluzioni infrastrutturali su Microsoft Azure. Esplora la gestione e l\'ottimizzazione dei servizi cloud, la sicurezza, la scalabilità e la gestione delle risorse in un ambiente Azure'
-    },
-    {
-      title: ' Developing Solutions for Microsoft Azure - Azure Developer Associate',
-      content: 'Progettato per sviluppatori che vogliono acquisire competenze nella progettazione e implementazione di applicazioni cloud su Microsoft Azure.'
-    },
-    {
-      title: 'Microsoft Azure Administrator Associate',
-      content: 'Pensato per coloro che desiderano acquisire competenze nella gestione e amministrazione delle risorse su Microsoft Azure'
-    },
-    {
-      title: 'Designing and Implementing Microsoft DevOps Solutions',
-      content: 'Destinato a professionisti IT e sviluppatori che desiderano acquisire le competenze necessarie per implementare soluzioni DevOps su Microsoft Azure.'
-    },
-    {
-      title: 'Microsoft Azure IoT Developer',
-      content: 'Rivolto a sviluppatori che desiderano acquisire competenze nell\'implementazione e nella gestione di soluzioni Internet of Things (IoT) su Microsoft Azure. '
-    },
-    {
-      title: 'Microsoft Azure Fundamentals',
-      content: 'Fornisce le basi necessarie per comprendere i concetti chiave e i servizi di Microsoft Azure. È ideale per chi è nuovo nel cloud computing e desidera acquisire una panoramica delle soluzioni e dei servizi offerti da Azure,'
-    },
-    {
-      title: 'Microsoft Azure AI Fundamentals',
-      content: 'Offre una panoramica introduttiva sull\'intelligenza artificiale (AI) e sui servizi correlati disponibili su Microsoft Azure. Ideale per coloro che vogliono comprendere le basi dell\'AI,'
-    },
-    {
-      title: 'Azure AI Engineer Associate',
-      content: 'Progettato per professionisti che desiderano sviluppare e implementare soluzioni di intelligenza artificiale su Microsoft Azure'
-    },
-    {
-      title: 'Designing and Implementing a Microsoft Azure AI Solution',
-      content: 'Pensato per professionisti che desiderano acquisire competenze avanzate nella progettazione e implementazione di soluzioni di intelligenza artificiale su Microsoft Azure.'
-    },
-    {
-      title: 'Designing and Implementing a Data Science Solution on Azure',
-      content: 'Indirizzato a professionisti e sviluppatori che desiderano acquisire competenze nella progettazione e implementazione di soluzioni di data science su Microsoft Azure.'
-    }
-  ];
+  const courses = useMemo(() => [
+    { title: 'Designing Microsoft Azure Infrastructure Solutions', content: 'Fornisce le competenze necessarie per progettare e implementare soluzioni infrastrutturali su Microsoft Azure.' },
+    { title: 'Developing Solutions for Microsoft Azure - Azure Developer Associate', content: 'Progettato per sviluppatori che vogliono acquisire competenze nella progettazione e implementazione di applicazioni cloud.' },
+    { title: 'Microsoft Azure Administrator Associate', content: 'Pensato per coloro che desiderano acquisire competenze nella gestione e amministrazione delle risorse su Microsoft Azure.' },
+    { title: 'Designing and Implementing Microsoft DevOps Solutions', content: 'Destinato a professionisti IT e sviluppatori per implementare soluzioni DevOps su Microsoft Azure.' },
+    { title: 'Microsoft Azure IoT Developer', content: 'Rivolto a sviluppatori che desiderano acquisire competenze nell\'implementazione e nella gestione di soluzioni Internet of Things (IoT) su Microsoft Azure.' },
+  
+  
+    { title: 'Microsoft Azure Fundamentals', content: 'Fornisce le basi necessarie per comprendere i concetti chiave e i servizi di Microsoft Azure. È ideale per chi è nuovo nel cloud computing e desidera acquisire una panoramica delle soluzioni e dei servizi offerti da Azure.' },
+    { title: 'Microsoft Azure AI Fundamentals', content: 'Offre una panoramica introduttiva sull\'intelligenza artificiale (AI) e sui servizi correlati disponibili su Microsoft Azure. Ideale per coloro che vogliono comprendere le basi dell\'AI.' },
+    { title: 'Azure AI Engineer Associate', content: 'Progettato per professionisti che desiderano sviluppare e implementare soluzioni di intelligenza artificiale su Microsoft Azur.' },
+    { title: 'Designing and Implementing a Microsoft Azure AI Solution', content: 'Pensato per professionisti che desiderano acquisire competenze avanzate nella progettazione e implementazione di soluzioni di intelligenza artificiale su Microsoft Azure' },
+    { title: 'Designing and Implementing a Data Science Solution on Azure', content: 'Indirizzato a professionisti e sviluppatori che desiderano acquisire competenze nella progettazione e implementazione di soluzioni di data science su Microsoft Azure.' },
+  ], []);
 
   return (
     <Layout>
