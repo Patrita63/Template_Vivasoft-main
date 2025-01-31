@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 
 import Cookies from "js-cookie";
 
-import { Box, Typography, TextField, CircularProgress, Button, FormControl, styled } from "@mui/material";
-import React, {useState, useEffect } from "react";
+import { Box, Typography, TextField, CircularProgress, Button, FormControl, styled, Grid } from "@mui/material";
+import React, { useState, useEffect } from "react";
 
 import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
@@ -16,10 +16,10 @@ import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 
 import { format, parseISO } from 'date-fns';
 
-import styles from '../AllUsers.module.css';
+import styles from '../AllRegisteredUsers.module.css';
 
 const UserContainer = styled(Box)`
-    width: 50%;
+    width: 70%;
     margin: 5% auto 0 auto;
     padding: 20px;
     background-color: white;
@@ -48,7 +48,7 @@ const ViewRegisteredUserDetails = () => {
     useEffect(() => {
         if (!id) return; // Prevent running the effect when id is undefined
         console.log("Fetching user with ID:", id);
-        
+
         // fetch getUserRegisteredById
         const getUserRegisteredById = async (id) => {
             if (!id) {
@@ -61,17 +61,17 @@ const ViewRegisteredUserDetails = () => {
             try {
                 // http://localhost:3000/api/registeruser/manageregistereduser?id=23
                 const response = await fetch(`/api/registeruser/manageregistereduser?id=${id}`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
                 });
-        
+
                 const data = await response.json();
                 debugger;
-        
+
                 if (!response.ok) {
-                setError(data.message || "Errore durante getUserRegisteredById");
-                alert("Errore nel recupero dell'utente registrato. " + data.error);
-                return;
+                    setError(data.message || "Errore durante getUserRegisteredById");
+                    alert("Errore nel recupero dell'utente registrato. " + data.error);
+                    return;
                 }
 
                 console.log("User Data:" + data.users[0]); // First user in the array
@@ -87,17 +87,17 @@ const ViewRegisteredUserDetails = () => {
 
                 setLoading(false);
                 setIsDataReady(true);
-        
+
             } catch (err) {
                 setIsDataReady(false);
-                console.error('Error fetching getUserRegisteredById:'+ err);
-                
+                console.error('Error fetching getUserRegisteredById:' + err);
+
                 setError(err.message);
-                console.error("Error during getUserRegisteredById:"+ err);
+                console.error("Error during getUserRegisteredById:" + err);
             }
         };
 
-        
+
         getUserRegisteredById(id);
         getAllTipoUtente();
         getAllRuolo();
@@ -111,24 +111,24 @@ const ViewRegisteredUserDetails = () => {
             setUsername(user || "");
             setRole(role || "");
         };
-    
+
         checkAuth(); // Run once when component mounts
-    
+
         const interval = setInterval(checkAuth, 1000); // Check cookies every second
-    
+
         return () => clearInterval(interval); // Cleanup on unmount
-        
+
     }, [id]); // Runs when `id` changes
 
     const getAllTipoUtente = async () => {
         try {
             const response = await fetch("/api/utente/getalltipoutente", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
             });
-        
+
             const data = await response.json();
-        
+
             if (!response.ok) {
                 setError(data.message || "Errore durante getAllTipoUtente");
                 return;
@@ -141,28 +141,28 @@ const ViewRegisteredUserDetails = () => {
             console.log(data?.user);
 
             setListTipoUtente(data?.user);
-        
+
             if (!response.ok) {
                 alert(data.error || "Errore durante la getAllTipoUtente");
                 return;
             }
-      
+
             console.log("get AllTipoUtente successfully!");
 
         } catch (err) {
-            console.error("getAllTipoUtente Error:"+ err);
+            console.error("getAllTipoUtente Error:" + err);
         }
     };
 
     const getAllRuolo = async () => {
         try {
             const response = await fetch("/api/utente/getallruolo", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
             });
-        
+
             const data = await response.json();
-        
+
             if (!response.ok) {
                 setError(data.message || "Errore durante getAllRuolo");
                 return;
@@ -175,16 +175,16 @@ const ViewRegisteredUserDetails = () => {
             console.log(data?.user);
 
             setListRuolo(data?.user);
-        
+
             if (!response.ok) {
                 alert(data.error || "Errore durante la getAllRuolo");
                 return;
             }
-      
+
             console.log("get AllRuolo successfully!");
 
         } catch (err) {
-            console.error("getAllRuolo Error:"+ err);
+            console.error("getAllRuolo Error:" + err);
         }
     };
 
@@ -194,89 +194,116 @@ const ViewRegisteredUserDetails = () => {
         return format(parseISO(dateString), "yyyy-MM-dd");
     };
 
-    
+
     // const GoBack = async () => {
     //     router.push("/intranet/allusers");
     // }
 
     return (
         <>
-        {/* NavIntranetMenu */}
-        {isClient && (
-            <div>
-                <NavIntranetMenu />
-            </div>
-        )}
-        {/* Breadcrumbs */}
-        <Box sx={{ margin: '16px' } }>
-            <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
-        </Box>
-        <UserContainer>
-                <Typography variant="h4" sx={{ marginBottom: 3 }}>
-                    Registered User Details - ID: {id} - Read only
-                </Typography>
+            {/* NavIntranetMenu */}
+            {isClient && (
+                <div>
+                    <NavIntranetMenu />
+                </div>
+            )}
+            {/* Breadcrumbs */}
+            <Box sx={{ margin: '16px' }}>
+                <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
+            </Box>
+            {isAuthenticated && (
+                <div className={styles.wrapperbody}>
+                    <UserContainer>
+                        <Typography variant="h4" sx={{ marginBottom: 3 }}>
+                            Registered User Details - ID: {id} - Read only
+                        </Typography>
 
-                {loading ? (
-                    <CircularProgress />
-                ) : error ? (
-                    <Typography color="error">{error}</Typography>
-                ) : (
-                    <>
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Nome" value={user.Nome} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                        {loading ? (
+                            <CircularProgress />
+                        ) : error ? (
+                            <Typography color="error">{error}</Typography>
+                        ) : (
+                            <>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Nome" value={user.Nome} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Cognome" value={user.Cognome} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Cognome" value={user.Cognome} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Gender" value={user.Gender} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Gender" value={user.Gender} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Email" value={user.Email} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Email" value={user.Email} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Telefono" value={user.Phone} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Telefono" value={user.Phone} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Data di Registrazione" value={formattedDate(user.DataRegistrazione)} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Data di Registrazione" value={formattedDate(user.DataRegistrazione)} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Tipo Utente" value={user.TipoUtente} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Tipo Utente" value={user.TipoUtente} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Ruolo Utente" value={user.Ruolo} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Ruolo Utente" value={user.Ruolo} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Password" value={user.Password} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Password" value={user.Password} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Codice" value={user.Code} InputProps={{ readOnly: true }} />
-                        </FormControl>
+                                    <Grid item xs={6}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Codice" value={user.Code} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
 
-                        <FormControl fullWidth margin="normal">
-                            <TextField label="Note" value={user.Note} InputProps={{ readOnly: true }} />
-                        </FormControl>
-
-                        <Button
-                            variant="contained"
-                            sx={{ mt: 3 }}
-                            className={styles.BtnBackAllUsers}
-                            onClick={() => router.push("/intranet/allregisteredusers")}
-                        >
-                            Back
-                        </Button>
-                    </>
-                )}
-            </UserContainer>
+                                    <Grid item xs={12}>
+                                        <FormControl fullWidth margin="normal">
+                                            <TextField label="Note" value={user.Note} InputProps={{ readOnly: true }} />
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                                <Button
+                                    variant="contained"
+                                    sx={{ mt: 3 }}
+                                    className={styles.BtnBackAllUsers}
+                                    onClick={() => router.push("/intranet/allregisteredusers")}
+                                >
+                                    Back
+                                </Button>
+                            </>
+                        )}
+                    </UserContainer>
+                </div>
+            )}
         </>
     );
 }

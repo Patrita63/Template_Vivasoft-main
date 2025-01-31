@@ -16,6 +16,9 @@ import { RegisterData } from '../../Models/registerdata';
 
 import Cookies from "js-cookie";
 
+import { BsArrowRight } from 'react-icons/bs';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 import {
     Avatar,
     Box,
@@ -27,47 +30,42 @@ import {
     Typography,
     Radio,
     RadioGroup,
-    FormControl, FormGroup, InputLabel, Input, styled, FormHelperText, Autocomplete, FormControlLabel, FormLabel,
-    CircularProgress
+    FormControl, InputLabel, Input, FormHelperText, Autocomplete, FormControlLabel, FormLabel,
+    CircularProgress, OutlinedInput, InputAdornment, IconButton
 } from "@mui/material";
 
 import { LockOutlined } from "@mui/icons-material";
 // next link
 import Link from 'next/link';
 
-const UserContainer = styled(FormGroup)`
-    width: 50%;
-    margin: 5% auto 0 auto;
-    background-color: white;
-`
 
 const Register = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [loading, setLoading] = useState(false); // Track loading state
     // To navigate to another page
     const router = useRouter();
     const [error, setError] = useState(null);
-
-    // const [nome, setNome] = useState('');
-    // const [cognome, setCognome] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [phone, setPhone] = useState('');
-    // const [dataregistrazione, setDataregistrazione] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [confirmpassword, setConfirmPassword] = useState('');
-    // const [idtipoutente, setIdTipoUtente] = useState(0);
-    // const [tipoutente, setTipoUtente] = useState('');
-    // const [code, setCode] = useState('');
 
     const [message, setMessage] = useState('');
 
     const [listTipoUtente, setListTipoUtente] = useState([]);
     const [listRuolo, setListRuolo] = useState([]);
 
-    // defaultValue="M" // Set a default value for the field
+    const handleTogglePassword = () => {
+        setShowPassword((prev) => !prev);
+    };
+
+    const handleToggleConfirmPassword = () => {
+        setShowConfirmPassword((prev) => !prev);
+    };
+    
+
+    // defaultValue="" // Set a default value for the field
     const initialValues = {
         nome: '',
         cognome: '',
-        gender: 'M', 
+        gender: '',
         email: '',
         phone: '',
         dataregistrazione: parseISO(format(new Date(), "yyyy-MM-dd")),  // Get the current date in ISO format (YYYY-MM-DD)
@@ -76,29 +74,29 @@ const Register = () => {
         password: '',
         confirmpassword: '',
         code: '',
-        idruolo: 0
+        idruolo: 0,
+        ruolo: null
     };
 
-    const [formValues, setFormValues] = useState(initialValues);
     // Validation
     const { handleSubmit, control, watch, setValue, formState: { errors } } = useForm({
-        defaultValues: formValues
-    }); 
+        defaultValues: initialValues
+    });
 
     useEffect(() => {
         getAllTipoUtente();
         getAllRuolo();
-    }, [setValue]); 
+    }, [setValue]);
 
     const getAllTipoUtente = async () => {
         try {
             const response = await fetch("/api/utente/getalltipoutente", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
             });
-        
+
             const data = await response.json();
-        
+
             if (!response.ok) {
                 setError(data.message || "Errore durante getAllTipoUtente");
                 return;
@@ -111,27 +109,27 @@ const Register = () => {
             console.log(data?.user);
 
             setListTipoUtente(data?.user);
-        
+
             if (!response.ok) {
                 (data.error || "Errore durante la getAllTipoUtente");
                 return;
             }
-      
+
             console.log("get AllTipoUtente successfully!");
         } catch (err) {
-            console.error("getAllTipoUtente Error:"+ err);
+            console.error("getAllTipoUtente Error:" + err);
         }
     };
 
     const getAllRuolo = async () => {
         try {
             const response = await fetch("/api/utente/getallruolo", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
             });
-        
+
             const data = await response.json();
-        
+
             if (!response.ok) {
                 setError(data.message || "Errore durante getAllRuolo");
                 return;
@@ -144,36 +142,36 @@ const Register = () => {
             console.log(data?.user);
 
             setListRuolo(data?.user);
-        
+
             if (!response.ok) {
                 alert(data.error || "Errore durante la getAllRuolo");
                 return;
             }
-      
+
             console.log("get AllRuolo successfully!");
 
         } catch (err) {
-            console.error("getAllRuolo Error:"+ err);
+            console.error("getAllRuolo Error:" + err);
         }
     };
 
 
-    const sendEmailAZ = async (fullname, mailAddress, mailSubject, mailBody) => {
+    const sendEmail = async (fullname, mailAddress, mailSubject, mailBody) => {
         debugger;
         console.log(`📧 Sending email: ${mailAddress}, Subject: ${mailSubject}, Body: ${mailBody}, FullName: ${fullname}`);
-    
+
         try {
             const response = await fetch('/api/sendemail-acsazure', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ toEmail: mailAddress, subject: mailSubject, body: mailBody })
             });
-    
-            console.log("📤 API Response:", response);
-    
+
+            console.log("📤 API Response:" + response);
+
             const result = await response.json();
-            console.log("📩 API Result:", result);
-    
+            console.log("📩 API Result:" + result);
+
             if (response.ok) {
                 setMessage('✅ Email sent successfully!');
             } else {
@@ -203,7 +201,7 @@ const Register = () => {
             !newUserData.IdTipoUtente ||
             !newUserData.Password ||
             !newUserData.Code ||
-            !newUserData.IdRuolo 
+            !newUserData.IdRuolo
         ) {
             console.error("Missing required fields in registration data");
             alert("Please fill in all required fields");
@@ -211,7 +209,7 @@ const Register = () => {
             return;
         }
         try {
-            
+
             const response = await fetch("/api/registeruser/manageregistereduser", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -231,37 +229,40 @@ const Register = () => {
 
             console.log("Full API response:" + response);
             console.log("Response status:" + response.status);
-      
+
             const data = await response.json();
-        
+
             if (!response.ok) {
                 alert(data.error || "Errore durante la registrazione di un nuovo utente. " + data.message);
+                setLoading(false); // Stop loading
                 return;
             }
-        
+
             console.log("User registered successfully!");
             Cookies.set("mailregistration", newUserData.Email, { expires: 1 / 48, secure: true }); // Expires in 30 minutes
             Cookies.set("coderegistration", newUserData.Code, { expires: 1 / 48, secure: true });
 
             const nominativo = newUserData.Nome + ' ' + newUserData.Cognome;
             let mailSubject = '';
-            if(newUserData.Gender === 'M') {
+            if (newUserData.Gender === 'M') {
                 mailSubject = 'Benvenuto ' + nominativo;
             } else {
                 mailSubject = 'Benvenuta ' + nominativo;
             }
             const mailBody = `Questo è il codice da inserire nel pannello di conferma mail: ${newUserData.Code}`;
-            await sendEmailAZ(nominativo,newUserData.Email,mailSubject,mailBody);
+            await sendEmail(nominativo, newUserData.Email, mailSubject, mailBody);
 
             setLoading(false); // Stop loading
-            
+
             // Redirect to ConfirmedMail page intranet
             router.push("/intranet/confirmedmail");
-            
+
         } catch (err) {
-          console.error("Register User Error:"+ err);
-          setLoading(false); // Stop loading
-        } 
+            console.error("Register User Error:" + err);
+            setLoading(false); // Stop loading
+        } finally {
+            setLoading(false); // Stop loading
+        }
     };
 
     const handleGenderChange = (event, field) => {
@@ -269,23 +270,31 @@ const Register = () => {
         console.log('Selected Gender:', selectedGender); // Log the selected gender
         field.onChange(selectedGender); // Update the form state
     };
-      
+
     // Validation
     const onSubmit = async (data) => {
-        
+        debugger;
         console.log('Form Data:' + data);
 
         if (!data.tipoutente || !data.tipoutente.id) {
-            console.error("Error: tipoutente does not have an ID"+ data.tipoutente);
+            console.error("Error: tipoutente does not have an ID" + data.tipoutente);
+            setLoading(false); // Stop loading
             alert("Please select a valid User Type.");
             return;
         }
 
-        const registerUserData = new RegisterData(0, data.nome, data.cognome, data.email, data.phone, data.dataregistrazione, data.idtipoutente, data.password, 0, data.gender);
+        if (!data.ruolo || !data.ruolo.id) {
+            console.error("Error: ruolo does not have an ID", data.ruolo);
+            setLoading(false); // Stop loading
+            alert("Please select a valid User Role.");
+            return;
+        }
+
+        const registerUserData = new RegisterData(0, data.nome, data.cognome, data.email, data.phone, data.dataregistrazione, data.idtipoutente, data.password, 0, data.gender, data.ruolo.id);
         const isPasswordOK = registerUserData.checkPassword(data.confirmpassword);
         console.log("Register - Password Confirmed = " + isPasswordOK);
-        
-        if(isPasswordOK){
+
+        if (isPasswordOK) {
             try {
 
                 console.log('BEFORE data.dataregistrazione: ' + data.dataregistrazione);
@@ -307,13 +316,15 @@ const Register = () => {
                 registerUserData.IdRuolo = data.ruolo?.id;
                 console.log('Form Data - data.ruolo.id: ' + data.ruolo.id);
                 handleAddRegisteredUser(registerUserData);
-                
-        
+
+
             } catch (error) {
-                console.error("Error registering user:", error);
+                setLoading(false); // Stop loading
+                console.error("Error registering user:" + error);
             }
-            
+
         } else {
+            setLoading(false); // Stop loading
             alert('Controllare le password Inserite.')
         }
     };
@@ -323,26 +334,26 @@ const Register = () => {
     // Validation
     const isFormValid = () => {
         const isValid = watchAllFields.nome &&
-        watchAllFields.cognome &&
-        watchAllFields.gender &&
-        watchAllFields.email &&
-        watchAllFields.phone &&
-        watchAllFields.password &&
-        watchAllFields.confirmpassword &&
-        watchAllFields.dataregistrazione &&
-        watchAllFields.tipoutente &&
-        watchAllFields.ruolo &&
-        !errors.ruolo && // No errors on tipoutente
-        !errors.tipoutente && // No errors on tipoutente
-        !errors.nome && // No errors on name
-        !errors.cognome && // No errors on cognome
-        !errors.gender && // No errors on gender
-        !errors.email && // No errors on email
-        !errors.phone && // No errors on phone
-        !errors.password && // No errors on phone
-        !errors.confirmpassword && // No errors on phone
-        !errors.dataregistrazione && // No errors on datadinascita
-        Object.keys(errors).length === 0;
+            watchAllFields.cognome &&
+            watchAllFields.gender &&
+            watchAllFields.email &&
+            watchAllFields.phone &&
+            watchAllFields.password &&
+            watchAllFields.confirmpassword &&
+            watchAllFields.dataregistrazione &&
+            watchAllFields.tipoutente &&
+            watchAllFields.ruolo &&
+            !errors.ruolo && // No errors on tipoutente
+            !errors.tipoutente && // No errors on tipoutente
+            !errors.nome && // No errors on name
+            !errors.cognome && // No errors on cognome
+            !errors.gender && // No errors on gender
+            !errors.email && // No errors on email
+            !errors.phone && // No errors on phone
+            !errors.password && // No errors on phone
+            !errors.confirmpassword && // No errors on phone
+            !errors.dataregistrazione && // No errors on datadinascita
+            Object.keys(errors).length === 0;
         // console.log('errors.tipoutente: ' + errors.tipoutente);
         // console.log('isValid: ' + isValid);
         return (
@@ -352,274 +363,301 @@ const Register = () => {
 
     return (
         <>
-            <Container maxWidth="xs">
-            <CssBaseline />
-            <Box
-                sx={{
-                    mt: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    position: 'relative',
-                }}
-            >
-                {/* Spinner Overlay */}
-                {loading && (
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                            zIndex: 2,
-                        }}
-                    >
-                        <CircularProgress />
-                    </Box>
-                )}
-                <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-                <LockOutlined />
-                </Avatar>
-                <Typography variant="h5">Register</Typography>
-                <Box sx={{ mt: 3 }}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                            <Controller 
-                                name="nome"
-                                control={control}
-                                rules={{ required: 'Name is required' }}
-                                render={({ field }) => (
-                                    <FormControl fullWidth error={!!errors.nome}>
-                                        <InputLabel htmlFor="nome">Nome</InputLabel>
-                                        <Input {...field} id="nome" />
-                                        <FormHelperText>{errors.nome?.message}</FormHelperText>
-                                    </FormControl>
-                                )}
-                            />
-                            </Grid>
+            <div style={{ backgroundColor: "rgb(149 186 250)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Container maxWidth="sm">
+                    <CssBaseline />
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto">
+                        <Box sx={{ mt: 2, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
+                                <LockOutlined />
+                            </Avatar>
+                            <Typography variant="h5">Register</Typography>
 
-                            <Grid item xs={12}>
-                            <Controller
-                                name="cognome"
-                                control={control}
-                                rules={{ required: 'Surname is required' }}
-                                render={({ field }) => (
-                                    <FormControl fullWidth error={!!errors.cognome}>
-                                    <InputLabel htmlFor="cognome">Cognome</InputLabel>
-                                    <Input {...field} id="cognome" />
-                                    <FormHelperText>{errors.cognome?.message}</FormHelperText>
-                                    </FormControl>
-                                )}
-                            />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <Controller
-                                    name="gender"
-                                    control={control}
-                                    rules={{
-                                    required: 'Gender is required',
-                                    }}
-                                    render={({ field }) => (
-                                        <FormControl component="fieldset" error={!!errors.gender} fullWidth>
-                                        <FormLabel component="legend">Gender</FormLabel>
-                                        <RadioGroup
-                                            {...field}
-                                            row // Arrange options horizontally
-                                            aria-label="gender"
-                                            name="gender"
-                                            onChange={(event) => handleGenderChange(event, field)}
-                                        >
-                                            <FormControlLabel value="M" control={<Radio />} label="Male" />
-                                            <FormControlLabel value="F" control={<Radio />} label="Female" />
-                                        </RadioGroup>
-                                        <FormHelperText>{errors.gender?.message}</FormHelperText>
-                                        </FormControl>
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                            <Controller
-                                name="email"
-                                control={control}
-                                rules={{
-                                    required: 'Email is required',
-                                    pattern: {
-                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                    message: 'Enter a valid email address',
-                                    },
-                                }}
-                                render={({ field }) => (
-                                    <FormControl fullWidth error={!!errors.email}>
-                                        <InputLabel htmlFor="email">Email</InputLabel>
-                                        <Input {...field} id="email" />
-                                        <FormHelperText>{errors.email?.message}</FormHelperText>
-                                    </FormControl>
-                                )}
-                            />
-                            </Grid>
-                            <Grid item xs={12}>
-                            <Controller
-                                name="phone"
-                                control={control}
-                                rules={{
-                                    required: 'Phone is required',
-                                    pattern: {
-                                    value: /^[0-9]+$/,
-                                    message: 'Enter a valid phone number',
-                                    },
-                                }}
-                                render={({ field }) => (
-                                    <FormControl fullWidth error={!!errors.phone}>
-                                        <InputLabel htmlFor="phone">Phone</InputLabel>
-                                        <Input {...field} id="phone" />
-                                        <FormHelperText>{errors.phone?.message}</FormHelperText>
-                                    </FormControl>
-                                )}
-                            />
-                            </Grid>
-                            <Grid item xs={12}>
-                            <Controller
-                                name="password"
-                                control={control}
-                                rules={{ required: 'Password is required' }}
-                                render={({ field }) => (
-                                    <FormControl fullWidth error={!!errors.password}>
-                                    <InputLabel htmlFor="password">Password</InputLabel>
-                                    <Input {...field} id="password" type='password' />
-                                    <FormHelperText>{errors.password?.message}</FormHelperText>
-                                    </FormControl>
-                                )}
-                            />
-                            </Grid>
-                            <Grid item xs={12}>
-                            <Controller
-                                name="confirmpassword"
-                                control={control}
-                                rules={{ required: 'Confirm Password is required' }}
-                                render={({ field }) => (
-                                    <FormControl fullWidth error={!!errors.confirmpassword}>
-                                    <InputLabel htmlFor="confirmpassword">Confirma Password</InputLabel>
-                                    <Input {...field} id="confirmpassword" type='password' />
-                                    <FormHelperText>{errors.confirmpassword?.message}</FormHelperText>
-                                    </FormControl>
-                                )}
-                            />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6}>
                                     <Controller
-                                        name="dataregistrazione"
+                                        name="nome"
                                         control={control}
-                                        rules={{
-                                            required: 'Date of Registration is required',
-                                        }}
+                                        rules={{ required: 'Name is required' }}
                                         render={({ field }) => (
-                                            <FormControl fullWidth error={!!errors.dataregistrazione}>
-                                                <DatePicker
-                                                    label="Data di registrazione"
-                                                    value={field.value}
-                                                    onChange={(newValue) => field.onChange(newValue)} // Update the form state
-                                                    // OLD renderInput={(params) => <TextField {...params} />}
-                                                    slots={{ textField: (props) => <TextField {...props} /> }}
-                                                />
-                                                <FormHelperText>{errors.dataregistrazione?.message}</FormHelperText>
+                                            <FormControl fullWidth error={!!errors.nome}>
+                                                <InputLabel htmlFor="nome">Nome</InputLabel>
+                                                <Input {...field} id="nome" />
+                                                <FormHelperText>{errors.nome?.message}</FormHelperText>
                                             </FormControl>
                                         )}
                                     />
-                                </LocalizationProvider>
-                            </Grid>
+                                </Grid>
 
-                            <Grid item xs={12}>
-                                <Controller
-                                    name="tipoutente"
-                                    control={control}
-                                    rules={{
-                                    required: 'User Type is required',
-                                    }}
-                                    render={({ field }) => (
-                                    <FormControl fullWidth error={!!errors.tipoutente}>
-                                        <Autocomplete
-                                        id="tipoutente"
-                                        options={listTipoUtente}
-                                        getOptionLabel={(option) => option?.TipoUtente || ''}
-                                        isOptionEqualToValue={(option, value) => option.Id === value?.id}
-                                        value={field.value || null}
-                                        onChange={(event, newValue) => {
-                                            field.onChange(newValue ? { id: newValue.Id, TipoUtente: newValue.TipoUtente } : null);
-                                        }}
-
-                                        renderInput={(params) => (
-                                            <TextField {...params} label="Select a User Type" />
+                                <Grid item xs={6}>
+                                    <Controller
+                                        name="cognome"
+                                        control={control}
+                                        rules={{ required: 'Surname is required' }}
+                                        render={({ field }) => (
+                                            <FormControl fullWidth error={!!errors.cognome}>
+                                                <InputLabel htmlFor="cognome">Cognome</InputLabel>
+                                                <Input {...field} id="cognome" />
+                                                <FormHelperText>{errors.cognome?.message}</FormHelperText>
+                                            </FormControl>
                                         )}
+                                    />
+                                </Grid>
 
-                                        />
-                                        <FormHelperText>{errors.tipoutente?.message}</FormHelperText>
-                                    </FormControl>
-                                    )}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Controller
-                                    name="ruolo"
-                                    control={control}
-                                    rules={{
-                                    required: 'User Role is required',
-                                    }}
-                                    render={({ field }) => (
-                                    <FormControl fullWidth error={!!errors.ruolo}>
-                                        <Autocomplete
-                                        id="ruolo"
-                                        options={listRuolo}
-                                        getOptionLabel={(option) => option?.Ruolo || ''}
-                                        isOptionEqualToValue={(option, value) => option.Id === value?.id}
-                                        value={field.value || null}
-                                        onChange={(event, newValue) => {
-                                            field.onChange(newValue ? { id: newValue.Id, Ruolo: newValue.Ruolo } : null);
+                                <Grid item xs={6}>
+                                    <Controller
+                                        name="gender"
+                                        control={control}
+                                        rules={{
+                                            required: 'Gender is required',
                                         }}
-
-                                        renderInput={(params) => (
-                                            <TextField {...params} label="Select a User Role" />
+                                        render={({ field }) => (
+                                            <FormControl component="fieldset" error={!!errors.gender} fullWidth>
+                                                <FormLabel component="legend">Gender</FormLabel>
+                                                <RadioGroup
+                                                    {...field}
+                                                    row // Arrange options horizontally
+                                                    aria-label="gender"
+                                                    name="gender"
+                                                    onChange={(event) => handleGenderChange(event, field)}
+                                                >
+                                                    <FormControlLabel value="M" control={<Radio />} label="Male" />
+                                                    <FormControlLabel value="F" control={<Radio />} label="Female" />
+                                                </RadioGroup>
+                                                <FormHelperText>{errors.gender?.message}</FormHelperText>
+                                            </FormControl>
                                         )}
+                                    />
+                                </Grid>
 
+                                <Grid item xs={6}>
+                                    <Controller
+                                        name="email"
+                                        control={control}
+                                        rules={{
+                                            required: 'Email is required',
+                                            pattern: {
+                                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                                message: 'Enter a valid email address',
+                                            },
+                                        }}
+                                        render={({ field }) => (
+                                            <FormControl fullWidth error={!!errors.email}>
+                                                <InputLabel htmlFor="email">Email</InputLabel>
+                                                <Input {...field} id="email" />
+                                                <FormHelperText>{errors.email?.message}</FormHelperText>
+                                            </FormControl>
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Controller
+                                        name="phone"
+                                        control={control}
+                                        rules={{
+                                            required: 'Phone is required',
+                                            pattern: {
+                                                value: /^[0-9]+$/,
+                                                message: 'Enter a valid phone number',
+                                            },
+                                        }}
+                                        render={({ field }) => (
+                                            <FormControl fullWidth error={!!errors.phone}>
+                                                <InputLabel htmlFor="phone">Phone</InputLabel>
+                                                <Input {...field} id="phone" />
+                                                <FormHelperText>{errors.phone?.message}</FormHelperText>
+                                            </FormControl>
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <Controller
+                                            name="dataregistrazione"
+                                            control={control}
+                                            rules={{
+                                                required: 'Date of Registration is required',
+                                            }}
+                                            render={({ field }) => (
+                                                <FormControl fullWidth error={!!errors.dataregistrazione}>
+                                                    <DatePicker
+                                                        label="Data di registrazione"
+                                                        value={field.value}
+                                                        onChange={(newValue) => field.onChange(newValue)} // Update the form state
+                                                        // OLD renderInput={(params) => <TextField {...params} />}
+                                                        slots={{ textField: (props) => <TextField {...props} /> }}
+                                                    />
+                                                    <FormHelperText>{errors.dataregistrazione?.message}</FormHelperText>
+                                                </FormControl>
+                                            )}
                                         />
-                                        <FormHelperText>{errors.ruolo?.message}</FormHelperText>
-                                    </FormControl>
-                                    )}
-                                />
+                                    </LocalizationProvider>
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <Controller
+                                        name="password"
+                                        control={control}
+                                        rules={{
+                                            required: "Password is required",
+                                            minLength: {
+                                                value: 8,
+                                                message: "The password must be at least 8 characters, including 1 capital letter, 1 number and 1 special character",
+                                            },
+                                            pattern: {
+                                                value: /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                                                message: "The password must be at least 8 characters, including 1 capital letter, 1 number and 1 special character",
+                                            },
+                                        }}
+                                        render={({ field }) => (
+                                            <FormControl fullWidth error={!!errors.password} variant="outlined">
+                                                <InputLabel htmlFor="password">Password</InputLabel>
+                                                <OutlinedInput
+                                                    {...field}
+                                                    id="password"
+                                                    type={showPassword ? "text" : "password"} // Toggle visibility
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            <IconButton onClick={handleTogglePassword} edge="end">
+                                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    }
+                                                    label="Password"
+                                                />
+                                                <FormHelperText>{errors.password?.message}</FormHelperText>
+                                            </FormControl>
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <Controller
+                                        name="confirmpassword"
+                                        control={control}
+                                        rules={{
+                                            required: "Confirm Password is required",
+                                            minLength: {
+                                                value: 8,
+                                                message: "Confirm password must be at least 8 characters, including 1 capital letter, 1 number and 1 special character",
+                                            },
+                                            pattern: {
+                                                value: /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                                                message: "Confirm password must be at least 8 characters, including 1 capital letter, 1 number and 1 special character",
+                                            },
+                                        }}
+                                        render={({ field }) => (
+                                            <FormControl fullWidth error={!!errors.confirmpassword} variant="outlined">
+                                                <InputLabel htmlFor="confirmpassword">Conferma Password</InputLabel>
+                                                <OutlinedInput
+                                                    {...field}
+                                                    id="confirmpassword"
+                                                    type={showConfirmPassword ? "text" : "password"} // Toggle visibility
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            <IconButton onClick={handleToggleConfirmPassword} edge="end">
+                                                                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    }
+                                                    label="Password"
+                                                />
+                                                <FormHelperText>{errors.confirmpassword?.message}</FormHelperText>
+                                            </FormControl>
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <Controller
+                                        name="tipoutente"
+                                        control={control}
+                                        rules={{
+                                            required: 'User Type is required',
+                                        }}
+                                        render={({ field }) => (
+                                            <FormControl fullWidth error={!!errors.tipoutente}>
+                                                <Autocomplete
+                                                    id="tipoutente"
+                                                    options={listTipoUtente}
+                                                    getOptionLabel={(option) => option?.TipoUtente || ''}
+                                                    isOptionEqualToValue={(option, value) => option.Id === value?.id}
+                                                    value={field.value || null}
+                                                    onChange={(event, newValue) => {
+                                                        field.onChange(newValue ? { id: newValue.Id, TipoUtente: newValue.TipoUtente } : null);
+                                                    }}
+
+                                                    renderInput={(params) => (
+                                                        <TextField {...params} label="Select a User Type" />
+                                                    )}
+
+                                                />
+                                                <FormHelperText>{errors.tipoutente?.message}</FormHelperText>
+                                            </FormControl>
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Controller
+                                        name="ruolo"
+                                        control={control}
+                                        rules={{
+                                            required: 'User Role is required',
+                                        }}
+                                        render={({ field }) => (
+                                            <FormControl fullWidth error={!!errors.ruolo}>
+                                                <Autocomplete
+                                                    id="ruolo"
+                                                    options={listRuolo}
+                                                    getOptionLabel={(option) => option?.Ruolo || ''}
+                                                    isOptionEqualToValue={(option, value) => option.Id === value?.id}
+                                                    value={field.value || null}
+                                                    onChange={(event, newValue) => {
+                                                        field.onChange(newValue ? { id: newValue.Id, Ruolo: newValue.Ruolo } : null);
+                                                    }}
+
+                                                    renderInput={(params) => (
+                                                        <TextField {...params} label="Select a User Role" />
+                                                    )}
+
+                                                />
+                                                <FormHelperText>{errors.ruolo?.message}</FormHelperText>
+                                            </FormControl>
+                                        )}
+                                    />
+                                </Grid>
                             </Grid>
-                        </Grid>
-            
-                        <Button
-                            fullWidth
-                            type="submit"
-                            variant="contained"
-                            color="primary.dark"
-                            sx={{ mt: 2 }}
-                            disabled={!isFormValid() || loading} // Button is disabled if the form is invalid
-                            >
-                            Registrati 
-                        </Button>
 
-                        <Button className={styles.RegisterCancel}
-                            fullWidth
-                            color="error"
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            onClick={() => router.push("/intranet")}
-                        >
-                            Cancel
-                        </Button>
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: 2, mt: 2 }}>
+                                {/* Registrati Button (Moved to the Left) */}
+                                <Button
+                                    className={styles.Register}
+                                    type="submit"
+                                    fullWidth
+                                    disabled={!isFormValid() || loading} // Button is disabled if the form is invalid
+                                    variant="contained"
+                                    color="primary"
+                                    sx={{ mt: 3, mb: 2, maxWidth: "150px" }} // Adjust maxWidth if needed
+                                >
+                                    {loading ? <CircularProgress size={24} color="inherit" /> : "Registrati"}
+                                    {!loading && <BsArrowRight />}
+                                </Button>
 
-                        
+                                {/* Cancel Button (Moved to the Right) */}
+                                <Button
+                                    className={styles.RegisterCancel}
+                                    fullWidth
+                                    color="error"
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2, maxWidth: "150px" }} // Adjust maxWidth if needed
+                                    onClick={() => router.push("/intranet")}
+                                >
+                                    Cancel
+                                </Button>
+                            </Box>
+
+                        </Box>
+
                     </form>
 
                     <Grid container justifyContent="flex-end">
@@ -628,9 +666,9 @@ const Register = () => {
                             <Link className={`${styles.CenterDiv} ${styles.UnderLine}`} href={'/intranet/auth/login'}>Hai già un account? Accedi</Link>
                         </Grid>
                     </Grid>
-                </Box>
-            </Box>
-            </Container>
+
+                </Container >
+            </div >
         </>
     );
 }

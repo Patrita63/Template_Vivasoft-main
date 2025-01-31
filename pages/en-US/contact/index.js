@@ -122,7 +122,7 @@ const Contact = () => {
                   </label>
                 </div>
 
-                <button onClick={(event)=>SendMail(event)} className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' >
+                <button onClick={(event)=>SendMail(event)} className='btn rounded-lg border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group' >
                   <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
                     Send
                   </span>

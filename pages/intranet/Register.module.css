@@ -1,9 +1,9 @@
 .Register {
-    background-color: #2A5BAF;
+    background-color: #2A5BAF !important;
 }
 
 .RegisterCancel {
-    background-color: red;
+    background-color: red !important;
 }
 
 .CenterDiv {

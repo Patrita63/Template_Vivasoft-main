@@ -52,7 +52,7 @@ const Academy = () => {
               <span className='text-lg font-bold'> Formazione In Aula e Online:</span> La nostra formazione è disponibile sia in aula che tramite piattaforme online, offrendo flessibilità e comodità.
               <span className='text-lg font-bold'> Piani di Certificazione:</span> Aiutiamo le aziende a far certificare i propri dipendenti, ottenendo qualifiche che valorizzano il brand aziendale.
             </motion.p>
-            {/* <button className='btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
+            {/* <button className='btn rounded-lg border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
               <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
                 Accedi
               </span>

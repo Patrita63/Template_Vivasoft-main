@@ -161,7 +161,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={!isValid || loading} // Disabled when form is invalid
-                  className={`btn rounded-full border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group ${!isValid || loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`btn rounded-lg border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group ${!isValid || loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                   aria-label="Invia email"
                 >
                   {loading ? <CircularProgress size={24} color="inherit" /> : (
