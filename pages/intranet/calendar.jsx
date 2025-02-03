@@ -1,27 +1,4 @@
-// import dynamic from "next/dynamic";
-// // N.B. 
-// // Next.js provides a way to disable SSR for specific components using dynamic imports. 
-// // This is particularly useful for client-only code like the loadDatabase function.
-// // This ensures that DatabaseComponent (and the loadDatabase function within it) is only executed on the client side.
-
-// const DynamicDatabaseComponent = dynamic(() => import('../../components/DatabaseComponent'), {
-//     ssr: false, // Disable server-side rendering
-// });
-
-// const HomePage = () => {
-//     return (
-//         <div>
-//             <h1>SQLite Database Loader</h1>
-//             <DynamicDatabaseComponent />
-//         </div>
-//     );
-// };
-
-// export default HomePage;
-
-// Use embedded sqlite database with IndexedDB
 import React, { useState, useEffect } from 'react';
-import getConnection from '../../lib/dbsqlazure';
 
 // https://mui.com/x/react-data-grid/
 // import { DataGrid } from '@mui/x-data-grid';
@@ -37,22 +14,24 @@ import {
     CssBaseline,
     MenuItem, Select, FormControl, InputLabel,
     Button
-  } from "@mui/material";
+} from "@mui/material";
 
-import { AccountCircle } from '@mui/icons-material';
+import { AccountCircle, Bolt } from '@mui/icons-material';
 // import { Underdog } from 'next/font/google';
 
 import NavIntranetMenu from '../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../components/DynamicBreadCrumbs';
 
+import Cookies from "js-cookie";
+
 const CalendarVivasoft = () => {
     // https://nextjs.org/docs/messages/react-hydration-error
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [username, setUsername] = useState('');
+    const [role, setRole] = useState('');
     // To navigate to another page
     const router = useRouter();
     const [calendarData, setCalendarData] = useState([]);
-    const [db, setDb] = useState(null);
     const [error, setError] = useState(null);
 
     const [message, setMessage] = useState('');
@@ -61,7 +40,7 @@ const CalendarVivasoft = () => {
 
     const years = Array.from({ length: 11 }, (_, i) => 2020 + i);
     const currentYear = new Date().getFullYear(); // Get the current year
-    
+
     const months = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -80,88 +59,60 @@ const CalendarVivasoft = () => {
     useEffect(() => {
         setIsClient(true); // This ensures the component knows it's running on the client
 
-        // https://stackoverflow.com/questions/73853069/solve-referenceerror-localstorage-is-not-defined-in-next-js
-        setIsAuthenticated(global?.localStorage?.getItem("isAuthenticated"));
-        setUsername(global?.localStorage?.getItem("username"));
-        
-        const initializeDatabase = async () => {
-            try {
-                setMessage('Please wait');
-                const databasePath = process.env.NEXT_PUBLIC_DATABASE_SQLITE; // || "/default_database.sqlite";
-                console.log('intranet\calendar.js - databasePath: ' + databasePath);
-                const database = await loadDatabase(databasePath);
-                setDb(database);
-                setMessage('Database ready to use');
-            } catch (err) {
-                setMessage('Failed to load database: '+ err);
-                setError(err.message);
-            }
+        const checkAuth = () => {
+            const auth = Cookies.get("isAuthenticated") === "true"; // Convert to boolean
+            const user = Cookies.get("username");
+            const role = Cookies.get("role");
+            setIsAuthenticated(auth);
+            setUsername(user || "");
+            setRole(role || "");
         };
 
-        initializeDatabase();
+        checkAuth(); // Run once when component mounts
+
+        const monthNumber = getMonthNumber(currentMonth);
+        getCalendarioMensile(currentYear, monthNumber);
     }, []);
 
-    if (error) return <div>Error: {error}</div>;
-    if (!db) return <div>Loading database...</div>;
-
-    const getCalendarioMensile = async () => {
-        
+    // Solution: Map Over Objects Instead of Arrays
+    const getCalendarioMensile = async (year, month) => {
         try {
-            if (!db) throw new Error('Database not loaded');
-            const tableExists = db.exec(
-                "SELECT name FROM sqlite_master WHERE type='table' AND name='T_Calendario'"
-            );
-            if (tableExists.length === 0) throw new Error('Table T_Calendario does not exist');
+            const response = await fetch("/api/agenda/managecalendar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ year, month }),
+            });
 
-            // setYear(2024);
-            // setMonth(12);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || `Errore durante la handleDataCalendar: ${errorData.message}`);
+            }
 
-            const query = `
-                SELECT 
-                    NumeroSettimanaAnno,
-                    MAX(CASE WHEN NumeroGiornoSettimana = 1 THEN Giorno ELSE NULL END) AS Sunday,
-                    MAX(CASE WHEN NumeroGiornoSettimana = 2 THEN Giorno ELSE NULL END) AS Monday,
-                    MAX(CASE WHEN NumeroGiornoSettimana = 3 THEN Giorno ELSE NULL END) AS Tuesday,
-                    MAX(CASE WHEN NumeroGiornoSettimana = 4 THEN Giorno ELSE NULL END) AS Wednesday,
-                    MAX(CASE WHEN NumeroGiornoSettimana = 5 THEN Giorno ELSE NULL END) AS Thursday,
-                    MAX(CASE WHEN NumeroGiornoSettimana = 6 THEN Giorno ELSE NULL END) AS Friday,
-                    MAX(CASE WHEN NumeroGiornoSettimana = 7 THEN Giorno ELSE NULL END) AS Saturday
-                FROM (
-                    SELECT 
-                        Id,
-                        Data,
-                        NomeGiorno,
-                        NumeroGiornoSettimana,
-                        NumeroSettimanaAnno,
-                        NomeMese,
-                        Anno,
-                        Giorno
-                    FROM 
-                        T_Calendario
-                    WHERE 
-                        Anno = ` + year + ` AND Mese = ` + getMonthNumber(month) + `
-                ) AS WeeklyData
-                GROUP BY 
-                    NumeroSettimanaAnno, NomeMese, Anno
-                ORDER BY 
-                    NumeroSettimanaAnno;
-            `;
-            // debugger;
-            console.log('getCalendarioMensile - query' + query);
-            const result = await db.exec(query);
-            const rows = result[0]?.values || [];
-            console.log(rows.length);
-            if(rows.length > 0){
-                setCalendarData(rows.map(([NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday]) => ({ NumeroSettimanaAnno,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday })));
+            const data = await response.json();
+            console.log("Fetched Data:", data); // Debugging
+
+            if (!data.datacalendar || !Array.isArray(data.datacalendar)) {
+                setMessage('No calendar data found. Please try again.');
+                setCalendarData([]); // Reset the state to an empty array
+                return;
+            }
+            debugger;
+            const calendarArray = Array.isArray(data.datacalendar) ? data.datacalendar : [];
+            console.log("Converted calendarData:", calendarArray);
+
+            if (calendarArray.length > 0) {
+                setCalendarData(calendarArray);
                 setMessage('');
             } else {
-                setMessage('Please retry to load data.');
+                setMessage('No data available for the selected month and year.');
+                setCalendarData([]); // Reset state if empty
             }
 
         } catch (err) {
-            console.error('Query error:'+ err);
-            setMessage('Query error:'+ err);
-            setError(err.message);
+            console.error("Error fetching calendar:", err);
+            setError(`Error: ${err.message}`);
+            setMessage('');
+            setCalendarData([]); // Reset state on error
         }
     };
 
@@ -171,7 +122,7 @@ const CalendarVivasoft = () => {
         const inputDate = new Date(dateString);
 
         // console.log('inputDate: ' + inputDate);
-        
+
         // Get today's date
         const today = new Date();
         // Check if year, month, and date are the same
@@ -183,55 +134,55 @@ const CalendarVivasoft = () => {
     };
 
     const handleSunDayClick = (cellInfo) => {
-        if(cellInfo.Sunday != null){
+        if (cellInfo.Sunday != null) {
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Sunday} Sunday  - ${month} - ${year}`;
             // alert(msg);
         }
     };
 
     const handleMonDayClick = (cellInfo) => {
-        if(cellInfo.Monday != null){
+        if (cellInfo.Monday != null) {
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Monday} Monday  - ${month} - ${year}`;
             // alert(msg);
         }
     };
 
     const handleTuesDayClick = (cellInfo) => {
-        if(cellInfo.Tuesday != null){
+        if (cellInfo.Tuesday != null) {
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Tuesday} Tuesday  - ${month} - ${year}`;
             // alert(msg);
         }
     };
 
     const handleWedDayClick = (cellInfo) => {
-        if(cellInfo.Wednesday != null){
+        if (cellInfo.Wednesday != null) {
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Wednesday} Wednesday  - ${month} - ${year}`;
             // alert(msg);
-         }
+        }
     };
 
     const handleThurDayClick = (cellInfo) => {
-        if(cellInfo.Thursday != null){
+        if (cellInfo.Thursday != null) {
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Thursday} Thursday  - ${month} - ${year}`;
             // alert(msg);
         }
     };
 
     const handleFriDayClick = (cellInfo) => {
-        if(cellInfo.Friday != null){
+        if (cellInfo.Friday != null) {
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Friday} Friday  - ${month} - ${year}`;
             // alert(msg);
         }
     };
 
     const handleSatDayClick = (cellInfo) => {
-        if(cellInfo.Saturday != null){
+        if (cellInfo.Saturday != null) {
             const msg = `Week Number: ${cellInfo.NumeroSettimanaAnno}` + ` - ${cellInfo.Saturday} Saturday  - ${month} - ${year}`;
             // alert(msg);
         }
     };
 
-    return ( 
+    return (
         <>
             {/* NavIntranetMenu */}
             {isClient && (
@@ -240,118 +191,111 @@ const CalendarVivasoft = () => {
                 </div>
             )}
             {/* Breadcrumbs */}
-            <Box sx={{ margin: '16px' } }>
+            <Box sx={{ margin: '16px' }}>
                 <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
             </Box>
-            
-            {isAuthenticated && (
-            <>
-                <div className={styles.wrapperbody}>
-                    {/* <div className='container mx-auto'>
-                        <h1 className='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
-                    </div>
-                    
 
-                    <br ></br> */}
-                    {message && <p>{message}</p>}
-                    <br ></br>  
-                
-                    { (message === "Database ready to use" || message === 'Please retry to load data.') &&
+            {isAuthenticated && (
+                <>
+
+                    <div className={styles.wrapperbody}>
+                        {/* <div className='container mx-auto'>
+                            <h1 className='slogan'>Tecnologia + Conoscenza = Innovazione.</h1>
+                        </div>
+                        <br ></br> */}
+
+                        {message && <p style={{color: 'red', fontWeight: 'bold' }}>{message}</p>}
+                        <br ></br>
                         <>
+
                             <div style={{ display: "flex", marginLeft: "625px", gap: "20px", alignItems: "center" }}>
                                 {/* Year Select */}
                                 <FormControl style={{ minWidth: 120 }}>
-                                <InputLabel>Year</InputLabel>
-                                <Select value={year} onChange={(e) => setYear(e.target.value)}>
-                                    {years.map((yr) => (
-                                    <MenuItem key={yr} value={yr}>{yr}</MenuItem>
-                                    ))}
-                                </Select>
+                                    <InputLabel>Year</InputLabel>
+                                    <Select value={year} onChange={(e) => setYear(e.target.value)}>
+                                        {years.map((yr) => (
+                                            <MenuItem key={yr} value={yr}>{yr}</MenuItem>
+                                        ))}
+                                    </Select>
                                 </FormControl>
-                        
+
                                 {/* Month Select */}
                                 <FormControl style={{ minWidth: 120 }}>
-                                <InputLabel>Month</InputLabel>
-                                <Select value={month} onChange={(e) => setMonth(e.target.value)}>
-                                    {months.map((mo, index) => (
-                                    <MenuItem key={index} value={mo}>{mo}</MenuItem>
-                                    ))}
-                                </Select>
+                                    <InputLabel>Month</InputLabel>
+                                    <Select value={month} onChange={(e) => setMonth(e.target.value)}>
+                                        {months.map((mo, index) => (
+                                            <MenuItem key={index} value={mo}>{mo}</MenuItem>
+                                        ))}
+                                    </Select>
                                 </FormControl>
                             </div>
                             <br></br>
-                            <Button className={styles.BtnLoadUsers} variant="contained" onClick={getCalendarioMensile}>
-                                Visualizza Calendario Mensile
-                            </Button>
                         </>
-                    }
-                    
-                    <Container maxWidth="xs" >
-                        <CssBaseline />
-                        <Box
-                            sx={{
-                                mt: 5,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center"                
-                            }}
+                        <Container maxWidth="xs" >
+                            <CssBaseline />
+                            <Box
+                                sx={{
+                                    mt: 5,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center"
+                                }}
                             >
-                            
-                            {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-                            {calendarData.length > 0 && (
-                                <>
-                                <Box sx={{ height: 600, width: 1300 }}>
-                                <div className={styles.CalendarBackgroud}>
-                                    <h1>Calendar of {month}/{year}</h1>
-                                    <table className={ styles.tableCalendar }>
-                                        <thead>
-                                            <tr className={ styles.tr }>
-                                                <th className={ styles.th }>Week</th>
-                                                <th className={ styles.thRed }>Sunday</th>
-                                                <th className={ styles.th }>Monday</th>
-                                                <th className={ styles.th }>Tuesday</th>
-                                                <th className={ styles.th }>Wednesday</th>
-                                                <th className={ styles.th }>Thursday</th>
-                                                <th className={ styles.th }>Friday</th>
-                                                <th className={ styles.thRed }>Saturday</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {calendarData.map((week, index) => (
-                                                <tr className={ styles.tr } key={index}>
-                                                    <td className={ styles.td}>{week.NumeroSettimanaAnno || ''}</td>
-                                                    <td onClick={() => handleSunDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Sunday}`) ? styles.today : ''}`}>
-                                                        {week.Sunday || ''}
-                                                    </td>
-                                                    <td onClick={() => handleMonDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Monday}`) ? styles.today : ''}`}>
-                                                        {week.Monday || ''}
-                                                    </td>
-                                                    <td onClick={() => handleTuesDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Tuesday}`) ? styles.today : ''}`}>
-                                                        {week.Tuesday || ''}
-                                                    </td>
-                                                    <td onClick={() => handleWedDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Wednesday}`) ? styles.today : ''}`}>
-                                                        {week.Wednesday || ''}
-                                                    </td>
-                                                    <td onClick={() => handleThurDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Thursday}`) ? styles.today : ''}`}>
-                                                        {week.Thursday || ''}
-                                                    </td>
-                                                    <td onClick={() => handleFriDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Friday}`) ? styles.today : ''}`}>
-                                                        {week.Friday || ''}
-                                                    </td>
-                                                    <td onClick={() => handleSatDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Saturday}`) ? styles.today : ''}`}>
-                                                        {week.Saturday || ''}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                </Box>
-                            </>)}
-                        </Box>
-                    </Container>
-                </div>
-            </>
+                                {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+                                {calendarData.length > 0 && (
+                                    <>
+                                        <Box sx={{ height: 600, width: 1300 }}>
+                                            <div className={styles.CalendarBackgroud}>
+                                                <h1>Calendar of {month}/{year}</h1>
+                                                <table className={styles.tableCalendar}>
+                                                    <thead>
+                                                        <tr className={styles.tr}>
+                                                            <th className={styles.th}>Week</th>
+                                                            <th className={styles.thRed}>Sunday</th>
+                                                            <th className={styles.th}>Monday</th>
+                                                            <th className={styles.th}>Tuesday</th>
+                                                            <th className={styles.th}>Wednesday</th>
+                                                            <th className={styles.th}>Thursday</th>
+                                                            <th className={styles.th}>Friday</th>
+                                                            <th className={styles.thRed}>Saturday</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {calendarData.map((week, index) => (
+                                                            <tr className={styles.tr} key={index}>
+                                                                <td className={styles.td}>{week.NumeroSettimanaAnno || ''}</td>
+                                                                <td onClick={() => handleSunDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Sunday}`) ? styles.today : ''}`}>
+                                                                    {week.Sunday || ''}
+                                                                </td>
+                                                                <td onClick={() => handleMonDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Monday}`) ? styles.today : ''}`}>
+                                                                    {week.Monday || ''}
+                                                                </td>
+                                                                <td onClick={() => handleTuesDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Tuesday}`) ? styles.today : ''}`}>
+                                                                    {week.Tuesday || ''}
+                                                                </td>
+                                                                <td onClick={() => handleWedDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Wednesday}`) ? styles.today : ''}`}>
+                                                                    {week.Wednesday || ''}
+                                                                </td>
+                                                                <td onClick={() => handleThurDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Thursday}`) ? styles.today : ''}`}>
+                                                                    {week.Thursday || ''}
+                                                                </td>
+                                                                <td onClick={() => handleFriDayClick(week)} className={`${styles.td} ${isToday(`${year}-${month}-${week.Friday}`) ? styles.today : ''}`}>
+                                                                    {week.Friday || ''}
+                                                                </td>
+                                                                <td onClick={() => handleSatDayClick(week)} className={`${styles.tdRed} ${isToday(`${year}-${month}-${week.Saturday}`) ? styles.today : ''}`}>
+                                                                    {week.Saturday || ''}
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </Box>
+                                    </>)}
+                            </Box>
+                        </Container>
+                    </div>
+                </>
             )}
         </>
     );
