@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "c.statcounter.com",
+      },
+    ],
+  },
+
   reactStrictMode: false,
   webpack: (config, { isServer }) => {
     if (!isServer) {
