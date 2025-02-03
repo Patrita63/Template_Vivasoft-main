@@ -165,13 +165,14 @@ const Home = () => {
               exit="hidden"
               className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
             >
+              
               <span className='text-lg font-bold'>
                 Dal 2014, plasmiamo il futuro delle aziende con soluzioni su misura, pensate per vincere ogni sfida. </span>
-              <span>Grazie al nostro supporto, le aziende ottimizzano i processi, migliorano l&apos;efficienza operativa e ottengono risultati concreti e duraturi, mantenendosi sempre un passo avanti. </span>
-              <span>Tutto questo è reso possibile dalla formazione e dallo sviluppo che offriamo attraverso i nostri collaboratori, esperti nelle tecnologie più avanzate di Microsoft. </span>
-              <span>Dall&apos;utilizzo della scalabilità di <span className='text-accent font-bold'>Azure Cloud</span> alla creazione di soluzioni dinamiche ed innovative con <span className='text-accent font-bold'>Microsoft Power Platform</span> fino all&apos;ottimizzazione della collaborazione aziendale con <span className='text-accent font-bold'>Microsoft SharePoint Online</span>, forniamo le competenze indispensabili per trasformare il tuo team in un motore di innovazione. </span>
+              <span className='text-lg'>Grazie al nostro supporto, le aziende ottimizzano i processi, migliorano l&apos;efficienza operativa e ottengono risultati concreti e duraturi, mantenendosi sempre un passo avanti. </span>
+              <span className='text-lg'>Tutto questo è reso possibile dalla formazione e dallo sviluppo che offriamo attraverso i nostri collaboratori, esperti nelle tecnologie più avanzate di Microsoft. </span>
+              <span className='text-lg'>Dall&apos;utilizzo della scalabilità di <span className='text-accent font-bold'>Azure Cloud</span> alla creazione di soluzioni dinamiche ed innovative con <span className='text-accent font-bold'>Microsoft Power Platform</span> fino all&apos;ottimizzazione della collaborazione aziendale con <span className='text-accent font-bold'>Microsoft SharePoint Online</span>, forniamo le competenze indispensabili per trasformare il tuo team in un motore di innovazione. </span>
               <span className='text-lg font-bold'> La nostra missione? Trasformare le sfide in opportunità. </span>
-              <span>Con programmi formativi personalizzati, facciamo della tecnologia un vero vantaggio strategico per il tuo successo.</span>
+              <span className='text-lg'>Con programmi formativi personalizzati, facciamo della tecnologia un vero vantaggio strategico per il tuo successo.</span>
             </motion.p>
           </div>
         </div>

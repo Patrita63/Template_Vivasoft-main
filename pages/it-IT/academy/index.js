@@ -48,9 +48,9 @@ const Academy = () => {
               exit='hidden'
               className='mb-4 max-w-[400px] mx-auto lg:mx-0'
             >
-              <span className='text-lg font-bold'>Creiamo soluzioni di formazione completa per le aziende,</span> progettando e gestendo <span className='text-secondary font-bold'>Academy Aziendali</span> su misura. Le nostre Academy sono ambienti di apprendimento esclusivi che rispondono alle esigenze di crescita professionale delle tue risorse, offrendo programmi formativi strutturati e innovativi.
-              <span className='text-lg font-bold'> Formazione In Aula e Online:</span> La nostra formazione è disponibile sia in aula che tramite piattaforme online, offrendo flessibilità e comodità.
-              <span className='text-lg font-bold'> Piani di Certificazione:</span> Aiutiamo le aziende a far certificare i propri dipendenti, ottenendo qualifiche che valorizzano il brand aziendale.
+              <span className='text-lg font-bold'>Creiamo soluzioni di formazione completa per le aziende,</span><span className='text-lg'> progettando e gestendo </span><span className='text-secondary font-bold text-lg'>Academy Aziendali </span><span className='text-lg'>su misura. Le nostre Academy sono ambienti di apprendimento esclusivi che rispondono alle esigenze di crescita professionale delle tue risorse, offrendo programmi formativi strutturati e innovativi.</span>
+              <span className='text-lg font-bold'> Formazione In Aula e Online:</span> <span className='text-lg'>La nostra formazione è disponibile sia in aula che tramite piattaforme online, offrendo flessibilità e comodità.</span>
+              <span className='text-lg font-bold'> Piani di Certificazione:</span> <span className='text-lg'>Aiutiamo le aziende a far certificare i propri dipendenti, ottenendo qualifiche che valorizzano il brand aziendale.</span>
             </motion.p>
             {/* <button className='btn rounded-lg border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
               <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>

@@ -42,7 +42,7 @@ const ItConsulting = () => {
               exit='hidden'
               className='mb-4 max-w-[400px] mx-auto lg:mx-0'
             >
-              <span className='text-lg font-bold'>Siamo un&apos;azienda IT specializzata nello sviluppo di soluzioni personalizzate</span> utilizzando le più avanzate tecnologie Microsoft.<span className='text-lg font-bold'> Con passione e competenza,</span> ci dedichiamo a creare prodotti su misura per le esigenze dei nostri clienti, che spaziano da applicazioni aziendali su misura a sistemi complessi integrati. Il nostro obiettivo è offrire soluzioni concrete e innovative, che ottimizzano i processi aziendali e massimizzano l&apos;efficienza, sfruttando appieno le potenzialità delle tecnologie Microsoft.
+              <span className='text-lg font-bold'>Siamo un&apos;azienda IT specializzata nello sviluppo di soluzioni personalizzate</span><span className='text-lg'> utilizzando le più avanzate tecnologie Microsoft.</span><span className='text-lg font-bold'> Con passione e competenza,</span><span className='text-lg'> ci dedichiamo a creare prodotti su misura per le esigenze dei nostri clienti, che spaziano da applicazioni aziendali su misura a sistemi complessi integrati. Il nostro obiettivo è offrire soluzioni concrete e innovative, che ottimizzano i processi aziendali e massimizzano l&apos;efficienza, sfruttando appieno le potenzialità delle tecnologie Microsoft.</span>
             </motion.p>
           </div>
 

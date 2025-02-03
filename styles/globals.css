@@ -6,8 +6,8 @@ html, body {
   height: 100%; /* Imposta l'altezza al 100% della finestra */
   /* Attiva lo scroll verticale se il contenuto è più lungo del viewport */
   /* overflow-hidden: Nasconde qualsiasi contenuto che supera i limiti del corpo del documento. */
-  /* PATRIZIO COMMENTATO */
-  /* overflow:hidden;  */
+  /* PATRIZIO COMMENTATO tolgo il commento 3febb per il counter che attivava la barra BB */
+  overflow:hidden; 
   font-family: font-segoe;
 }
 

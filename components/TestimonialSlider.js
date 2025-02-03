@@ -63,7 +63,7 @@ const TestimonialSlider = () => {
       //   clickable: true,
       // }}
       modules={[Navigation]}
-      className='h-[600px]'
+      className='xl:h-[500px] sm:h-[800] font-["Segoe UI"]'
     >
       {testimonialSlider.map((person, index) => {
         return (
@@ -91,8 +91,8 @@ const TestimonialSlider = () => {
                   <FaQuoteLeft className='text-4xl xl:text-6xl text-white/20 mx-auto md:mx-0' />
                 </div>
                 {/* message */}
-                {/* <div className='xl:text-lg text-center md:text-left'> */}
-                <div className="text-center md:text-left lg:text-lg xl:text-xl">
+                {/* <div className='xl:text-lg text-center md:text-left sm:text-sm'> */}
+                <div className="text-center md:text-left lg:text-lg xl:text-lg text-white/60">
                   {person.message}
                 </div>
               </div>

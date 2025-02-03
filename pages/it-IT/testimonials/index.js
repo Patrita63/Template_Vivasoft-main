@@ -35,17 +35,17 @@ const Testimonials = () => {
         <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden xl:pt-0 pt-20'>
           <div className='container mx-auto h-full flex flex-col justify-center overflow-hidden xl:pt-0 pt-20'>
             {/* title */}
-            <header>
+            <div>
               <motion.h2
                 variants={fadeIn('up', 0.2)}
                 initial='hidden'
                 animate='show'
                 exit='hidden'
-                className='text-2xl md:text-4xl font-bold mb-8 pt-10 md:pt-0 md:mb-0'
+                className='text-2xl md:text-4xl font-bold mb-8 pt-40 md:pt-12 md:mb-12'
               >
                 Dicono di<span className='text-accent'> noi</span>
               </motion.h2>
-            </header>
+            </div>
 
             {/* slider */}
             <motion.div

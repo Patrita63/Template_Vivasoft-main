@@ -1,9 +1,25 @@
+import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Socials from './Socials'; // Assicurati di avere il componente Socials importato
 import Credits from './Credits'; // Assicurati di avere il componente Credits importato
 
 const Footer = () => {
+
+  useEffect(() => {
+    // Aggiungi lo script di Statcounter dinamicamente
+    const script = document.createElement('script');
+    script.src = 'https://statcounter.com/counter/counter.js';
+    script.async = true;
+    script.type = 'text/javascript';
+    script.onload = () => {
+      window.sc_project = 13084256;
+      window.sc_invisible = 0;
+      window.sc_security = '7bd27416';
+    };
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <footer className="bg-primary/80 text-white py-2 translate-z-0 mt-auto xl:pt-2 pt-5">
       <div className="container mx-auto text-center">
@@ -114,10 +130,25 @@ const Footer = () => {
             <Socials />
           </div>
         </div>
-  
         {/* Powered by */}
         <div className=' items-center gap-x-6 text-sm mt-2'>
           <Credits />
+           {/* Statcounter Script e <noscript> */}
+      <div dangerouslySetInnerHTML={{
+        __html: `
+          <noscript>
+            <div class="statcounter">
+              <a title="Web Analytics Made Easy - Statcounter" href="https://statcounter.com/" target="_blank">
+                <img class="statcounter"
+                     src="https://c.statcounter.com/13084256/0/7bd27416/0/"
+                     alt="Web Analytics Made Easy - Statcounter"
+                     referrerPolicy="no-referrer-when-downgrade">
+              </a>
+            </div>
+          </noscript>
+          <small><a href="https://statcounter.com/p13084256/?guest=1" target='_blank'>View My Stats</a></small>
+        `
+      }} />
         </div>
       </div>
     </footer>

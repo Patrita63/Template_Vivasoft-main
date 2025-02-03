@@ -61,9 +61,9 @@ const Course = () => {
                 exit="hidden"
                 className="mb-4 max-w-[400px] mx-auto lg:mx-0"
               >
-                <span className='text-lg font-bold'>Siamo una realtà affermata nel settore della formazione IT,</span> con un focus su corsi ufficiali Microsoft, corsi personalizzati e formazione specializzata per le aziende. Offriamo soluzioni adatte alle diverse esigenze dei nostri clienti, con programmi formativi aggiornati e in linea con le ultime tendenze tecnologiche.
-              Oltre ai corsi ufficiali, offriamo corsi customizzati, progettati per rispondere alle specifiche necessità delle aziende. <span className='text-lg font-bold'>Questi corsi sono costruiti su misura</span> per sviluppare le competenze richieste dai singoli team o per affrontare problematiche aziendali particolari.
-              Eroghiamo formazione per <span className='text-accent1 font-bold'>Tutti i Livelli</span>. <span></span>I corsi sono progettati per soddisfare le esigenze di professionisti di diversi livelli, da principianti a esperti, con programmi adatti a chi è nuovo nel settore IT, ma anche a coloro che vogliono ampliare le proprie competenze.
+                <span className='text-lg font-bold'>Siamo una realtà affermata nel settore della formazione IT,</span><span className='text-lg'> con un focus su corsi ufficiali Microsoft, corsi personalizzati e formazione specializzata per le aziende. Offriamo soluzioni adatte alle diverse esigenze dei nostri clienti, con programmi formativi aggiornati e in linea con le ultime tendenze tecnologiche.
+              Oltre ai corsi ufficiali, offriamo corsi customizzati, progettati per rispondere alle specifiche necessità delle aziende. </span><span className='text-lg font-bold'>Questi corsi sono costruiti su misura</span> <span className='text-lg'> per sviluppare le competenze richieste dai singoli team o per affrontare problematiche aziendali particolari.
+              Eroghiamo formazione per </span><span className='text-accent1 font-bold text-lg'>Tutti i Livelli. </span><span className='text-lg'>I corsi sono progettati per soddisfare le esigenze di professionisti di diversi livelli, da principianti a esperti, con programmi adatti a chi è nuovo nel settore IT, ma anche a coloro che vogliono ampliare le proprie competenze.</span>
               </motion.p>
             </div>
 

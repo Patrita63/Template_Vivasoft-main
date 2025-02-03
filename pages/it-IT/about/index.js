@@ -292,10 +292,10 @@ const About = () => {
               exit="hidden"
               className="max-w-[600px] mx-auto xl:mx-0 mb-6 xl:mb-12 px-2 xl:px-0"
             >
-              <span className='text-lg font-bold'>Da oltre 10 anni è una realtà consolidata nel settore IT</span>,
-              specializzata nell&apos;insegnamento e nella realizzazione di
-              soluzioni basate sulle piattaforme{" "}
-              <span className="text-secondary text-bold">
+              <span className='text-lg font-bold'>Da oltre 10 anni è una realtà consolidata nel settore IT, </span>
+              <span className='text-lg'>specializzata nell&apos;insegnamento e nella realizzazione di
+              soluzioni basate sulle piattaforme{" "}</span>
+              <span className="text-lg text-secondary">
                 Microsoft Sharepoint, Microsoft Power Apps, Power BI e Power Automate.
               </span>
             </motion.p>
@@ -374,7 +374,7 @@ const About = () => {
               })}
             </div>
             {/* Tabella */}
-            <div className="overflow-x-auto py-2 xl:py-6">
+            <div className="overflow-x-auto py-2 xl:py-6 z-40">
               <table className="min-w-full table-auto text-white/60">
                 <tbody>
                   {aboutData[index].info.map((item, itemIndex) => {

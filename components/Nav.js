@@ -40,7 +40,7 @@ const Nav = () => {
     <nav className='flex flex-col items-center xl:justify-center gap-y-2 fixed h-max top-0 mt-auto xl:right-[92%] z-50 top-0 w-full xl:w-[7rem] xl:max-w-md xl:h-screen'>
       {/* inner */}
       <div
-        className='flex w-full xl:flex-col items-center justify-between xl:justify-center gap-y-2 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10
+        className='flex w-full xl:flex-col items-center justify-between xl:justify-center gap-y-2 px-2 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10
         backdrop-blur-sm text-2xl xl:text-xl xl:rounded-[1rem]'
       >
         {navData.map((link, index) => {
@@ -51,7 +51,7 @@ const Nav = () => {
                 isActive
                   // ? 'border-b-2 border-accent'  // Linea gialla sotto quando il link è attivo
                   // : 'border-b-2 border-transparent'  // Linea trasparente quando il link non è attivo
-              } relative flex items-center group hover:text-accent transition-all duration-300 py-2 px-4 rounded-xl xl:rounded-none w-full xl:w-auto`}
+              } relative flex items-center group hover:text-accent transition-all duration-300 py-2 px-2 rounded-xl xl:rounded-none w-full xl:w-auto`}
               href={link.path}
               key={index}
             >

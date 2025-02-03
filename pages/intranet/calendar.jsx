@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 // https://mui.com/x/react-data-grid/
 // import { DataGrid } from '@mui/x-data-grid';
@@ -12,11 +12,10 @@ import {
     Box,
     Container,
     CssBaseline,
-    MenuItem, Select, FormControl, InputLabel,
-    Button
+    MenuItem, Select, FormControl, InputLabel
 } from "@mui/material";
 
-import { AccountCircle, Bolt } from '@mui/icons-material';
+// import { AccountCircle } from '@mui/icons-material';
 // import { Underdog } from 'next/font/google';
 
 import NavIntranetMenu from '../../components/NavIntranetMenu';
@@ -41,20 +40,21 @@ const CalendarVivasoft = () => {
     const years = Array.from({ length: 11 }, (_, i) => 2020 + i);
     const currentYear = new Date().getFullYear(); // Get the current year
 
-    const months = [
+    const months = useMemo(() => [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
-    ];
+    ], []); // ✅ Memoized months array to prevent re-creation
+    
     // new Date().getMonth(); // Get current month (0-11)
     const currentMonth = months[new Date().getMonth()]; // Get current month name
 
     const [month, setMonth] = useState(currentMonth);
     const [year, setYear] = useState(currentYear); // Set default year
 
-    const getMonthNumber = (monthName) => {
+    const getMonthNumber = useCallback((monthName) => {
         const index = months.indexOf(monthName);
         return index !== -1 ? index + 1 : null;
-    };
+    }, [months]); // ✅ Use useCallback to memoize the function
 
     useEffect(() => {
         setIsClient(true); // This ensures the component knows it's running on the client
@@ -72,7 +72,7 @@ const CalendarVivasoft = () => {
 
         const monthNumber = getMonthNumber(currentMonth);
         getCalendarioMensile(currentYear, monthNumber);
-    }, []);
+    }, [currentMonth, currentYear, getMonthNumber]); // ✅ Now `getMonthNumber` is stable
 
     // Solution: Map Over Objects Instead of Arrays
     const getCalendarioMensile = async (year, month) => {
