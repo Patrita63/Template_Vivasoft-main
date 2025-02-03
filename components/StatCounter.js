@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Image from 'next/image';
 
 const StatCounter = () => {
   useEffect(() => {
@@ -27,7 +28,9 @@ const StatCounter = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
+          <Image
+            width={60}
+            height={14}
             src="https://c.statcounter.com/13084256/0/7bd27416/0/"
             alt="Statcounter tracking"
             referrerPolicy="no-referrer-when-downgrade"

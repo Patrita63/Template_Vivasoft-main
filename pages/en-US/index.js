@@ -35,10 +35,10 @@ const Home = () => {
   const [isPopupSettingsOpened, setIsPopupSettingsOpened]=useState(false);
   
   useEffect(() => {
-    window.localStorage.setItem("isLanguageIta", 'true');
+    localStorage.setItem("isLanguageIta", 'true');
     debugger;
     
-    const isPopupToShow = Boolean(window.localStorage.getItem("isCookiesAccepted"));
+    const isPopupToShow = Boolean(localStorage.getItem("isCookiesAccepted"));
     console.log('isPopupToShow: ' + isPopupToShow);
     setIsCookiesAccepted(isPopupToShow);
 

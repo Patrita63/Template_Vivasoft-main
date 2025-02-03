@@ -21,7 +21,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-primary/80 text-white py-2 translate-z-0 mt-auto xl:pt-2 pt-5">
+    <footer className="bg-primary/80 text-white xl:py-2 sm:py-10 translate-z-0 mt-auto xl:pt-2 pt-5">
       <div className="container mx-auto text-center">
         {/* Flexbox container per i 5 div sulla stessa riga */}
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4 xl:mt-0 sm:mt-60">
@@ -136,8 +136,10 @@ const Footer = () => {
 
           {/* Statcounter Section */}
           <div className="flex justify-center items-center space-x-2 mt-4 p-2 rounded-lg shadow-md">
-            <span className="mr-1 text-white">View My Stats:</span>
-            <img
+            <span className="mr-1 text-white">Vivasoft&apos;s Stats:</span>
+            <Image
+              width={60}
+              height={14}
               src="https://c.statcounter.com/13084256/0/7bd27416/0/"
               alt="Statcounter tracking"
               referrerPolicy="no-referrer-when-downgrade"
@@ -149,7 +151,9 @@ const Footer = () => {
           <noscript>
             <div className="statcounter">
               <a title="Web Analytics Made Easy - Statcounter" href="https://statcounter.com/" target="_blank">
-                <img className="statcounter"
+                <Image className="statcounter"
+                  width={60}
+                  height={14}
                   src="https://c.statcounter.com/13084256/0/7bd27416/0/"
                   alt="Web Analytics Made Easy - Statcounter"
                   referrerPolicy="no-referrer-when-downgrade" />
@@ -157,7 +161,6 @@ const Footer = () => {
             </div>
           </noscript>
         </div>
-
       </div>
     </footer>
   );

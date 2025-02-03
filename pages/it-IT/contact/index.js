@@ -122,20 +122,20 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex flex-col w-full max-w-[700px] xl:pt-0 pt-20"
+              className="flex flex-col w-full max-w-[700px] xl:pt-0"
             >
-              <motion.h2 className="h2 text-center mt-40 xl:mt-5">
+              <motion.h2 className="h2 text-center xl:mt-40 sm:mt-0 xl:mt-5">
                 Richiedi<span className="text-accent"> info</span>
               </motion.h2>
 
               <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto">
                 {/* Input Group */}
-                <div className="flex gap-x-6 w-full">
-                  <div className="w-1/2">
+                <div className="flex flex-col sm:flex-row gap-6 w-full">
+                  <div className="sm:w-1/2 w-full">
                     <input {...register('nominativo')} type="text" placeholder="Nome e cognome" className="input" />
                     {errors.nominativo && <p className="text-red-500 text-sm">{errors.nominativo.message}</p>}
                   </div>
-                  <div className="w-1/2">
+                  <div className="sm:w-1/2 w-full">
                     <input {...register('email')} type="text" placeholder="Email" className="input" />
                     {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                   </div>
@@ -163,8 +163,9 @@ const Contact = () => {
                   disabled={!isValid || loading} // Disabled when form is invalid
                   className={`btn rounded-lg border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group ${!isValid || loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                   aria-label="Invia email"
+                  aria-disabled={(!isValid || loading).toString()}
                 >
-                  {loading ? <CircularProgress size={24} color="inherit" /> : (
+                  {loading ? <CircularProgress size={24} color="inherit" aria-hidden="true"/> : (
                     <>
                       <span className="group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500">Invia</span>
                       <BsArrowRight className="absolute -translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 text-[22px]" />

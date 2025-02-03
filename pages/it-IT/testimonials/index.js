@@ -41,7 +41,7 @@ const Testimonials = () => {
                 initial='hidden'
                 animate='show'
                 exit='hidden'
-                className='text-2xl md:text-4xl font-bold mb-8 pt-40 md:pt-12 md:mb-12'
+                className='md:text-4xl font-bold mb-8 pt-40 md:pt-12 md:mb-12 h2'
               >
                 Dicono di<span className='text-accent'> noi</span>
               </motion.h2>

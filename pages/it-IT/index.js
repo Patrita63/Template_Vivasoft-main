@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head'; // Importa il componente Head di Next.js
 // import Image from 'next/image';
 
+import Cookies from "js-cookie";
+
 import styles from './Popup.module.css';
 // components
 import Layout from '../../components/Layout';
@@ -31,17 +33,16 @@ import { Bolt } from '@mui/icons-material';
 
 const Home = () => {
   // COOKIES Management
-  const [isCookiesAccepted, setIsCookiesAccepted] = useState(false);
   const [isPopupOpened, setIsPopupOpened]=useState(false);
   const [isPopupSettingsOpened, setIsPopupSettingsOpened]=useState(false);
   
   useEffect(() => {
-    window.localStorage.setItem("isLanguageIta", 'true');
+    localStorage.setItem("isLanguageIta", 'true');
     debugger;
-    
-    const isPopupToShow = Boolean(window.localStorage.getItem("isCookiesAccepted"));
+    // const isPopupToShow = Boolean(localStorage.getItem("isCookiesAccepted"));
+    // Replace with:
+    const isPopupToShow = Cookies.get("isCookiesAccepted") === "true" ? true : false;
     console.log('isPopupToShow: ' + isPopupToShow);
-    setIsCookiesAccepted(isPopupToShow);
 
     if(!isPopupToShow){
       openPopup();
@@ -64,7 +65,9 @@ const Home = () => {
   } 
 
   const cookiesAcceptedFirtPopup = () =>{
-    localStorage.setItem("isCookiesAccepted", true);
+    // localStorage.setItem("isCookiesAccepted", true);
+    // Replace with:
+    Cookies.set("isCookiesAccepted", true);
     setIsPopupOpened(false);
   } 
 
@@ -77,7 +80,9 @@ const Home = () => {
   } 
 
   const cookiesAcceptedPopupSettings = () =>{
-    localStorage.setItem("isCookiesAccepted", true);
+    // localStorage.setItem("isCookiesAccepted", true);
+    // Replace with:
+    Cookies.set("isCookiesAccepted", true);
     setIsPopupSettingsOpened(false);
   } 
 
@@ -142,7 +147,7 @@ const Home = () => {
               </DialogContent>
 
               <DialogActions>
-                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}>Naviga con i cookies selezionati</Button>
+                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}  aria-label="Naviga con i cookies selezionati">Naviga con i cookies selezionati</Button>
               </DialogActions>
               
             </Dialog>

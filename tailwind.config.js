@@ -38,7 +38,6 @@ module.exports = {
       },
       fontFamily: {
         segoe: ['"Segoe UI"', 'Tahoma', 'Geneva', 'sans-serif'],
-        // sora: [`var(--font-sora)`, 'sans-serif'],
       },
     },
   },
