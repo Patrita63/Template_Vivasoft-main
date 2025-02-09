@@ -18,9 +18,8 @@ import Cookies from "js-cookie";
 
 import { BsArrowRight } from 'react-icons/bs';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
+import Image from "next/image"; // Importa l'immagine del logo
 import {
-    Avatar,
     Box,
     Button,
     Container,
@@ -363,14 +362,17 @@ const Register = () => {
 
     return (
         <>
-            <div style={{ backgroundColor: "rgb(149 186 250)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ backgroundColor: "#2854A3", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Container maxWidth="sm">
                     <CssBaseline />
                     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto">
                         <Box sx={{ mt: 2, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-                                <LockOutlined />
-                            </Avatar>
+                             <Image
+                                            src="/LogoClaim_F.png" // Percorso del tuo logo
+                                            alt="Logo Aziendale"
+                                            width={150}  // Imposta la larghezza del logo
+                                            height={150} // Imposta l'altezza del logo
+                                          />
                             <Typography variant="h5">Register</Typography>
 
                             <Grid container spacing={2}>
@@ -381,9 +383,9 @@ const Register = () => {
                                         rules={{ required: 'Name is required' }}
                                         render={({ field }) => (
                                             <FormControl fullWidth error={!!errors.nome}>
-                                                <InputLabel htmlFor="nome">Nome</InputLabel>
-                                                <Input {...field} id="nome" />
-                                                <FormHelperText>{errors.nome?.message}</FormHelperText>
+                                                <InputLabel sx={{ color: "white" }} htmlFor="nome">Nome</InputLabel>
+                                                <Input {...field} id="nome" InputProps={{ style: { color: "white" } }} />
+                                                <FormHelperText sx={{ color: "white" }} >{errors.nome?.message}</FormHelperText>
                                             </FormControl>
                                         )}
                                     />
@@ -396,8 +398,8 @@ const Register = () => {
                                         rules={{ required: 'Surname is required' }}
                                         render={({ field }) => (
                                             <FormControl fullWidth error={!!errors.cognome}>
-                                                <InputLabel htmlFor="cognome">Cognome</InputLabel>
-                                                <Input {...field} id="cognome" />
+                                                <InputLabel sx={{ color: "white" }} htmlFor="cognome">Cognome</InputLabel>
+                                                <Input {...field} id="cognome" InputProps={{ style: { color: "white" } }} />
                                                 <FormHelperText>{errors.cognome?.message}</FormHelperText>
                                             </FormControl>
                                         )}
@@ -413,7 +415,7 @@ const Register = () => {
                                         }}
                                         render={({ field }) => (
                                             <FormControl component="fieldset" error={!!errors.gender} fullWidth>
-                                                <FormLabel component="legend">Gender</FormLabel>
+                                                <FormLabel sx={{ color: "white" }} component="legend">Gender</FormLabel>
                                                 <RadioGroup
                                                     {...field}
                                                     row // Arrange options horizontally
@@ -421,8 +423,8 @@ const Register = () => {
                                                     name="gender"
                                                     onChange={(event) => handleGenderChange(event, field)}
                                                 >
-                                                    <FormControlLabel value="M" control={<Radio />} label="Male" />
-                                                    <FormControlLabel value="F" control={<Radio />} label="Female" />
+                                                    <FormControlLabel sx={{ color: "white" }} value="M" control={<Radio />} label="Male" />
+                                                    <FormControlLabel sx={{ color: "white" }} value="F" control={<Radio />} label="Female" />
                                                 </RadioGroup>
                                                 <FormHelperText>{errors.gender?.message}</FormHelperText>
                                             </FormControl>
@@ -443,7 +445,7 @@ const Register = () => {
                                         }}
                                         render={({ field }) => (
                                             <FormControl fullWidth error={!!errors.email}>
-                                                <InputLabel htmlFor="email">Email</InputLabel>
+                                                <InputLabel sx={{ color: "white" }} htmlFor="email">Email</InputLabel>
                                                 <Input {...field} id="email" />
                                                 <FormHelperText>{errors.email?.message}</FormHelperText>
                                             </FormControl>
@@ -463,7 +465,7 @@ const Register = () => {
                                         }}
                                         render={({ field }) => (
                                             <FormControl fullWidth error={!!errors.phone}>
-                                                <InputLabel htmlFor="phone">Phone</InputLabel>
+                                                <InputLabel sx={{ color: "white" }} htmlFor="phone">Phone</InputLabel>
                                                 <Input {...field} id="phone" />
                                                 <FormHelperText>{errors.phone?.message}</FormHelperText>
                                             </FormControl>
@@ -479,7 +481,7 @@ const Register = () => {
                                                 required: 'Date of Registration is required',
                                             }}
                                             render={({ field }) => (
-                                                <FormControl fullWidth error={!!errors.dataregistrazione}>
+                                                <FormControl sx={{ color: "white" }} fullWidth error={!!errors.dataregistrazione}>
                                                     <DatePicker
                                                         label="Data di registrazione"
                                                         value={field.value}
@@ -511,7 +513,7 @@ const Register = () => {
                                         }}
                                         render={({ field }) => (
                                             <FormControl fullWidth error={!!errors.password} variant="outlined">
-                                                <InputLabel htmlFor="password">Password</InputLabel>
+                                                <InputLabel sx={{ color: "white" }} htmlFor="password">Password</InputLabel>
                                                 <OutlinedInput
                                                     {...field}
                                                     id="password"
@@ -548,7 +550,7 @@ const Register = () => {
                                         }}
                                         render={({ field }) => (
                                             <FormControl fullWidth error={!!errors.confirmpassword} variant="outlined">
-                                                <InputLabel htmlFor="confirmpassword">Conferma Password</InputLabel>
+                                                <InputLabel sx={{ color: "white" }} htmlFor="confirmpassword">Conferma Password</InputLabel>
                                                 <OutlinedInput
                                                     {...field}
                                                     id="confirmpassword"
@@ -576,7 +578,7 @@ const Register = () => {
                                             required: 'User Type is required',
                                         }}
                                         render={({ field }) => (
-                                            <FormControl fullWidth error={!!errors.tipoutente}>
+                                            <FormControl  fullWidth error={!!errors.tipoutente}>
                                                 <Autocomplete
                                                     id="tipoutente"
                                                     options={listTipoUtente}
@@ -588,11 +590,11 @@ const Register = () => {
                                                     }}
 
                                                     renderInput={(params) => (
-                                                        <TextField {...params} label="Select a User Type" />
+                                                        <TextField  {...params} label="Select a User Type" />
                                                     )}
 
                                                 />
-                                                <FormHelperText>{errors.tipoutente?.message}</FormHelperText>
+                                                <FormHelperText sx={{ color: "white" }}>{errors.tipoutente?.message}</FormHelperText>
                                             </FormControl>
                                         )}
                                     />

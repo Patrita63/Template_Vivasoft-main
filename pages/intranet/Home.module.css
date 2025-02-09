@@ -2,6 +2,8 @@
     background-color: #005f6a;  /* Verde Petrolio */
 }
 
+
+
 .Home {
     /* background-color: #81D8D0; Tiffany #81d8d0 */
     /*  background-color: #6bbbae; */
@@ -29,6 +31,7 @@
 
 .MarginTop {
     margin-top: 10px;
+    color: #fff !important;
 }
 
 .BtnLoadUsers {
@@ -94,10 +97,10 @@ Assicurati che il contenitore principale (bodycontainer) gestisca correttamente 
     overflow-y: auto;
 }
 .header {
-    background-color: #0078D4;
+    /* background-color: #0078D4; */
     color: white;
-    padding: 20px;
     text-align: center;
+    
 }
 .container {
     flex: 1;
@@ -107,11 +110,12 @@ Assicurati che il contenitore principale (bodycontainer) gestisca correttamente 
     box-sizing: border-box;
 }
 .hero {
-    background-color: #e3f2fd;
+    /* background-color: #bfe1f9; */
     padding: 15px;
     padding-bottom: 5px;
     text-align: center;
     border-radius: 8px;
+    margin-bottom: 25px;
 }
 .hero h1 {
     color: #0078D4;
@@ -166,5 +170,5 @@ Assicurati che il contenitore principale (bodycontainer) gestisca correttamente 
     color: white;
     text-align: center;
     padding: 10px 0;
-    margin-top: 20px;
+    margin-top: 70px;
 }

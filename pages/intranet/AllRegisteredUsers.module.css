@@ -25,7 +25,7 @@
 }
 
 .wrapperbody {
-    background-color: #81d8d0; /* Light teal background */
+    background-color: #fefefe; /* Light teal background */
     min-height: 100vh; /* Ensure the wrapper covers the full viewport height */
     width: 100%; /* Full width of the container */
     text-align: center; /* Center text content */

@@ -132,7 +132,7 @@ const Home = () => {
             </Dialog>
 
             <Dialog open={isPopupSettingsOpened} onClose={handlePopupSettingsClose} fullWidth maxWidth="sm">
-              <DialogTitle>Impostazioni dei cookies <IconButton style={{float:'right'}} onClick={closeSettingsPopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
+              <DialogTitle>Impostazioni dei cookies <IconButton style={{float:'right'}} onClick={closeSettingsPopup}><CloseIcon color="primary" title="Chiudi pannello cookies"></CloseIcon></IconButton></DialogTitle>
               <DialogContent>
                 <Stack spacing={2} margin={2}>
                   {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Agree terms & conditions"></FormControlLabel> */}
@@ -147,7 +147,7 @@ const Home = () => {
               </DialogContent>
 
               <DialogActions>
-                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}  aria-label="Naviga con i cookies selezionati">Naviga con i cookies selezionati</Button>
+                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}  aria-label="Naviga con i cookies selezionati" title="Title">Naviga con i cookies selezionati</Button>
               </DialogActions>
               
             </Dialog>

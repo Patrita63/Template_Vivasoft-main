@@ -27,9 +27,14 @@ export const testimonialSlider = [
       Patrizio ha molto appreso e tuttavia non si stanca mai di imparare. Il mondo Microsoft, pur nella sua crescente smisurata vastità, non lo intimidisce, ma anzi lo sprona ad approfondire ed estendere, continuamente e sistemicamente, i sui campi conoscenza e di azione.`,
   },
   {
+    name: 'Elena Paraboschi',
+    position: 'Sales Manager at Inforpc and ValueGroup',
+    message:"Ho avuto modo di collaborare con Patrizio e ho sempre apprezzato la sua professionalità e competenza nel mondo Microsoft. Il suo approccio chiaro e pratico alla formazione lo rende un docente affidabile e preparato.",
+  },
+  {
     name: 'Eduard Stefanica',
     position: 'Studente',
-    message:"Consiglio vivamente il signor Patrizio come esperto nel campo dello sviluppo software e delle reti. Durante il corso presso l'academy .Net 2023/24, ha dimostrato una conoscenza approfondita e una capacità straordinaria di insegnamento. La sua leadership empatica e la sua passione per l'insegnamento lo rendono un prezioso asset per qualsiasi team o progetto tecnologico. Inoltre, la sua vasta esperienza è supportata da numerose certificazioni Microsoft, confermando ulteriormente il suo livello di competenza nel settore.",
+    message:"Consiglio vivamente Patrizio come esperto nel campo dello sviluppo software e delle reti. Durante il corso presso l'academy .Net 2023/24, ha dimostrato una conoscenza approfondita e una capacità straordinaria di insegnamento. La sua leadership empatica e la sua passione per l'insegnamento lo rendono un prezioso asset per qualsiasi team o progetto tecnologico. Inoltre, la sua vasta esperienza è supportata da numerose certificazioni Microsoft, confermando ulteriormente il suo livello di competenza nel settore.",
   },
   {
     name: 'Beatrice Bottini',
@@ -68,7 +73,7 @@ const TestimonialSlider = () => {
       {testimonialSlider.map((person, index) => {
         return (
           <SwiperSlide key={index}>
-            <div className='flex flex-col items-center md:flex-row gap-x-8 h-full px-16'>
+            <div className='flex flex-col items-center md:flex-row gap-x-8 h-full px-10'>
               {/* avatar, name, position */}
               <div className='w-full max-w-[300px] flex flex-col xl:justify-center items-center relative mx-auto xl:mx-0'>
                 <div className='flex flex-col justify-center text-center'>
@@ -91,8 +96,8 @@ const TestimonialSlider = () => {
                   <FaQuoteLeft className='text-4xl xl:text-6xl text-white/20 mx-auto md:mx-0' />
                 </div>
                 {/* message */}
-                {/* <div className='xl:width-full xl:text-lg text-center md:text-left sm:text-sm sm:width-[210px]' > */}
-                <div className="text-center md:text-left lg:text-lg xl:text-lg text-white/60">
+                {/* <div className='xl:w-full xl:text-lg text-center md:text-left sm:text-sm sm:w-[210px]> */}
+                <div className="xl:w-full text-center md:text-left lg:text-lg xl:text-lg text-white/60 sm:w-[210px]">
                   {person.message}
                 </div>
               </div>

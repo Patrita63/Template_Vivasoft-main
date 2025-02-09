@@ -11,6 +11,18 @@ html, body {
   font-family: font-segoe;
 }
 
+/* Nasconde la barra di scorrimento */
+html, body {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Per Firefox */
+  -ms-overflow-style: none; /* Per Internet Explorer e Edge */
+}
+
+/* Nasconde la barra di scorrimento per WebKit (Chrome, Safari) */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
 
 
 .scroll-container::-webkit-scrollbar {

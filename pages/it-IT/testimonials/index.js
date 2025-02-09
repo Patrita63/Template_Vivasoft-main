@@ -53,7 +53,7 @@ const Testimonials = () => {
               initial='hidden'
               animate='show'
               exit='hidden'
-              className="w-full px-2 sm:px-4 md:px-0" // Ensures slider is well-aligned across devices
+              className="lg:w-full px-2 sm:px-4 md:px-0 sm:w-[210px]" // Ensures slider is well-aligned across devices
             >
               <TestimonialSlider />
             </motion.div>

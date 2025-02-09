@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import ParticlesContainer from '/components/ParticlesContainer';
 import styles from "./Login.module.css";
 import {
   Container,
@@ -14,7 +15,8 @@ import {
 
 import { BsArrowRight } from 'react-icons/bs';
 
-import { LockOutlined } from "@mui/icons-material";
+import Image from "next/image"; // Importa l'immagine del logo
+
 import Link from "next/link";
 
 import Cookies from "js-cookie";
@@ -22,6 +24,7 @@ import Cookies from "js-cookie";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
+import zIndex from "@mui/material/styles/zIndex";
 
 // ✅ Validation Schema with Yup
 const validationSchema = yup.object().shape({
@@ -101,10 +104,14 @@ const Login = () => {
 
   return (
     <>
-    <div style={{ backgroundColor: "rgb(149 186 250)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+       
+    <div style={{ backgroundColor: "#2854A3", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",position: "relative",
+    zIndex: 9999 }} >
+       {/* particles */}
+       <ParticlesContainer />
       <Container maxWidth="xs">
         <CssBaseline />
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto" style={{ marginTop: "-220px" }}>
           <Box
             sx={{
               mt: 20,
@@ -113,10 +120,15 @@ const Login = () => {
               alignItems: "center"
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-              <LockOutlined />
-            </Avatar>
-            <Typography variant="h5">Login</Typography>
+            
+            <Image
+                src="/LogoClaim_F.png" // Percorso del tuo logo
+                alt="Logo Aziendale"
+                width={150}  // Imposta la larghezza del logo
+                height={150} // Imposta l'altezza del logo
+              />
+          
+            <Typography variant="h5"  sx={{ color: "#fff" }}>Login</Typography>
             <TextField
               {...register('email')}
               label="Email"
@@ -124,9 +136,19 @@ const Login = () => {
               fullWidth
               error={!!errors.email}
               helperText={errors.email?.message}
-              sx={{ mt: 2 }}
-            />
-
+              sx={{ mt: 2,
+                '& .MuiInputLabel-root': { color: "#fff" },
+                '& .MuiOutlinedInput-root': {
+                '& fieldset': { borderColor: '#fff' },
+                '&:hover fieldset': { borderColor: '#fff' },
+                '&.Mui-focused fieldset': { borderColor: '#fff' },
+                },
+                '& .MuiFormHelperText-root': { 
+                color: '#C9C9C9 !important',
+                fontSize:'16px'  // Colore dell'alert di errore (puoi cambiarlo a qualsiasi colore desiderato)
+                }
+                }}                  
+               />
             <TextField
               {...register('password')}
               label="Password"
@@ -135,16 +157,28 @@ const Login = () => {
               fullWidth
               error={!!errors.password}
               helperText={errors.password?.message}
-              sx={{ mt: 2 }}
+              sx={{ mt: 2,
+                '& .MuiInputLabel-root': { color: "#fff" }, // Cambia il colore del label a bianco
+                '& .MuiOutlinedInput-root': {
+                '& fieldset': { borderColor: '#fff' }, // Cambia il bordo a bianco
+                '&:hover fieldset': { borderColor: '#fff' }, // Cambia il bordo a bianco al passaggio del mouse
+                '&.Mui-focused fieldset': { borderColor: '#fff' },
+                }, // Cambia il bordo quando il campo è attivo
+                '& .MuiFormHelperText-root': { 
+                color: '#C9C9C9 !important',
+                fontSize:'16px'  // Colore dell'alert di errore (puoi cambiarlo a qualsiasi colore desiderato)
+                }
+              }}
             />
-            {error && <Typography color="error">{error}</Typography>}
+            {error && <Typography sx={{ color: "#fff" }}>{error}</Typography>}
 
             {/* Submit Button with Loader */}
             <button
               type="submit"
               disabled={!isValid || loading} // Disabled when form is invalid
-              className={`btn rounded-lg border border-navy/100 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group ${!isValid || loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`btn rounded-lg border border-navy/100 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent1 group ${!isValid || loading ? 'opacity-50 cursor-not-allowed' : ''}`}
               aria-label="Login"
+              style={{marginTop:'15px', color: "#fff"}}
             >
               {loading ? <CircularProgress size={24} color="inherit" /> : (
                 <>
@@ -168,11 +202,11 @@ const Login = () => {
             <Link
               className={`${styles.CenterDiv} ${styles.UnderLine}`}
               href={"/intranet/register"}
+              style={{ color: "#fff",position:'relative',zIndex:5 }} // Colore del link bianco
             >
               Non hai un account? Registrati
             </Link>
           </Box>
-
         </form>
       </Container>
     </div>

@@ -74,7 +74,7 @@ const NavIntranetMenu = () => {
 
   return (
     <AppBar position="static">
-      <Toolbar>
+      <Toolbar sx={{ height: "80px" }}>
         <IconButton
           edge="start"
           color="inherit"
@@ -89,12 +89,12 @@ const NavIntranetMenu = () => {
                            
         <Link href={'/'}>
           <Image 
-              src={'/Logo_VivaSoft.png'}
-              width={85}
-              height={20}
+              src={'/LogoClaim_F.png'}
+              width={115}
+              height={115}
               alt="Logo Vivasoft S.R.L."
               priority={true}
-              style={{ width: '100%', height: 'auto' }}
+              
           />
         </Link>
 
