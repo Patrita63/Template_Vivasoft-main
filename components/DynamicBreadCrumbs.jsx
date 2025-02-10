@@ -34,6 +34,13 @@ const DynamicBreadCrumbs = () => {
   const isViewCatalogoCorsiPage = pathnames.includes("catalogocorsiviewdetails");
   const isDeleteCatalogoCorsiPage = pathnames.includes("catalogocorsidelete");
 
+  // Custom logic to check for relagendacalendario pages
+  const isAgendaCalendarioPage = pathnames.includes("relagendacalendario");
+  const isAddAgendaCalendarioPage = pathnames.includes("relagendacalendarioadd");
+  const isEditAgendaCalendarioPage = pathnames.includes("relagendacalendarioeditdetails");
+  const isViewAgendaCalendarioPage = pathnames.includes("relagendacalendarioviewdetails");
+  const isDeleteAgendaCalendarioPage = pathnames.includes("relagendacalendariodelete");
+
   // Helper to create user-related breadcrumb
   const renderUserBreadcrumb = (type, id) => {
     return (
@@ -79,6 +86,18 @@ const DynamicBreadCrumbs = () => {
         </Link>
         {" "}
         / {type} Catalogo Corsi ({id || "N/A"})
+      </Typography>
+    );
+  };
+
+  const renderAgendaCalendarioBreadcrumb = (type, id) => {
+    return (
+      <Typography color="text.primary">
+        <Link href="/intranet/relagendacalendario" passHref>
+          Rel. Agenda Calendario
+        </Link>
+        {" "}
+        / {type} Rel. Agenda Calendario ({id || "N/A"})
       </Typography>
     );
   };
@@ -134,6 +153,17 @@ const DynamicBreadCrumbs = () => {
       {isEditCatalogoCorsiPage && renderCatalogoCorsiBreadcrumb("Edit", router.query.id)}
       {isViewCatalogoCorsiPage && renderCatalogoCorsiBreadcrumb("View", router.query.id)}
       {isDeleteCatalogoCorsiPage && renderCatalogoCorsiBreadcrumb("Delete", router.query.id)}
+
+      {/* Conditional "Rel Agenda Calendario Vivasoft" page breadcrumb */}
+      {isAgendaCalendarioPage && !isEditAgendaCalendarioPage && !isViewAgendaCalendarioPage && !isDeleteAgendaCalendarioPage && (
+        <Typography color="text.primary">Rel. Agenda Calendario</Typography>
+      )}
+
+       {/* Conditional breadcrumbs for specific relagendacalendario pages */}
+       {isAddAgendaCalendarioPage && renderAgendaCalendarioBreadcrumb("Add", router.query.id)}
+      {isEditAgendaCalendarioPage && renderAgendaCalendarioBreadcrumb("Edit", router.query.id)}
+      {isViewAgendaCalendarioPage && renderAgendaCalendarioBreadcrumb("View", router.query.id)}
+      {isDeleteAgendaCalendarioPage && renderAgendaCalendarioBreadcrumb("Delete", router.query.id)}
     </Breadcrumbs>
   );
 };

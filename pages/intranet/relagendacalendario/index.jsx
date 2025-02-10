@@ -5,10 +5,10 @@ import Cookies from "js-cookie";
 import { Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
-
 import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 import Credits from "../../../components/Credits";
+import RelAgendaCalendarioDataGrid from "../../../components/RelAgendaCalendarioGrid";
 
 import styles from "../Home.module.css";
 
@@ -17,7 +17,7 @@ import styles from "../Home.module.css";
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-export default function CatalogoCorsiDelete() {
+export default function RelAgendaCalendario() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => setIsClient(true), []);
@@ -28,7 +28,7 @@ export default function CatalogoCorsiDelete() {
         <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
       </Box>
       <div>
-      DELETE Catalogo Corsi Vivasoft
+        <RelAgendaCalendarioDataGrid />
       </div>
       {/* Footer */}
       <footer className={styles.footer}>

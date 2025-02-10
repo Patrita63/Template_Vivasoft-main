@@ -17,7 +17,7 @@ import styles from "../Home.module.css";
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-export default function CatalogoCorsiDelete() {
+export default function RelAgendaCalendarioEditDetails() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => setIsClient(true), []);
@@ -28,7 +28,7 @@ export default function CatalogoCorsiDelete() {
         <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
       </Box>
       <div>
-      DELETE Catalogo Corsi Vivasoft
+      EDIT Rel Agenda Calendario
       </div>
       {/* Footer */}
       <footer className={styles.footer}>

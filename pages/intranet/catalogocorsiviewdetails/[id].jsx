@@ -17,7 +17,7 @@ import styles from "../Home.module.css";
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-export default function AgendaCorsiViewDetails() {
+export default function CatalogoCorsiViewDetails() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => setIsClient(true), []);

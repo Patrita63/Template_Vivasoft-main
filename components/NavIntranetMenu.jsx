@@ -166,6 +166,11 @@ const NavIntranetMenu = () => {
                 Utenti Registrati
               </Link>
             </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
+              <Link href="/intranet/relagendacalendario" passHref>
+                Rel Agenda Calendario
+              </Link>
+            </MenuItem>
           </>
           )}
         </Menu>
