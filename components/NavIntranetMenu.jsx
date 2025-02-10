@@ -147,6 +147,11 @@ const NavIntranetMenu = () => {
               </Link>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
+              <Link href="/intranet/agendacorsi" passHref>
+                Agenda Corsi
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/allusers" passHref>
                 Utenti Corsi
               </Link>

@@ -20,6 +20,12 @@ const DynamicBreadCrumbs = () => {
   const isViewRegisteredUserDetailsPage = pathnames.includes("viewregistereduserdetails");
   const isDeleteRegisteredUserPage = pathnames.includes("deleteregistereduser");
 
+  // Custom logic to check for agendacorsi pages
+  const isAgendaCorsiPage = pathnames.includes("agendacorsi");
+  const isEditAgendaCorsiPage = pathnames.includes("agendacorsieditdetails");
+  const isViewAgendaCorsiPage = pathnames.includes("agendacorsiviewdetails");
+  const isDeleteAgendaCorsiPage = pathnames.includes("agendacorsidelete");
+
   // Helper to create user-related breadcrumb
   const renderUserBreadcrumb = (type, id) => {
     return (
@@ -41,6 +47,18 @@ const DynamicBreadCrumbs = () => {
         </Link>
         {" "}
         / {type} Register User Details ({id || "N/A"})
+      </Typography>
+    );
+  };
+
+  const renderAgendaCorsiBreadcrumb = (type, id) => {
+    return (
+      <Typography color="text.primary">
+        <Link href="/intranet/agendacorsi" passHref>
+          Agenda Corsi Vivasoft
+        </Link>
+        {" "}
+        / {type} Agenda Corsi ({id || "N/A"})
       </Typography>
     );
   };
@@ -74,6 +92,16 @@ const DynamicBreadCrumbs = () => {
       {isRegisteredUserDetailsPage && renderRegisteredUserBreadcrumb("Edit", router.query.id)}
       {isViewRegisteredUserDetailsPage && renderRegisteredUserBreadcrumb("View", router.query.id)}
       {isDeleteRegisteredUserPage && renderRegisteredUserBreadcrumb("Delete", router.query.id)}
+
+      {/* Conditional "Agenda Corsi Vivasoft" page breadcrumb */}
+      {isAgendaCorsiPage && !isEditAgendaCorsiPage && !isViewAgendaCorsiPage && !isDeleteAgendaCorsiPage && (
+        <Typography color="text.primary">Agenda Corsi Vivasoft</Typography>
+      )}
+
+      {/* Conditional breadcrumbs for specific agendacorsi pages */}
+      {isEditAgendaCorsiPage && renderAgendaCorsiBreadcrumb("Edit", router.query.id)}
+      {isViewAgendaCorsiPage && renderAgendaCorsiBreadcrumb("View", router.query.id)}
+      {isDeleteAgendaCorsiPage && renderAgendaCorsiBreadcrumb("Delete", router.query.id)}
     </Breadcrumbs>
   );
 };

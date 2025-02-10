@@ -246,7 +246,7 @@ import { fadeIn } from "../../../variants";
 
 // counter
 import CountUp from "react-countup";
-import { isAbsoluteUrl } from "next/dist/shared/lib/utils";
+// import { isAbsoluteUrl } from "next/dist/shared/lib/utils";
 
 const About = () => {
   const [index, setIndex] = useState(0);
