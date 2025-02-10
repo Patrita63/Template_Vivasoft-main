@@ -22,9 +22,17 @@ const DynamicBreadCrumbs = () => {
 
   // Custom logic to check for agendacorsi pages
   const isAgendaCorsiPage = pathnames.includes("agendacorsi");
+  const isAddAgendaCorsiPage = pathnames.includes("agendacorsiadd");
   const isEditAgendaCorsiPage = pathnames.includes("agendacorsieditdetails");
   const isViewAgendaCorsiPage = pathnames.includes("agendacorsiviewdetails");
   const isDeleteAgendaCorsiPage = pathnames.includes("agendacorsidelete");
+
+  // Custom logic to check for catalogocorsi pages
+  const isCatalogoCorsiPage = pathnames.includes("catalogocorsi");
+  const isAddCatalogoCorsiPage = pathnames.includes("catalogocorsiadd");
+  const isEditCatalogoCorsiPage = pathnames.includes("catalogocorsieditdetails");
+  const isViewCatalogoCorsiPage = pathnames.includes("catalogocorsiviewdetails");
+  const isDeleteCatalogoCorsiPage = pathnames.includes("catalogocorsidelete");
 
   // Helper to create user-related breadcrumb
   const renderUserBreadcrumb = (type, id) => {
@@ -59,6 +67,18 @@ const DynamicBreadCrumbs = () => {
         </Link>
         {" "}
         / {type} Agenda Corsi ({id || "N/A"})
+      </Typography>
+    );
+  };
+
+  const renderCatalogoCorsiBreadcrumb = (type, id) => {
+    return (
+      <Typography color="text.primary">
+        <Link href="/intranet/catalogocorsi" passHref>
+          Catalogo Corsi Vivasoft
+        </Link>
+        {" "}
+        / {type} Catalogo Corsi ({id || "N/A"})
       </Typography>
     );
   };
@@ -99,9 +119,21 @@ const DynamicBreadCrumbs = () => {
       )}
 
       {/* Conditional breadcrumbs for specific agendacorsi pages */}
+      {isAddAgendaCorsiPage && renderAgendaCorsiBreadcrumb("Add", router.query.id)}
       {isEditAgendaCorsiPage && renderAgendaCorsiBreadcrumb("Edit", router.query.id)}
       {isViewAgendaCorsiPage && renderAgendaCorsiBreadcrumb("View", router.query.id)}
       {isDeleteAgendaCorsiPage && renderAgendaCorsiBreadcrumb("Delete", router.query.id)}
+
+      {/* Conditional "Catalogo Corsi Vivasoft" page breadcrumb */}
+      {isCatalogoCorsiPage && !isEditCatalogoCorsiPage && !isViewCatalogoCorsiPage && !isDeleteCatalogoCorsiPage && (
+        <Typography color="text.primary">Catalogo Corsi Vivasoft</Typography>
+      )}
+
+       {/* Conditional breadcrumbs for specific catalogocorsi pages */}
+       {isAddCatalogoCorsiPage && renderCatalogoCorsiBreadcrumb("Add", router.query.id)}
+      {isEditCatalogoCorsiPage && renderCatalogoCorsiBreadcrumb("Edit", router.query.id)}
+      {isViewCatalogoCorsiPage && renderCatalogoCorsiBreadcrumb("View", router.query.id)}
+      {isDeleteCatalogoCorsiPage && renderCatalogoCorsiBreadcrumb("Delete", router.query.id)}
     </Breadcrumbs>
   );
 };

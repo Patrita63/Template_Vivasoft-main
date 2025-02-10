@@ -17,7 +17,7 @@ import styles from "../Home.module.css";
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-export default function AgendaCorsiViewDetails() {
+export default function AgendaCorsiDelete() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => setIsClient(true), []);
@@ -28,7 +28,7 @@ export default function AgendaCorsiViewDetails() {
         <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
       </Box>
       <div>
-      AgendaCorsiViewDetails
+      DELETE Catalogo Corsi Vivasoft
       </div>
       {/* Footer */}
       <footer className={styles.footer}>

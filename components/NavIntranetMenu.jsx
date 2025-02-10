@@ -141,6 +141,11 @@ const NavIntranetMenu = () => {
           </MenuItem>
           {isAuthenticated && (
            <>
+           <MenuItem onClick={handleMenuClose}>
+              <Link href="/intranet/catalogocorsi" passHref>
+                Catalogo Corsi Vivasoft
+              </Link>
+            </MenuItem>
             <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/calendar" passHref>
                 Calendario Vivasoft

@@ -9,7 +9,6 @@ import React, { useState, useEffect } from "react";
 import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 import Credits from "../../../components/Credits";
-import AgendaDataGrid from "../../../components/AgendaGrid";
 
 import styles from "../Home.module.css";
 

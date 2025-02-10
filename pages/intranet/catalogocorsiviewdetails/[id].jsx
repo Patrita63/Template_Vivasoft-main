@@ -28,7 +28,7 @@ export default function AgendaCorsiViewDetails() {
         <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
       </Box>
       <div>
-      AgendaCorsiViewDetails
+      VIEW Catalogo Corsi Vivasoft
       </div>
       {/* Footer */}
       <footer className={styles.footer}>
