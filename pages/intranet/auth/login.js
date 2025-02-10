@@ -77,11 +77,19 @@ const Login = () => {
         return;
       }
 
-      Cookies.set("isAuthenticated", "true", { expires: 1 / 48, secure: true });
-      Cookies.set("username", loginData.email, { expires: 1 / 48, secure: true });
+      const expirationDate = new Date();
+      expirationDate.setHours(expirationDate.getHours() + 8);
+
+      Cookies.set("isAuthenticated", "true", { expires: expirationDate, secure: true }); // Expires after 8 hours
+      Cookies.set("username", loginData.email, { expires: expirationDate, secure: true });
+
+      // Cookies.set("isAuthenticated", "true", { expires: 1 / 48, secure: true }); // Expires in 30 minutes
+      // Cookies.set("username", loginData.email, { expires: 1 / 48, secure: true });
 
       const greeting = data.user.Gender === "M" ? "Benvenuto" : "Benvenuta";
-      Cookies.set("nominativo", `${greeting} ${data.user.Nome} ${data.user.Cognome}`, { expires: 1 / 48, secure: true });
+      // Cookies.set("nominativo", `${greeting} ${data.user.Nome} ${data.user.Cognome}`, { expires: 1 / 48, secure: true });
+
+      Cookies.set("nominativo", `${greeting} ${data.user.Nome} ${data.user.Cognome}`, { expires: expirationDate, secure: true });
 
       router.push("/intranet");
 
