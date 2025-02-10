@@ -25,10 +25,9 @@ const Footer = () => {
       <div className="container mx-auto text-center">
         {/* Flexbox container per i 5 div sulla stessa riga */}
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4 xl:mt-0 sm:mt-60">
-
-          {/* Logo azienda */}
+          {process.env.NEXT_PUBLIC_INTRANET_VISIBLE==="true" && (
           <div className="flex flex-col justify-center items-center">
-            {/* logo */}
+            {/* Logo azienda */}
             {/* Link all'area intranet */}
             <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
               <Image
@@ -46,6 +45,23 @@ const Footer = () => {
               <small>INTRANET</small>
             </Link>
           </div>
+          )}
+
+          {process.env.NEXT_PUBLIC_INTRANET_VISIBLE==="false" && (
+          <div className="flex flex-col justify-center items-center">
+            {/* Logo azienda */}
+            
+              <Image
+                src={'/LogoClaim_F.png'}
+                width={110}
+                height={50}
+                alt="Logo Vivasoft S.R.L."
+                priority={true}
+                className="mt-4"
+              />
+              <small>Tecnologia + Conoscenza = Innovazione</small>
+          </div>
+          )}
 
           <span className="text-accent">
             Vivasoft S.R.L. <span className="text-white">P.IVA 12888541005</span>
@@ -130,6 +146,8 @@ const Footer = () => {
             <Socials />
           </div>
         </div>
+
+
         {/* Powered by */}
         <div className='items-center gap-x-6 text-sm mt-2'>
           <Credits />
