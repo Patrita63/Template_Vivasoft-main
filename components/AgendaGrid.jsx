@@ -4,13 +4,33 @@ import { Button, Container, Typography } from "@mui/material";
 
 import { useRouter } from 'next/router';
 
+import { useLookups } from "../context/LookupsContext";
+
 const AgendaDataGrid = () => {
     // To navigate to another page
     const router = useRouter();
     const [agendas, setAgendas] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { lookups, setLookups } = useLookups();
 
     useEffect(() => {
+        const fetchLookups = async () => {
+            if (!lookups) {
+                try {
+                    const response = await fetch("/api/agenda/retrieveaccessorytables");
+                    const data = await response.json();
+                    setLookups(data.lookups);
+                } catch (error) {
+                    console.error("Error fetching lookups:", error);
+                }
+            }
+        };
+
+        fetchLookups();
+        fetchData();
+    }, [lookups, setLookups]); 
+
+    const fetchData = async () => {
         fetch("/api/agenda/selectinsertagenda")
             .then((res) => res.json())
             .then((data) => {
@@ -18,7 +38,7 @@ const AgendaDataGrid = () => {
                 setLoading(false);
             })
             .catch((err) => console.error(err));
-    }, []);
+    };
 
     // Functions for button click
     const handleEdit = (row) => {

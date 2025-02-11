@@ -1,16 +1,11 @@
-import { useRouter } from 'next/router';
-
-import Cookies from "js-cookie";
-
 import { Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
-
-import dynamic from "next/dynamic";
 
 import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 import Credits from "../../../components/Credits";
 import AgendaDataGrid from "../../../components/AgendaGrid";
+import IntranetLayout from "../../../components/IntranetLayout";
 
 import styles from "../Home.module.css";
 
@@ -30,7 +25,9 @@ export default function AgendaCorsi() {
         <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
       </Box>
       <div>
-        <AgendaDataGrid />
+        <IntranetLayout>
+            <AgendaDataGrid />
+        </IntranetLayout>
       </div>
       {/* Footer */}
       <footer className={styles.footer}>
