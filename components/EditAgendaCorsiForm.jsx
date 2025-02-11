@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useLookups } from "../context/LookupsContext";
 import {
     TextField,
     Button,
@@ -12,12 +13,15 @@ import {
     InputLabel,
     Checkbox,
     FormControlLabel,
-    Grid
+    Grid,
+    Autocomplete
 } from '@mui/material';
 
 const EditAgendaCorsiForm = ({ initialData, onSubmit }) => {
     const router = useRouter();
     const [formData, setFormData] = useState(initialData);
+
+    const { lookups } = useLookups();
 
     useEffect(() => {
         setFormData(initialData);
@@ -76,15 +80,17 @@ const EditAgendaCorsiForm = ({ initialData, onSubmit }) => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <FormControl fullWidth>
-                            <InputLabel>Id Catalogo Corsi</InputLabel>
-                            <Select
-                                name="IdCatalogoCorsi"
-                                value={formData.IdCatalogoCorsi || ''}
-                                onChange={handleChange}
-                            >
-                                <MenuItem value={1}>Catalog 1</MenuItem>
-                                <MenuItem value={2}>Catalog 2</MenuItem>
-                            </Select>
+                            <Autocomplete
+                                id="catalogocorso"
+                                options={lookups?.catalogo || []}
+                                getOptionLabel={(option) => option.Nome || ""}
+                                isOptionEqualToValue={(option, value) => option.Id === value?.Id}
+                                value={lookups?.catalogo.find((item) => item.Id === formData.IdCatalogoCorsi) || null}
+                                onChange={(event, newValue) =>
+                                    setFormData({ ...formData, IdCatalogoCorsi: newValue ? newValue.Id : "" })
+                                }
+                                renderInput={(params) => <TextField {...params} label="Select a Course" />}
+                            />
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6}>

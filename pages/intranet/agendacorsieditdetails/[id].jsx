@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EditAgendaCorsiForm from '../../../components/EditAgendaCorsiForm';
+import IntranetLayout from "../../../components/IntranetLayout";
 import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 import Credits from "../../../components/Credits";
@@ -15,8 +16,8 @@ const EditAgendaCorsiPage = () => {
     Id: 1,
     DataInizio: '2023-10-01T09:00',
     DataFine: '2023-10-05T18:00',
-    IdCatalogoCorsi: 101,
-    IdLearningCenter: 201,
+    IdCatalogoCorsi: 1,
+    IdLearningCenter: 1,
     ClienteFinale: 'Client A',
     Descrizione: 'Course Description',
     NumeroDiscenti: 20,
@@ -40,9 +41,10 @@ const EditAgendaCorsiPage = () => {
       <Box sx={{ margin: "16px", "& .MuiBreadcrumbs-root": { color: "#fff" } }}>
         <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
       </Box>
-      <div>
-      <EditAgendaCorsiForm initialData={initialData} onSubmit={handleSubmit} />
-      </div>
+      {/* // ✅ Wrap the page with IntranetLayout */}
+      <IntranetLayout>
+        <EditAgendaCorsiForm initialData={initialData} onSubmit={handleSubmit} />
+      </IntranetLayout>
       {/* Footer */}
       <footer className={styles.footer}>
         <Credits />
@@ -50,5 +52,6 @@ const EditAgendaCorsiPage = () => {
     </>
   );
 };
+
 
 export default EditAgendaCorsiPage;

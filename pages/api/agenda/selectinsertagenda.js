@@ -8,7 +8,7 @@ export default async function handler(req, res) {
                 SELECT 
                     Agenda.Id, Agenda.DataInizio, Agenda.DataFine
                     ,CatCor.Nome AS NomeCorso, CatCor.Durata
-                    ,LCenter.Nome AS LearningCenter
+                    ,LCenter.Id AS IdLearningCenter, LCenter.Nome AS LearningCenter
                     ,StaAgenda.Nome AS StatoAgenda
                     ,TipoErog.Nome AS TipoErogazione
                 FROM dbo.T_AgendaCorsi AS Agenda
