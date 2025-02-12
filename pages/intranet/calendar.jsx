@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import NavIntranetMenu from '../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../components/DynamicBreadCrumbs';
-import CalendarTable  from '../../components/CalendarioCorsi';
+import CalendarTable from '../../components/CalendarioCorsi';
 import Cookies from "js-cookie";
 
 const CalendarVivasoft = () => {
@@ -32,6 +32,16 @@ const CalendarVivasoft = () => {
     const [monthname, setMonthname] = useState(months[new Date().getMonth()]);
 
     const [year, setYear] = useState(currentYear);
+
+    const [selectedDay, setSelectedDay] = useState(null);
+
+    // 📌 Function to handle actions when a cell is clicked
+    const handleCellClick = (day) => {
+        setSelectedDay(day);
+        debugger;
+        console.log('handleCellClick - Selected data: ',day);
+        alert(day.Day_DayNumber);
+    };
 
     useEffect(() => {
         setIsClient(true);
@@ -116,8 +126,8 @@ const CalendarVivasoft = () => {
                                 {calendarData.length > 0 && (
                                     <Box sx={{ height: 600, width: 1300 }}>
                                         <div className="p-4">
-                                            <h1 className="text-xl font-bold mb-4">January 2025 Calendar</h1>
-                                            <CalendarTable data={calendarData} />
+                                            <h1 className="text-xl font-bold mb-4">Calendar {monthname} {year}</h1>
+                                            <CalendarTable data={calendarData} onCellClick={handleCellClick} />
                                         </div>
                                     </Box>
                                 )}

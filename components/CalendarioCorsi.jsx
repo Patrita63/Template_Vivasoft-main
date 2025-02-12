@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./CalendarTable.module.css"; // Ensure you have styles defined
 
-const CalendarTable = ({ data }) => {
+const CalendarTable = ({ data, onCellClick }) => {
     debugger;
     console.log('CalendarTable: ', data);
   const days = data;
@@ -25,10 +25,13 @@ const CalendarTable = ({ data }) => {
     }
   });
 
+  // Get today's date
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <div className="overflow-x-auto p-4">
       <table className="border-collapse border border-gray-300 w-full text-center">
-        {/* ✅ CUSTOM HEADER WITH WEEK NUMBER */}
+       {/* ✅ CUSTOM HEADER WITH SUNDAY & SATURDAY IN RED */}
         <thead>
           <tr className={styles.tr}>
             <th className={styles.th}>Week</th>
@@ -53,23 +56,36 @@ const CalendarTable = ({ data }) => {
             return (
               <tr key={weekIndex} className={styles.tr}>
                 <td className={`${styles.th} font-bold`}>Week {week[0].Day_WeekNumber}</td>
-                {weekDays.map((day, dayIndex) => (
-                  <td key={dayIndex} className={`${styles.th} px-4 py-2 h-20 align-top`}>
-                    {day ? (
-                      <div>
-                        <strong>{day.Day_DayNumber}</strong>
-                        {day.IdAgendaCorsi !== null && <span className="text-green-500 ml-2">🟢</span>}
-                        {day.ClienteFinale && (
-                          <div className="text-sm text-gray-600">
-                            {day.ClienteFinale} - {day.TipoErogazione}
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="text-gray-400">-</div>
-                    )}
-                  </td>
-                ))}
+                {weekDays.map((day, dayIndex) => {
+                  const isToday = day && day.Day_Date.split("T")[0] === today;
+                  const cellClass =
+                    dayIndex === 0 || dayIndex === 6 // Sunday & Saturday
+                      ? `${styles.tdRed} ${isToday ? styles.today : ""}`
+                      : `${styles.td} ${isToday ? styles.today : ""}`;
+
+                  return (
+                    <td
+                      key={dayIndex}
+                      className={cellClass}
+                      onClick={() => day && onCellClick(day)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {day ? (
+                        <div>
+                          <strong>{day.Day_DayNumber}</strong>
+                          {day.IdAgendaCorsi !== null && <span className="text-green-500 ml-2">🟢</span>}
+                          {day.ClienteFinale && (
+                            <div className="text-sm text-gray-600">
+                              {day.NomeCorso} - {day.StatoAgenda} - {day.LearningCenter} - {day.TipoErogazione} 
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="text-gray-400">-</div>
+                      )}
+                    </td>
+                  );
+                })}
               </tr>
             );
           })}
