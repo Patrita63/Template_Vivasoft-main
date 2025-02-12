@@ -1,31 +1,98 @@
-.tr {
-    background-color: #f8f9fa;
-}
-
-.th {
-border: 1px solid #ccc;
-padding: 8px;
-}
-
-.thRed {
-background-color: #e07979;
-border: 1px solid #ccc;
-padding: 8px;
-}
-
-.td {
+/* General Table Styles */
+.tableContainer {
+    overflow-x: auto;
+    width: 100%;
+  }
+  
+  .calendarTable {
+    border-collapse: collapse;
     border: 1px solid #ccc;
-    padding: 12px;
-}
-
-.tdRed {
-background-color: #ffdddd;
-border: 1px solid #ccc;
-padding: 12px;
-}
-
-.today {
-background-color: yellow !important;
-font-weight: bold;
-}
+    width: 100%;
+    min-width: 700px; /* Ensures columns are not squeezed */
+    text-align: center;
+  }
+  
+  /* Header & Cell Styling */
+  .tableHead {
+    background-color: #f8f9fa;
+  }
+  
+  .tableRow {
+    background-color: #fff;
+  }
+  
+  .tableCell, .tableHeader {
+    border: 1px solid #ccc;
+    padding: 8px;
+    white-space: nowrap;
+  }
+  
+  .tableHeaderRed {
+    background-color: #ffcccc;
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  .tableCellRed {
+    background-color: #ffdddd;
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  .today {
+    background-color: yellow !important;
+    font-weight: bold;
+  }
+  
+  /* ✅ RESPONSIVE DESIGN */
+  
+  /* 1️⃣ On Small Screens, Make the Table Scrollable */
+  @media (max-width: 768px) {
+    .tableContainer {
+      overflow-x: auto;
+      width: 100%;
+    }
+  
+    .calendarTable {
+      min-width: 700px;
+    }
+  
+    .tableHeader, .tableCell {
+      padding: 6px;
+      font-size: 14px;
+    }
+  }
+  
+  /* 2️⃣ On Extra Small Screens (Mobile), Switch to Block Layout */
+  @media (max-width: 480px) {
+    .tableContainer {
+      overflow-x: auto;
+    }
+  
+    .calendarTable {
+      display: block;
+    }
+  
+    .tableHead {
+      display: none; /* Hide headers on very small screens */
+    }
+  
+    .tableRow {
+      display: block;
+      width: 100%;
+    }
+  
+    .tableCell {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+    }
+  
+    .tableCell::before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  }
   

@@ -1,9 +1,8 @@
 import React from "react";
-import styles from "./CalendarTable.module.css"; // Ensure you have styles defined
+import styles from "./CalendarTable.module.css"; // Import CSS Module
 
 const CalendarTable = ({ data, onCellClick }) => {
-    debugger;
-    console.log('CalendarTable: ', data);
+  console.log("CalendarTable: ", data);
   const days = data;
 
   // Sort days by date
@@ -29,19 +28,19 @@ const CalendarTable = ({ data, onCellClick }) => {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div className="overflow-x-auto p-4">
-      <table className="border-collapse border border-gray-300 w-full text-center">
-       {/* ✅ CUSTOM HEADER WITH SUNDAY & SATURDAY IN RED */}
-        <thead>
-          <tr className={styles.tr}>
-            <th className={styles.th}># Week</th>
-            <th className={styles.thRed}>Sunday</th>
-            <th className={styles.th}>Monday</th>
-            <th className={styles.th}>Tuesday</th>
-            <th className={styles.th}>Wednesday</th>
-            <th className={styles.th}>Thursday</th>
-            <th className={styles.th}>Friday</th>
-            <th className={styles.thRed}>Saturday</th>
+    <div className={styles.tableContainer}>
+      <table className={styles.calendarTable}>
+        {/* ✅ CUSTOM HEADER WITH SUNDAY & SATURDAY IN RED */}
+        <thead className={styles.tableHead}>
+          <tr className={styles.tableRow}>
+            <th className={styles.tableHeader}># Week</th>
+            <th className={styles.tableHeaderRed}>Sunday</th>
+            <th className={styles.tableHeader}>Monday</th>
+            <th className={styles.tableHeader}>Tuesday</th>
+            <th className={styles.tableHeader}>Wednesday</th>
+            <th className={styles.tableHeader}>Thursday</th>
+            <th className={styles.tableHeader}>Friday</th>
+            <th className={styles.tableHeaderRed}>Saturday</th>
           </tr>
         </thead>
         <tbody>
@@ -54,14 +53,14 @@ const CalendarTable = ({ data, onCellClick }) => {
             });
 
             return (
-              <tr key={weekIndex} className={styles.tr}>
-                <td className={`${styles.th} font-bold`}>{week[0].Day_WeekNumber}</td>
+              <tr key={weekIndex} className={styles.tableRow}>
+                <td className={`${styles.tableCell} font-bold`}>{week[0].Day_WeekNumber}</td>
                 {weekDays.map((day, dayIndex) => {
                   const isToday = day && day.Day_Date.split("T")[0] === today;
                   const cellClass =
                     dayIndex === 0 || dayIndex === 6 // Sunday & Saturday
-                      ? `${styles.tdRed} ${isToday ? styles.today : ""}`
-                      : `${styles.td} ${isToday ? styles.today : ""}`;
+                      ? `${styles.tableCellRed} ${isToday ? styles.today : ""}`
+                      : `${styles.tableCell} ${isToday ? styles.today : ""}`;
 
                   return (
                     <td
@@ -69,6 +68,7 @@ const CalendarTable = ({ data, onCellClick }) => {
                       className={cellClass}
                       onClick={() => day && onCellClick(day)}
                       style={{ cursor: "pointer" }}
+                      data-label={["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayIndex]} // For mobile
                     >
                       {day ? (
                         <div>
@@ -76,7 +76,7 @@ const CalendarTable = ({ data, onCellClick }) => {
                           {day.IdAgendaCorsi !== null && <span className="text-green-500 ml-2">🟢</span>}
                           {day.ClienteFinale && (
                             <div className="text-sm text-gray-600">
-                              {day.NomeCorso} - {day.StatoAgenda} - {day.LearningCenter} - {day.TipoErogazione} 
+                              {day.NomeCorso} - {day.StatoAgenda} - {day.LearningCenter} - {day.TipoErogazione}
                             </div>
                           )}
                         </div>
