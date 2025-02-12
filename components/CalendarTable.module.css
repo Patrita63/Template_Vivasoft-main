@@ -1,0 +1,15 @@
+.tr {
+    background-color: #f8f9fa;
+  }
+  
+  .th {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  .thRed {
+    background-color: #ffdddd;
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
