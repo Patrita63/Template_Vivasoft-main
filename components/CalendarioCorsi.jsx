@@ -34,7 +34,7 @@ const CalendarTable = ({ data, onCellClick }) => {
        {/* ✅ CUSTOM HEADER WITH SUNDAY & SATURDAY IN RED */}
         <thead>
           <tr className={styles.tr}>
-            <th className={styles.th}>Week</th>
+            <th className={styles.th}># Week</th>
             <th className={styles.thRed}>Sunday</th>
             <th className={styles.th}>Monday</th>
             <th className={styles.th}>Tuesday</th>
@@ -55,7 +55,7 @@ const CalendarTable = ({ data, onCellClick }) => {
 
             return (
               <tr key={weekIndex} className={styles.tr}>
-                <td className={`${styles.th} font-bold`}>Week {week[0].Day_WeekNumber}</td>
+                <td className={`${styles.th} font-bold`}>{week[0].Day_WeekNumber}</td>
                 {weekDays.map((day, dayIndex) => {
                   const isToday = day && day.Day_Date.split("T")[0] === today;
                   const cellClass =
