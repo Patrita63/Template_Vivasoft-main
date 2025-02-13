@@ -86,73 +86,83 @@ const ConfirmedMail = () => {
     };
 
     return (
-        <Container maxWidth="xs">
-            <CssBaseline />
-            <Box
-                sx={{
-                    mt: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    position: 'relative',
-                }}
-            >
-                {/* Spinner Overlay */}
-                {loading && (
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                            zIndex: 2,
-                        }}
-                    >
-                        <CircularProgress />
+        <div style={{ backgroundColor: "#2854A3", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Container maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        mt: 20,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                    }}
+                >
+                    {/* Spinner Overlay */}
+                    {loading && (
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                zIndex: 2,
+                            }}
+                        >
+                            <CircularProgress />
+                        </Box>
+                    )}
+                    <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
+                        <LockOutlined />
+                    </Avatar>
+                    <Typography variant="h5">Inserire il codice ricevuto via mail</Typography>
+                    <Box sx={{ mt: 3 }}>
+                        <TextField
+                            label="Enter code (case sensitive)"
+                            variant="outlined"
+                            fullWidth
+                            value={codetocheck}
+                            onChange={handleChange}
+                            margin="normal"
+                            sx={{
+                                input: { color: "white" }, // Text color
+                                label: { color: "white" }, // Label color
+                                "& .MuiOutlinedInput-root": {
+                                    "& fieldset": { borderColor: "white" }, // Border color
+                                    "&:hover fieldset": { borderColor: "#f0f0f0" }, // Hover effect
+                                    "&.Mui-focused fieldset": { borderColor: "white" }, // Focused effect
+                                },
+                            }}
+                        />
+
+                        <Button className={styles.ConfirmedMail}
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={handleMailConfirmed}
+                            disabled={loading} // Disable button while loading
+                        >
+                            Verifica
+                        </Button>
+
+                        <Button className={styles.ConfirmedMailCancel}
+                            fullWidth
+                            color="error"
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={() => router.push('/intranet')}
+                            disabled={loading} // Disable button while loading
+                        >
+                            Cancel
+                        </Button>
                     </Box>
-                )}
-                <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-                    <LockOutlined />
-                </Avatar>
-                <Typography variant="h5">Inserire il codice ricevuto via mail</Typography>
-                <Box sx={{ mt: 3 }}>
-                    <TextField
-                        label="Enter code (case sensitive)"
-                        variant="outlined"
-                        fullWidth
-                        value={codetocheck}
-                        onChange={handleChange}
-                        margin="normal"
-                    />
-
-                    <Button className={styles.ConfirmedMail}
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleMailConfirmed}
-                        disabled={loading} // Disable button while loading
-                    >
-                        Verifica
-                    </Button>
-
-                    <Button className={styles.ConfirmedMailCancel}
-                        fullWidth
-                        color="error"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={() => router.push('/intranet')}
-                        disabled={loading} // Disable button while loading
-                    >
-                        Cancel
-                    </Button>
                 </Box>
-            </Box>
-        </Container>
+            </Container>
+        </div>
     );
 };
 

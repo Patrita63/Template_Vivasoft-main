@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const StatCounter = () => {
   useEffect(() => {
-    debugger;
+    // debugger;
     if (typeof window !== "undefined") {
       // Initialize Statcounter variables
       window.sc_project = 13084256;

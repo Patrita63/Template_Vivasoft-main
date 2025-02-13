@@ -12,6 +12,8 @@ import { BsArrowRight } from 'react-icons/bs';
 // Particelle
 import ParticlesContainer from '../../../components/ParticlesContainer';
 
+import styles from './contact.module.css';
+
 // ✅ Validation Schema with Yup
 const validationSchema = yup.object().shape({
   nominativo: yup.string().required('Nome e cognome sono obbligatori'),
@@ -54,7 +56,7 @@ const Contact = () => {
 
   // const sendEmailAZ = async (fullname, mailAddress, mailSubject, mailBody) => {
   const sendEmailAZ = async (data) => {
-    debugger;
+    // debugger;
 
     const dataMailFullName = data.nominativo;
     const dataMailAddress = data.email;
@@ -136,7 +138,7 @@ const Contact = () => {
                     {errors.nominativo && <p className="text-red-500 text-sm">{errors.nominativo.message}</p>}
                   </div>
                   <div className="sm:w-1/2 w-full">
-                    <input {...register('email')} type="text" placeholder="Email" className="input" />
+                    <input {...register('email')} type="text" placeholder="Email" className="input"  />
                     {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                   </div>
                 </div>
@@ -144,7 +146,7 @@ const Contact = () => {
                 <input {...register('subject')} type="text" placeholder="Soggetto" className="input" />
                 {errors.subject && <p className="text-red-500 text-sm">{errors.subject.message}</p>}
 
-                <textarea {...register('body')} placeholder="Messaggio" className="textarea xl:h-full h-20"></textarea>
+                <textarea {...register('body')} placeholder="Messaggio" className="textarea xl:h-full h-20 input"></textarea>
                 {errors.body && <p className="text-red-500 text-sm">{errors.body.message}</p>}
 
                 {/* GDPR Checkbox */}

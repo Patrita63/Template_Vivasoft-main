@@ -38,7 +38,7 @@ const Home = () => {
   
   useEffect(() => {
     localStorage.setItem("isLanguageIta", 'true');
-    debugger;
+    // debugger;
     // const isPopupToShow = Boolean(localStorage.getItem("isCookiesAccepted"));
     // Replace with:
     const isPopupToShow = Cookies.get("isCookiesAccepted") === "true" ? true : false;
@@ -116,7 +116,7 @@ const Home = () => {
           <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto xl:pt-0 pt-20'>
             {/* Modal popup MUI fullScreen in <Dialog */}
             <Dialog open={isPopupOpened} onClose={handleClose} fullWidth maxWidth="sm">
-              <DialogTitle>Questo sito utilizza cookies <IconButton style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
+              <DialogTitle>Questo sito utilizza cookies <IconButton aria-label="Chiudi popup" style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
               <DialogContent>
                 <DialogContentText>
                   Sul nostro sito utilizziamo cookies tecnici ed analitici. Questi sono necessari per il corretto funzionamento del nostro sito e per fornirci informazioni su come viene utilizzato.
@@ -124,8 +124,8 @@ const Home = () => {
               </DialogContent>
 
               <DialogActions>
-                <Button variant='outlined' onClick={goToImpostazioni}>Impostazioni</Button>
-                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedFirtPopup}>Ho capito, accetto</Button>
+                <Button variant='outlined' aria-label="Impostazioni cookie" onClick={goToImpostazioni}>Impostazioni</Button>
+                <Button color="success" aria-label="Accetto Cookie" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedFirtPopup}>Ho capito, accetto</Button>
                 {/* <Button color="error" className={styles.PopupButtonError} variant='contained' onClick={closePopup}>Close</Button> */}
               </DialogActions>
               

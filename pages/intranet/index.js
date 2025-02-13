@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Image from 'next/image';
 import dynamic from "next/dynamic";
 import { Box, Card, CardContent, Typography, Button, Container } from "@mui/material";
 import DynamicBreadCrumbs from "../../components/DynamicBreadCrumbs";
 import Credits from "../../components/Credits";
 import styles from "./Home.module.css";
+import Script from "next/script"; // Import Script from next
 
 const NavIntranetMenu = dynamic(() => import("../../components/NavIntranetMenu"), { ssr: false });
 
@@ -60,22 +62,20 @@ const IntranetHome = () => {
             <Card
               key={index}
               sx={{
-                padding: "20px", // Aggiungi padding per più spazio
+                padding: "20px",
                 textAlign: "center",
-                borderRadius: "16px", // Angoli arrotondati per una forma più morbida
-                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", // Ombra leggera per un effetto di profondità
-                backgroundColor: "#dbd9d9", // Colore di sfondo chiaro
-                transition: "transform 0.3s ease, box-shadow 0.3s ease", // Transizione fluida
+                borderRadius: "16px",
+                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                backgroundColor: "#dbd9d9",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
                 '&:hover': {
-                  transform: "scale(1.05)", // Ingrandimento al passaggio del mouse
-                  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)", // Ombra più marcata
-                  backgroundColor: "#e0f7fa", // Cambia colore di sfondo al passaggio del mouse
+                  transform: "scale(1.05)",
+                  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
+                  backgroundColor: "#e0f7fa",
                 },
               }}
             >
               <CardContent>
-                {/* Se vuoi aggiungere un'icona o immagine, puoi farlo qui */}
-                {/* <Image src="your-icon-url" alt="Feature Icon" width={50} height={50} /> */}
                 <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: "10px", color: "#264082" }}>
                   {feature.title}
                 </Typography>
@@ -107,7 +107,41 @@ const IntranetHome = () => {
       {/* Footer */}
       <footer className={styles.footer}>
         <Credits />
+        {/* Statcounter Section */}
+        <div className="flex justify-center items-center space-x-2 mt-4 p-2 rounded-lg shadow-md">
+          <a title="Web Analytics Made Easy - Statcounter" href="https://statcounter.com/" target="_blank">
+            <span className="mr-1 text-white">Vivasoft&apos;s Stats Dashboard:</span>
+          </a>
+          <Image
+            width={60}
+            height={14}
+            src="https://c.statcounter.com/13084256/0/7bd27416/0/"
+            alt="Statcounter tracking"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-24 h-auto rounded-lg"
+          />
+        </div>
+
+        {/* Noscript Fallback */}
+        <noscript>
+          <div className="statcounter">
+            <a title="Web Analytics Made Easy - Statcounter" href="https://statcounter.com/" target="_blank">
+              <Image className="statcounter"
+                width={60}
+                height={14}
+                src="https://c.statcounter.com/13084256/0/7bd27416/0/"
+                alt="Web Analytics Made Easy - Statcounter"
+                referrerPolicy="no-referrer-when-downgrade" />
+            </a>
+          </div>
+        </noscript>
       </footer>
+
+      {/* Statcounter Script */}
+      <Script
+        strategy="lazyOnload"
+        src="https://www.statcounter.com/counter/counter.js"
+      />
     </>
   );
 };

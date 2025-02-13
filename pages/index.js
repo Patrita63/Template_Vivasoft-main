@@ -8,7 +8,7 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    debugger;
+    // debugger;
     // localStorage.setItem("isCookiesAccepted", 'false');
     // Replace with: expire after 8 hours
     const expirationDate = new Date();

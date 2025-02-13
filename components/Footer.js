@@ -5,21 +5,6 @@ import Socials from './Socials'; // Assicurati di avere il componente Socials im
 import Credits from './Credits'; // Assicurati di avere il componente Credits importato
 
 const Footer = () => {
-
-  useEffect(() => {
-    // Aggiungi lo script di Statcounter dinamicamente
-    const script = document.createElement('script');
-    script.src = 'https://statcounter.com/counter/counter.js';
-    script.async = true;
-    script.type = 'text/javascript';
-    script.onload = () => {
-      window.sc_project = 13084256;
-      window.sc_invisible = 0;
-      window.sc_security = '7bd27416';
-    };
-    document.body.appendChild(script);
-  }, []);
-
   return (
     <footer className="bg-primary/80 text-white xl:py-2 sm:py-10 translate-z-0 mt-auto xl:pt-2 pt-5">
       <div className="container mx-auto text-center">
@@ -118,6 +103,15 @@ const Footer = () => {
             </Link>
             <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
               <Image
+                src={'/FondAIAZu.png'}
+                width={75}
+                height={25}
+                alt='Microsoft-Partner'
+                priority={true}
+              />
+            </Link>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+              <Image
                 src={'/microsoft-certified-general-badge.svg'}
                 width={75}
                 height={25}
@@ -151,33 +145,6 @@ const Footer = () => {
         {/* Powered by */}
         <div className='items-center gap-x-6 text-sm mt-2'>
           <Credits />
-
-          {/* Statcounter Section */}
-          <div className="flex justify-center items-center space-x-2 mt-4 p-2 rounded-lg shadow-md">
-            <span className="mr-1 text-white">Vivasoft&apos;s Stats:</span>
-            <Image
-              width={60}
-              height={14}
-              src="https://c.statcounter.com/13084256/0/7bd27416/0/"
-              alt="Statcounter tracking"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-24 h-auto rounded-lg"
-            />
-          </div>
-
-          {/* Noscript Fallback */}
-          <noscript>
-            <div className="statcounter">
-              <a title="Web Analytics Made Easy - Statcounter" href="https://statcounter.com/" target="_blank">
-                <Image className="statcounter"
-                  width={60}
-                  height={14}
-                  src="https://c.statcounter.com/13084256/0/7bd27416/0/"
-                  alt="Web Analytics Made Easy - Statcounter"
-                  referrerPolicy="no-referrer-when-downgrade" />
-              </a>
-            </div>
-          </noscript>
         </div>
       </div>
     </footer>

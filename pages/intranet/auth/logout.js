@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './Logout.module.css';
-
+import Image from "next/image"; // Importa l'immagine del logo
 import Cookies from "js-cookie";
 
 import {
@@ -34,7 +34,7 @@ const Logout = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: "rgb(149 186 250)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ backgroundColor: "#2854A3", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Container maxWidth="xs">
           <CssBaseline />
           <Box
@@ -45,10 +45,13 @@ const Logout = () => {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-              <LockOutlined />
-            </Avatar>
-            <Typography variant="h5">Are you sure to Logout?</Typography>
+            <Image
+              src="/LogoClaim_F.png" // Percorso del tuo logo
+              alt="Logo Aziendale"
+              width={150}  // Imposta la larghezza del logo
+              height={150} // Imposta l'altezza del logo
+            />
+            <Typography variant="h5" color="white">Are you sure to Logout?</Typography>
 
             <Button className={styles.LogoutCancel}
               color="error"
