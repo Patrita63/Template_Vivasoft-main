@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import styles from './Home.module.css';
 import {
@@ -29,20 +29,19 @@ const CalendarVivasoft = () => {
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ], []);
+
     const [monthname, setMonthname] = useState(months[new Date().getMonth()]);
-
     const [year, setYear] = useState(currentYear);
-
     const [selectedDay, setSelectedDay] = useState(null);
 
-    // 📌 Function to handle actions when a cell is clicked
+    // 📌 Handle Cell Click
     const handleCellClick = (day) => {
         setSelectedDay(day);
-        debugger;
-        console.log('handleCellClick - Selected data: ',day);
+        console.log('Selected Day:', day);
         alert(day.Day_DayNumber);
     };
 
+    // 📌 Check User Authentication
     useEffect(() => {
         setIsClient(true);
         const checkAuth = () => {
@@ -52,9 +51,9 @@ const CalendarVivasoft = () => {
             setRole(Cookies.get("role") || "");
         };
         checkAuth();
-
     }, []);
 
+    // 📌 Fetch Data When Month or Year Changes
     useEffect(() => {
         setLoading(true);
         fetchCalendarData(year, monthname)
@@ -62,32 +61,26 @@ const CalendarVivasoft = () => {
             .finally(() => setLoading(false));
     }, [monthname, year]);
 
-
     const fetchCalendarData = async (year, monthname) => {
-        debugger;
         try {
-            debugger;
-            console.log('fetchCalendarData - getmonthnameName', monthname); // e.g., "February"
+            console.log('Fetching data for:', year, monthname);
             const response = await fetch("/api/agenda/managecalendar", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ year, monthname }),
             });
-            // doesn't arrive here
-            console.log("API Response Status:", response.status);
 
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`HTTP error! Status: ${response.status}, Response: ${errorText}`);
             }
+
             const data = await response.json();
-            debugger;
             setCalendarData(data.datacalendar || []);
         } catch (err) {
             setError(err.message);
         }
     };
-
 
     return (
         <>
@@ -95,36 +88,50 @@ const CalendarVivasoft = () => {
             <Box sx={{ margin: '16px' }}>
                 <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
             </Box>
+
             {isAuthenticated && (
                 <>
                     {error && <p style={{ color: "red" }}>Error: {error}</p>}
                     {loading && <p>Loading data...</p>}
-                    <div className={styles.wrapperbody}>
+
+                    <div className={styles.wrapperbody} style={{paddingTop: '20px'}}>
                         {message && <p style={{ color: 'red', fontWeight: 'bold' }}>{message}</p>}
-                        <div style={{ display: "flex", marginLeft: "625px", gap: "20px", alignItems: "center" }}>
-                            <FormControl style={{ minWidth: 120 }}>
+
+                        {/* 📌 Responsive Year & Month Selectors */}
+                        <div className={styles.selectContainer}>
+                            <FormControl className={styles.selectWrapper}>
                                 <InputLabel>Year</InputLabel>
-                                <Select value={year} onChange={(e) => setYear(e.target.value)}>
+                                <Select
+                                    value={year}
+                                    className={styles.select}
+                                    onChange={(e) => setYear(e.target.value)}
+                                >
                                     {years.map((yr) => (
                                         <MenuItem key={yr} value={yr}>{yr}</MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
-                            <FormControl style={{ minWidth: 120 }}>
+
+                            <FormControl className={styles.selectWrapper}>
                                 <InputLabel>Month</InputLabel>
-                                <Select value={monthname || ""} onChange={(e) => setMonthname(e.target.value)}>
+                                <Select
+                                    value={monthname || ""}
+                                    className={styles.select}
+                                    onChange={(e) => setMonthname(e.target.value)}
+                                >
                                     {months.map((mo, index) => (
                                         <MenuItem key={index} value={mo}>{mo}</MenuItem>
                                     ))}
                                 </Select>
                             </FormControl>
                         </div>
-                        <Container maxWidth="xs">
+
+                        {/* 📌 Calendar Table */}
+                        <Container maxWidth="md">
                             <CssBaseline />
                             <Box sx={{ mt: 5, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                {error && <p style={{ color: 'red' }}>Error: {error}</p>}
                                 {calendarData.length > 0 && (
-                                    <Box sx={{ height: 600, width: 1300 }}>
+                                    <Box sx={{ width: "100%", overflowX: "auto" }}>
                                         <div className="p-4">
                                             <h1 className="text-xl font-bold mb-4">Calendar {monthname} {year}</h1>
                                             <CalendarTable data={calendarData} onCellClick={handleCellClick} />

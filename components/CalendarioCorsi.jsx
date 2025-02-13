@@ -54,7 +54,9 @@ const CalendarTable = ({ data, onCellClick }) => {
 
             return (
               <tr key={weekIndex} className={styles.tableRow}>
-                <td className={`${styles.tableCell} font-bold`}>{week[0].Day_WeekNumber}</td>
+                <td className={`${styles.tableCell} font-bold`} data-label="Week">
+                  {week[0].Day_WeekNumber}
+                </td>
                 {weekDays.map((day, dayIndex) => {
                   const isToday = day && day.Day_Date.split("T")[0] === today;
                   const cellClass =

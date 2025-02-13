@@ -1,98 +1,200 @@
-/* General Table Styles */
+/* ✅ Make Table Scrollable on Small Screens */
 .tableContainer {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* .calendarTable {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 700px; */ /* Ensures table is not squeezed */
+/*  text-align: center;
+} */
+
+.calendarTable {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  width: 100%;
+  table-layout: auto; /* ✅ Allows columns to fit content dynamically */
+  text-align: center;
+}
+
+/* 📝 Table Header & Cell Styles */
+.tableHead {
+  background-color: #f8f9fa;
+}
+
+.tableRow {
+  background-color: #fff;
+}
+
+.tableCell, .tableHeader {
+  border: 1px solid #ccc;
+  padding: 10px;
+  white-space: normal; /* ✅ Allows text wrapping */
+  font-size: 14px;
+  min-width: 80px; /* Ensures content fits */
+}
+
+.tableHeaderRed {
+  background-color: #ffcccc;
+}
+
+.tableCellRed {
+  background-color: #ffdddd;
+}
+
+.today {
+  background-color: yellow !important;
+  font-weight: bold;
+}
+
+/* ✅ RESPONSIVE DESIGN */
+
+/* 📱 1️⃣ On Tablets & Small Screens */
+@media (max-width: 768px) {
+  .tableContainer {
+    width: 100%;
     overflow-x: auto;
-    width: 100%;
   }
-  
+
   .calendarTable {
-    border-collapse: collapse;
-    border: 1px solid #ccc;
-    width: 100%;
-    min-width: 700px; /* Ensures columns are not squeezed */
-    text-align: center;
+    min-width: 700px;
   }
-  
-  /* Header & Cell Styling */
+
+  .tableHeader, .tableCell {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
+
+/* 📱 2️⃣ On Mobile (< 480px): Convert Table to List View */
+@media (max-width: 480px) {
+  .tableContainer {
+    overflow-x: auto;
+  }
+
+  .calendarTable {
+    display: block;
+  }
+
+  /* Hide table headers */
   .tableHead {
-    background-color: #f8f9fa;
+    display: none;
   }
-  
+
+  /* Make rows display as block elements */
   .tableRow {
-    background-color: #fff;
-  }
-  
-  .tableCell, .tableHeader {
+    display: block;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
-    padding: 8px;
-    white-space: nowrap;
+    padding: 10px;
   }
-  
-  .tableHeaderRed {
-    background-color: #ffcccc;
-    border: 1px solid #ccc;
-    padding: 8px;
-  }
-  
-  .tableCellRed {
-    background-color: #ffdddd;
-    border: 1px solid #ccc;
+
+  /* Display table cells as flex items with labels */
+  .tableCell {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
     padding: 8px;
   }
-  
-  .today {
-    background-color: yellow !important;
+
+  .tableCell::before {
+    content: attr(data-label);
     font-weight: bold;
+    margin-right: 10px;
+  }
+}
+
+/* Container to ensure proper spacing */
+.appContainer {
+  padding: 16px;
+  max-width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Title styling */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+/* ✅ Ensures Dropdowns Stay Visible */
+.selectContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap; /* ✅ Ensures proper layout on small screens */
+}
+
+/* Dropdown Styling */
+.select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: white;
+  cursor: pointer;
+  min-width: 120px; /* ✅ Prevents too small dropdowns */
+}
+
+/* 📱 Responsive Design: Adjust for Mobile Screens */
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .selectContainer {
+    flex-direction: column; /* ✅ Stack dropdowns on smaller screens */
+    gap: 8px;
+  }
+
+  .select {
+    width: 100%; /* ✅ Full width for better mobile experience */
+  }
+}
+
+
+/* ✅ Fix Dropdown Visibility on All Screens */
+.selectContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* ✅ Ensures it doesn't break on mobile */
+  margin-bottom: 16px;
+}
+
+/* Dropdown Styling */
+.selectWrapper {
+  min-width: 120px;
+}
+
+/* 📱 Mobile-Friendly: Stack Dropdowns */
+@media (max-width: 480px) {
+  .selectContainer {
+      flex-direction: column;
+      align-items: center;
   }
   
-  /* ✅ RESPONSIVE DESIGN */
-  
-  /* 1️⃣ On Small Screens, Make the Table Scrollable */
-  @media (max-width: 768px) {
-    .tableContainer {
-      overflow-x: auto;
+  .selectWrapper {
       width: 100%;
-    }
-  
-    .calendarTable {
-      min-width: 700px;
-    }
-  
-    .tableHeader, .tableCell {
-      padding: 6px;
-      font-size: 14px;
-    }
   }
-  
-  /* 2️⃣ On Extra Small Screens (Mobile), Switch to Block Layout */
-  @media (max-width: 480px) {
-    .tableContainer {
-      overflow-x: auto;
-    }
-  
-    .calendarTable {
-      display: block;
-    }
-  
-    .tableHead {
-      display: none; /* Hide headers on very small screens */
-    }
-  
-    .tableRow {
-      display: block;
-      width: 100%;
-    }
-  
-    .tableCell {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid #ddd;
-      padding: 10px;
-    }
-  
-    .tableCell::before {
-      content: attr(data-label);
-      font-weight: bold;
-      margin-right: 10px;
-    }
-  }
-  
+}
+
+/* 📌 Make Calendar Responsive */
+.wrapperbody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+/* ✅ Allow Table to Scroll Horizontally */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+}
