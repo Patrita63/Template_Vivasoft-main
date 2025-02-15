@@ -25,10 +25,12 @@ export default async function handler(req, res) {
   }
 
   // Microsoft 365 credentials
-  const tenantId = process.env.NEXT_PUBLIC_AZURE_TENANT_ID;
-  console.log("🔍 NEXT_PUBLIC_AZURE_TENANT_ID Loaded:", tenantId);
-  const clientId = process.env.NEXT_PUBLIC_AZURE_CLIENT_ID;
-  console.log("🔍 NEXT_PUBLIC_AZURE_CLIENT_ID Loaded:", clientId);
+  // NEXT_PUBLIC_AZURE_TENANT_ID=3be9add1-f9f0-44e0-b01c-fa585c33b214
+  // NEXT_PUBLIC_AZURE_CLIENT_ID=12210a3d-572e-4193-ba1d-73a5757ab382
+  const tenantId = "3be9add1-f9f0-44e0-b01c-fa585c33b214"; // process.env.NEXT_PUBLIC_AZURE_TENANT_ID;
+  // console.log("🔍 NEXT_PUBLIC_AZURE_TENANT_ID Loaded:", tenantId);
+  const clientId = "12210a3d-572e-4193-ba1d-73a5757ab382"; // process.env.NEXT_PUBLIC_AZURE_CLIENT_ID;
+  // console.log("🔍 NEXT_PUBLIC_AZURE_CLIENT_ID Loaded:", clientId);
   // # Expires 14 Agosto 2025
   const clientSecret = "i7S8Q~cPFPFYlXYjFqxyg~RWI7DXSTXBa3rhhdnw";
 
