@@ -29,8 +29,8 @@ export default async function handler(req, res) {
   console.log("🔍 NEXT_PUBLIC_AZURE_TENANT_ID Loaded:", tenantId);
   const clientId = process.env.NEXT_PUBLIC_AZURE_CLIENT_ID;
   console.log("🔍 NEXT_PUBLIC_AZURE_CLIENT_ID Loaded:", clientId);
-  const clientSecret = process.env.NEXT_PUBLIC_AZURE_CLIENT_SECRET;
-  console.log("🔍 NEXT_PUBLIC_AZURE_CLIENT_SECRET Loaded:", clientSecret);
+  // # Expires 14 Agosto 2025
+  const clientSecret = "i7S8Q~cPFPFYlXYjFqxyg~RWI7DXSTXBa3rhhdnw";
 
   try {
     // Authenticate with Microsoft Graph API
