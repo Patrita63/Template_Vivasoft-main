@@ -32,7 +32,7 @@ export default async function handler(req, res) {
   const clientId = "12210a3d-572e-4193-ba1d-73a5757ab382"; // process.env.NEXT_PUBLIC_AZURE_CLIENT_ID;
   // console.log("🔍 NEXT_PUBLIC_AZURE_CLIENT_ID Loaded:", clientId);
   // # Expires 14 Agosto 2025
-  // const clientSecret = "i7S8Q~cPFPFYlXYjFqxyg~RWI7DXSTXBa3rhhdnw";
+  const clientSecret = "i7S8Q~cPFPFYlXYjFqxyg~RWI7DXSTXBa3rhhdnw";
 
   try {
     // Authenticate with Microsoft Graph API
