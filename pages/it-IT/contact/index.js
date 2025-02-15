@@ -12,8 +12,6 @@ import { BsArrowRight } from 'react-icons/bs';
 // Particelle
 import ParticlesContainer from '../../../components/ParticlesContainer';
 
-import styles from './contact.module.css';
-
 // ✅ Validation Schema with Yup
 const validationSchema = yup.object().shape({
   nominativo: yup.string().required('Nome e cognome sono obbligatori'),
@@ -51,11 +49,13 @@ const Contact = () => {
     console.log('Form Data:', data);
 
     // API call
-    await sendEmailAZ(data);
+    // await sendEmailAZ(data);
+
+    // MICROSOFT GRAPH API call
+    await sendEmailUsingGraph(data);
   };
 
-  // const sendEmailAZ = async (fullname, mailAddress, mailSubject, mailBody) => {
-  const sendEmailAZ = async (data) => {
+  const sendEmailUsingGraph = async (data) => {
     // debugger;
 
     const dataMailFullName = data.nominativo;
@@ -66,14 +66,17 @@ const Contact = () => {
     const body = `${dataMailFullName}  has sent an email from ${dataMailAddress} - Subject: ${dataMailSubject} - Body: ${data.body} - Privacy Policy Accepted: ${dataPrivacyPolicy}`
     // alert(body);
 
-    const dataMailBody = body;
-    console.log(`📧 Sending email: ${dataMailAddress}, Subject: ${dataMailSubject}, Body: ${body}, FullName: ${dataMailBody}`);
+    console.log(`📧 Sending email: ${dataMailAddress}, Subject: ${dataMailSubject}, Body: ${body}, FullName: ${body}`);
 
+    const sender = process.env.NEXT_PUBLIC_AZURE_GRAPH_MAIL_TO;
+    const dataMailBody = body;
+    debugger;
+    // const { to, subject, body, contentType = 'Text' } = req.body;
     try {
-      const response = await fetch('/api/sendemail-acsazure', {
+      const response = await fetch('/api/sendemail-graph', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ toEmail: process.env.NEXT_PUBLIC_AZURE_MAIL_TO, subject: dataMailSubject, body: dataMailBody })
+        body: JSON.stringify({ to: sender, subject: dataMailSubject, body: dataMailBody })
       });
 
       console.log("📤 API Response:", response);

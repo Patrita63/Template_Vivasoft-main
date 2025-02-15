@@ -16,15 +16,8 @@ export default async function handler(req, res) {
         console.log("🔍 NEXT_PUBLIC_AZURE_EMAIL_SENDER Loaded:", senderEmail ? "Yes" : "No");
         console.log("🔍 Sender Email:", senderEmail);
 
-        const connectionStringA = process.env.AZURE_EMAIL_CONNECTION_STRING;
-        console.log("🔍 AZURE_EMAIL_CONNECTION_STRING Loaded:", connectionStringA ? "Yes" : "No");
-        const senderEmailA = process.env.AZURE_EMAIL_SENDER;
-        console.log("🔍 AZURE_EMAIL_SENDER Loaded:", senderEmailA ? "Yes" : "No");
-        console.log("🔍 Sender EmailA:", senderEmailA);
-
         debugger;
         console.log("senderEmail: " + senderEmail);
-        console.log("🔍 Sender EmailA:", senderEmailA);
         if (!connectionString || !senderEmail) {
             console.error("❌ Missing environment variables.");
             return res.status(500).json({ error: "Server misconfiguration. Missing environment variables." });
