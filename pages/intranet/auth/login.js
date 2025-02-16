@@ -9,11 +9,15 @@ import {
   Typography,
   Button,
   TextField,
-  CircularProgress
+  CircularProgress,
+  IconButton,
+  InputAdornment   // Opzione visualizza password
 } from "@mui/material";
+// Opzione visualizza password
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { BsArrowRight } from "react-icons/bs";
-import Image from "next/image"; 
+import Image from "next/image";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -43,6 +47,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
+  // Opzione visualizza password
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -156,11 +162,16 @@ const Login = () => {
 
                 <TextField
                   {...register("email")}
+                  required
                   label="Email"
                   variant="outlined"
                   fullWidth
                   error={!!errors.email}
                   helperText={errors.email?.message}
+                  margin="normal"
+                  InputLabelProps={{
+                    style: { color: "white" }, // Mantiene la label bianca
+                  }}
                   sx={{
                     mt: 2,
                     "& .MuiInputLabel-root": { color: "#fff" },
@@ -175,12 +186,18 @@ const Login = () => {
 
                 <TextField
                   {...register("password")}
+                  required
                   label="Password"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Usa lo stato per mostrare/nascondere la password
                   variant="outlined"
                   fullWidth
                   error={!!errors.password}
                   helperText={errors.password?.message}
+                  margin="normal"
+                  autoComplete="new-password" // Prevents browser autofill from interfering
+                  InputLabelProps={{
+                    style: { color: "white" }, // Mantiene la label bianca
+                  }}
                   sx={{
                     mt: 2,
                     "& .MuiInputLabel-root": { color: "#fff" },
@@ -190,6 +207,20 @@ const Login = () => {
                       "&.Mui-focused fieldset": { borderColor: "#fff" }
                     },
                     "& .MuiFormHelperText-root": { color: "#C9C9C9", fontSize: "16px" }
+                  }}
+                  InputProps={{
+                    autoComplete: "off", // Stops autofill
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowPassword((prev) => !prev)}
+                          edge="end"
+                          tabIndex={-1} // Prevents autofocus issues
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
                   }}
                 />
 

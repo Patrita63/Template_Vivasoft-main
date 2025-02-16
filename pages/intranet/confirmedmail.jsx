@@ -3,16 +3,16 @@ import { useRouter } from 'next/router';
 import styles from './ConfirmedMail.module.css';
 
 import {
-    Avatar,
     Box,
     Button,
     Container,
     CssBaseline,
     Typography,
-    TextField,
-    CircularProgress,
+    TextField
 } from "@mui/material";
-import { LockOutlined } from "@mui/icons-material";
+// import { LockOutlined } from "@mui/icons-material";
+import Image from "next/image";
+import { useMemo } from "react";
 import Cookies from "js-cookie";
 
 const ConfirmedMail = () => {
@@ -23,10 +23,14 @@ const ConfirmedMail = () => {
     const [coderegistration, setCoderegistration] = useState('');
 
     const router = useRouter();
+    // const { email } = router.query; // Extract the dynamic route parameter
 
     useEffect(() => {
         const email = Cookies.get("mailregistration");
         const code = Cookies.get("coderegistration");
+        // 🔹 Miglioramento con useMemo() (Evita ricalcoli inutili)
+        // const email = useMemo(() => Cookies.get("mailregistration") || '', []);
+        // const code = useMemo(() => Cookies.get("coderegistration") || '', []);
         setMailregistration(email || '');
         setCoderegistration(code || '');
     }, []);
@@ -113,13 +117,30 @@ const ConfirmedMail = () => {
                                 zIndex: 2,
                             }}
                         >
-                            <CircularProgress />
+
                         </Box>
                     )}
-                    <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-                        <LockOutlined />
-                    </Avatar>
-                    <Typography variant="h5">Inserire il codice ricevuto via mail</Typography>
+                    {/* Regola di Next.js: Qualsiasi file in /public può essere accessibile direttamente con src="/nomefile.ext" */}
+                    <Image
+                        src="/LogoClaim_F.png"
+                        alt="Logo Aziendale"
+                        width={150}
+                        height={150}
+                    />
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            color: "white", // Testo principale bianco
+                            textAlign: "center",
+                            fontWeight: "bold",
+                            mt: 2,
+                            mb: 2,
+                            px: 2, // Aggiunge padding per una migliore leggibilità
+                        }}
+                    >
+                        Abbiamo inviato un codice di verifica all&apos;indirizzo email: <strong style={{ color: "yellow" }}>{mailregistration}</strong>.
+                        Controlla la tua casella di posta, inclusa la cartella spam, e inserisci il codice ricevuto per confermare la registrazione.
+                    </Typography>
                     <Box sx={{ mt: 3 }}>
                         <TextField
                             label="Enter code (case sensitive)"
@@ -128,16 +149,23 @@ const ConfirmedMail = () => {
                             value={codetocheck}
                             onChange={handleChange}
                             margin="normal"
+                            InputLabelProps={{
+                                style: { color: "white" }, // Mantiene la label bianca
+                            }}
                             sx={{
-                                input: { color: "white" }, // Text color
-                                label: { color: "white" }, // Label color
                                 "& .MuiOutlinedInput-root": {
-                                    "& fieldset": { borderColor: "white" }, // Border color
-                                    "&:hover fieldset": { borderColor: "#f0f0f0" }, // Hover effect
-                                    "&.Mui-focused fieldset": { borderColor: "white" }, // Focused effect
+                                    "& fieldset": { borderColor: "white" }, // Bordo bianco di default
+                                    "&:hover fieldset": { borderColor: "white !important" }, // Effetto hover bianco
+                                    "&.Mui-focused fieldset": { borderColor: "white !important" }, // Bordo bianco al focus
                                 },
+                                "& .MuiInputLabel-root": {
+                                    color: "white", // Label bianca
+                                    "&.Mui-focused": { color: "white" }, // Label rimane bianca al focus
+                                },
+                                input: { color: "white" }, // Testo scritto in bianco
                             }}
                         />
+
 
                         <Button className={styles.ConfirmedMail}
                             fullWidth

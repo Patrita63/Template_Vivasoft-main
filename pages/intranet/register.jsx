@@ -33,7 +33,7 @@ import {
     CircularProgress, OutlinedInput, InputAdornment, IconButton
 } from "@mui/material";
 
-import { LockOutlined } from "@mui/icons-material";
+// import { LockOutlined } from "@mui/icons-material";
 // next link
 import Link from 'next/link';
 
@@ -58,7 +58,7 @@ const Register = () => {
     const handleToggleConfirmPassword = () => {
         setShowConfirmPassword((prev) => !prev);
     };
-    
+
 
     // defaultValue="" // Set a default value for the field
     const initialValues = {
@@ -160,10 +160,10 @@ const Register = () => {
         console.log(`📧 Sending email: ${mailAddress}, Subject: ${mailSubject}, Body: ${mailBody}, FullName: ${fullname}`);
 
         try {
-            const response = await fetch('/api/sendemail-acsazure', {
+            const response = await fetch('/api/sendemail-graph', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ toEmail: mailAddress, subject: mailSubject, body: mailBody })
+                body: JSON.stringify({ to: mailAddress, subject: mailSubject, body: mailBody })
             });
 
             console.log("📤 API Response:" + response);
@@ -254,6 +254,8 @@ const Register = () => {
             setLoading(false); // Stop loading
 
             // Redirect to ConfirmedMail page intranet
+            /* const email = newUserData.Email;
+            router.push("/intranet/confirmedmail/${email}"); */
             router.push("/intranet/confirmedmail");
 
         } catch (err) {
@@ -367,28 +369,52 @@ const Register = () => {
                     <CssBaseline />
                     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto">
                         <Box sx={{ mt: 2, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                             <Image
-                                            src="/LogoClaim_F.png" // Percorso del tuo logo
-                                            alt="Logo Aziendale"
-                                            width={150}  // Imposta la larghezza del logo
-                                            height={150} // Imposta l'altezza del logo
-                                          />
-                            <Typography variant="h5">Register</Typography>
+                            <Image
+                                src="/LogoClaim_F.png" // Percorso del tuo logo
+                                alt="Logo Aziendale"
+                                width={150}  // Imposta la larghezza del logo
+                                height={150} // Imposta l'altezza del logo
+                            />
+                            <Typography variant="h5" sx={{ color: "#fff" }}>
+                                Register
+                            </Typography>
+                            <br></br>
 
                             <Grid container spacing={2}>
                                 <Grid item xs={6}>
                                     <Controller
                                         name="nome"
                                         control={control}
-                                        rules={{ required: 'Name is required' }}
+                                        rules={{ required: "Name is required" }}
                                         render={({ field }) => (
-                                            <FormControl fullWidth error={!!errors.nome}>
-                                                <InputLabel sx={{ color: "white" }} htmlFor="nome">Nome</InputLabel>
-                                                <Input {...field} id="nome" InputProps={{ style: { color: "white" } }} />
-                                                <FormHelperText sx={{ color: "white" }} >{errors.nome?.message}</FormHelperText>
+                                            <FormControl fullWidth error={!!errors.nome} variant="outlined">
+                                                {/* Label Always White */}
+                                                <InputLabel
+                                                    htmlFor="nome"
+                                                    sx={{ color: "white", "&.Mui-focused": { color: "white" } }}
+                                                >
+                                                    Nome
+                                                </InputLabel>
+
+                                                {/* Input Field with White Styling */}
+                                                <OutlinedInput
+                                                    {...field}
+                                                    id="nome"
+                                                    sx={{
+                                                        color: "white", // Input text color
+                                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Default border color
+                                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "lightgray" }, // Hover effect
+                                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Keeps border white when focused
+                                                    }}
+                                                    label="Nome"
+                                                />
+
+                                                {/* Error Message Styled */}
+                                                <FormHelperText sx={{ color: "white" }}>{errors.nome?.message}</FormHelperText>
                                             </FormControl>
                                         )}
                                     />
+
                                 </Grid>
 
                                 <Grid item xs={6}>
@@ -397,36 +423,101 @@ const Register = () => {
                                         control={control}
                                         rules={{ required: 'Surname is required' }}
                                         render={({ field }) => (
-                                            <FormControl fullWidth error={!!errors.cognome}>
-                                                <InputLabel sx={{ color: "white" }} htmlFor="cognome">Cognome</InputLabel>
-                                                <Input {...field} id="cognome" InputProps={{ style: { color: "white" } }} />
-                                                <FormHelperText>{errors.cognome?.message}</FormHelperText>
+                                            <FormControl fullWidth error={!!errors.cognome} variant="outlined">
+                                                {/* Label Always White */}
+                                                <InputLabel
+                                                    htmlFor="cognome"
+                                                    sx={{ color: "white", "&.Mui-focused": { color: "white" } }}
+                                                >
+                                                    Cognome
+                                                </InputLabel>
+
+                                                {/* Input Field with White Styling */}
+                                                <OutlinedInput
+                                                    {...field}
+                                                    id="cognome"
+                                                    sx={{
+                                                        color: "white", // Input text color
+                                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Default border color
+                                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "lightgray" }, // Hover effect
+                                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Keeps border white when focused
+                                                    }}
+                                                    label="cognome"
+                                                />
+
+                                                {/* Error Message Styled */}
+                                                <FormHelperText sx={{ color: "white" }}>{errors.nome?.message}</FormHelperText>
                                             </FormControl>
                                         )}
                                     />
                                 </Grid>
 
                                 <Grid item xs={6}>
+                                    {/* make the selected option white */}
                                     <Controller
                                         name="gender"
                                         control={control}
-                                        rules={{
-                                            required: 'Gender is required',
-                                        }}
+                                        rules={{ required: "Gender is required" }}
                                         render={({ field }) => (
-                                            <FormControl component="fieldset" error={!!errors.gender} fullWidth>
-                                                <FormLabel sx={{ color: "white" }} component="legend">Gender</FormLabel>
+                                            <FormControl fullWidth error={!!errors.gender}
+                                                sx={{
+                                                    color: "white",
+                                                    border: "1px solid white", // Default border
+                                                    borderRadius: "4px", // Rounded corners
+                                                    padding: "5px", // Adds spacing inside the outline
+
+                                                    "&:hover": { borderColor: "lightgray" }, // Hover effect
+                                                    "&.Mui-focused": { borderColor: "white" }, // Focus effect
+                                                }}
+
+                                            >
+                                                {/* Gender Label in White */}
+                                                <FormLabel sx={{ color: "white", display: "flex", alignItems: "flex-start", marginLeft: "10px", "&.Mui-focused": { color: "white" } }}>
+                                                    Gender
+                                                </FormLabel>
+
+                                                {/* Radio Group with Styled Options */}
                                                 <RadioGroup
                                                     {...field}
-                                                    row // Arrange options horizontally
+                                                    row
                                                     aria-label="gender"
                                                     name="gender"
                                                     onChange={(event) => handleGenderChange(event, field)}
                                                 >
-                                                    <FormControlLabel sx={{ color: "white" }} value="M" control={<Radio />} label="Male" />
-                                                    <FormControlLabel sx={{ color: "white" }} value="F" control={<Radio />} label="Female" />
+                                                    {/* Male Option with White Selection */}
+                                                    <FormControlLabel
+                                                        value="M"
+                                                        control={
+                                                            <Radio
+                                                                sx={{
+                                                                    marginLeft: "10px",
+                                                                    color: "white", // Default color
+                                                                    "&.Mui-checked": { color: "white" }, // White when selected
+                                                                    "&.Mui-checked + .MuiTypography-root": { fontWeight: "bold" }, // Bold label when selected
+                                                                }}
+                                                            />
+                                                        }
+                                                        label={<Typography sx={{ color: "white" }}>Male</Typography>}
+                                                    />
+
+                                                    {/* Female Option with White Selection */}
+                                                    <FormControlLabel
+                                                        value="F"
+                                                        control={
+                                                            <Radio
+                                                                sx={{
+                                                                    color: "white", // Default color
+                                                                    "&.Mui-checked": { color: "white" }, // White when selected
+                                                                    "&.Mui-checked + .MuiTypography-root": { fontWeight: "bold" }, // Bold label when selected
+                                                                }}
+                                                            />
+                                                        }
+                                                        label={<Typography sx={{ color: "white" }}>Female</Typography>}
+                                                    />
                                                 </RadioGroup>
-                                                <FormHelperText>{errors.gender?.message}</FormHelperText>
+
+                                                {/* Error Message Styled in White */}
+                                                <FormHelperText sx={{ color: "white" }}>{errors.gender?.message}</FormHelperText>
                                             </FormControl>
                                         )}
                                     />
@@ -437,59 +528,123 @@ const Register = () => {
                                         name="email"
                                         control={control}
                                         rules={{
-                                            required: 'Email is required',
+                                            required: "Email is required",
                                             pattern: {
                                                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                                message: 'Enter a valid email address',
+                                                message: "Enter a valid email address",
                                             },
                                         }}
                                         render={({ field }) => (
-                                            <FormControl fullWidth error={!!errors.email}>
-                                                <InputLabel sx={{ color: "white" }} htmlFor="email">Email</InputLabel>
-                                                <Input {...field} id="email" />
-                                                <FormHelperText>{errors.email?.message}</FormHelperText>
+                                            <FormControl fullWidth error={!!errors.email} variant="outlined">
+                                                {/* Label Always White */}
+                                                <InputLabel
+                                                    htmlFor="email"
+                                                    sx={{ color: "white", "&.Mui-focused": { color: "white" } }}
+                                                >
+                                                    Email
+                                                </InputLabel>
+
+                                                {/* Outlined Input with White Styling */}
+                                                <OutlinedInput
+                                                    {...field}
+                                                    id="email"
+                                                    type="email"
+                                                    sx={{
+                                                        height: "79.6px",
+                                                        color: "white", // Input text color
+                                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Default border
+                                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "lightgray" }, // Hover effect
+                                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Focused effect
+                                                    }}
+                                                    label="Email"
+                                                />
+
+                                                {/* Error Message Styled in White */}
+                                                <FormHelperText sx={{ color: "white" }}>{errors.email?.message}</FormHelperText>
                                             </FormControl>
                                         )}
                                     />
+
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Controller
                                         name="phone"
                                         control={control}
                                         rules={{
-                                            required: 'Phone is required',
+                                            required: "Phone is required",
                                             pattern: {
                                                 value: /^[0-9]+$/,
-                                                message: 'Enter a valid phone number',
+                                                message: "Enter a valid phone number",
                                             },
                                         }}
                                         render={({ field }) => (
-                                            <FormControl fullWidth error={!!errors.phone}>
-                                                <InputLabel sx={{ color: "white" }} htmlFor="phone">Phone</InputLabel>
-                                                <Input {...field} id="phone" />
-                                                <FormHelperText>{errors.phone?.message}</FormHelperText>
+                                            <FormControl fullWidth error={!!errors.phone} variant="outlined">
+                                                {/* Label Always White */}
+                                                <InputLabel
+                                                    htmlFor="phone"
+                                                    sx={{ color: "white", "&.Mui-focused": { color: "white" } }}
+                                                >
+                                                    Phone
+                                                </InputLabel>
+
+                                                {/* Outlined Input with White Styling */}
+                                                <OutlinedInput
+                                                    {...field}
+                                                    id="phone"
+                                                    type="tel"
+                                                    sx={{
+                                                        color: "white", // Input text color
+                                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Default border
+                                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "lightgray" }, // Hover effect
+                                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Focused effect
+                                                    }}
+                                                    label="Phone"
+                                                />
+
+                                                {/* Error Message Styled in White */}
+                                                <FormHelperText sx={{ color: "white" }}>{errors.phone?.message}</FormHelperText>
                                             </FormControl>
                                         )}
                                     />
                                 </Grid>
+
                                 <Grid item xs={6}>
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                                         <Controller
                                             name="dataregistrazione"
                                             control={control}
                                             rules={{
-                                                required: 'Date of Registration is required',
+                                                required: "Date of Registration is required",
                                             }}
                                             render={({ field }) => (
-                                                <FormControl sx={{ color: "white" }} fullWidth error={!!errors.dataregistrazione}>
+                                                <FormControl fullWidth error={!!errors.dataregistrazione}>
                                                     <DatePicker
                                                         label="Data di registrazione"
                                                         value={field.value}
                                                         onChange={(newValue) => field.onChange(newValue)} // Update the form state
-                                                        // OLD renderInput={(params) => <TextField {...params} />}
-                                                        slots={{ textField: (props) => <TextField {...props} /> }}
+                                                        slots={{
+                                                            textField: (props) => (
+                                                                <TextField
+                                                                    {...props}
+                                                                    InputLabelProps={{
+                                                                        style: { color: "white" }, // Label bianca
+                                                                    }}
+                                                                    sx={{
+                                                                        "& .MuiOutlinedInput-root": {
+                                                                            "& fieldset": { borderColor: "white" }, // Bordo bianco
+                                                                            "&:hover fieldset": { borderColor: "lightgray" },
+                                                                            "&.Mui-focused fieldset": { borderColor: "white" },
+                                                                        },
+                                                                        "& .MuiInputBase-input": { color: "white" }, // Testo dell'input bianco
+                                                                        "& .MuiFormHelperText-root": { color: "white" }, // Testo dell'errore bianco
+                                                                    }}
+                                                                />
+                                                            ),
+                                                        }}
                                                     />
-                                                    <FormHelperText>{errors.dataregistrazione?.message}</FormHelperText>
+                                                    <FormHelperText sx={{ color: "white" }}>
+                                                        {errors.dataregistrazione?.message}
+                                                    </FormHelperText>
                                                 </FormControl>
                                             )}
                                         />
@@ -512,12 +667,25 @@ const Register = () => {
                                             },
                                         }}
                                         render={({ field }) => (
-                                            <FormControl fullWidth error={!!errors.password} variant="outlined">
-                                                <InputLabel sx={{ color: "white" }} htmlFor="password">Password</InputLabel>
+                                            <FormControl fullWidth error={!!errors.password} >
+                                                {/* Label Bianca */}
+                                                <InputLabel
+                                                    htmlFor="password"
+                                                    sx={{ color: "white", "&.Mui-focused": { color: "white" } }}
+                                                >
+                                                    Password
+                                                </InputLabel>
+                                                {/* Password Input with Toggle Visibility */}
                                                 <OutlinedInput
                                                     {...field}
                                                     id="password"
                                                     type={showPassword ? "text" : "password"} // Toggle visibility
+                                                    sx={{
+                                                        color: "white", // Input text color
+                                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Default border
+                                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "lightgray" }, // Hover effect
+                                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Focused effect
+                                                    }}
                                                     endAdornment={
                                                         <InputAdornment position="end">
                                                             <IconButton onClick={handleTogglePassword} edge="end">
@@ -550,11 +718,24 @@ const Register = () => {
                                         }}
                                         render={({ field }) => (
                                             <FormControl fullWidth error={!!errors.confirmpassword} variant="outlined">
-                                                <InputLabel sx={{ color: "white" }} htmlFor="confirmpassword">Conferma Password</InputLabel>
+                                                {/* Label Bianca */}
+                                                <InputLabel
+                                                    htmlFor="confirmpassword"
+                                                    sx={{ color: "white", "&.Mui-focused": { color: "white" } }}
+                                                >
+                                                    Conferma Password
+                                                </InputLabel>
+                                                {/* Password Input with Toggle Visibility */}
                                                 <OutlinedInput
                                                     {...field}
                                                     id="confirmpassword"
                                                     type={showConfirmPassword ? "text" : "password"} // Toggle visibility
+                                                    sx={{
+                                                        color: "white", // Input text color
+                                                        "& .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Default border
+                                                        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "lightgray" }, // Hover effect
+                                                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "white" }, // Focused effect
+                                                    }}
                                                     endAdornment={
                                                         <InputAdornment position="end">
                                                             <IconButton onClick={handleToggleConfirmPassword} edge="end">
@@ -569,7 +750,6 @@ const Register = () => {
                                         )}
                                     />
                                 </Grid>
-
                                 <Grid item xs={6}>
                                     <Controller
                                         name="tipoutente"
@@ -578,7 +758,7 @@ const Register = () => {
                                             required: 'User Type is required',
                                         }}
                                         render={({ field }) => (
-                                            <FormControl  fullWidth error={!!errors.tipoutente}>
+                                            <FormControl fullWidth error={!!errors.tipoutente}>
                                                 <Autocomplete
                                                     id="tipoutente"
                                                     options={listTipoUtente}
@@ -588,13 +768,30 @@ const Register = () => {
                                                     onChange={(event, newValue) => {
                                                         field.onChange(newValue ? { id: newValue.Id, TipoUtente: newValue.TipoUtente } : null);
                                                     }}
-
                                                     renderInput={(params) => (
-                                                        <TextField  {...params} label="Select a User Type" />
+                                                        <TextField
+                                                            {...params}
+                                                            label="Select a User Type"
+                                                            InputLabelProps={{
+                                                                style: { color: "white" }  // Mantiene la label visibile
+                                                            }}
+                                                            sx={{
+                                                                "& .MuiOutlinedInput-root": {
+                                                                    "& fieldset": { borderColor: "white" },
+                                                                    "&:hover fieldset": { borderColor: "lightgray" },
+                                                                    "&.Mui-focused fieldset": { borderColor: "white" }
+                                                                },
+                                                                "& .MuiInputBase-input": { color: "white" }, // Testo dell'input
+                                                                "& .MuiFormHelperText-root": { color: "white" } // Testo dell'errore
+                                                            }}
+                                                        />
                                                     )}
-
                                                 />
-                                                <FormHelperText sx={{ color: "white" }}>{errors.tipoutente?.message}</FormHelperText>
+                                                {errors.tipoutente && (
+                                                    <FormHelperText sx={{ color: "white" }}>
+                                                        {errors.tipoutente.message}
+                                                    </FormHelperText>
+                                                )}
                                             </FormControl>
                                         )}
                                     />
@@ -619,11 +816,30 @@ const Register = () => {
                                                     }}
 
                                                     renderInput={(params) => (
-                                                        <TextField {...params} label="Select a User Role" />
+                                                        <TextField
+                                                            {...params}
+                                                            label="Select a Role"
+                                                            InputLabelProps={{
+                                                                style: { color: "white" }  // Mantiene la label visibile
+                                                            }}
+                                                            sx={{
+                                                                "& .MuiOutlinedInput-root": {
+                                                                    "& fieldset": { borderColor: "white" },
+                                                                    "&:hover fieldset": { borderColor: "lightgray" },
+                                                                    "&.Mui-focused fieldset": { borderColor: "white" }
+                                                                },
+                                                                "& .MuiInputBase-input": { color: "white" }, // Testo dell'input
+                                                                "& .MuiFormHelperText-root": { color: "white" } // Testo dell'errore
+                                                            }}
+                                                        />
                                                     )}
 
                                                 />
-                                                <FormHelperText>{errors.ruolo?.message}</FormHelperText>
+                                                {errors.ruolo && (
+                                                    <FormHelperText sx={{ color: "white" }}>
+                                                        {errors.ruolo.message}
+                                                    </FormHelperText>
+                                                )}
                                             </FormControl>
                                         )}
                                     />
