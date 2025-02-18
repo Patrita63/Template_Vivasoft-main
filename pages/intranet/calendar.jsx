@@ -5,7 +5,7 @@ import {
     Box,
     Container,
     CssBaseline,
-    MenuItem, Select, FormControl, InputLabel
+    MenuItem, Select, FormControl, InputLabel, Button
 } from "@mui/material";
 import NavIntranetMenu from '../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../components/DynamicBreadCrumbs';
@@ -124,6 +124,14 @@ const CalendarVivasoft = () => {
                                     ))}
                                 </Select>
                             </FormControl>
+                            <Button
+                                variant="contained"
+                                // className={`${styles.BtnTopUsers} ${styles.BtnUpdateUser}`}
+                                size="medium"
+                                onClick={() => router.push("/intranet/aggiungicorsocalendariovivasoft")}
+                            >
+                                Aggiungi Corso
+                            </Button>
                         </div>
 
                         {/* 📌 Calendar Table */}
