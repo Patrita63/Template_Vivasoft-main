@@ -47,6 +47,7 @@ const CourseAndScheduleForm = () => {
 
     // Fetch dropdown options from API
     useEffect(() => {
+        debugger;
         const fetchDropdownOptions = async () => {
             try {
                 const [coursesResponse, learningCentersResponse, deliveryTypesResponse, statusesResponse] =

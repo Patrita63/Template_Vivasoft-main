@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import NavIntranetMenu from '../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../components/DynamicBreadCrumbs';
+
 import CalendarTable from '../../components/CalendarioCorsi';
 import Cookies from "js-cookie";
 
@@ -35,10 +36,26 @@ const CalendarVivasoft = () => {
     const [selectedDay, setSelectedDay] = useState(null);
 
     // 📌 Handle Cell Click
-    const handleCellClick = (day) => {
-        setSelectedDay(day);
-        console.log('Selected Day:', day);
-        alert(day.Day_DayNumber);
+    // Clicking on a day cell passes the full event array.
+    // onClick={() => dayEvents.length > 0 && onCellClick(dayEvents)}
+    const handleCellClick = (dayEvents) => {
+        debugger;
+        // setSelectedDay(day);
+        let messageEvent = '';
+        if (dayEvents[0].IdAgendaCorsi === null) {
+            messageEvent = 'No Events for selected day: ' + dayEvents[0].Day_Date.split("T")[0];
+            setSelectedDay(dayEvents[0].Day_Date.split("T")[0]);
+        } else {
+            if (dayEvents.length > 1) {
+                messageEvent = 'There are ' + dayEvents.length + ' events for selected day: ' + dayEvents[0].Day_Date.split("T")[0];
+            } else {
+                messageEvent = 'There is ' + dayEvents.length + ' event for selected day: ' + dayEvents[0].Day_Date.split("T")[0];
+            }
+        }
+
+        console.log(messageEvent);
+        console.log(selectedDay);
+        alert(messageEvent);
     };
 
     // 📌 Check User Authentication
@@ -141,7 +158,7 @@ const CalendarVivasoft = () => {
                                 {calendarData.length > 0 && (
                                     <Box sx={{ width: "100%", overflowX: "auto" }}>
                                         <div className="p-4">
-                                            <h1 className="text-xl font-bold mb-4">Calendar {monthname} {year}</h1>
+                                            <h1 className="text-xl font-bold mb-4">📅 Calendar Vivasoft → {monthname} {year}</h1>
                                             <CalendarTable data={calendarData} onCellClick={handleCellClick} />
                                         </div>
                                     </Box>
