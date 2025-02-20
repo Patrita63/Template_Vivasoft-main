@@ -18,8 +18,16 @@ import {
 const CourseAndScheduleForm = () => {
     // To navigate to another page
     const router = useRouter();
+
+    // When you refresh the page, selectedDay disappears because router.query is only available after Next.js hydrates the client-side state.
+    // const { selectedDay } = router.query; // Extract the dynamic route parameter
+
+    // To persist selectedDay across page refreshes, store it in local state (useState) and retrieve it from router.query in useEffect.
+    const [selectedDay, setSelectedDay] = useState("");
+
     const [formData, setFormData] = useState({
-        DataInizio: "",
+        // Use Logical OR (||)
+        DataInizio: selectedDay || "",
         DataFine: "",
         IdCatalogoCorsi: "",
         IdLearningCenter: "",
@@ -45,34 +53,40 @@ const CourseAndScheduleForm = () => {
     const [deliveryTypeOptions, setDeliveryTypeOptions] = useState([]);
     const [statusOptions, setStatusOptions] = useState([]);
 
+    // ✅ Ensure `selectedDay` is updated when `router.query.selectedDay` becomes available
+    useEffect(() => {
+        if (router.isReady && router.query.selectedDay) {
+            setSelectedDay(router.query.selectedDay);
+            setFormData((prev) => ({ ...prev, DataInizio: router.query.selectedDay }));
+        }
+    }, [router.isReady, router.query.selectedDay]);
+
     // Fetch dropdown options from API
     useEffect(() => {
         debugger;
         const fetchDropdownOptions = async () => {
+            setLoading(true);
             try {
-                const [coursesResponse, learningCentersResponse, deliveryTypesResponse, statusesResponse] =
-                    await Promise.all([
-                        fetch('/api/relagendacalendario/catalogocorsi'),
-                        fetch('/api/relagendacalendario/learningcenter'),
-                        fetch('/api/relagendacalendario/tipoerogazione'),
-                        fetch('/api/relagendacalendario/statoagenda'),
-                    ]);
+                const response = await fetch('/api/relagendacalendario/getDropdownData');
+                const data = await response.json();
 
-                const courses = await coursesResponse.json();
-                setCatalogocorsiOptions(courses);
-                const learningCenters = await learningCentersResponse.json();
-                setLearningCenterOptions(learningCenters);
-                const deliveryTypes = await deliveryTypesResponse.json();
-                setDeliveryTypeOptions(deliveryTypes);
-                const statuses = await statusesResponse.json();
-                setStatusOptions(statuses);
+                if (!response.ok) throw new Error(data.error || "Failed to load dropdown data");
+
+                // ✅ Set dropdown options from a single API call
+                setCatalogocorsiOptions(Array.isArray(data.catalogocorsiOptions) ? data.catalogocorsiOptions : []);
+                setLearningCenterOptions(Array.isArray(data.learningCenterOptions) ? data.learningCenterOptions : []);
+                setDeliveryTypeOptions(Array.isArray(data.deliveryTypeOptions) ? data.deliveryTypeOptions : []);
+                setStatusOptions(Array.isArray(data.statusOptions) ? data.statusOptions : []);
             } catch (error) {
                 console.error('Error fetching dropdown options:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchDropdownOptions();
     }, []);
+
 
     // Handle input change
     const handleChange = (e) => {
@@ -88,11 +102,11 @@ const CourseAndScheduleForm = () => {
         e.preventDefault(); // Prevent the default form submission behavior
         setLoading(true);
         setResponseMessage(null);
-    
+
         try {
             // Call the insertCourseAndSchedule function with formData
             const data = await insertCourseAndSchedule(formData);
-    
+
             // Handle the response
             if (data.success) {
                 setResponseMessage({
@@ -112,7 +126,7 @@ const CourseAndScheduleForm = () => {
             setLoading(false);
         }
     };
-    
+
     // Function to insert course and schedule
     const insertCourseAndSchedule = async (formData) => {
         const response = await fetch('/api/relagendacalendario/insertcourseandschedule', {
@@ -138,11 +152,11 @@ const CourseAndScheduleForm = () => {
                 MailUtente: formData.MailUtente,
             }),
         });
-    
+
         const data = await response.json();
         return data;
     };
-    
+
 
     return (
         <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
@@ -179,7 +193,7 @@ const CourseAndScheduleForm = () => {
                         <FormControl fullWidth sx={{ mb: 2 }}>
                             <InputLabel>Course</InputLabel>
                             <Select name="IdCatalogoCorsi" value={formData.IdCatalogoCorsi} onChange={handleChange} required>
-                                {catalogocorsiOptions.map((option) => (
+                                {catalogocorsiOptions?.map((option) => (
                                     <MenuItem key={option.IdCatalogoCorsi} value={option.IdCatalogoCorsi}>
                                         {option.Nome}
                                     </MenuItem>
@@ -228,6 +242,16 @@ const CourseAndScheduleForm = () => {
                             onChange={handleChange}
                             sx={{ mb: 2 }}
                         />
+
+                        {/* Back Button */}
+                        <Button
+                            variant="contained"
+                            sx={{ backgroundColor: "green !important", color: "white", '&:hover': { backgroundColor: "darkgreen" } }}
+                            disabled={loading}
+                            onClick={() => router.push("/intranet/calendar")}
+                        >
+                            {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Back"}
+                        </Button>
                     </Grid>
 
                     {/* Right Grid - Schedule & Additional Details */}
@@ -251,7 +275,7 @@ const CourseAndScheduleForm = () => {
                         <FormControl fullWidth sx={{ mb: 2 }}>
                             <InputLabel>Learning Center</InputLabel>
                             <Select name="IdLearningCenter" value={formData.IdLearningCenter} onChange={handleChange} required>
-                                {learningCenterOptions.map((option) => (
+                                {learningCenterOptions?.map((option) => (
                                     <MenuItem key={option.IdLearningCenter} value={option.IdLearningCenter}>
                                         {option.Nome}
                                     </MenuItem>
@@ -262,7 +286,7 @@ const CourseAndScheduleForm = () => {
                         <FormControl fullWidth sx={{ mb: 2 }}>
                             <InputLabel>Delivery Type</InputLabel>
                             <Select name="IdTipoErogazione" value={formData.IdTipoErogazione} onChange={handleChange} required>
-                                {deliveryTypeOptions.map((option) => (
+                                {deliveryTypeOptions?.map((option) => (
                                     <MenuItem key={option.IdTipoErogazione} value={option.IdTipoErogazione}>
                                         {option.Nome}
                                     </MenuItem>
@@ -301,15 +325,19 @@ const CourseAndScheduleForm = () => {
                             onChange={handleChange}
                             sx={{ mb: 2 }}
                         />
+                        {/* Submit Button */}
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ backgroundColor: "blue !important", color: "white", '&:hover': { backgroundColor: "darkblue" } }}
+                            disabled={loading}
+                        >
+                            {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Add"}
+                        </Button>
                     </Grid>
                 </Grid>
 
-                {/* Submit Button */}
-                <Box mt={4} textAlign="center">
-                    <Button type="submit" variant="contained" color="primary" disabled={loading} sx={{ px: 5, py: 1.5 }}>
-                        {loading ? <CircularProgress size={24} /> : "Submit Course & Schedule"}
-                    </Button>
-                </Box>
+
             </Box>
         </Container>
     );

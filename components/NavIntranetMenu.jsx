@@ -123,7 +123,7 @@ const NavIntranetMenu = () => {
                 </div>
             </>
         )}
-
+{/* Unicode & Emoji Symbols for homepage */}
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -131,44 +131,44 @@ const NavIntranetMenu = () => {
         >
           <MenuItem onClick={handleMenuClose}>
             <Link href="/" passHref>
-              Home web site
+            🌐 Home web site
             </Link>
           </MenuItem>
           <MenuItem onClick={handleMenuClose}>
           <Link href='/intranet' target='_blank' passHref>
-            Home Intranet Vivasoft
+          🏢 Home Intranet Vivasoft
             </Link>
           </MenuItem>
           {isAuthenticated && (
            <>
            <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/catalogocorsi" passHref>
-                Catalogo Corsi Vivasoft
+              📚 Catalogo Corsi Vivasoft
               </Link>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/calendar" passHref>
-                Calendario Vivasoft
+              📆 Calendario Vivasoft
               </Link>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/agendacorsi" passHref>
-                Agenda Corsi
+              📅 Agenda Corsi
               </Link>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/allusers" passHref>
-                Utenti Corsi
+              👨‍🎓👩‍🎓 Utenti Corsi
               </Link>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/allregisteredusers" passHref>
-                Utenti Registrati
+              👤 Utenti Registrati
               </Link>
             </MenuItem>
             <MenuItem onClick={handleMenuClose}>
               <Link href="/intranet/relagendacalendario" passHref>
-                Rel Agenda Calendario
+                Rel 📅 Agenda 📆 Calendario
               </Link>
             </MenuItem>
           </>

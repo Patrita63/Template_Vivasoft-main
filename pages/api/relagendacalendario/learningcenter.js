@@ -1,6 +1,7 @@
 import { executeQuery, closeDatabaseConnection } from "../../../lib/dbsqlazurenew";
 
 export default async function handler(req, res) {
+    debugger;
     if (req.method === 'GET') {
         try {
             // Query to fetch T_LearningCenter
