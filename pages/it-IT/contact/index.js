@@ -108,12 +108,12 @@ const Contact = () => {
       <Head>
         <title>Vivasoft - Contattaci per soluzioni IT e Microsoft</title>
         <meta name="description" content="Hai domande? Contatta Vivasoft per ricevere consulenze su soluzioni IT, Power Apps, Power BI, Power Automate, e molto altro. Siamo qui per aiutarti." />
-        <meta name="keywords" content="contatti Vivasoft, supporto IT, consulenza IT, soluzioni Microsoft, Power Apps, Power BI, Power Automate,C#, Python, React, assistenza clienti" />
+        <meta name="keywords" content="contatti Vivasoft, supporto IT, consulenza IT, soluzioni Microsoft, Azure, Power Apps, Power BI, Power Automate, C#, Python, React, Kubernetes, assistenza clienti" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Contattaci per soluzioni IT e Microsoft" />
         <meta property="og:description" content="Contattaci oggi per ricevere supporto sui nostri servizi IT, consulenze su Power Apps, Power BI, Power Automate e altre soluzioni Microsoft." />
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
-        <meta property="og:url" content="https://www.vivasoft.it/contact" />
+        <meta property="og:url" content="https://www.vivasoft.it/it-IT/contact" />
       </Head>
       {/* <div className="h-full bg-primary py-40">
         <div className="container mx-auto text-center xl:text-left flex items-center justify-center h-full"> */}
@@ -131,7 +131,7 @@ const Contact = () => {
               className="flex flex-col w-full max-w-[700px] xl:pt-0"
             >
               <motion.h2 className="h2 text-center xl:mt-40 sm:mt-0 xl:mt-5">
-                Richiedi<span className="text-accent"> info</span>
+                Richiedi<span className="text-accent"> informazioni</span>
               </motion.h2>
 
               <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full mx-auto">

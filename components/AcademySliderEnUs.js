@@ -1,36 +1,48 @@
-import Image from 'next/image'; // Se stai usando Next.js
+import Image from 'next/image'; 
 
 // service data
 export const serviceData = [
   {
-    image: '/kuber.jpg',
-    pdf: '/brochures/Kubernetes.pdf',  // Percorso del file PDF per questo corso
-  },
-  {
-    image: '/PowerAutomate.png',
-    pdf: '/brochures/PowerAutomate.pdf',  // Percorso del file PDF per questo corso
-  },
-  {
-    image: '/PowerBI.png',
-    pdf: '/brochures/PowerBI.pdf',  // Percorso del file PDF per questo corso
-  },
-  {
     image: '/Power_APPS.png',
-    pdf: '/brochures/PowerApps.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/EN/PowerApps.pdf',  // PDF file path for this course C#
   },
   {
     image: '/Azure.png',
-    pdf: '/brochures/Azure.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/EN/Azure.pdf',  // PDF file path for this course React
   },
   {
     image: '/Sharepoint.jpg',
-    pdf: '/brochures/Sharepoint.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/EN/Sharepoint.pdf',  // PDF file path for this course Full stack Microsoft
+  },
+  {
+    image: '/kuber.jpg',
+    pdf: '/brochures/EN/Kubernetes.pdf',  // PDF file path for this course 
+  },
+  {
+    image: '/PowerAutomate.png',
+    pdf: '/brochures/EN/PowerAutomate.pdf',  // PDF file path for this course 
+  },
+  {
+    image: '/PowerBI.png',
+    pdf: '/brochures/EN/PowerBI.pdf',  // PDF file path for this course 
+  },
+  {
+    image: '/React.png',
+    pdf: '/brochures/EN/React.pdf',  // PDF file path for this course 
+  },
+  {
+    image: '/Csharp.jpeg',
+    pdf: '/brochures/EN/CSharp.pdf',  // PDF file path for this course 
+  },
+  {
+    image: '/python.png',
+    pdf: '/brochures/EN/Python.pdf',  // PDF file path for this course 
   },
 ];
 
 const ServiceCards = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
       {serviceData.map((item, index) => (
         <div
           key={index}
@@ -40,7 +52,7 @@ const ServiceCards = () => {
           <div className="relative w-full h-52">
             <Image
               src={item.image}
-              alt={`Immagine servizio ${index + 1}`}   // Descrizione per l'accessibilità
+              alt={`Service image ${index + 1}`}   // Description for accessibility
               layout="fill"
               objectFit="cover"
               className="rounded-lg"
@@ -53,7 +65,7 @@ const ServiceCards = () => {
                 download // Forza il download del file PDF
                 className="text-white hover:text-gray-200"
               >
-                Scarica Brochure
+                Download Brochure
               </a>
             </div>
           </div>

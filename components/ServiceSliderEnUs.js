@@ -3,52 +3,52 @@ export const serviceData = [
   {
 
     title: 'Azure',
-    description: 'Soluzioni scalabili e sicure su Microsoft Azure, per supportare le tue esigenze di computing, storage e networking.',
+    description: 'Scalable, secure solutions on Microsoft Azure to support your computing, storage and networking needs.',
   },
   {
     
     title: 'Microsoft 365',
-    description: 'Suite integrata di strumenti, come Word, Excel, Teams e Outlook per migliorare la gestione dei documenti.',
+    description: 'Integrated suite of tools, such as Word, Excel, Teams and Outlook to improve document management.',
   },
   {
     
     title: 'Data Analysis',
-    description: 'Analizziamo e interpretiamo i tuoi dati per identificare tendenze e opportunità, migliorando i processi aziendali.',
+    description: 'We analyze and interpret your data to identify trends and opportunities, improving business processes.',
   },
   {
     
     title: 'Power Apps',
-    description: 'Semplifica i tuoi processi aziendali con la piattaforma low-code che ti consente di creare applicazioni personalizzate.',
+    description: 'Simplify your business processes with the low-code platform that allows you to create custom applications.',
   },
   {
     
     title: 'Power BI',
-    description: 'Strumento potente di business intelligence che trasforma i dati complessi in report visivi e interattivi,con dashboard personalizzate.',
+    description: 'Powerful business intelligence tool that transforms complex data into visual and interactive reports, with custom dashboards.',
   },
   {
    
     title: 'Power Automate',
-    description: 'Creiamo flussi di lavoro che collegano le tue applicazioni e servizi, riducendo il tempo speso su attività ripetitive.',
+    description: 'We create workflows that connect your applications and services, reducing time spent on repetitive tasks.',
   },
   {
    
     title: 'Sharepoint Online',
-    description: 'Ti aiutiamo a creare e gestire siti intranet sicuri, condividere informazioni in tempo reale e migliorare la produttività del team.',
+    description: 'We help you create and manage secure intranet sites, share information in real time and improve team productivity.',
   },
   {
    
     title: 'Sharepoint On-Premises',
-    description: 'Per chi preferisce mantenere il controllo totale sulla propria infrastruttura IT.',
+    description: 'For those who prefer to keep total control over their IT infrastructure.',
   },
   {
     
-    title: 'Processi Aziendali',
-    description: 'Aiutiamo la tua azienda a migliorare e a ridurre i costi con soluzioni su misura, ottimizzando i flussi aziendali.',
+    title: 'Business processes',
+    description: 'We help your company to improve and reduce costs with customized solutions, optimizing business flows.',
   },
  
 ];
 
-const ServiceCards = () => {
+const ServiceCardsEnUs = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {serviceData.map((item, index) => {
@@ -72,4 +72,4 @@ const ServiceCards = () => {
   );
 };
 
-export default ServiceCards;
+export default ServiceCardsEnUs;

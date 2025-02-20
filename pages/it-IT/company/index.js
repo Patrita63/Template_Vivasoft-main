@@ -248,7 +248,7 @@ import { fadeIn } from "../../../variants";
 import CountUp from "react-countup";
 // import { isAbsoluteUrl } from "next/dist/shared/lib/utils";
 
-const About = () => {
+const Company = () => {
   const [index, setIndex] = useState(0);
   // console.log(index);
   return (
@@ -261,7 +261,7 @@ const About = () => {
         />
         <meta
           name="keywords"
-          content="Vivasoft, soluzioni IT, Microsoft Sharepoint online, Microsoft Sharepoint on-premises, Microsoft Power Apps, Power BI, Power Automate, C#, Python, React consulenza IT, certificazioni Microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD"
+          content="Vivasoft, soluzioni IT, Microsoft Sharepoint online, Microsoft Sharepoint on-premises, Microsoft Power Apps, Power BI, Power Automate, C#, Python, Consulenza React e Angular, certificazioni Microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD"
         />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Chi Siamo" />
@@ -270,7 +270,7 @@ const About = () => {
           content="Scopri come Vivasoft aiuta le aziende a innovare e ottimizzare i processi aziendali."
         />
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
-        <meta property="og:url" content="https://www.vivasoft.it/about" />
+        <meta property="og:url" content="https://www.vivasoft.it/company" />
       </Head>
       <div className="h-full bg-primary xl:py-60 py-80 text-center xl:text-left bg-gradient-to-r from-primary via-black/30 to-black/10">
         <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6">
@@ -417,4 +417,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Company;

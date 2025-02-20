@@ -1,5 +1,4 @@
 import Layout from '../../../components/Layout';
-import ParticlesContainer from '../../../components/ParticlesContainer';
 import Head from 'next/head'; // Importa il componente Head di Next.js
 
 // framer motion
@@ -22,8 +21,8 @@ const Course = () => {
   
     { title: 'Microsoft Azure Fundamentals', content: 'Fornisce le basi necessarie per comprendere i concetti chiave e i servizi di Microsoft Azure. È ideale per chi è nuovo nel cloud computing e desidera acquisire una panoramica delle soluzioni e dei servizi offerti da Azure.' },
     { title: 'Microsoft Azure AI Fundamentals', content: 'Offre una panoramica introduttiva sull\'intelligenza artificiale (AI) e sui servizi correlati disponibili su Microsoft Azure. Ideale per coloro che vogliono comprendere le basi dell\'AI.' },
-    { title: 'Azure AI Engineer Associate', content: 'Progettato per professionisti che desiderano sviluppare e implementare soluzioni di intelligenza artificiale su Microsoft Azur.' },
-    { title: 'Designing and Implementing a Microsoft Azure AI Solution', content: 'Pensato per professionisti che desiderano acquisire competenze avanzate nella progettazione e implementazione di soluzioni di intelligenza artificiale su Microsoft Azure' },
+    { title: 'Azure AI Engineer Associate', content: 'Progettato per professionisti che desiderano sviluppare e implementare soluzioni di intelligenza artificiale su Microsoft Azure.' },
+    { title: 'Designing and Implementing a Microsoft Azure AI Solution', content: 'Pensato per professionisti che desiderano acquisire competenze avanzate nella progettazione e implementazione di soluzioni di intelligenza artificiale su Microsoft Azure.' },
     { title: 'Designing and Implementing a Data Science Solution on Azure', content: 'Indirizzato a professionisti e sviluppatori che desiderano acquisire competenze nella progettazione e implementazione di soluzioni di data science su Microsoft Azure.' },
   ], []);
 
@@ -32,10 +31,10 @@ const Course = () => {
       <Head>
         <title>Vivasoft Learning - Formazione Microsoft e Certificazioni</title>
         <meta name="description" content="Scopri i corsi di formazione offerti da Vivasoft Academy. Preparati per le certificazioni Microsoft con corsi su Power Apps, Power BI, Power Automate e altro." />
-        <meta name="keywords" content="Vivasoft Academy, corsi Microsoft, formazione IT, certificazioni Microsoft, Power Apps, Power BI, Power Automate, formazione professionale certificazioni microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD" />
+        <meta name="keywords" content="Vivasoft Academy, corsi Microsoft, formazione IT, certificazioni Microsoft, Power Apps, Power BI, Power Automate, formazione professionale certificazioni microsoft, AZ-305, AZ-204, AZ-104, AZ-400, AZ-220, AZ-900, AI-900, AI-102, DP-100, PL-200, PL-300,PL-400,PL-500, PL-600, PL-900, MS-900, CKA, CKAD." />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft Academy - Formazione Microsoft e Certificazioni" />
-        <meta property="og:description" content="Vivi l'esperienza di Vivasoft Academy. Partecipa ai nostri corsi di formazione su Microsoft Power Apps, Power BI, Power Automate e ottieni le certificazioni ufficiali." />
+        <meta property="og:description" content="Vivi l\'esperienza di Vivasoft Academy. Partecipa ai nostri corsi di formazione su Microsoft Power Apps, Power BI, Power Automate e ottieni le certificazioni ufficiali." />
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
         <meta property="og:url" content="https://www.vivasoft.it/course" />
       </Head>
@@ -63,7 +62,7 @@ const Course = () => {
               >
                 <span className='text-lg font-bold'>Siamo una realtà affermata nel settore della formazione IT,</span><span className='text-lg'> con un focus su corsi ufficiali Microsoft, corsi personalizzati e formazione specializzata per le aziende. Offriamo soluzioni adatte alle diverse esigenze dei nostri clienti, con programmi formativi aggiornati e in linea con le ultime tendenze tecnologiche.
               Oltre ai corsi ufficiali, offriamo corsi customizzati, progettati per rispondere alle specifiche necessità delle aziende. </span><span className='text-lg font-bold'>Questi corsi sono costruiti su misura</span> <span className='text-lg'> per sviluppare le competenze richieste dai singoli team o per affrontare problematiche aziendali particolari.
-              Eroghiamo formazione per </span><span className='text-accent1 font-bold text-lg'>Tutti i Livelli. </span><span className='text-lg'>I corsi sono progettati per soddisfare le esigenze di professionisti di diversi livelli, da principianti a esperti, con programmi adatti a chi è nuovo nel settore IT, ma anche a coloro che vogliono ampliare le proprie competenze.</span>
+              Eroghiamo formazione per </span><span className='text-accent1 font-bold text-lg'>tutti i Livelli. </span><span className='text-lg'>I corsi sono progettati per soddisfare le esigenze di professionisti di diversi livelli, da principianti a esperti, con programmi adatti a chi è nuovo nel settore IT, ma anche a coloro che vogliono ampliare le proprie competenze.</span>
               </motion.p>
             </div>
 

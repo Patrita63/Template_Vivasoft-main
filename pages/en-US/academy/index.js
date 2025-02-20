@@ -1,6 +1,6 @@
 // components
-import Layout from '../../../components/Layout';
-import AcademySlider from '../../../components/AcademySlider';
+import LayoutEnUs from '../../../components/LayoutEnUs';
+import AcademySliderEnUs from '../../../components/AcademySliderEnUs';
 import ParticlesContainer from '../../../components/ParticlesContainer';
 import Head from 'next/head'; // Importa il componente Head di Next.js
 
@@ -13,14 +13,14 @@ import { fadeIn } from '../../../variants';
 
 const Academy = () => {
   return (
-    <Layout>
+    <LayoutEnUs>
        <Head>
-        <title>Vivasoft Academy - Formazione Microsoft e Certificazioni</title>
-        <meta name="description" content="Scopri i corsi di formazione offerti da Vivasoft Academy. Preparati per le certificazioni Microsoft con corsi su Power Apps, Power BI, Power Automate e altro." />
-        <meta name="keywords" content="Vivasoft Academy, corsi Microsoft, formazione IT, certificazioni Microsoft, Power Apps, Power BI, Power Automate,C#, Python, React, formazione professionale." />
+        <title>Vivasoft Academy - Microsoft Training and Certifications</title>
+        <meta name="description" content="Discover the training courses offered by Vivasoft Academy. Prepare for Microsoft certifications with courses on Power Apps, Power BI, Power Automate and more." />
+        <meta name="keywords" content="Vivasoft Academy, Microsoft courses, IT training, Microsoft certifications, Power Apps, Power BI, Power Automate,C#, Python, React, professional training." />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Vivasoft Academy - Formazione Microsoft e Certificazioni" />
-        <meta property="og:description" content="Vivi l'esperienza di Vivasoft Academy. Partecipa ai nostri corsi di formazione su Microsoft Power Apps, Power BI, Power Automate e ottieni le certificazioni ufficiali." />
+        <meta property="og:title" content="Vivasoft Academy - Microsoft Training and Certifications" />
+        <meta property="og:description" content="Experience the Vivasoft Academy. Attend our training courses on Microsoft Power Apps, Power BI, Power Automate and get official certifications." />
         <meta property="og:image" content="/images/vivasoft-logo.jpg" />
         <meta property="og:url" content="https://www.vivasoft.it/academy" />
       </Head>
@@ -48,9 +48,9 @@ const Academy = () => {
               exit='hidden'
               className='mb-4 max-w-[400px] mx-auto lg:mx-0'
             >
-              <span className='text-lg font-bold'>Creiamo soluzioni di formazione completa per le aziende,</span><span className='text-lg'> progettando e gestendo </span><span className='text-secondary font-bold text-lg'>Academy Aziendali </span><span className='text-lg'>su misura. Le nostre Academy sono ambienti di apprendimento esclusivi che rispondono alle esigenze di crescita professionale delle tue risorse, offrendo programmi formativi strutturati e innovativi.</span>
-              <span className='text-lg font-bold'> Formazione In Aula e Online:</span> <span className='text-lg'>La nostra formazione è disponibile sia in aula che tramite piattaforme online, offrendo flessibilità e comodità.</span>
-              <span className='text-lg font-bold'> Piani di Certificazione:</span> <span className='text-lg'>Aiutiamo le aziende a far certificare i propri dipendenti, ottenendo qualifiche che valorizzano il brand aziendale.</span>
+              <span className='text-lg font-bold'>We create complete training solutions for companies,</span><span className='text-lg'> designing and managing </span><span className='text-secondary font-bold text-lg'>customized Corporate Academy.</span><span className='text-lg'>Our Academies are unique learning environments that respond to the professional growth needs of your resources, offering structured and innovative training programs.</span>
+              <span className='text-lg font-bold'> Classroom and Online Training:</span> <span className='text-lg'>Our training is available both in the classroom and through online platforms, offering flexibility and convenience.</span>
+              <span className='text-lg font-bold'> Certification Plans:</span> <span className='text-lg'>We help companies to certify their employees, obtaining qualifications that enhance the company brand.</span>
             </motion.p>
             {/* <button className='btn rounded-lg border border-white/50 w-full px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
               <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>
@@ -69,7 +69,7 @@ const Academy = () => {
             className='w-full xl:max-w-[65%]'
           >
             <div className=''>
-               <AcademySlider />
+               <AcademySliderEnUs />
             </div>
            
           </motion.div>
@@ -77,7 +77,7 @@ const Academy = () => {
       </div>
       
     </div>
-    </Layout>
+    </LayoutEnUs>
   );
 };
 

@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head'; // Importa il componente Head di Next.js
 // import Image from 'next/image';
 
+import Cookies from "js-cookie";
+
 import styles from './Popup.module.css';
 // components
 import LayoutEnUs from '../../components/LayoutEnUs';
@@ -30,17 +32,16 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const Home = () => {
   // COOKIES Management
-  const [isCookiesAccepted, setIsCookiesAccepted] = useState(false);
   const [isPopupOpened, setIsPopupOpened]=useState(false);
   const [isPopupSettingsOpened, setIsPopupSettingsOpened]=useState(false);
   
   useEffect(() => {
     localStorage.setItem("isLanguageIta", 'true');
-    debugger;
-    
-    const isPopupToShow = Boolean(localStorage.getItem("isCookiesAccepted"));
+    // debugger;
+    // const isPopupToShow = Boolean(localStorage.getItem("isCookiesAccepted"));
+    // Replace with:
+    const isPopupToShow = Cookies.get("isCookiesAccepted") === "true" ? true : false;
     console.log('isPopupToShow: ' + isPopupToShow);
-    setIsCookiesAccepted(isPopupToShow);
 
     if(!isPopupToShow){
       openPopup();
@@ -63,7 +64,9 @@ const Home = () => {
   } 
 
   const cookiesAcceptedFirtPopup = () =>{
-    localStorage.setItem("isCookiesAccepted", true);
+    // localStorage.setItem("isCookiesAccepted", true);
+    // Replace with:
+    Cookies.set("isCookiesAccepted", true);
     setIsPopupOpened(false);
   } 
 
@@ -76,7 +79,9 @@ const Home = () => {
   } 
 
   const cookiesAcceptedPopupSettings = () =>{
-    localStorage.setItem("isCookiesAccepted", true);
+    // localStorage.setItem("isCookiesAccepted", true);
+    // Replace with:
+    Cookies.set("isCookiesAccepted", true);
     setIsPopupSettingsOpened(false);
   } 
 
@@ -92,51 +97,56 @@ const Home = () => {
         <title>Vivasoft Consulting and Learning</title>
         <meta
           name="description"
-          content="Siamo un'azienda specializzata in consulenza e formazione con tecnologia Microsoft. Offriamo soluzioni innovative e siamo operativi dal 2014, pronti ad affrontare nuove sfide."
+          content="o il futuro delle aziende con soluzioni su misura, pensate per vincere ogni sfida.Grazie al nostro supporto, le aziende ottimizzano i processi, migliorano l’efficienza operativa e ottengono risultati concreti e duraturi, mantenendosi sempre un passo avanti.Tutto questo è reso possibile dalla formazione e dallo sviluppo che offriamo attraverso i nostri collaboratori, esperti nelle tecnologie più avanzate di Microsoft.Dall'utilizzo della scalabilità di Azure Cloud alla creazione di soluzioni dinamiche ed innovative con Microsoft Power Platform fino all'ottimizzazione della collaborazione aziendale con Microsoft SharePoint Online, forniamo le competenze indispensabili per trasformare il tuo team in un motore di innovazione.La nostra missione? Trasformare le sfide in opportunità.Con programmi formativi personalizzati, facciamo della tecnologia un vero vantaggio strategico per il tuo successo."
         />
         <meta name="keywords" content="Microsoft Azure, Microsoft 365, Microsoft Power Platform, Microsoft Power Apps, Microsoft Power BI, Microsoft Power Automate, Consulenza, Formazione, Microsoft" />
         <meta name="author" content="Vivasoft" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="/favicon.ico?v=1" rel="shortcut icon" type="image/x-icon"></link>
+        {/* Favicon in PNG per desktop e tab */}
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />  {/* Favicon più grande per schermi Retina */}
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />  {/* Una dimensione intermedia */}
       </Head>
       <div className='bg-primary/60 h-full'>
         {/* text */}
-        <div className='w-full h-full bg-gradient-to-r from-primary via-black/30 to-black/10 py-80'>
-          <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto'>
+        <div className='w-full h-full bg-gradient-to-r from-primary via-black/10 to-black/10 xl:py-60 py-80'>
+          <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto xl:pt-0 pt-20'>
             {/* Modal popup MUI fullScreen in <Dialog */}
             <Dialog open={isPopupOpened} onClose={handleClose} fullWidth maxWidth="sm">
-              <DialogTitle>This site uses cookies <IconButton style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
+              <DialogTitle>Questo sito utilizza cookies <IconButton aria-label="Chiudi popup" style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                On our site we use technical and analytical cookies. These are necessary for the correct functioning of our site and to provide us with information on how it is used.
+                  Sul nostro sito utilizziamo cookies tecnici ed analitici. Questi sono necessari per il corretto funzionamento del nostro sito e per fornirci informazioni su come viene utilizzato.
                 </DialogContentText>
               </DialogContent>
 
               <DialogActions>
-                <Button variant='outlined' onClick={goToImpostazioni}>Settings</Button>
-                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedFirtPopup}>I understand, I accept</Button>
+                <Button variant='outlined' aria-label="Impostazioni cookie" onClick={goToImpostazioni}>Impostazioni</Button>
+                <Button color="success" aria-label="Accetto Cookie" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedFirtPopup}>Ho capito, accetto</Button>
                 {/* <Button color="error" className={styles.PopupButtonError} variant='contained' onClick={closePopup}>Close</Button> */}
               </DialogActions>
               
             </Dialog>
 
             <Dialog open={isPopupSettingsOpened} onClose={handlePopupSettingsClose} fullWidth maxWidth="sm">
-              <DialogTitle>Cookies settings<IconButton style={{float:'right'}} onClick={closeSettingsPopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
+              <DialogTitle>Impostazioni dei cookies <IconButton style={{float:'right'}} onClick={closeSettingsPopup}><CloseIcon color="primary" title="Chiudi pannello cookies"></CloseIcon></IconButton></DialogTitle>
               <DialogContent>
                 <Stack spacing={2} margin={2}>
                   {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Agree terms & conditions"></FormControlLabel> */}
                   {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Accetto termini e condizioni"></FormControlLabel> */}
                   <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Tecnici"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>Technical cookies are essential for the correct functioning of this site and are used for reasons related to navigation, saving preferences and loading images.</span>
+                  <span className={styles.TextAlignJustify}>I cookie tecnici sono essenziali per il corretto funzionamento di questo sito e vengono utilizzati per motivi legati alla navigazione, al salvataggio delle preferenze e al caricamento delle immagini.</span>
                   <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Analitici"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>Analytical cookies are used to analyze and evaluate the performance of this website and provide information on how it is used. The data collected through these cookies are aggregated to perform analyses and are used for improvements and optimizations.</span>
+                  <span className={styles.TextAlignJustify}>I cookie analitici vengono utilizzati per analizzare e valutare le prestazioni di questo sito Web e fornire informazioni su come viene utilizzato. I dati raccolti tramite questi cookies vengono aggregati per eseguire delle analisi e sono utilizzati per miglioramenti ed ottimizzazioni.</span>
                   <FormControlLabel control={<Checkbox></Checkbox>} label="Marketing"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>Marketing cookies are used to track visitors across websites. We use them to show ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers.</span>
+                  <span className={styles.TextAlignJustify}>I cookie di marketing vengono utilizzati per tracciare i visitatori sui siti Web. Li utilizziamo per mostrare annunci pertinenti e coinvolgenti per il singolo utente e quindi di maggior valore per editori ed inserzionisti terzi.</span>
                 </Stack>
               </DialogContent>
 
               <DialogActions>
-                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}>Browse with selected cookies</Button>
+                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}  aria-label="Naviga con i cookies selezionati" title="Title">Naviga con i cookies selezionati</Button>
               </DialogActions>
               
             </Dialog>
@@ -148,19 +158,25 @@ const Home = () => {
               exit='hidden'
               className='h1'
             >
-              Consulting services and <br /> Learning{' '}
+              Consulting and <br /> Training {' '}
               <span className='text-accent'>Microsoft</span>
             </motion.h1>
             {/* subtitle */}
             <motion.p
               variants={fadeIn('down', 0.3)}
-              initial='hidden'
-              animate='show'
-              exit='hidden'
-              className='max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16'
+              initial="hidden"
+              animate="show"
+              exit="hidden"
+              className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
             >
-              Since 2014, we have been transforming the future of companies with innovative and customized solutions, designed to face and overcome every challenge.
-              With our support, they optimize business processes, improve operations and achieve lasting results, always staying one step ahead.
+              
+              <span className='text-lg font-bold'>
+              Since 2014, we have been shaping the future of companies with tailor-made solutions designed to meet every challenge.  </span>
+              <span className='text-lg'>Thanks to our support, companies optimize processes, improve operational efficiency and achieve concrete and lasting results, always staying one step ahead. </span>
+              <span className='text-lg'>All this is made possible by the training and development that we offer through our collaborators, experts in the most advanced technologies of Microsoft. </span>
+              <span className='text-lg'>rom using the scalability of <span className='text-accent font-bold'>Azure Cloud</span> to creating dynamic and innovative solutions with  <span className='text-accent font-bold'>Microsoft Power Platform</span> to optimizing business collaboration with <span className='text-accent font-bold'>Microsoft SharePoint Online</span>, We provide the skills you need to turn your team into an engine of innovation. </span>
+              <span className='text-lg font-bold'> Our mission? Turning challenges into opportunities. </span>
+              <span className='text-lg'>With customized training programs, we make technology a real strategic advantage for your success.</span>
             </motion.p>
           </div>
         </div>

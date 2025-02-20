@@ -4,39 +4,39 @@ import Image from 'next/image'; // Se stai usando Next.js
 export const serviceData = [
   {
     image: '/Power_APPS.png',
-    pdf: '/brochures/PowerApps.pdf',  // Percorso del file PDF per questo corso C#
+    pdf: '/brochures/IT/PowerApps.pdf',  // Percorso del file PDF per questo corso C#
   },
   {
     image: '/Azure.png',
-    pdf: '/brochures/Azure.pdf',  // Percorso del file PDF per questo corso React
+    pdf: '/brochures/IT/Azure.pdf',  // Percorso del file PDF per questo corso React
   },
   {
     image: '/Sharepoint.jpg',
-    pdf: '/brochures/Sharepoint.pdf',  // Percorso del file PDF per questo corso Full stack Microsoft
+    pdf: '/brochures/IT/Sharepoint.pdf',  // Percorso del file PDF per questo corso Full stack Microsoft
   },
   {
     image: '/kuber.jpg',
-    pdf: '/brochures/Kubernetes.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/IT/Kubernetes.pdf',  // Percorso del file PDF per questo corso
   },
   {
     image: '/PowerAutomate.png',
-    pdf: '/brochures/PowerAutomate.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/IT/PowerAutomate.pdf',  // Percorso del file PDF per questo corso
   },
   {
     image: '/PowerBI.png',
-    pdf: '/brochures/PowerBI.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/IT/PowerBI.pdf',  // Percorso del file PDF per questo corso
   },
   {
     image: '/React.png',
-    pdf: '/brochures/React.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/IT/React.pdf',  // Percorso del file PDF per questo corso
   },
   {
     image: '/Csharp.jpeg',
-    pdf: '/brochures/CSharp.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/IT/CSharp.pdf',  // Percorso del file PDF per questo corso
   },
   {
     image: '/python.png',
-    pdf: '/brochures/Python.pdf',  // Percorso del file PDF per questo corso
+    pdf: '/brochures/IT/Python.pdf',  // Percorso del file PDF per questo corso
   },
 ];
 
