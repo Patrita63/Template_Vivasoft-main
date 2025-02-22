@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Socials from './Socials'; // Assicurati di avere il componente Socials importato
@@ -81,7 +80,6 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
-
 
             <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
               <Image

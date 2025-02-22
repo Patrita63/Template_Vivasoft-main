@@ -29,7 +29,6 @@ import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentTe
 /* Collecting page data  .C:\Vivasoft\Template_Vivasoft\Template_Vivasoft-main\node_modules\@mui\material\FormControl\FormControlContext.js:1
 import * as React from 'react'; */
 import CloseIcon from "@mui/icons-material/Close";
-import { Bolt } from '@mui/icons-material';
 
 const Home = () => {
   // COOKIES Management
@@ -39,9 +38,9 @@ const Home = () => {
   useEffect(() => {
     localStorage.setItem("isLanguageIta", 'true');
     // debugger;
-    // const isPopupToShow = Boolean(localStorage.getItem("isCookiesAccepted"));
+    // const isPopupToShow = Boolean(localStorage.getItem("isCookiesAcceptedIT"));
     // Replace with:
-    const isPopupToShow = Cookies.get("isCookiesAccepted") === "true" ? true : false;
+    const isPopupToShow = Cookies.get("isCookiesAcceptedIT") === "true" ? true : false;
     console.log('isPopupToShow: ' + isPopupToShow);
 
     if(!isPopupToShow){
@@ -65,9 +64,9 @@ const Home = () => {
   } 
 
   const cookiesAcceptedFirtPopup = () =>{
-    // localStorage.setItem("isCookiesAccepted", true);
+    // localStorage.setItem("isCookiesAcceptedIT", true);
     // Replace with:
-    Cookies.set("isCookiesAccepted", true);
+    Cookies.set("isCookiesAcceptedIT", true);
     setIsPopupOpened(false);
   } 
 
@@ -80,9 +79,9 @@ const Home = () => {
   } 
 
   const cookiesAcceptedPopupSettings = () =>{
-    // localStorage.setItem("isCookiesAccepted", true);
+    // localStorage.setItem("isCookiesAcceptedIT", true);
     // Replace with:
-    Cookies.set("isCookiesAccepted", true);
+    Cookies.set("isCookiesAcceptedIT", true);
     setIsPopupSettingsOpened(false);
   } 
 
@@ -116,7 +115,7 @@ const Home = () => {
           <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto xl:pt-0 pt-20'>
             {/* Modal popup MUI fullScreen in <Dialog */}
             <Dialog open={isPopupOpened} onClose={handleClose} fullWidth maxWidth="sm">
-              <DialogTitle>Questo sito utilizza cookies <IconButton aria-label="Chiudi popup" style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
+              <DialogTitle>Questo sito utilizza cookies 🍪 <IconButton aria-label="Chiudi popup" style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
               <DialogContent>
                 <DialogContentText>
                   Sul nostro sito utilizziamo cookies tecnici ed analitici. Questi sono necessari per il corretto funzionamento del nostro sito e per fornirci informazioni su come viene utilizzato.
@@ -138,11 +137,11 @@ const Home = () => {
                   {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Agree terms & conditions"></FormControlLabel> */}
                   {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Accetto termini e condizioni"></FormControlLabel> */}
                   <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Tecnici"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>I cookie tecnici sono essenziali per il corretto funzionamento di questo sito e vengono utilizzati per motivi legati alla navigazione, al salvataggio delle preferenze e al caricamento delle immagini.</span>
+                  <span className={styles.TextAlignJustify}>I cookies tecnici sono essenziali per il corretto funzionamento di questo sito e vengono utilizzati per motivi legati alla navigazione, al salvataggio delle preferenze e al caricamento delle immagini.</span>
                   <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Analitici"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>I cookie analitici vengono utilizzati per analizzare e valutare le prestazioni di questo sito Web e fornire informazioni su come viene utilizzato. I dati raccolti tramite questi cookies vengono aggregati per eseguire delle analisi e sono utilizzati per miglioramenti ed ottimizzazioni.</span>
+                  <span className={styles.TextAlignJustify}>I cookies analitici vengono utilizzati per analizzare e valutare le prestazioni di questo sito Web e fornire informazioni su come viene utilizzato. I dati raccolti tramite questi cookies vengono aggregati per eseguire delle analisi e sono utilizzati per miglioramenti ed ottimizzazioni.</span>
                   <FormControlLabel control={<Checkbox></Checkbox>} label="Marketing"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>I cookie di marketing vengono utilizzati per tracciare i visitatori sui siti Web. Li utilizziamo per mostrare annunci pertinenti e coinvolgenti per il singolo utente e quindi di maggior valore per editori ed inserzionisti terzi.</span>
+                  <span className={styles.TextAlignJustify}>I cookies di marketing vengono utilizzati per tracciare i visitatori sui siti Web. Li utilizziamo per mostrare annunci pertinenti e coinvolgenti per il singolo utente e quindi di maggior valore per editori ed inserzionisti terzi.</span>
                 </Stack>
               </DialogContent>
 

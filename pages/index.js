@@ -8,14 +8,13 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // debugger;
-    // localStorage.setItem("isCookiesAccepted", 'false');
-    // Replace with: expire after 8 hours
+    // Expire after 8 hours
     const expirationDate = new Date();
     expirationDate.setHours(expirationDate.getHours() + 8);
-    Cookies.set("isCookiesAccepted", "false", { expires: expirationDate, path: "/" });
-    console.log('Home page' + Cookies.get("isCookiesAccepted")); 
-
+    Cookies.set("isCookiesAcceptedEN", "false", { expires: expirationDate, path: "/" });
+    console.log('Home page EN' + Cookies.get("isCookiesAcceptedEN")); 
+    Cookies.set("isCookiesAcceptedIT", "false", { expires: expirationDate, path: "/" });
+    console.log('Home page IT' + Cookies.get("isCookiesAcceptedIT")); 
     // Redirect to home page it-IT
     router.push("/it-IT");
   }, [router]);

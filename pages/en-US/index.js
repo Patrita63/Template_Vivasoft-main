@@ -38,9 +38,9 @@ const Home = () => {
   useEffect(() => {
     localStorage.setItem("isLanguageIta", 'true');
     // debugger;
-    // const isPopupToShow = Boolean(localStorage.getItem("isCookiesAccepted"));
+    // const isPopupToShow = Boolean(localStorage.getItem("isCookiesAcceptedEN"));
     // Replace with:
-    const isPopupToShow = Cookies.get("isCookiesAccepted") === "true" ? true : false;
+    const isPopupToShow = Cookies.get("isCookiesAcceptedEN") === "true" ? true : false;
     console.log('isPopupToShow: ' + isPopupToShow);
 
     if(!isPopupToShow){
@@ -64,9 +64,9 @@ const Home = () => {
   } 
 
   const cookiesAcceptedFirtPopup = () =>{
-    // localStorage.setItem("isCookiesAccepted", true);
+    // localStorage.setItem("isCookiesAcceptedEN", true);
     // Replace with:
-    Cookies.set("isCookiesAccepted", true);
+    Cookies.set("isCookiesAcceptedEN", true);
     setIsPopupOpened(false);
   } 
 
@@ -79,9 +79,9 @@ const Home = () => {
   } 
 
   const cookiesAcceptedPopupSettings = () =>{
-    // localStorage.setItem("isCookiesAccepted", true);
+    // localStorage.setItem("isCookiesAcceptedEN", true);
     // Replace with:
-    Cookies.set("isCookiesAccepted", true);
+    Cookies.set("isCookiesAcceptedEN", true);
     setIsPopupSettingsOpened(false);
   } 
 
@@ -97,9 +97,9 @@ const Home = () => {
         <title>Vivasoft Consulting and Learning</title>
         <meta
           name="description"
-          content="o il futuro delle aziende con soluzioni su misura, pensate per vincere ogni sfida.Grazie al nostro supporto, le aziende ottimizzano i processi, migliorano l’efficienza operativa e ottengono risultati concreti e duraturi, mantenendosi sempre un passo avanti.Tutto questo è reso possibile dalla formazione e dallo sviluppo che offriamo attraverso i nostri collaboratori, esperti nelle tecnologie più avanzate di Microsoft.Dall'utilizzo della scalabilità di Azure Cloud alla creazione di soluzioni dinamiche ed innovative con Microsoft Power Platform fino all'ottimizzazione della collaborazione aziendale con Microsoft SharePoint Online, forniamo le competenze indispensabili per trasformare il tuo team in un motore di innovazione.La nostra missione? Trasformare le sfide in opportunità.Con programmi formativi personalizzati, facciamo della tecnologia un vero vantaggio strategico per il tuo successo."
+          content="Since 2014, we have been shaping the future of companies with tailor-made solutions designed to overcome every challenge.Thanks to our support, companies optimize processes, improve operational efficiency and achieve concrete and lasting results, always staying one step ahead. All this is made possible by the training and development we offer through our employees, experts in the most advanced technologies of Microsoft.From the use of the scalability of Azure Cloud to the creation of dynamic and innovative solutions with Microsoft Power Platform to the optimization of business collaboration with Microsoft SharePoint Online, We provide the skills you need to turn your team into an engine of innovation.Our mission? Turn challenges into opportunities.With customized training programs, we make technology a strategic advantage for your success."
         />
-        <meta name="keywords" content="Microsoft Azure, Microsoft 365, Microsoft Power Platform, Microsoft Power Apps, Microsoft Power BI, Microsoft Power Automate, Consulenza, Formazione, Microsoft" />
+        <meta name="keywords" content="Microsoft Azure, Microsoft 365, Microsoft Power Platform, Microsoft Power Apps, Microsoft Power BI, Microsoft Power Automate, Consulting, Learning, Microsoft" />
         <meta name="author" content="Vivasoft" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="/favicon.ico?v=1" rel="shortcut icon" type="image/x-icon"></link>
@@ -115,38 +115,38 @@ const Home = () => {
           <div className='text-center flex flex-col justify-center  xl:text-left h-full container mx-auto xl:pt-0 pt-20'>
             {/* Modal popup MUI fullScreen in <Dialog */}
             <Dialog open={isPopupOpened} onClose={handleClose} fullWidth maxWidth="sm">
-              <DialogTitle>Questo sito utilizza cookies <IconButton aria-label="Chiudi popup" style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
+              <DialogTitle>Our website is sweeter with cookies 🍪<IconButton aria-label="Chiudi popup" style={{float:'right'}} onClick={closePopup}><CloseIcon color="primary"></CloseIcon></IconButton></DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  Sul nostro sito utilizziamo cookies tecnici ed analitici. Questi sono necessari per il corretto funzionamento del nostro sito e per fornirci informazioni su come viene utilizzato.
+                On our site we use technical and analytical cookies. These are necessary for the proper functioning of our website and to provide us with information about how it is used.
                 </DialogContentText>
               </DialogContent>
 
               <DialogActions>
-                <Button variant='outlined' aria-label="Impostazioni cookie" onClick={goToImpostazioni}>Impostazioni</Button>
-                <Button color="success" aria-label="Accetto Cookie" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedFirtPopup}>Ho capito, accetto</Button>
+                <Button variant='outlined' aria-label="Cookies settings" onClick={goToImpostazioni}>Settings</Button>
+                <Button color="success" aria-label="I accept  Cookies" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedFirtPopup}>I understand, I accept</Button>
                 {/* <Button color="error" className={styles.PopupButtonError} variant='contained' onClick={closePopup}>Close</Button> */}
               </DialogActions>
               
             </Dialog>
 
             <Dialog open={isPopupSettingsOpened} onClose={handlePopupSettingsClose} fullWidth maxWidth="sm">
-              <DialogTitle>Impostazioni dei cookies <IconButton style={{float:'right'}} onClick={closeSettingsPopup}><CloseIcon color="primary" title="Chiudi pannello cookies"></CloseIcon></IconButton></DialogTitle>
+              <DialogTitle>Cookies settings <IconButton style={{float:'right'}} onClick={closeSettingsPopup}><CloseIcon color="primary" title="Close cookies panel"></CloseIcon></IconButton></DialogTitle>
               <DialogContent>
                 <Stack spacing={2} margin={2}>
                   {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Agree terms & conditions"></FormControlLabel> */}
                   {/* <FormControlLabel control={<Checkbox></Checkbox>} label="Accetto termini e condizioni"></FormControlLabel> */}
-                  <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Tecnici"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>I cookie tecnici sono essenziali per il corretto funzionamento di questo sito e vengono utilizzati per motivi legati alla navigazione, al salvataggio delle preferenze e al caricamento delle immagini.</span>
-                  <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Analitici"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>I cookie analitici vengono utilizzati per analizzare e valutare le prestazioni di questo sito Web e fornire informazioni su come viene utilizzato. I dati raccolti tramite questi cookies vengono aggregati per eseguire delle analisi e sono utilizzati per miglioramenti ed ottimizzazioni.</span>
+                  <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Technical"></FormControlLabel>
+                  <span className={styles.TextAlignJustify}>Technical cookies are essential for the proper functioning of this site and are used for reasons related to navigation, saving preferences and loading images.</span>
+                  <FormControlLabel control={<Checkbox defaultChecked disabled></Checkbox>} label="Analytical"></FormControlLabel>
+                  <span className={styles.TextAlignJustify}>Analytical cookies are used to analyze and evaluate the performance of this website and provide information about how it is used. The data collected by these cookies are aggregated for analysis and used for improvements and optimizations.</span>
                   <FormControlLabel control={<Checkbox></Checkbox>} label="Marketing"></FormControlLabel>
-                  <span className={styles.TextAlignJustify}>I cookie di marketing vengono utilizzati per tracciare i visitatori sui siti Web. Li utilizziamo per mostrare annunci pertinenti e coinvolgenti per il singolo utente e quindi di maggior valore per editori ed inserzionisti terzi.</span>
+                  <span className={styles.TextAlignJustify}>Marketing cookies are used to track visitors on websites. We use them to show ads that are relevant and engaging for the individual user and therefore of greater value to third-party publishers and advertisers.</span>
                 </Stack>
               </DialogContent>
 
               <DialogActions>
-                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}  aria-label="Naviga con i cookies selezionati" title="Title">Naviga con i cookies selezionati</Button>
+                <Button color="success" className={styles.PopupButtonSuccess} variant='contained' onClick={cookiesAcceptedPopupSettings}  aria-label="Browse with cookies selected" title="Title">Browse with cookies selected</Button>
               </DialogActions>
               
             </Dialog>
