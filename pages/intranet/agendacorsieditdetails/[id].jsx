@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import EditAgendaCorsiForm from '../../../components/EditAgendaCorsiForm';
-import IntranetLayout from "../../../components/IntranetLayout";
 import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 import Credits from "../../../components/Credits";
@@ -11,24 +10,6 @@ const EditAgendaCorsiPage = () => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => setIsClient(true), []);
-
-  const initialData = {
-    Id: 1,
-    DataInizio: '2023-10-01T09:00',
-    DataFine: '2023-10-05T18:00',
-    IdCatalogoCorsi: 1,
-    IdLearningCenter: 1,
-    ClienteFinale: 'Client A',
-    Descrizione: 'Course Description',
-    NumeroDiscenti: 20,
-    IdTipoErogazione: 1,
-    TotaleOre: 40,
-    IsMTM: true,
-    IsFinanziato: false,
-    IsAcademy: true,
-    IdStatoAgenda: 2,
-    Note: 'Additional notes here...',
-  };
 
   const handleSubmit = (formData) => {
     console.log('Form Data Submitted:', formData);
@@ -41,10 +22,7 @@ const EditAgendaCorsiPage = () => {
       <Box sx={{ margin: "16px", "& .MuiBreadcrumbs-root": { color: "#fff" } }}>
         <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
       </Box>
-      {/* // ✅ Wrap the page with IntranetLayout */}
-      <IntranetLayout>
-        <EditAgendaCorsiForm initialData={initialData} onSubmit={handleSubmit} />
-      </IntranetLayout>
+        <EditAgendaCorsiForm onSubmit={handleSubmit} />
       {/* Footer */}
       <footer className={styles.footer}>
         <Credits />

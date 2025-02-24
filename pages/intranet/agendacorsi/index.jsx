@@ -5,7 +5,6 @@ import NavIntranetMenu from '../../../components/NavIntranetMenu';
 import DynamicBreadCrumbs from '../../../components/DynamicBreadCrumbs';
 import Credits from "../../../components/Credits";
 import AgendaDataGrid from "../../../components/AgendaGrid";
-import IntranetLayout from "../../../components/IntranetLayout";
 
 import styles from "../Home.module.css";
 
@@ -25,9 +24,7 @@ export default function AgendaCorsi() {
         <DynamicBreadCrumbs className={styles.MarginTop} aria-label="breadcrumb" />
       </Box>
       <div>
-        <IntranetLayout>
-            <AgendaDataGrid />
-        </IntranetLayout>
+        <AgendaDataGrid />
       </div>
       {/* Footer */}
       <footer className={styles.footer}>

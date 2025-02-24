@@ -1,36 +1,45 @@
-import getConnection from "../../../lib/dbsqlazure";
+import { getConnection, closeDatabaseConnection } from "../../../lib/dbsqlazurenew";
+import sql from "mssql";
 
 export default async function handler(req, res) {
-    const { id } = req.query;
+    const { id } = req.query; // Extract course ID from URL
 
+    let pool;
     if (req.method === 'GET') {
         try {
-            const pool = await getConnection();
+
+            pool = await getConnection(); // Establish a database connection
+
+            const query = `
+                SELECT 
+                    Agenda.*, 
+                    CatCor.Nome AS CatalogoNome, 
+                    LCenter.Nome AS LearningCenterNome, 
+                    StaAgenda.Nome AS StatoNome, 
+                    TipoErog.Nome AS TipoErogNome 
+                FROM dbo.T_AgendaCorsi AS Agenda
+                INNER JOIN dbo.T_CatalogoCorsi AS CatCor ON Agenda.IdCatalogoCorsi = CatCor.Id
+                INNER JOIN dbo.T_LearningCenter AS LCenter ON Agenda.IdLearningCenter = LCenter.Id
+                INNER JOIN dbo.T_StatoAgenda AS StaAgenda ON Agenda.IdStatoAgenda = StaAgenda.Id
+                INNER JOIN dbo.T_TipoErogazione AS TipoErog ON Agenda.IdTipoErogazione = TipoErog.Id
+                WHERE Agenda.Id = @Id
+                        `;
             const result = await pool.request()
                 .input('Id', sql.Int, id)
-                .query(`
-                    SELECT 
-                        Agenda.*, 
-                        CatCor.Nome AS CatalogoNome, 
-                        LCenter.Nome AS LearningCenterNome, 
-                        StaAgenda.Nome AS StatoNome, 
-                        TipoErog.Nome AS TipoErogNome 
-                    FROM dbo.T_AgendaCorsi AS Agenda
-                    INNER JOIN dbo.T_CatalogoCorsi AS CatCor ON Agenda.IdCatalogoCorsi = CatCor.Id
-                    INNER JOIN dbo.T_LearningCenter AS LCenter ON Agenda.IdLearningCenter = LCenter.Id
-                    INNER JOIN dbo.T_StatoAgenda AS StaAgenda ON Agenda.IdStatoAgenda = StaAgenda.Id
-                    INNER JOIN dbo.T_TipoErogazione AS TipoErog ON Agenda.IdTipoErogazione = TipoErog.Id
-                    WHERE Agenda.Id = @Id
-                `);
+                .query(query);
 
             if (!result.recordset.length) {
                 return res.status(404).json({ error: 'Not Found' });
             }
             return res.status(200).json({
-                data: result.recordset
+                dataAgenda: result.recordset[0]
             });
         } catch (error) {
             res.status(500).json({ error: error.message });
+        } finally {
+            if (pool) {
+                await closeDatabaseConnection();
+            }
         }
     } else if (req.method === 'PUT') {
         try {

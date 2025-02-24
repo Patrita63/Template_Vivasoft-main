@@ -1,15 +1,14 @@
-import getConnection from "../../../lib/dbsqlazure";
+import { getConnection, closeDatabaseConnection } from "../../../lib/dbsqlazurenew";
 
 export default async function handler(req, res) {
     const { id } = req.query;
-
+    let pool;
     if (req.method === 'GET') {
         try {
-            const pool = await getConnection();
-            const result = await pool.request()
-                .input('Id', sql.Int, id)
-                .query(`
-                    SELECT 
+            pool = await getConnection(); // Establish a database connection
+
+            const query = `
+                SELECT 
                     CatCor.Id, CatCor.Nome AS NomeCorso, CatCor.Descrizione AS DescrizioneCorso, 
                     CatCor.Link, CatCor.Durata,
                     Tec.Nome AS NomeTecnologia, Tec.Descrizione AS DescrizioneTecnologia,
@@ -18,13 +17,22 @@ export default async function handler(req, res) {
                     INNER JOIN dbo.T_Tecnologia AS Tec ON CatCor.IdTecnologia = Tec.Id
                     INNER JOIN dbo.T_Provider AS Prov ON Tec.IdProvider = Prov.Id
                     WHERE Agenda.Id = @Id
-                `);
+            `;
+            const result = await pool
+                .request()
+                .input('Id', sql.Int, id)
+                .query(query);
+
             if (!result.recordset.length) {
                 return res.status(404).json({ error: 'Not Found' });
             }
             res.status(200).json(result.recordset[0]);
         } catch (error) {
             res.status(500).json({ error: error.message });
+        } finally {
+            if (pool) {
+                await closeDatabaseConnection();
+            }
         }
     } else if (req.method === 'PUT') {
         // Update course

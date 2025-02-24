@@ -2,41 +2,19 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, Container, Typography, Box } from "@mui/material";
 import { useRouter } from 'next/router';
-import { useLookups } from "../context/LookupsContext";
 
 const AgendaDataGrid = () => {
     // To navigate to another page
     const router = useRouter();
     const [agendas, setAgendas] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { lookups, setLookups } = useLookups();
-    const [lookupsLoaded, setLookupsLoaded] = useState(false); // ✅ Prevent infinite loop
     const [columnVisibilityModel, setColumnVisibilityModel] = useState({
         IdLearningCenter: false, // ✅ Hide this column
     });
 
     useEffect(() => {
-        const fetchLookups = async () => {
-            if (!lookupsLoaded) {  // ✅ Fetch only once
-                try {
-                    const response = await fetch("/api/agenda/retrieveaccessorytables");
-                    const data = await response.json();
-                    setLookups(data.lookups);
-                    setLookupsLoaded(true);
-                } catch (error) {
-                    console.error("Error fetching lookups:", error);
-                }
-            }
-        };
-
-        fetchLookups();
-    }, [lookupsLoaded, setLookups]);
-
-    useEffect(() => {
-        if (lookupsLoaded) {  // ✅ Fetch data only after lookups are loaded
-            fetchData();
-        }
-    }, [lookupsLoaded]); // ✅ Depend on `lookupsLoaded` to avoid infinite loop
+        fetchData();
+    }, []); 
 
     const fetchData = async () => {
         fetch("/api/agenda/selectinsertagenda")
@@ -113,9 +91,10 @@ const AgendaDataGrid = () => {
             console.log("Course Days:", courseDays);
 
             // Example: Finding `IdCalendario` for each day from lookups
-            const idCalendarioList = courseDays.map(day => {
+            // TODO
+            /* const idCalendarioList = courseDays.map(day => {
                 return lookups?.calendario?.find(cal => formatDate(cal.Data) === day)?.Id || null;
-            });
+            }); */
 
             console.log("Selected Calendar IDs:", idCalendarioList);
 
@@ -138,18 +117,20 @@ const AgendaDataGrid = () => {
             // WHERE Email = 'p.tardiolobonifazi@vivasoft.it'
 
             // Fetch Aula (Assuming it is linked to Learning Center)
-            const idAula = lookups?.aula?.find(aula => aula.IdLearningCenter === idLearningCenter)?.Id || null;
+            // TODO
+            // const idAula = lookups?.aula?.find(aula => aula.IdLearningCenter === idLearningCenter)?.Id || null;
 
             // Fetch Trainer User ID (Placeholder Logic)
-            const idUtente = lookups?.utente?.find(user => user.Email === 'p.tardiolobonifazi@vivasoft.it')?.Id || null;
+            // TODO
+            // const idUtente = lookups?.utente?.find(user => user.Email === 'p.tardiolobonifazi@vivasoft.it')?.Id || null;
 
-            console.log({
+            /* console.log({
                 idAgendaCorsi,
                 idCalendarioList,
                 idLearningCenter,
                 idAula,
                 idUtente,
-            });
+            }); */
 
             // Here, insert the event into the DB
             // (Use API call to send these values)

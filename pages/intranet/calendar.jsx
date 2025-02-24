@@ -184,7 +184,6 @@ const CalendarVivasoft = () => {
         );
     };
 
-
     // 📌 Check User Authentication
     useEffect(() => {
         setIsClient(true);
@@ -208,6 +207,7 @@ const CalendarVivasoft = () => {
     const fetchCalendarData = async (year, monthname) => {
         try {
             console.log('Fetching data for:', year, monthname);
+            debugger;
             const response = await fetch("/api/agenda/managecalendar", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

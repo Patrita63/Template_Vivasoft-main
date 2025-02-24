@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import ParticlesContainer from "/components/ParticlesContainer";
 import styles from "./Login.module.css";
@@ -68,7 +68,8 @@ const Login = () => {
   };
 
   const handleLogin = async (loginData) => {
-    console.log("🔵 Logging in with:", loginData);
+    setLoading(true);
+    setError(null); // Reset previous error messages
     try {
       const response = await fetch("/api/authenticate", {
         method: "POST",
@@ -79,33 +80,33 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || "Errore durante il login");
-        return;
+        setError(data.error || "Credenziali non valide");
+      } else {
+
+        // ✅ Store user data in cookies
+        const expirationDate = new Date();
+        expirationDate.setHours(expirationDate.getHours() + 8);
+
+        Cookies.set("isAuthenticated", "true", { expires: expirationDate, secure: true });
+        Cookies.set("username", loginData.email, { expires: expirationDate, secure: true });
+
+        const greeting = data.user.Gender === "M" ? "Benvenuto" : "Benvenuta";
+        Cookies.set("nominativo", `${greeting} ${data.user.Nome} ${data.user.Cognome}`, {
+          expires: expirationDate,
+          secure: true
+        });
+
+        router.push("/intranet");
       }
-
-      const expirationDate = new Date();
-      expirationDate.setHours(expirationDate.getHours() + 8);
-
-      Cookies.set("isAuthenticated", "true", { expires: expirationDate, secure: true }); // Expires after 8 hours
-      Cookies.set("username", loginData.email, { expires: expirationDate, secure: true });
-
-      // Cookies.set("isAuthenticated", "true", { expires: 1 / 48, secure: true }); // Expires in 30 minutes
-      // Cookies.set("username", loginData.email, { expires: 1 / 48, secure: true });
-
-      const greeting = data.user.Gender === "M" ? "Benvenuto" : "Benvenuta";
-      // Cookies.set("nominativo", `${greeting} ${data.user.Nome} ${data.user.Cognome}`, { expires: 1 / 48, secure: true });
-
-      Cookies.set("nominativo", `${greeting} ${data.user.Nome} ${data.user.Cognome}`, { expires: expirationDate, secure: true });
-
-      router.push("/intranet");
 
     } catch (err) {
       console.error("❌ Login error:", err);
-      setError("Errore di connessione al server");
+      setError(err.message || "Errore durante il login"); // Correctly show error message
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <>

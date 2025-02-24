@@ -1,10 +1,12 @@
-import getConnection from "../../../lib/dbsqlazure";
+import { getConnection, closeDatabaseConnection } from "../../../lib/dbsqlazurenew";
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
+        let pool;
         try {
-            const pool = await getConnection();
-            const result = await pool.request().query(`
+            pool = await getConnection(); // Establish a database connection
+
+            const query = `
                 SELECT 
                     Agenda.Id, Agenda.DataInizio, Agenda.DataFine
                     ,CatCor.Nome AS NomeCorso, CatCor.Durata
@@ -16,10 +18,17 @@ export default async function handler(req, res) {
                 INNER JOIN dbo.T_LearningCenter AS LCenter ON Agenda.IdLearningCenter = LCenter.Id
                 INNER JOIN dbo.T_StatoAgenda AS StaAgenda ON Agenda.IdStatoAgenda = StaAgenda.Id
                 INNER JOIN dbo.T_TipoErogazione AS TipoErog ON Agenda.IdTipoErogazione = TipoErog.Id
-            `);
+            `;
+
+            const result = await pool.request().query(query);
             res.status(200).json(result.recordset);
+
         } catch (error) {
             res.status(500).json({ error: error.message });
+        } finally {
+            if (pool) {
+                await closeDatabaseConnection();
+            }
         }
     } else if (req.method === 'POST') {
         try {
@@ -37,6 +46,10 @@ export default async function handler(req, res) {
             res.status(201).json({ message: 'Record created successfully' });
         } catch (error) {
             res.status(500).json({ error: error.message });
+        } finally {
+            if (pool) {
+                await closeDatabaseConnection();
+            }
         }
     } else {
         res.status(405).json({ error: 'Method Not Allowed' });

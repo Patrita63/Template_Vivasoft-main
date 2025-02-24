@@ -1,8 +1,8 @@
 // pages/api/authenticate.js
-import getConnection from '../../lib/dbsqlazure';
+import { getConnection, closeDatabaseConnection } from "../../lib/dbsqlazurenew";
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
+    if (req.method !== "POST") {
         return res.status(405).json({ error: "Method Not Allowed" });
     }
 
@@ -12,8 +12,10 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "Email and Password are required" });
     }
 
+    let pool;
     try {
-        const pool = await getConnection();
+        pool = await getConnection(); // Establish a database connection
+
         const query = `
             SELECT [Id], [Nome], [Cognome], [Email], [Phone],
                    [DataRegistrazione], [IdTipoUtente], [Password], [Code], Gender 
@@ -31,10 +33,17 @@ export default async function handler(req, res) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        return res.status(200).json({ user: result.recordset[0] });
+        const user = result.recordset[0];
+        delete user.Password;
+
+        return res.status(200).json({ user });
 
     } catch (err) {
-        console.error("Login Error:"+ err);
+        console.error("❌ Login Error:", err);
         return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        if (pool) {
+            await closeDatabaseConnection();
+        }
     }
 }
