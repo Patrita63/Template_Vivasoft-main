@@ -1,4 +1,4 @@
-import getConnection from "../../../lib/dbsqlazure";
+import { getConnection, closeDatabaseConnection } from "../../../lib/dbsqlazure";
 
 // If email and code are provided in the POST request, assume the request is for checking user registration.
 // If all parameters required for adding a user are provided, assume the request is for user creation.
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     return await getUsers(req, res);
   } else if (req.method === "POST") {
     const { nome, cognome, gender, email, phone, dataregistrazione, idtipoutente, password, code } = req.body;
-  
+
     // Step 3: Validate the email and code combination
     if (email && code && !nome && !cognome && !gender && !phone && !dataregistrazione && !idtipoutente && !password) {
       try {
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: "Error validating email and code" });
       }
     }
-  
+
     // Step 1: Check if the user is already registered and add them if not
     try {
       const emailCheck = await checkUserAlreadyRegistered(req, res, true);
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       console.error("Error checking email registration:", err.message);
       return res.status(500).json({ error: "Error checking email registration" });
     }
-  
+
     // Step 2: Add the user if they are not already registered
     try {
       if (!nome || !cognome || !gender || !email || !phone || !dataregistrazione || !idtipoutente || !password || !code) {
@@ -53,15 +53,15 @@ export default async function handler(req, res) {
   } else {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-  
+
 }
 
 // 🔹 Fetch All Users or Get User by ID
 async function getUsers(req, res) {
   const { id } = req.query;
-
+  let pool;
   try {
-    const pool = await getConnection();
+    pool = await getConnection(); // Establish a database connection
     let query;
     let result;
 
@@ -90,8 +90,12 @@ async function getUsers(req, res) {
 
     return res.status(200).json({ users: result.recordset });
   } catch (err) {
-    console.error("Error fetching users:"+ err);
+    console.error("Error fetching users:" + err);
     return res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    if (pool) {
+      await closeDatabaseConnection();
+    }
   }
 }
 
@@ -104,9 +108,9 @@ async function addUser(req, res) {
   if (!nome || !cognome || !gender || !email || !phone || !dataregistrazione || !idtipoutente || !password || !code || !idruolo) {
     return res.status(400).json({ error: "addUser REGISTERED - Missing required fields" });
   }
-
+  let pool;
   try {
-    const pool = await getConnection();
+    pool = await getConnection(); // Establish a database connection
     const query = `
       INSERT INTO [T_Register] (Nome, Cognome, Gender, Email, Phone, DataRegistrazione, IdTipoUtente, Password, Code, IdRuolo)
       VALUES (@Nome, @Cognome, @Gender, @Email, @Phone, @DataRegistrazione, @IdTipoUtente, @Password, @Code, @IdRuolo) -- GETDATE()
@@ -128,8 +132,12 @@ async function addUser(req, res) {
 
     return res.status(201).json({ message: "User added successfully" });
   } catch (err) {
-    console.error("Add User Error:"+ err);
+    console.error("Add User Error:" + err);
     return res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    if (pool) {
+      await closeDatabaseConnection();
+    }
   }
 }
 
@@ -140,9 +148,9 @@ async function updateUser(req, res) {
   if (!id || !nome || !cognome || !gender || !phone || !email || !dataregistrazione || !idtipoutente || !idruolo || !password || !code || !note) {
     return res.status(400).json({ error: "updateUser - Missing required fields" });
   }
-
+  let pool;
   try {
-    const pool = await getConnection();
+    pool = await getConnection(); // Establish a database connection
     const query = `
       UPDATE [T_Register]
       SET Nome = @Nome, Cognome = @Cognome, Gender = @Gender, Phone = @Phone, Email = @Email, DataRegistrazione = @DataRegistrazione, IdTipoUtente = @IdTipoUtente 
@@ -168,8 +176,12 @@ async function updateUser(req, res) {
 
     return res.status(200).json({ message: "User updated successfully" });
   } catch (err) {
-    console.error("Update Error:"+ err);
+    console.error("Update Error:" + err);
     return res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    if (pool) {
+      await closeDatabaseConnection();
+    }
   }
 }
 
@@ -181,16 +193,21 @@ async function deleteUser(req, res) {
     return res.status(400).json({ error: "User ID is required" });
   }
 
+  let pool;
   try {
-    const pool = await getConnection();
+    pool = await getConnection(); // Establish a database connection
     const query = `DELETE FROM [T_Register] WHERE Id = @Id`;
 
     await pool.request().input("Id", id).query(query);
 
     return res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
-    console.error("Delete Error:"+ err);
+    console.error("Delete Error:" + err);
     return res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    if (pool) {
+      await closeDatabaseConnection();
+    }
   }
 }
 
@@ -204,8 +221,9 @@ async function checkUserAlreadyRegistered(req, res, returnResult = false) {
     return res.status(400).json(errorResponse);
   }
 
+  let pool;
   try {
-    const pool = await getConnection();
+    pool = await getConnection(); // Establish a database connection
     const query = `SELECT * FROM [T_Register] WHERE Email = @Email`;
 
     const result = await pool.request().input("Email", email).query(query);
@@ -229,6 +247,10 @@ async function checkUserAlreadyRegistered(req, res, returnResult = false) {
     console.error("Check User Already Registered Error:", err);
     if (returnResult) return { isAlreadyRegistered: false, error: err.message };
     return res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    if (pool) {
+      await closeDatabaseConnection();
+    }
   }
 }
 
@@ -244,8 +266,9 @@ async function checkUserRegistered(req, res, returnResult = false) {
     return res.status(400).json(errorResponse);
   }
 
+  let pool;
   try {
-    const pool = await getConnection();
+    pool = await getConnection(); // Establish a database connection
     const query = `
       SELECT * FROM [T_Register] WHERE Email = @Email AND Code = @Code
     `;
@@ -274,6 +297,10 @@ async function checkUserRegistered(req, res, returnResult = false) {
     console.error("Check User Registered Error:", err);
     if (returnResult) return { registered: false, error: err.message };
     return res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    if (pool) {
+      await closeDatabaseConnection();
+    }
   }
 }
 

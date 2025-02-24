@@ -1,4 +1,4 @@
-import { getConnection, executeStoredProcedure, closeDatabaseConnection } from "../../../lib/dbsqlazurenew";
+import { getConnection, executeStoredProcedure, closeDatabaseConnection } from "../../../lib/dbsqlazure";
 import sql from 'mssql';
 // Use precise conditional checks to avoid unintended operation mismatches.
 export default async function handler(req, res) {

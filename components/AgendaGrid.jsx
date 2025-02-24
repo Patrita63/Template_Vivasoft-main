@@ -96,7 +96,7 @@ const AgendaDataGrid = () => {
                 return lookups?.calendario?.find(cal => formatDate(cal.Data) === day)?.Id || null;
             }); */
 
-            console.log("Selected Calendar IDs:", idCalendarioList);
+            // console.log("Selected Calendar IDs:", idCalendarioList);
 
             // const idCalendario = 0;
             // TODO

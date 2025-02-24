@@ -1,12 +1,12 @@
-import getConnection from '../../../lib/dbsqlazure';
+import { getConnection, closeDatabaseConnection } from '../../../lib/dbsqlazure';
 
 export default async function handler(req, res) {
     if (req.method !== 'GET') {
         return res.status(405).json({ error: "Method Not Allowed" });
     }
-
+let pool;
     try {
-        const pool = await getConnection();
+        pool = await getConnection(); // Establish a database connection
         const query = `
             SELECT Id, TipoUtente, Descrizione FROM T_TipoUtente
         `;
@@ -24,5 +24,9 @@ export default async function handler(req, res) {
     } catch (err) {
         console.error("GetAllTipoUtente Error:" + err);
         return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        if (pool) {
+            await closeDatabaseConnection();
+        }
     }
 }

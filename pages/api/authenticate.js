@@ -1,5 +1,5 @@
 // pages/api/authenticate.js
-import { getConnection, closeDatabaseConnection } from "../../lib/dbsqlazurenew";
+import { getConnection, closeDatabaseConnection } from "../../lib/dbsqlazure";
 
 export default async function handler(req, res) {
     if (req.method !== "POST") {

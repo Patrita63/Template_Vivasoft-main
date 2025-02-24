@@ -1,4 +1,4 @@
-import getConnection from "../../../lib/dbsqlazure";
+import { getConnection, closeDatabaseConnection } from "../../../lib/dbsqlazure";
 
 // Main handler function
 export default async function handler(req, res) {
@@ -18,8 +18,10 @@ export default async function handler(req, res) {
 
 // Function to check if the email already exists in the database
 async function checkUserByEmailExists(email) {
+    let pool;
     try {
-        const pool = await getConnection();
+        pool = await getConnection(); // Establish a database connection
+
         const query = `SELECT COUNT(1) AS EmailExists FROM T_Utente WHERE Email = @Email`;
         
         const result = await pool
@@ -32,6 +34,10 @@ async function checkUserByEmailExists(email) {
     } catch (err) {
         console.error("Error checking email:", err);
         throw new Error("Error checking email existence");
+    } finally {
+        if (pool) {
+            await closeDatabaseConnection();
+        }
     }
 }
 
@@ -49,9 +55,10 @@ async function addUser(req, res) {
         return res.status(400).json({ error: "Email already exists" });
     }
 
+    let pool;
     try {
         console.log("Connecting to database...");
-        const pool = await getConnection();
+        pool = await getConnection(); // Establish a database connection
         console.log("Connected to database successfully!");
 
         const query = `
@@ -75,15 +82,19 @@ async function addUser(req, res) {
     } catch (err) {
         console.error("Add User Error:", err);
         return res.status(500).json({ error: "Internal Server Error: " + err });
+    } finally {
+        if (pool) {
+            await closeDatabaseConnection();
+        }
     }
 }
 
 // 🔹 Fetch All Users or Get User by ID
 async function getUsers(req, res) {
     const { id } = req.query;
-
+let pool;
     try {
-        const pool = await getConnection();
+        pool = await getConnection(); // Establish a database connection
         let query;
         let result;
 
@@ -109,6 +120,10 @@ async function getUsers(req, res) {
     } catch (err) {
         console.error("Error fetching users:", err);
         return res.status(500).json({ error: "Internal Server Error. " + err });
+    } finally {
+        if (pool) {
+            await closeDatabaseConnection();
+        }
     }
 }
 

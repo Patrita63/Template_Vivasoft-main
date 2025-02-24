@@ -1,4 +1,4 @@
-import { getConnection, closeDatabaseConnection } from "../../../lib/dbsqlazurenew";
+import { getConnection, closeDatabaseConnection } from "../../../lib/dbsqlazure";
 import sql from 'mssql';
 
 export default async function handler(req, res) {
