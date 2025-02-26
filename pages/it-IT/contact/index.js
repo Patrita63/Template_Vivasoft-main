@@ -15,7 +15,7 @@ import ParticlesContainer from '../../../components/ParticlesContainer';
 // ✅ Validation Schema with Yup
 const validationSchema = yup.object().shape({
   nominativo: yup.string().required('Nome e cognome sono obbligatori'),
-  email: yup.string().email('Inserisci un indirizzo email valido').required('L’email è obbligatoria'),
+  email: yup.string().email('Inserisci un indirizzo email valido').required('L&apos;email è obbligatoria'),
   subject: yup.string().required('Il soggetto è obbligatorio'),
   body: yup.string().required('Il messaggio non può essere vuoto'),
   privacyPolicy: yup.boolean().oneOf([true], 'Devi accettare la Policy Privacy'),

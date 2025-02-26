@@ -4,14 +4,14 @@ export const testimonialSlider = [
     name: 'Vincenzo Criscuolo',
     position: 'Owner Multimediaform',
     message:
-      `Ho il piacere di collaborare con Patrizio per lo sviluppo di percorsi formativi altamente qualificati nel campo dell\' IT e posso dire con certezza che ogni progetto con lui è sinonimo di eccellenza. 
+      `Ho il piacere di collaborare con Patrizio per lo sviluppo di percorsi formativi altamente qualificati nel campo dell&apos; IT e posso dire con certezza che ogni progetto con lui è sinonimo di eccellenza. 
       Ci supporta con corsi progettati e realizzati con un approccio su misura che rispecchia perfettamente le nostre esigenze. 
-      Ogni corso si distingue per un\'esperienza coinvolgente, grazie alla sua capacità di rendere i concetti chiari e facilmente applicabili nella pratica. 
-      I partecipanti apprezzano la qualità dell\'insegnamento, la disponibilità a rispondere alle domande e il clima positivo che sa creare in aula o online. 
+      Ogni corso si distingue per un&apos;esperienza coinvolgente, grazie alla sua capacità di rendere i concetti chiari e facilmente applicabili nella pratica. 
+      I partecipanti apprezzano la qualità dell&apos;insegnamento, la disponibilità a rispondere alle domande e il clima positivo che sa creare in aula o online. 
       Inoltre, lavorare con Patrizio è sempre una garanzia di affidabilità. Rispetta ogni scadenza, è estremamente flessibile e, soprattutto, orientato al risultato. 
       Grazie alla sua competenza e professionalità, i nostri clienti non solo acquisiscono nuove competenze, ma sviluppano una vera consapevolezza su come applicarle per migliorare il loro lavoro quotidiano. 
       Raccomando vivamente Patrizio a chiunque stia cercando un professionista eccezionale nel campo della formazione. 
-      Sono certo che continueremo a collaborare a lungo e che ogni progetto futuro sarà all\’altezza delle aspettative, se non oltre!`,
+      Sono certo che continueremo a collaborare a lungo e che ogni progetto futuro sarà all&apos;altezza delle aspettative, se non oltre!`,
   },
   {
     name: 'Vittorio Goletti',

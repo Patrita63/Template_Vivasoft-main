@@ -107,7 +107,7 @@ const Contact = () => {
     <LayoutEnUs>
       <Head>
         <title>Vivasoft - Contact us for IT and Microsoft solutions</title>
-        <meta name="description" content="Have questions? Contact Vivasoft for advice on IT solutions, Power Apps, Power BI, Power Automate, and more. We’re here to help." />
+        <meta name="description" content="Have questions? Contact Vivasoft for advice on IT solutions, Power Apps, Power BI, Power Automate, and more. We&apos;re here to help." />
         <meta name="keywords" content="Contacts Vivasoft,IT support, IT consulting, Microsoft solutions, Azure, Power Apps, Power BI, Power Automate, C#, Python, React, Kubernetes, customer support" />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="Vivasoft - Contact us for IT and Microsoft solutions" />

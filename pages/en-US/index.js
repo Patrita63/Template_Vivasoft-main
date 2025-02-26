@@ -97,7 +97,8 @@ const Home = () => {
         <title>Vivasoft Consulting and Learning</title>
         <meta
           name="description"
-          content="Since 2014, we have been shaping the future of companies with tailor-made solutions designed to overcome every challenge.Thanks to our support, companies optimize processes, improve operational efficiency and achieve concrete and lasting results, always staying one step ahead. All this is made possible by the training and development we offer through our employees, experts in the most advanced technologies of Microsoft.From the use of the scalability of Azure Cloud to the creation of dynamic and innovative solutions with Microsoft Power Platform to the optimization of business collaboration with Microsoft SharePoint Online, We provide the skills you need to turn your team into an engine of innovation.Our mission? Turn challenges into opportunities.With customized training programs, we make technology a strategic advantage for your success."
+          content="Since 2014, we have been shaping the future of companies with tailor-made solutions designed to overcome every challenge. With our support, companies optimize processes, improve operational efficiency and achieve concrete and lasting results, keeping one step ahead. All this is made possible by the training and development we offer through our employees, who are experts in Microsoft&apos;s most advanced technologies. 
+          From leveraging the scalability of Azure Cloud to creating dynamic and innovative solutions with Microsoft Power Platform to optimizing enterprise collaboration with Microsoft SharePoint Online, we provide the essential skills to transform your team into an innovation engine. Our mission? Turn challenges into opportunities. With customized training programs, we make technology a real strategic advantage for your success."
         />
         <meta name="keywords" content="Microsoft Azure, Microsoft 365, Microsoft Power Platform, Microsoft Power Apps, Microsoft Power BI, Microsoft Power Automate, Consulting, Learning, Microsoft" />
         <meta name="author" content="Vivasoft" />
@@ -171,11 +172,11 @@ const Home = () => {
             >
               
               <span className='text-lg font-bold'>
-              Since 2014, we have been shaping the future of companies with tailor-made solutions designed to meet every challenge.  </span>
-              <span className='text-lg'>Thanks to our support, companies optimize processes, improve operational efficiency and achieve concrete and lasting results, always staying one step ahead. </span>
-              <span className='text-lg'>All this is made possible by the training and development that we offer through our collaborators, experts in the most advanced technologies of Microsoft. </span>
-              <span className='text-lg'>rom using the scalability of <span className='text-accent font-bold'>Azure Cloud</span> to creating dynamic and innovative solutions with  <span className='text-accent font-bold'>Microsoft Power Platform</span> to optimizing business collaboration with <span className='text-accent font-bold'>Microsoft SharePoint Online</span>, We provide the skills you need to turn your team into an engine of innovation. </span>
-              <span className='text-lg font-bold'> Our mission? Turning challenges into opportunities. </span>
+              Since 2014, we have been shaping the future of companies with tailor-made solutions designed to overcome every challenge.  </span>
+              <span className='text-lg'>With our support, companies optimize processes, improve operational efficiency and achieve concrete and lasting results, keeping one step ahead. </span>
+              <span className='text-lg'>All this is made possible by the training and development we offer through our employees, who are experts in Microsoft&apos;s most advanced technologies.  </span>
+              <span className='text-lg'>From leveraging the scalability of <span className='text-accent font-bold'>Azure Cloud</span> to creating dynamic and innovative solutions with  <span className='text-accent font-bold'>Microsoft Power Platform</span> to optimizing business collaboration with <span className='text-accent font-bold'>Microsoft SharePoint Online</span>, we provide the essential skills to transform your team into an innovation engine. </span>
+              <span className='text-lg font-bold'> Our mission? Turn challenges into opportunities. </span>
               <span className='text-lg'>With customized training programs, we make technology a real strategic advantage for your success.</span>
             </motion.p>
           </div>

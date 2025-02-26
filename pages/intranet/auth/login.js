@@ -33,7 +33,7 @@ const validationSchema = yup.object().shape({
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
       "Inserisci un'email valida con il formato corretto"
     )
-    .required("L’email è obbligatoria"),
+    .required("L&apos;email è obbligatoria"),
   password: yup
     .string()
     .matches(
