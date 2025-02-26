@@ -17,7 +17,7 @@ const HeaderEnUS = () => {
           {/* https://stackoverflow.com/questions/69230343/nextjs-image-component-with-fixed-witdth-and-auto-height */}
           <Link href='/intranet' target='_blank'>
             <Image
-              src={'/LogoClaim1.svg'}
+              src={'/LogoClaimENG.svg'}
               width={350}
               height={60}
               alt='Vivasoft S.R.L.'

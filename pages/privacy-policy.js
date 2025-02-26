@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
             Privacy Policy
           </h1>
           <p className="text-center text-gray-600 mb-4">
-            Ultimo aggiornamento: {CurYear}
+          Last updated: {CurYear}
           </p>
           
                 <Image
@@ -30,133 +30,131 @@ const PrivacyPolicy = () => {
             
           {/* <!-- Sezione Introduzione --> */}
           <h2 className=" text-2xl font-semibold text-primary mb-4 text-center">
-            Introduzione
+            Introduction
           </h2>
           <p className="text-gray-600 text-lg text-center mb-6">
-            La presente Privacy Policy descrive come raccogliamo, utilizziamo,
-            conserviamo, proteggiamo e condividiamo i tuoi dati personali quando
-            utilizzi il nostro sito web www.vivasoft.it.
-            Ti invitiamo a leggere attentamente questa politica per comprendere
-            come trattiamo i tuoi dati personali.
+            This Privacy Policy describes how we collect, use,
+            we store, protect and share your personal data when
+            use our website www.vivasoft.it.
+            Please read this policy carefully to understand
+            how we process your personal data.
           </p>
 
           {/* <!-- Sezione 1: Informazioni che raccogliamo --> */}
           <h3 className="text-2xl font-semibold text-primary mb-4 text-center">
-            Informazioni che raccogliamo
+            Information we collect
           </h3>
           <p className="text-gray-600 text-lg text-center mb-6">
-            Possiamo raccogliere le seguenti informazioni:
+            We may collect the following information:
           </p>
           <ul className="list-inside list-disc text-gray-600 text-lg mb-6 text-center">
             <li>
-              Dati personali: Nome, indirizzo email, numero di telefono
+            Personal data: Name, email address, phone number
             </li>
             <li>
-              Dati di navigazione: Indirizzo IP, tipo di browser, sistema
-              operativo, pagine visitate, tempo trascorso sul nostro sito, ecc.
+            Browsing data: IP address, browser type, system
+            operational, pages visited, time spent on our site, etc.
             </li>
             <li>
-              Dati raccolti tramite cookies: I cookies ci permettono di
-              raccogliere informazioni sulle tue preferenze e attività sul
-              nostro sito per migliorare l&apos;esperienza dell&apos;utente. Puoi
-              controllare l&apos;uso dei cookies tramite le impostazioni del tuo
+              Data collected through cookies: Cookies allow us to
+              collect information about your preferences and activities on
+              our site to improve your experience. You can
+              control the use of cookies through your settings
               browser.
             </li>
           </ul>
 
           {/* <!-- Sezione 2: Come utilizziamo le informazioni --> */}
           <h3 className="text-2xl font-semibold text-primary mb-4 text-center">
-            Come utilizziamo le informazioni
+          How we use your information
           </h3>
           <p className="text-gray-600 text-lg text-center mb-6">
-            Utilizziamo le informazioni raccolte per:
+          We use the information collected to:
           </p>
           <ul className="list-inside list-disc text-gray-600 text-lg mb-6 text-center">
-            <li>Fornire e migliorare i nostri Servizi.</li>
-            <li>Rispondere alle tue richieste e domande.</li>
-            <li>Personalizzare la tua esperienza sul nostro sito.</li>
+            <li>Provide and improve our Services.</li>
+            <li>Answer your requests and questions.</li>
+            <li>Personalize your experience on our site.</li>
             <li>
-              Inviarti comunicazioni relative ai nostri Servizi, come
-              aggiornamenti o offerte speciali.
+            Send you communications related to our Services, such as
+            Updates or special offers.
             </li>
             <li>
-              Analizzare l&apos;uso del nostro sito per migliorare il contenuto e le
-              funzionalità.
+            Analyse the use of our site to improve content and
+            functionality.
             </li>
-            <li>Rispettare gli obblighi legali e normativi.</li>
+            <li>Comply with legal and regulatory requirements.</li>
           </ul>
 
           {/* <!-- Sezione 3: Condivisione delle informazioni --> */}
           <h3 className="text-2xl font-semibold text-primary mb-4 text-center">
-            Condivisione delle informazioni
+          Sharing information
           </h3>
           <p className="text-gray-600 text-lg text-center mb-6">
-            Non vendiamo, scambiamo o cediamo le tue informazioni personali a
-            terzi, ad eccezione dei seguenti casi:
+          We do not sell, trade or transfer your personal information to
+          third parties, with the exception of:
           </p>
           <ul className="list-inside list-disc text-gray-600 text-lg mb-6 text-center">
             <li>
-              <strong>Fornitori di servizi</strong>: Condividiamo i tuoi dati
-              con fornitori di servizi terzi che ci aiutano a gestire il nostro
-              sito web e i nostri Servizi (ad esempio, hosting, analisi dei
-              dati, invio di email). Questi fornitori sono obbligati a
-              proteggere i tuoi dati e non possono utilizzarli per scopi diversi
-              da quelli per cui sono stati forniti.
+              <strong>Service providers</strong>: We share your data
+              with third party service providers who help us manage our
+              website and our Services (for example, hosting, analytics
+              data, sending email). These suppliers are obliged to
+              protect your data and may not use it for different purposes
+              by those for whom they were provided.
             </li>
             <li>
-              <strong>Obblighi legali</strong>: Potremmo essere tenuti a
-              divulgare le tue informazioni per rispondere a richieste legali,
-              come ordini del tribunale, inchieste governative, o per far
-              rispettare i nostri diritti legali.
+              <strong>Legal obligations</strong>: We may be required to
+              disclose your information to respond to legal requests,
+              as court orders, government inquiries, or to make
+              respect our legal rights.
             </li>
           </ul>
 
           {/* <!-- Sezione 4: Protezione dei dati --> */}
           <h3 className="text-2xl font-semibold text-primary mb-4 text-center">
-            Protezione dei dati
+          Data protection
           </h3>
           <p className="text-gray-600 text-lg text-center mb-6">
-            Prendiamo misure di sicurezza ragionevoli per proteggere i tuoi dati
-            personali da accessi non autorizzati, alterazioni, divulgazioni o
-            distruzioni. Tuttavia, nessun metodo di trasmissione su Internet o
-            di archiviazione elettronica è sicuro al 100%, e non possiamo
-            garantire la sicurezza assoluta dei tuoi dati.
+            We take reasonable security measures to protect your data
+            personal from unauthorized access, alteration, disclosure or
+            destruction. However, no method of transmission over the Internet or
+            electronic storage is 100% secure, and we cannot
+            ensure the absolute security of your data.
           </p>
 
           {/* <!-- Sezione 5: I tuoi diritti --> */}
           <h3 className="text-2xl font-semibold text-primary mb-4 text-center">
-            I tuoi diritti
+          Your rights
           </h3>
           <p className="text-gray-600 text-lg text-center mb-6">
-            Hai il diritto di:
+          You have the right to:
           </p>
           <ul className="list-inside list-disc text-gray-600 text-lg mb-6 text-center">
             <li>
-              <strong>Accesso</strong>: Richiedere l&apos;accesso alle informazioni
-              che raccogliamo su di te.
+              <strong>Access</strong>: Request access to information
+              that we collect on you.
             </li>
             <li>
-              <strong>Correzione</strong>: Richiedere la correzione di
-              informazioni imprecise o incomplete.
+              <strong>Correction</strong>: Request correction of
+              Inaccurate or incomplete information.
             </li>
             <li>
-              <strong>Cancellazione</strong>: Chiedere la cancellazione dei tuoi
-              dati personali, salvo che non ci siano motivi legali per
-              trattenerli.
+              <strong>Deletion of personal data</strong>: Request your personal data unless there are legal reasons to retain it.
             </li>
             <li>
-              <strong>Limitazione del trattamento</strong>: Chiedere di limitare
-              il trattamento dei tuoi dati in determinate circostanze.
+              <strong>Limitation of the processing</strong>: Ask to limit
+              the processing of your data in certain circumstances.
             </li>
             <li>
-              <strong>Portabilità dei dati</strong>: Richiedere una copia dei
-              tuoi dati personali in un formato strutturato, di uso comune e
-              leggibile da dispositivo automatico.
+              <strong>Data portability</strong>: Request a copy of
+              your personal data in a structured, commonly used format and
+              readable.
             </li>
             <li>
-              <strong>Revoca del consenso</strong>: Se il trattamento dei tuoi
-              dati si basa sul consenso, hai il diritto di revocarlo in
-              qualsiasi momento.
+              <strong>Withdrawal of consent</strong>: If the treatment of your
+              data is based on consent, you have the right to revoke it in
+              any time.
             </li>
           </ul>
 
@@ -165,36 +163,36 @@ const PrivacyPolicy = () => {
             Cookies
           </h3>
           <p className="text-gray-600 text-lg text-center mb-6">
-            Il nostro sito utilizza i cookies per migliorare la tua esperienza.
-            Un cookie è un piccolo file che viene memorizzato sul tuo
-            dispositivo quando visiti il nostro sito. Puoi scegliere di
-            accettare o rifiutare i cookies, ma alcune funzionalità del sito
-            potrebbero non funzionare correttamente senza di essi.
+            Our site uses cookies to improve your experience.
+            A cookie is a small file that is stored on your
+            device when you visit our site. You can choose to
+            accept or reject cookies, but some features of the site
+            may not function properly without them.
           </p>
 
           {/* <!-- Sezione 7: Modifiche alla Privacy Policy --> */}
           <h3 className="text-2xl font-semibold text-primary mb-4 text-center">
-            Modifiche alla Privacy Policy
+          Changes to the Privacy Policy
           </h3>
           <p className="text-gray-600 text-lg text-center mb-6">
-            Ci riserviamo il diritto di modificare questa Privacy Policy in
-            qualsiasi momento. Le modifiche saranno pubblicate su questa pagina
-            e saranno effettive dal momento della pubblicazione. Ti invitiamo a
-            controllare periodicamente questa pagina per essere informato su
-            eventuali aggiornamenti.
+            We reserve the right to change this Privacy Policy in
+            any time. Changes will be posted on this page
+            and will be effective from the time of publication. We invite you to
+            Periodically check this page to be informed about
+            any updates.
           </p>
 
           {/* <!-- Sezione 8: Contatti --> */}
           <h3 className="text-2xl font-semibold text-primary mb-4 text-center">
-            Contatti
+            Contacts
           </h3>
           <p className="text-gray-600 text-lg text-center mb-6">
-            Se hai domande riguardo questa Privacy Policy o il trattamento dei
-            tuoi dati personali, puoi contattarci all&apos;indirizzo:
+          If you have questions about this Privacy Policy or the treatment of
+          your personal data, you can contact us at:
           </p>
           <p className="text-gray-600 text-lg text-center">
           Vivasoft S.R.L <br />
-         via Copenaghen, 10 00144 Roma<br />
+          Via Copenaghen, 10 00144 Roma<br />
             <a href="mailto:info@vivasoft.it"> info@vivasoft.it</a>
           </p>
         </div>

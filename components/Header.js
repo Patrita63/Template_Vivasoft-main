@@ -25,7 +25,7 @@ const Header = () => {
           <>
           {/* Logo azienda */}
             <Image
-              src={'/LogoClaim1.svg'}
+              src={'/LogoClaim.svg'}
               width={350}
               height={60}
               alt='Vivasoft S.R.L.'

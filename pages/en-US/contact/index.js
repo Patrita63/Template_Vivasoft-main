@@ -70,7 +70,7 @@ const Contact = () => {
 
     const sender = process.env.NEXT_PUBLIC_AZURE_GRAPH_MAIL_TO;
     const dataMailBody = body;
-    debugger;
+    // debugger;
     // const { to, subject, body, contentType = 'Text' } = req.body;
     try {
       const response = await fetch('/api/sendemail-graph', {
@@ -158,7 +158,7 @@ const Contact = () => {
                   <input type="checkbox" {...register('privacyPolicy')} id="gdpr-checkbox" className="accent-accent" />
                   <label htmlFor="gdpr-checkbox" className="text-sm">
                   I consent to the processing of my personal data in accordance with{' '}
-                    <a href="/privacy-policy" className="text-accent" target="_blank">Policy Privacy</a>.
+                    <a href="/informativa-privacy" className="text-accent" target="_blank">Policy Privacy</a>.
                   </label>
                 </div>
                 {errors.privacyPolicy && <p className="text-red-500 text-sm">{errors.privacyPolicy.message}</p>}

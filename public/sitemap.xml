@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>https://www.vivasoft.it/it-IT</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>1.00</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/it-IT/company</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.80</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/company" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/company" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/it-IT/itconsulting</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.80</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/itconsulting" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/itconsulting" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/it-IT/course</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.80</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/course" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/course" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/it-IT/academy</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.80</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/academy" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/academy" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/it-IT/testimonials</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.80</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/testimonials" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/testimonials" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/it-IT/contact</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.80</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/contact" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/contact" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/en-US</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.80</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/en-US/company</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/company" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/company" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/en-US/itconsulting</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/itconsulting" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/itconsulting" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/en-US/course</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/course" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/course" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/en-US/academy</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/academy" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/academy" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/en-US/testimonials</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/testimonials" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/testimonials" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/en-US/contact</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/it-IT/contact" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/en-US/contact" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/informativa-privacy</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.50</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/informativa-privacy" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/privacy-policy" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/termini-condizioni</loc>
+  <lastmod>2025-02-25T10:12:42+00:00</lastmod>
+  <priority>0.50</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/termini-condizioni" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/terms-conditions" />
+</url>
+
+<!-- Brochures -->
+<url>
+  <loc>https://www.vivasoft.it/brochures/IT/PowerApps.pdf</loc>
+  <lastmod>2025-02-24T20:59:55+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/brochures/IT/PowerApps.pdf" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/brochures/EN/PowerApps.pdf" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/brochures/IT/Azure.pdf</loc>
+  <lastmod>2025-02-24T20:59:55+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/brochures/IT/Azure.pdf" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/brochures/EN/Azure.pdf" />
+</url>
+
+<url>
+  <loc>https://www.vivasoft.it/brochures/IT/CloudSolutions.pdf</loc>
+  <lastmod>2025-02-24T20:59:55+00:00</lastmod>
+  <priority>0.64</priority>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.vivasoft.it/brochures/IT/CloudSolutions.pdf" />
+  <xhtml:link rel="alternate" hreflang="en-US" href="https://www.vivasoft.it/brochures/EN/CloudSolutions.pdf" />
+</url>
+
+</urlset>

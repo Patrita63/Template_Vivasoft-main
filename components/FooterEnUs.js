@@ -117,6 +117,24 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+              <Image
+                src={'/AI_Fundamentals-min.png'}
+                width={75}
+                height={25}
+                alt='AI_Fundamentals'
+                priority={true}
+              />
+            </Link>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+              <Image
+                src={'/AI-100_ProductImage.png'}
+                width={75}
+                height={25}
+                alt='AI-100'
+                priority={true}
+              />
+            </Link>
           </div>
 
           {/* Contatti */}
