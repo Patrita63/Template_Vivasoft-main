@@ -5,47 +5,56 @@ const Header = () => {
   return (
     <header className="absolute z-30 w-full flex items-center px-16 xl:px-0 xl:h-[90px] pt-20">
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row justify-between items-center xl:pt-2 sm:pt-0">
-          {process.env.NEXT_PUBLIC_INTRANET_VISIBLE==="true" && (
-          <>
-          {/* Logo azienda */}
-          <Link href='/intranet' target='_blank'>
-            <Image
-              src={'/LogoClaim1.svg'}
-              width={350}
-              height={60}
-              alt='Vivasoft S.R.L.'
-              priority={true}
-            />
-          </Link>
-          </>
+        <div className="flex flex-col lg:flex-row justify-between items-center xl:pt-2 sm:pt-0 w-full">
+
+          {process.env.NEXT_PUBLIC_INTRANET_VISIBLE === "true" && (
+            <Link href='/intranet' target='_blank'>
+              <Image
+                src={'/LogoClaim.svg'}
+                width={600} // Set a larger intrinsic width for better quality
+                height={80} // Larger height
+                alt='Vivasoft S.R.L.'
+                priority={true}
+                className="w-[200px] sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[550px] max-w-full h-auto"
+              />
+            </Link>
           )}
 
-          {process.env.NEXT_PUBLIC_INTRANET_VISIBLE==="false" && (
-          <>
-          {/* Logo azienda */}
+          {process.env.NEXT_PUBLIC_INTRANET_VISIBLE === "false" && (
             <Image
               src={'/LogoClaim.svg'}
-              width={350}
-              height={60}
+              width={600}
+              height={80}
               alt='Vivasoft S.R.L.'
               priority={true}
+              className="w-[200px] sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[550px] max-w-full h-auto"
             />
-          </>
           )}
 
-          <div className="mt-4 lg:mt-0"> 
+          <div className="mt-4 lg:mt-0">
             <a href="https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact" target='_blank'>
-              <Image alt="Logo Partner Microsoft" src="/PartnerMic.png" width={125} height={25} />
+              <Image
+                alt="Logo Partner Microsoft"
+                src="/PartnerMic.png"
+                width={250}
+                height={50}
+                className="w-[100px] sm:w-[150px] md:w-[200px] lg:w-[250px] max-w-full h-auto"
+              />
             </a>
           </div>
 
-          {process.env.NEXT_PUBLIC_ENGLISH_VISIBLE==="true" && (
-          <div className="mt-8 lg:mt-0">
-            <a href="\en-US\">
-              <Image alt="EN" src="/GB.svg" width={35} height={15} className='w-[25px] lg:w-[35px]' />
-            </a>
-          </div>
+          {process.env.NEXT_PUBLIC_ENGLISH_VISIBLE === "true" && (
+            <div className="mt-8 lg:mt-0">
+              <a href="\en-US\">
+                <Image
+                  alt="EN"
+                  src="/GB.svg"
+                  width={70}
+                  height={30}
+                  className='w-[25px] sm:w-[35px] md:w-[50px] lg:w-[70px] max-w-full h-auto'
+                />
+              </a>
+            </div>
           )}
         </div>
       </div>
