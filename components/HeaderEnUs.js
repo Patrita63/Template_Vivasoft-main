@@ -15,7 +15,7 @@ const HeaderEnUS = () => {
                 height={80} // Larger height
                 alt='Vivasoft S.R.L.'
                 priority={true}
-                className="w-[100px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] max-w-full h-auto"
+                className="w-[120px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] max-w-full h-auto"
               />
             </Link>
           )}
@@ -27,7 +27,7 @@ const HeaderEnUS = () => {
               height={80}
               alt='Vivasoft S.R.L.'
               priority={true}
-              className="w-[100px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] max-w-full h-auto"
+              className="w-[120px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] max-w-full h-auto"
             />
           )}
 
