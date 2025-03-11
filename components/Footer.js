@@ -15,19 +15,19 @@ const Footer = () => {
             {/* Link all'area intranet */}
             <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
               <Image
-                src={'/LogoClaim_F.png'}
-                width={110}
-                height={50}
+                src={'/LogoClaim.svg'}
+                width={200}
+                height={80}
                 alt="Logo Vivasoft S.R.L."
                 priority={true}
-                className="mt-4"
+                className="w-[100px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] max-w-full h-auto"
               />
             </Link>
 
             {/* Link all'area intranet */}
-            <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
+            {/* <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
               <small>INTRANET</small>
-            </Link>
+            </Link> */}
           </div>
           )}
 
@@ -36,14 +36,14 @@ const Footer = () => {
             {/* Logo azienda */}
             
               <Image
-                src={'/LogoClaim_F.png'}
-                width={110}
-                height={50}
+                src={'/LogoClaim.svg'}
+                width={200}
+                height={80}
                 alt="Logo Vivasoft S.R.L."
                 priority={true}
-                className="mt-4"
+                className="w-[100px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] max-w-full h-auto"
               />
-              <small>Tecnologia + Conoscenza = Innovazione</small>
+              {/* <small>Tecnologia + Conoscenza = Innovazione</small> */}
           </div>
           )}
 

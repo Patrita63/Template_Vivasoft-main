@@ -51,7 +51,7 @@ const Header = () => {
                   src="/GB.svg"
                   width={70}
                   height={30}
-                  className='w-[20px] sm:w-[30px] md:w-[40px] lg:w-[60px] max-w-full h-auto'
+                  className='w-[15px] sm:w-[20px] md:w-[30px] lg:w-[40px] max-w-full h-auto'
                 />
               </a>
             </div>
