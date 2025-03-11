@@ -15,7 +15,7 @@ const HeaderEnUS = () => {
                 height={80} // Larger height
                 alt='Vivasoft S.R.L.'
                 priority={true}
-                className="w-[200px] sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[550px] max-w-full h-auto"
+                className="w-[100px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] max-w-full h-auto"
               />
             </Link>
           )}
@@ -27,7 +27,7 @@ const HeaderEnUS = () => {
               height={80}
               alt='Vivasoft S.R.L.'
               priority={true}
-              className="w-[200px] sm:w-[300px] md:w-[400px] lg:w-[500px] xl:w-[550px] max-w-full h-auto"
+              className="w-[100px] sm:w-[150px] md:w-[200px] lg:w-[250px] xl:w-[300px] max-w-full h-auto"
             />
           )}
 
@@ -38,7 +38,7 @@ const HeaderEnUS = () => {
                 src="/PartnerMic.png"
                 width={250}
                 height={50}
-                className="w-[100px] sm:w-[150px] md:w-[200px] lg:w-[250px] max-w-full h-auto"
+                className="w-[80px] sm:w-[120px] md:w-[150px] lg:w-[180px] max-w-full h-auto"
               />
             </a>
           </div>
@@ -51,7 +51,7 @@ const HeaderEnUS = () => {
                   src="/IT.svg"
                   width={70}
                   height={30}
-                  className='w-[25px] sm:w-[35px] md:w-[50px] lg:w-[70px] max-w-full h-auto'
+                  className='w-[20px] sm:w-[30px] md:w-[40px] lg:w-[60px] max-w-full h-auto'
                 />
               </a>
             </div>
