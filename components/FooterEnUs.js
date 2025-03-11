@@ -52,7 +52,7 @@ const Footer = () => {
 
           {/* Certificazioni */}
           <div className="flex justify-center items-center space-x-4">
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/MCT.png'}
                 width={75}
@@ -61,7 +61,7 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/mcsa-badge.svg'}
                 width={75}
@@ -70,7 +70,7 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/mcsd-badge.svg'}
                 width={75}
@@ -80,7 +80,7 @@ const Footer = () => {
               />
             </Link>
 
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/microsoft-certified-expert-badge.svg'}
                 width={75}
@@ -89,7 +89,7 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/microsoft-certified-associate-badge.svg'}
                 width={75}
@@ -98,7 +98,7 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/FondAIAZu.png'}
                 width={75}
@@ -107,7 +107,7 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/microsoft-certified-general-badge.svg'}
                 width={75}
@@ -116,7 +116,7 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/AI_Fundamentals-min.png'}
                 width={75}
@@ -125,7 +125,7 @@ const Footer = () => {
                 priority={true}
               />
             </Link>
-            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact'} target='_blank'>
+            <Link href={'https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview'} target='_blank'>
               <Image
                 src={'/AI-100_ProductImage.png'}
                 width={75}

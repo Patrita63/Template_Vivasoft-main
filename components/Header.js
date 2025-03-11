@@ -32,7 +32,7 @@ const Header = () => {
           )}
 
           <div className="mt-4 lg:mt-0">
-            <a href="https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview/contact" target='_blank'>
+            <a href="https://appsource.microsoft.com/en-us/marketplace/partner-dir/3be9add1-f9f0-44e0-b01c-fa585c33b214/overview" target='_blank'>
               <Image
                 alt="Logo Partner Microsoft"
                 src="/PartnerMic.png"
