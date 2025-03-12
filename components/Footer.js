@@ -15,7 +15,7 @@ const Footer = () => {
             {/* Link all'area intranet */}
             <Link href='/intranet' target='_blank' className="mt-4 text-white text-sm hover:text-secondary" >
               <Image
-                src={'/LogoClaim.svg'}
+                src={'/LogoVClaim.svg'}
                 width={200}
                 height={80}
                 alt="Logo Vivasoft S.R.L."
@@ -36,7 +36,7 @@ const Footer = () => {
             {/* Logo azienda */}
             
               <Image
-                src={'/LogoClaim.svg'}
+                src={'/LogoVClaim.svg'}
                 width={200}
                 height={80}
                 alt="Logo Vivasoft S.R.L."

@@ -10,7 +10,7 @@ const HeaderEnUS = () => {
           {process.env.NEXT_PUBLIC_INTRANET_VISIBLE === "true" && (
             <Link href='/intranet' target='_blank'>
               <Image
-                src={'/LogoClaimENG.svg'}
+                src={'/LogoVClaimENG.svg'}
                 width={600} // Set a larger intrinsic width for better quality
                 height={80} // Larger height
                 alt='Vivasoft S.R.L.'
@@ -22,7 +22,7 @@ const HeaderEnUS = () => {
 
           {process.env.NEXT_PUBLIC_INTRANET_VISIBLE === "false" && (
             <Image
-              src={'/LogoClaimENG.svg'}
+              src={'/LogoVClaimENG.svg'}
               width={600}
               height={80}
               alt='Vivasoft S.R.L.'
